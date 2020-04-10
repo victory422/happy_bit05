@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="shop.SaDAOImpl">
+	<insert id="saleInsert" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO sales VALUES (
+			'testcode',
+			#{sp_prod_id},
+			#{sale_price},
+			#{sale_quantity},
+			#{sale_name},
+			#{sale_name_sub},
+			'000',
+			'200410',
+			'true',
+			#{sale_thumbmail},
+			#{sale_detail},
+			'1.0'
+		
+		)
+		]]>
+	</insert>
+
+	<select id="getList2" resultType="java.lang.String"
+		resultMap="selectProductsList">
+		<![CDATA[
+		select * from products
+		]]>
+	</select>
+
+	<resultMap type="map" id="selectProductsList">
+		<result column="SP_PROD_ID" property="prod_id" />
+		<result column="SP_VEND_ID" property="vend_id" />
+		<result column="SP_PROD_COST" property="prod_cost" />
+		<result column="SP_PROD_PRICE_NORMAL" property="prod_price" />
+		<result column="SP_CATE_ID" property="cate_id" />
+		<result column="SP_PROD_DATE" property="prod_date" />
+	</resultMap>
+
+	<select id="searchProducts" resultMap="selectProductsList">
+		<![CDATA[
+		select * from products where SP_PROD_ID like '%'||#{key}||'%'
+		]]>
+	</select>
+	
+
+
+
+</mapper>
+
+
+  
+  
