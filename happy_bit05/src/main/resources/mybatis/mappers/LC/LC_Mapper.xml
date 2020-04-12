@@ -46,4 +46,10 @@
 			#{lc_index}, #{lc_address}, #{lc_xy_arr})
 	</insert>
 	
+	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
+		<![CDATA[
+			select * from course where lc_index like 'lc_%'
+		]]>	
+	</select>
+	
 </mapper>

@@ -12,7 +12,7 @@ import vs.lc.lc_001_1.vo.LC_001_1_MapVO;
 import vs.lc.lc_001_1.vo.LC_001_1_VO;
 
 @Controller
-@RequestMapping("/lc/*")
+@RequestMapping("/lc/001")
 @Log4j
 @AllArgsConstructor
 public class LC_001_1_Controller {

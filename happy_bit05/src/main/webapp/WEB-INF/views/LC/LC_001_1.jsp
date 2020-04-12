@@ -27,7 +27,7 @@
 <!-- 지도 부분 -->
  	<div class="container">
  	
- 	<form name="upload" action="lc/uploadCourse" method="get">
+ 	<form name="upload" action="lc/001/uploadCourse" method="get">
 	
 		<h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
 	       	 코스 등록
