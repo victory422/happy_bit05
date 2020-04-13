@@ -1,8 +1,10 @@
-<%@ include file="../includes/topbar.jsp"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="../includes/topbar.jsp"%>
 	
 	
 <style>
@@ -27,7 +29,7 @@
 <!-- 지도 부분 -->
  	<div class="container">
  	
- 	<form name="upload" action="lc/001/uploadCourse" enctype="multipart/form-data" method="post">
+ 	<form:form name="upload" action="lc/001/uploadCourse" method="post" enctype="multipart/form-data">
 	
 		<h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
 	       	 코스 등록
@@ -160,7 +162,7 @@
 		<input type="submit" value="업로드" />
 		
 		<input type="text" id="lc_xy_arr" name="lc_xy_arr"/>
-		</form>
+		</form:form>
 		
 	</div>
 	
