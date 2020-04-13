@@ -18,7 +18,7 @@
 
 <h2>1개의 상품이 장바구니에 존재합니다. </h2>
 
-<form name="checkout_form" class="cm-check-changes cm-processed-form cm-ajax cm-ajax-full-render" action="https://www.monstermart.net/" method="post" enctype="multipart/form-data" target="_self">
+<form name="checkout_form" class="cm-check-changes cm-processed-form cm-ajax cm-ajax-full-render" action="" method="post" enctype="multipart/form-data" target="_self">
     <input type="hidden" name="redirect_mode" value="cart">
     <input type="hidden" name="result_ids" value="cart_items,checkout_totals,checkout_steps,cart_status*,checkout_cart">
 
