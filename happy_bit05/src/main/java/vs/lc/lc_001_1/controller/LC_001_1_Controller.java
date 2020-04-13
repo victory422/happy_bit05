@@ -1,5 +1,8 @@
 package vs.lc.lc_001_1.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,21 +15,34 @@ import vs.lc.lc_001_1.vo.LC_001_1_MapVO;
 import vs.lc.lc_001_1.vo.LC_001_1_VO;
 
 @Controller
-@RequestMapping("/lc/001")
+@RequestMapping("/lc/001/*")
 @Log4j
 @AllArgsConstructor
 public class LC_001_1_Controller {
 	
 	private LC_001_1_Service service;
 
-	@RequestMapping(value = "uploadCourse", method = {RequestMethod.GET})
+	@RequestMapping(value = "uploadCourse", method =RequestMethod.POST)
 	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model) {
 		
 		System.out.println("컨트롤러 : " + vo);
 		System.out.println("컨트롤러 : " + vo2);
 		System.out.println("모델 : " + model);
+		System.out.println("뭐야..------------" + vo.getLc_title());
 		
-		service.courseInsert(vo, vo2);
+		try {
+			Map<String, Object> hmap = new HashMap<String, Object>();
+			hmap.put("lc_thumbnail", vo.getLc_thumbnail().getBytes());
+			
+			vo.setM_index("guest");
+			
+			service.courseInsert(vo, vo2);
+			service.thumbnailInsert(hmap);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 		
 		return "redirect:/";
 	}

@@ -27,7 +27,7 @@
 <!-- 지도 부분 -->
  	<div class="container">
  	
- 	<form name="upload" action="lc/001/uploadCourse" method="get">
+ 	<form name="upload" action="lc/001/uploadCourse" enctype="multipart/form-data" method="post">
 	
 		<h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
 	       	 코스 등록
@@ -134,7 +134,7 @@
 							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">썸네일</font></h5>    
 						</div>
 						<div class="custom-file">
-                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="lc_tumbnail">
+                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="lc_thumbnail">
              			</div>
 					</div>
 			</li>

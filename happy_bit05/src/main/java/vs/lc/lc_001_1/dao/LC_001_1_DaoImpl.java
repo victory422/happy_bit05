@@ -1,6 +1,7 @@
 package vs.lc.lc_001_1.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
@@ -24,9 +25,8 @@ public class LC_001_1_DaoImpl implements LC_001_1_Dao{
 	}
 
 	@Override
-	public List<LC_001_1_VO> getList() {
-		// TODO Auto-generated method stub
-		return null;
+	public void insertThumbnail(Map<String, Object> hmap) {
+		sqlSession.insert("lc.lc_001_01_thumbnail", hmap);
 	}
 
 }
