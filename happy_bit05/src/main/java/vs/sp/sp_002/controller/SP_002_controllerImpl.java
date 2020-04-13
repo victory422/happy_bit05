@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class SP_002_controllerImpl implements SP_002_Controller{
 	 	
 	@Override
-	@RequestMapping(value="/sp/*")
+	@RequestMapping(value="/sp/spcode")
 	public ModelAndView SP_002(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("/spcode mapping");
 		
@@ -19,9 +19,20 @@ public class SP_002_controllerImpl implements SP_002_Controller{
 		mav.setViewName("sp/sp_002_1");
 
 		return mav;
-		
-		
 	}
+	
+	
+	@Override
+	@RequestMapping(value="/sp/cart")
+	public ModelAndView SP_002_4(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("/jbgn2 mapping");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("sp/sp_002_4_1");
+
+		return mav;
+	}
+
 	
 		
 	
