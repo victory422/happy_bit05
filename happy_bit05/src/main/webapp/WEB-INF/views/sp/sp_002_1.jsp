@@ -65,14 +65,11 @@
 
 				<div class="my-4" role="group"
 					aria-label="Button group with nested dropdown">
-					<a href="#" class="btn btn-primary">Buy now </a> <a href="#"
-						class="btn btn-primary">Shopping basket </a>
+					<a href="#" class="btn btn-primary">Buy now </a> 
+					<a href="/sp/cart" class="btn btn-primary">Shopping cart </a>
 				</div>
 
 			</div>
-			<!-- /.row -->
-
-			<!-- Related Projects Row -->
 			<h3 class="my-4">Thumbnails</h3>
 
 			<div class="row">
