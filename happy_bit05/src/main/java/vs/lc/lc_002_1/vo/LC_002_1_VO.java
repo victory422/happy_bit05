@@ -18,7 +18,7 @@ public class LC_002_1_VO {
 	private String lc_area1;	//지역1 (시)
 	private String lc_area2;	//지역2 (구)
 	private String lc_area3;	//지역3 (동)
-	private String lc_thumbnail = "";	//썸네일
+	private byte[] lc_thumbnail;	//썸네일
 	private String lc_text;		//내용
 	private String lc_date;		//작성날짜
 	private int lc_good;		//좋아요

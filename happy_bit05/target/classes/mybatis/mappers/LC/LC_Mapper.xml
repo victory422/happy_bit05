@@ -25,26 +25,45 @@
 		<result property="lc_address" column="lc_address"/>
 		<result property="lc_xy_arr" column="lc_xy_arr"/>
 	</resultMap> -->
+	
+	<resultMap id="clobMap" type="java.util.HashMap">
+		<result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
+	</resultMap>
 
 	<insert id="lc_001_01">
 		<![CDATA[   
-		insert into course
+		insert into course(lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle, lc_area1,
+			lc_area2, lc_area3, lc_text, lc_date, lc_good, lc_see, lc_record)
 		values('lc_'||seq_course.nextval, #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
-			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, UTL_RAW.CAST_TO_RAW(#{lc_thumbnail}), #{lc_text},
-			sysdate, 0, 0, 0)
+			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, #{lc_text}, sysdate, 0, 0, 0)
 			]]>
 	</insert>
 	
+	
 	<insert id="lc_001_01_map">
-		<selectKey keyProperty="lc_index" order="BEFORE" resultType="String">
+		<selectKey keyProperty="last_index" order="BEFORE" resultType="String">
 		<![CDATA[ 
 			select max(lc_index) from course
 		]]>	
 		</selectKey>
 		
 		insert into map values(
-			#{lc_index}, #{lc_address}, #{lc_xy_arr})
+			#{last_index}, #{lc_address}, #{lc_xy_arr})
 	</insert>
+	
+	
+	<insert id="lc_001_01_thumbnail" parameterType="java.util.Map">
+		<selectKey keyProperty="last_index" order="BEFORE" resultType="String">
+			<![CDATA[ 
+				select max(lc_index) from course
+			]]>	
+		</selectKey>
+		
+		insert into course(lc_thumbnail)(
+				select lc_thumbnail from course where lc_index = #{last_index}
+			) values (${lc_thumbnail})
+	</insert>
+	
 	
 	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
 		<![CDATA[

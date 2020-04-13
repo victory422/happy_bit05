@@ -25,6 +25,6 @@ public class LC_002_1_Controller {
 			
 			model.addAttribute("lc_list", service.getList());
 			
-			return "LC/LC_002_1.jsp";
+			return "LC/LC_002_1";
 	}
 }
