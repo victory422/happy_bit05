@@ -1,5 +1,7 @@
 package vs.lc.lc_002_1.controller;
 
+import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.http.HttpHeaders;
@@ -28,19 +30,29 @@ public class LC_002_1_Controller {
 			log.info("컨트롤러 list....");
 			log.info(service);
 			
-			for(int i = 0; i < service.getList().size(); i++) {
+			List<LC_002_1_VO> listVO = service.getList();
+			
+			for(int i = 0; i < listVO.size(); i++) {
 				
-				LC_002_1_VO vo = service.getList().get(i);
+				LC_002_1_VO vo = listVO.get(i);
 				
-				byte[] imageContent = vo.getLc_thumbnail();
+				if(vo.getLc_thumbnail() != null) {
+					
+					byte[] imageContent = Base64.getEncoder().encode(vo.getLc_thumbnail());
+					
+					System.out.println("대체 뭐야........" + imageContent);
+					String thumbnail = new String(imageContent);
+					
+					System.out.println(thumbnail);
 				
-				final HttpHeaders headers = new HttpHeaders();
-				headers.setContentType(MediaType.IMAGE_PNG);
-				
-				model.addAttribute("lc_thumbnail" + i, new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK));
+					vo.setLc_request(thumbnail);
+				// model.addAttribute("thumbnail"+i, thumbnail);
+				}else {
+					vo.setLc_request("");
+				}
 			}
 			
-			model.addAttribute("lc_list", service.getList());
+			model.addAttribute("lc_list", listVO);
 			
 			return "LC/LC_002_1";
 	}
