@@ -26,7 +26,8 @@ public class LC_001_1_DaoImpl implements LC_001_1_Dao{
 
 	@Override
 	public void insertThumbnail(Map<String, Object> hmap) {
-		sqlSession.insert("lc.lc_001_01_thumbnail", hmap);
+		sqlSession.update("lc.lc_001_01_thumbnail", hmap);
+	
 	}
 
 }
