@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.ws.soap.AddressingFeature.Responses;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -26,9 +28,14 @@ import vs.lc.lc_001_1.vo.LC_001_1_VO;
 public class LC_001_1_Controller {
 	
 	private LC_001_1_Service service;
+	
+	@RequestMapping(value = "test")
+	public String testGo() {
+		return "LC/LC_Test";
+	}
 
-	@RequestMapping(value = "uploadCourse", method =RequestMethod.POST)
-	public String insertCourse(LC_001_1_VO vo, Model model) {
+	@RequestMapping(value = "uploadCourse", method = RequestMethod.POST)
+	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model) {
 		
 		
 		
@@ -43,7 +50,7 @@ public class LC_001_1_Controller {
 			
 			vo.setM_index("guest");
 			
-			//service.courseInsert(vo, vo2);
+			service.courseInsert(vo, vo2);
 			service.thumbnailInsert(hmap);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -51,6 +58,12 @@ public class LC_001_1_Controller {
 		}
 		
 		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "uploadCourse2", method = RequestMethod.POST)
+	public String insertCourse2(LC_001_1_VO vo, Model model) {
+		System.out.println("==================================================>>" + vo);
 		return "redirect:/";
 	}
 }
