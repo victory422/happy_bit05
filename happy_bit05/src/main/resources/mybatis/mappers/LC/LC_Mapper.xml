@@ -68,4 +68,12 @@
 		]]>	
 	</select>
 	
+	<select id="LC_003_01" resultType="vs.lc.lc_003_1.vo.LC_003_1_VO">
+		<![CDATA[
+			select * from course as A join map b 
+				on b.lc_index = a.lc_index
+				where b.lc_index = #{lc_index}
+		]]>	
+	</select>
+	
 </mapper>

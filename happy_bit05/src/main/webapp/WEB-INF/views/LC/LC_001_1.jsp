@@ -543,14 +543,6 @@
 		    
 		}
 		
-		function imgSize(){
-			var imgFile = document.getElementById('exampleFormControlFile1').files;
-			var file = imgFile[0];
-			
-			var img = document.createElement("img");
-			var reader = new FileReader();
-		}
-		
 		
 		
 	</script>
