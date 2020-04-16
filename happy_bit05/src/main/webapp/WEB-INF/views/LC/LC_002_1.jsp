@@ -13,9 +13,13 @@
 		<c:forEach var="lc" varStatus="status" items="${lc_list}">
 			<div class="col-md-3">
 				<div class="card mb-3 shadow-sm">
-				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc.lc_request}" height="100"/></svg>
+				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc.lc_request}" height="100"/>
+				</svg>
 				<div class="card-body">
+					<a href="../../lc/003/lc_get?lc_index=<c:out value='${lc.lc_index}'/>">
 					<p class="card-text">${lc.lc_title}</p>
+					</a>
 					<p class="card-text">${lc.m_index}</p>
 					<p class="card-text">조회수 : ${lc.lc_see}</p>
 					<p class="card-text">추천수 : ${lc.lc_good}</p>

@@ -17,6 +17,8 @@ public class LC_003_1_ServiceImpl implements LC_003_1_Service{
 	@Override
 	public LC_003_1_VO getLC(String lc_index) {
 		
+		System.out.println("서비스 단에서 번호는 : " + lc_index);
+		
 		return dao.getLC(lc_index);
 	}
 

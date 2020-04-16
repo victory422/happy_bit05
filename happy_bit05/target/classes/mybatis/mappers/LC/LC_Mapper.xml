@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="lc">
-
-	<!--  <resultMap type="LC_001_1_VO" id="lc_001Result">
+	
+	<resultMap type="LC_003_1_VO" id="lc_getResult">
 		<result property="lc_index" column="lc_index"/>
 		<result property="m_index" column="m_index"/>
 		<result property="lc_title" column="lc_title"/>
@@ -16,15 +16,14 @@
 		<result property="lc_area1" column="lc_area1"/>
 		<result property="lc_area2" column="lc_area2"/>
 		<result property="lc_area3" column="lc_area3"/>
-		<result property="lc_thumbnail" column="lc_thumbnail"/>
-		<result property="lc_text" column="lc_text"/>
+		<result property="lc_text" column="lc_text" jdbcType="CLOB" javaType="java.lang.String"/>
 		<result property="lc_date" column="lc_date"/>
 		<result property="lc_good" column="lc_good"/>
 		<result property="lc_see" column="lc_see"/>
 		<result property="lc_record" column="lc_record"/>
 		<result property="lc_address" column="lc_address"/>
-		<result property="lc_xy_arr" column="lc_xy_arr"/>
-	</resultMap> -->
+		<result property="lc_xy_arr" column="lc_xy_arr" jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap>
 	
 	<resultMap id="clobMap" type="java.util.HashMap">
 		<result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
@@ -68,9 +67,9 @@
 		]]>	
 	</select>
 	
-	<select id="LC_003_01" resultType="vs.lc.lc_003_1.vo.LC_003_1_VO">
+	<select id="LC_003_01" resultMap="lc_getResult">
 		<![CDATA[
-			select * from course as A join map b 
+			select * from course a join map b 
 				on b.lc_index = a.lc_index
 				where b.lc_index = #{lc_index}
 		]]>	

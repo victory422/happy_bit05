@@ -4,6 +4,6 @@
 
 <configuration>
 	<typeAliases>
-	
+			<typeAlias type="vs.lc.lc_003_1.vo.LC_003_1_VO" alias="LC_003_1_VO"/>
 		</typeAliases> 
 </configuration>
