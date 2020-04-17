@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="co">
+
+	<select id="co_detail" resultType="vs.ac.ac_001_1.vo.AcVO" parameterType="String">
+	<![CDATA[	
+		
+		select * from competition where co_b_index = #{co_b_index}
+
+	]]>
+	</select>
+
+</mapper>

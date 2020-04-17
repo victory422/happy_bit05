@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vs.cm.cm_001_1.mapper.CrMapper">
+<!-- 대회 후기 리스트 -->
+<select id="cr_list" resultType="vs.cr.cr_001_1.vo.CrVO">
+<![CDATA[
+select *
+from competition_review
+order by co_r_index desc
+]]>
+
+</select>
+
+<insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
+	INSERT INTO
+	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type})
+
+</insert>
+
+</mapper>
