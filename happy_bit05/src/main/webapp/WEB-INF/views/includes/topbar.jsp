@@ -80,7 +80,7 @@
 								class="dropdown-item" href="faq.html">메뉴3</a> <a
 								class="dropdown-item" href="404.html">메뉴4</a>
 						</div></li>
-					<li class="nav-item"><a class="nav-link" href="about.html">shop</a>
+					<li class="nav-item"><a class="nav-link" href="sp">shop</a>
 					</li>
 				</ul>
 			</div>
