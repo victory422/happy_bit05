@@ -11,7 +11,10 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="vs.home.controller">
+	<logger name="org.ma.ma_001">
+		<level value="info" />
+	</logger>
+	<logger name="vs">
 		<level value="info" />
 	</logger>
 	

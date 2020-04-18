@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="li">
+
+
+   	<sql id="Page_DTO">
+		<trim prefix="(" suffix=") and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<when test="type == '육상'.toString()">
+							li_type like '%'||'육상'||'%'
+						</when>
+						<when test="type == '자전거'.toString()">
+							li_type like '%'||'자전거'||'%'
+						</when>
+						<when test="type == '운동복'.toString()">
+							li_category like '%'||'운동복'||'%'
+						</when>
+						<when test="type == '안전장비'.toString()">
+							li_category like '%'||'안전장비'||'%'
+						</when>
+						<when test="type == '신발'.toString()">
+							li_category like '%'||'신발'||'%'
+						</when>
+						<when test="type == '기타'.toString()">
+							li_category like '%'||'기타'||'%'
+						</when>
+						<when test="search_filter == 'all'.toString()">
+								li_title like '%'||#{input_text}||'%') or (li_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '내용'.toString()">
+							li_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '작성자'.toString()">
+							m_index like '%'||#{input_text}||'%'
+						</when>
+						<otherwise>
+							li_title like '%'||#{input_text}||'%'
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	
+
+	<insert id="insert" parameterType="LI_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+		<![CDATA[ 
+		insert into item (li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title) 
+		values ('li_'||seq_test.nextval, #{li_b_type}, #{m_index}, #{li_category}, #{li_text}, #{li_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{li_title})
+		]]>
+	</insert>
+
+
+<!-- 리스트 페이징해서 출력하는 쿼리 -->
+	<select id="get_list" resultType="LI_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+<![CDATA[ 
+select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
+from
+        (        
+        select rownum rn, li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
+        from item
+        where 
+        ]]>
+        <include refid="Page_DTO"/> 
+        <![CDATA[ 
+        rownum <= (#{page} * #{amount})
+        and li_index > '0'
+        and li_b_type = TRIM(#{board})
+        order by li_index desc
+        )
+where rn > ((#{page}-1) * #{amount})
+]]>
+	</select>
+	<!-- <select id="get_list" parameterType="vs.li.li_001_01.vo.LI_VO" resultType="vs.li.li_001_01.vo.LI_VO"> 
+		<![CDATA[ select li_index, li_b_type, li_category, li_date, li_text, li_type 
+		from item where li_b_type = TRIM(#{li_b_type}) ]]> </select> -->
+	
+	<!-- 게시물 총합 출력 쿼리 -->
+	<select id="get_total" resultType="int">
+		select count(li_index) from
+		item where	
+		<include refid="Page_DTO"/>
+		li_b_type = TRIM(#{board})
+	</select>
+
+
+<!-- 사용안함 필터검색 쿼리 -->
+	<select id="search_list" resultType="LI_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+<![CDATA[ 
+select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
+from
+        (        
+        select rownum rn, li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
+        from item
+        where rownum <= (#{page} * #{amount})
+        and li_index > 0
+        and li_b_type = TRIM(#{board})
+        and li_type LIKE %TRIM(#{li_type})%
+        and li_category LIKE %TRIM(#{li_category})%
+        and (li_title LIKE %{li_search_text_title})
+        or (m_index) LIKE %{li_search_text_id})
+        order by li_index desc
+        )
+where rn > ((#{page}-1) * #{amount})
+]]>
+	</select>
+	
+	<!-- 상세페이지 데이터 뽑는 쿼리문 -->
+	<select id="detail_page" resultType="LI_VO" parameterType="String"> 
+	<![CDATA[ 
+	select li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title
+	from item 
+	where li_index = TRIM(#{index})
+	]]>
+	</select>
+
+</mapper>
