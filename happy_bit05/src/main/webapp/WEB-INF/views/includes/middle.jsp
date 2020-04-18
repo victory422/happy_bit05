@@ -48,8 +48,4 @@
 	</header>
 
 	<!-- Page Content -->
-	<div class="container">
-
-		<h1 class="my-4">미들 부분</h1>
-	</div>
 	<hr>

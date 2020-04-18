@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="lt">
+
+
+	<sql id="Page_DTO">
+		<trim prefix="(" suffix=") and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<when test="type == '육상'.toString()">
+							lt_type like '%'||'육상'||'%'
+						</when>
+						<when test="type == '자전거'.toString()">
+							lt_type like '%'||'자전거'||'%'
+						</when>
+						<when test="type == '초심자'.toString()">
+							lt_type like '%'||'초심자'||'%'
+						</when>
+						<when test="type == '숙련자'.toString()">
+							lt_type like '%'||'숙련자'||'%'
+						</when>
+						<when test="search_filter == 'all'.toString()">
+							lt_title like '%'||#{input_text}||'%') or (lt_text like
+							'%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '내용'.toString()">
+							lt_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '작성자'.toString()">
+							m_index like '%'||#{input_text}||'%'
+						</when>
+						<otherwise>
+							lt_title like '%'||#{input_text}||'%'
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+
+	<insert id="insert" parameterType="LT_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+		<![CDATA[ 
+		insert into trainning (lt_index, lt_b_type, m_index, lt_text, lt_type, lt_date, lt_title, lt_tier) 
+		values ('lt_'||seq_test2.nextval, #{lt_b_type}, #{m_index}, #{lt_text}, #{lt_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{lt_title}, #{lt_tier})
+		]]>
+	</insert>
+
+
+	<!-- 리스트 페이징해서 출력하는 쿼리 -->
+	<select id="get_list" resultType="LT_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+<![CDATA[ 
+select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+from
+        (        
+        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+        from trainning
+        where 
+        ]]>
+		<include refid="Page_DTO" /> 
+        <![CDATA[ 
+        rownum <= (#{page} * #{amount})
+        and lt_index > '0'
+        and lt_b_type = TRIM(#{board})
+        order by lt_index desc
+        )
+where rn > ((#{page}-1) * #{amount})
+]]>
+	</select>
+	<!-- <select id="get_list" parameterType="vs.li.lt_001_01.vo.lt_VO" resultType="vs.li.lt_001_01.vo.lt_VO"> 
+		<![CDATA[ select lt_index, lt_b_type, lt_category, lt_date, lt_text, lt_type 
+		from trainning where lt_b_type = TRIM(#{lt_b_type}) ]]> </select> -->
+
+	<!-- 게시물 총합 출력 쿼리 -->
+	<select id="get_total" resultType="int">
+		select count(lt_index) from
+		trainning where
+		<include refid="Page_DTO" />
+		lt_b_type = TRIM(#{board})
+	</select>
+
+
+	<!-- 사용안함 필터검색 쿼리 -->
+	<select id="search_list" resultType="LT_VO">
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+<![CDATA[ 
+select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+from
+        (        
+        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+        from trainning
+        where rownum <= (#{page} * #{amount})
+        and lt_index > 0
+        and lt_b_type = TRIM(#{board})
+        and lt_type LIKE %TRIM(#{lt_type})%
+        and (lt_title LIKE %{lt_search_text_title})
+        or (m_index) LIKE %{lt_search_text_id})
+        order by lt_index desc
+        )
+where rn > ((#{page}-1) * #{amount})
+]]>
+	</select>
+
+	<!-- 상세페이지 데이터 뽑는 쿼리문 -->
+	<select id="detail_page" resultType="LT_VO"
+		parameterType="String"> 
+	<![CDATA[
+	select lt_index, lt_b_type, m_index, lt_text, lt_type, lt_date, lt_title, lt_tier
+	from trainning 
+	where lt_index = TRIM(#{index})
+	]]>
+	</select>
+
+</mapper>

@@ -42,9 +42,9 @@ CKEDITOR.editorConfig = function( config ) {
 	// Simplify the dialog windows.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 	
-    config.filebrowserBrowseUrl = "/ma_001/resources/ckfinder/ckfinder.html";
-    config.filebrowserFlashBrowseUrl = "/ma_001/resources/ckfinder/ckfinder.html?type=Flash";
-    config.filebrowserUploadUrl = "/ma_001/resources/ckfinder/core/connector/java/connctor.java?command=QuickUpload&type=Files";
-    config.filebrowserImageUploadUrl = "/ma_001/resources/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images";
-    config.filebrowserFlashUploadUrl = "/ma_001/resources/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash";	
+    config.filebrowserBrowseUrl = "/resources/ckfinder/ckfinder.html";
+    config.filebrowserFlashBrowseUrl = "/resources/ckfinder/ckfinder.html?type=Flash";
+    config.filebrowserUploadUrl = "/resources/ckfinder/core/connector/java/connctor.java?command=QuickUpload&type=Files";
+    config.filebrowserImageUploadUrl = "/resources/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Images";
+    config.filebrowserFlashUploadUrl = "/resources/ckfinder/core/connector/java/connector.java?command=QuickUpload&type=Flash";	
 };
