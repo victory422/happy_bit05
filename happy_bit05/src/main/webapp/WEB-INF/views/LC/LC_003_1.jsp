@@ -24,14 +24,14 @@
 
 	<div class="container col-md-10 bg-light">
 	
-		<div class="row justify-content-center col-10">
+		<div class="row justify-content-center .d-block col-10">
 			HOME > 코스 > ${lc_get.lc_type }
 			<hr/>
-			<div class="row" style="margin-left:100px;">
+			<div class="w-100"></div>
 			
 				<div id="map" class="col-6" style="width:600px;height:500px;"></div>
 			
-			<div class="col-4" id="mapText">
+		<div class="col-4" id="mapText">
 			<div class="p-4">
 			<h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 거리 : <span id="distance" name="distance">${lc_get.lc_distance } km</span>
@@ -60,19 +60,21 @@
 	      </div>
 	      <br>
 	    </div>
+	    
+	    <div class="w-100"></div>
+	    
+		    <div>
+			${lc_get.lc_text }
+			</div>
 	    </div>
-		<div class="col-2">
+	    
+		<div class="col-2 .d-none .d-xl-block">
 			
 		</div>
 		
 		
 		
 	</div>	
-	
-	<div class="row justify-content-center col-12">
-		${lc_get.lc_text }
-	</div>
-	</div>
 <!-- =====================================================================================================================	-->	
 	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=12678188621fb459c68a7473a7071d75&libraries=services"></script>
