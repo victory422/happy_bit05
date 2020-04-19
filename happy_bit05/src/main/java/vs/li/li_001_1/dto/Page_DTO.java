@@ -12,6 +12,7 @@ public class Page_DTO {
 	
 	//-----------------------------
 	private String board;
+	private String sort;
 	
 	//검색 필터 관련 변수----------------------------
 	private String input_text; //입력 텍스트
@@ -25,7 +26,7 @@ public class Page_DTO {
 	}
 	public Page_DTO() {
 		page = 1;
-		amount = 10;
+		amount = 15;
 		
 	}
 

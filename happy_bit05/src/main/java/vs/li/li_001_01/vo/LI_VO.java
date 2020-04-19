@@ -9,7 +9,7 @@ import lombok.Data;
 public class LI_VO {
 	private String li_text;
 	private String li_category;
-	private String m_index = "test_index";
+	private String m_index;
 	private String li_index;
 	private String li_b_type;
 	private String li_type;

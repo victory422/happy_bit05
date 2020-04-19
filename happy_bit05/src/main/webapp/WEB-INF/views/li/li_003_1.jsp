@@ -70,17 +70,21 @@
 					<td>장비 종류</td>
 					<td>작성자</td>
 					<td>작성날자</td>
+					<td>조회수</td>
+					<td>좋아요</td>
 				</tr>
 				<tbody id="table_list">
 					<c:forEach var="board" items="${list }">
 					
 						<tr class="success">
-							<td><a href="/li/li_006_1?index=${board.li_index }">${board.li_index }</a></td>
+							<td>${board.li_index }</td>
 							<td>${board.li_type }</td>
-							<td>${board.li_title }</td>
+							<td onclick="location.href='/li/li_006_1?index=${board.li_index }'">${board.li_title }</td>
 							<td>${board.li_category }</td>
 							<td>${board.m_index }</td>
 							<td>${board.li_date }</td>
+							<td>${board.li_see }</td>
+							<td>${board.li_good }</td>
 						</tr>
 					
 					</c:forEach>
