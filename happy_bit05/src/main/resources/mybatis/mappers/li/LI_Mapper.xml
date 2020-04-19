@@ -62,21 +62,24 @@
 	<select id="get_list" resultType="LI_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
-from
-        (        
-        select rownum rn, li_index, li_b_type, li_category, li_date, li_text, li_type, li_title
-        from item
-        where 
-        ]]>
-        <include refid="Page_DTO"/> 
-        <![CDATA[ 
-        rownum <= (#{page} * #{amount})
-        and li_index > '0'
-        and li_b_type = TRIM(#{board})
-        order by li_index desc
-        )
-where rn > ((#{page}-1) * #{amount})
+	 select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title, li_see, li_good
+	 from(
+		select rownum rn, a.*
+		from
+		        (
+			        select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title, li_see, li_good
+			        from item
+			        where 
+			        ]]>
+			        	<include refid="Page_DTO"/>
+			        <![CDATA[ 
+			        li_index > '0'
+			        and li_b_type = TRIM(#{board})
+			        order by to_number(substr(li_index, 4)) desc
+		        )a
+		where rownum <= (#{page} * #{amount})
+		)
+	where rn > ((#{page}-1) * #{amount})
 ]]>
 	</select>
 	<!-- <select id="get_list" parameterType="vs.li.li_001_01.vo.LI_VO" resultType="vs.li.li_001_01.vo.LI_VO"> 
@@ -117,10 +120,44 @@ where rn > ((#{page}-1) * #{amount})
 	<!-- 상세페이지 데이터 뽑는 쿼리문 -->
 	<select id="detail_page" resultType="LI_VO" parameterType="String"> 
 	<![CDATA[ 
-	select li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title
+	select li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title, li_see, li_good
 	from item 
 	where li_index = TRIM(#{index})
 	]]>
 	</select>
+	
+	
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE item  SET li_see = NVL(li_see,0)+1 where li_index = TRIM(#{index})
+    	]]>
+    </update>
+    
+    
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select li_good from item where li_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	 <!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE item
+		    SET li_good = li_good + 1 
+		    WHERE li_index=#{board_index}
+		]]>
+	</update>
+	
+	<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE item
+		    SET li_good =  li_good - 1
+		    WHERE li_index=#{board_index}
+    	]]>
+  	</update>
+
 
 </mapper>

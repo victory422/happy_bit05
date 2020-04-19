@@ -58,7 +58,7 @@
 				</div>
 	
 				<hr>
-	
+			
 				<div class="row justify-content-md-center">
 					<div class="col_c" style="margin-bottom: 30px">
 						<div class="input-group">
@@ -69,6 +69,18 @@
 						</div>
 					</div>
 				</div>
+	
+	<!--  썸네일 -->
+			<!-- 	      <div class="row justify-content-md-center">
+		            <div class="input-group mb-3">
+		              <div class="input-group-prepend">
+		                <span class="input-group-text" id="inputGroupFileAddon01">썸네일</span>
+		              </div>
+		              <div class="custom-file">
+		                  &nbsp;<input name="li_thumbnail" type="file" class="form-control-file" id="exampleFormControlFile1">
+		              </div>
+		            </div>
+		      </div> -->
 	
 				<div class="row justify-content-md-center">
 					<button type="submit" class="btn btn-primary" 

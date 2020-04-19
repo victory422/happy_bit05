@@ -18,10 +18,10 @@
 							lt_type like '%'||'자전거'||'%'
 						</when>
 						<when test="type == '초심자'.toString()">
-							lt_type like '%'||'초심자'||'%'
+							lt_tier like '%'||'초심자'||'%'
 						</when>
 						<when test="type == '숙련자'.toString()">
-							lt_type like '%'||'숙련자'||'%'
+							lt_tier like '%'||'숙련자'||'%'
 						</when>
 						<when test="search_filter == 'all'.toString()">
 							lt_title like '%'||#{input_text}||'%') or (lt_text like
@@ -57,10 +57,10 @@
 	<select id="get_list" resultType="LT_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good
 from
         (        
-        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good, substr(lt_index, 4) as sort
         from trainning
         where 
         ]]>
@@ -69,7 +69,7 @@ from
         rownum <= (#{page} * #{amount})
         and lt_index > '0'
         and lt_b_type = TRIM(#{board})
-        order by lt_index desc
+        order by to_number(sort) desc
         )
 where rn > ((#{page}-1) * #{amount})
 ]]>
@@ -82,7 +82,7 @@ where rn > ((#{page}-1) * #{amount})
 	<select id="get_total" resultType="int">
 		select count(lt_index) from
 		trainning where
-		<include refid="Page_DTO" />
+			<include refid="Page_DTO" />
 		lt_b_type = TRIM(#{board})
 	</select>
 
@@ -90,32 +90,39 @@ where rn > ((#{page}-1) * #{amount})
 	<!-- 사용안함 필터검색 쿼리 -->
 	<select id="search_list" resultType="LT_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
-<![CDATA[ 
-select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
-from
-        (        
-        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
-        from trainning
-        where rownum <= (#{page} * #{amount})
-        and lt_index > 0
-        and lt_b_type = TRIM(#{board})
-        and lt_type LIKE %TRIM(#{lt_type})%
-        and (lt_title LIKE %{lt_search_text_title})
-        or (m_index) LIKE %{lt_search_text_id})
-        order by lt_index desc
-        )
-where rn > ((#{page}-1) * #{amount})
-]]>
+		<![CDATA[ 
+			select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+			from
+			        (        
+			        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier
+			        from trainning
+			        where rownum <= (#{page} * #{amount})
+			        and lt_index > 0
+			        and lt_b_type = TRIM(#{board})
+			        and lt_type LIKE %TRIM(#{lt_type})%
+			        and (lt_title LIKE %{lt_search_text_title})
+			        or (m_index) LIKE %{lt_search_text_id})
+			        order by lt_index desc
+			        )
+			where rn > ((#{page}-1) * #{amount})
+		]]>
 	</select>
 
 	<!-- 상세페이지 데이터 뽑는 쿼리문 -->
 	<select id="detail_page" resultType="LT_VO"
 		parameterType="String"> 
-	<![CDATA[
-	select lt_index, lt_b_type, m_index, lt_text, lt_type, lt_date, lt_title, lt_tier
-	from trainning 
-	where lt_index = TRIM(#{index})
-	]]>
+		<![CDATA[
+			select lt_index, lt_b_type, m_index, lt_text, lt_type, lt_date, lt_title, lt_tier
+			from trainning 
+			where lt_index = TRIM(#{index})
+		]]>
 	</select>
 
+
+	<!--조회수 증가 쿼리-->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE trainning  SET lt_see = NVL(lt_see,0) +1 where lt_index = TRIM(${index);
+    	]]>
+    </update>
 </mapper>

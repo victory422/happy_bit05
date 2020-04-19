@@ -76,7 +76,7 @@
 <input type="hidden" name="lt_b_type" value="질문게시판">
 	<div class="container">
 	<div style="margin-top: 30px;">
-		<h1>트레이닝 게시판<small> (질문 게시판)</small></h1>
+		<h1>트레이닝 게시판<small> 질문 게시판</small></h1>
 		</div>
 		
 		<!-- 체크박스 부분 -->
@@ -89,19 +89,6 @@
 				<option value=null selected>종목선택</option>
 				<option value="육상">육상</option>
 				<option value="자전거">자전거</option>
-			</select> 
-			<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
-				style="margin-left: 10px; width: 15%">
-				<option value=null selected>장비선택</option>
-				<option value="스포츠웨어">스포츠웨어</option>
-				<option value="안전장비">안전장비</option>
-				<option value="신발">신발</option>
-				<option value="기타">기타</option>
-								<%-- <c:forEach items=”${사용할변수}” var=”넘어온데이터”>
-								<option value=”${사용할변수.값}”
-									${아이템.변수}
-								</option> 
-							</c:forEach>--%>
 			</select>
 			<select
 				id="type" name="type" class="custom-select custom-select-sm-1"
@@ -136,21 +123,23 @@
 					<td>숙련도</td>
 					<td>종목</td>
 					<td>게시글 제목</td>
-					<td>장비 종류</td>
 					<td>작성자</td>
 					<td>작성날자</td>
+					<td>조회수</td>
+					<td>좋아요</td>
 				</tr>
 				<tbody id="table_list">
 					<c:forEach var="board" items="${list }">
 					
 						<tr class="success">
-							<td><a href="/lt/lt_004_1?index=${board.lt_index }">${board.lt_index }</a></td>
+							<td>${board.lt_index }</td>
 							<td>${board.lt_tier }</td>
 							<td>${board.lt_type }</td>
-							<td>${board.lt_title }</td>
-							<td>${board.lt_category }</td>
+							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'">${board.lt_title }</td>
 							<td>${board.m_index }</td>
 							<td>${board.lt_date }</td>
+							<td>${board.lt_see }</td>
+							<td>${board.lt_good }</td>
 						</tr>
 					
 					</c:forEach>

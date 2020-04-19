@@ -1,15 +1,26 @@
 package vs.li.li_001_01.controller;
 
+import java.awt.Window.Type;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonObject;
 
 import lombok.extern.log4j.Log4j;
+import vs.board.good.vo.GOOD_VO;
 import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_01.vo.PageUtil;
 import vs.li.li_001_1.dto.Page_DTO;
@@ -22,24 +33,25 @@ public class LI_controller {
 
 	@Autowired
 	private LI_Service service;
+	
+
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
-	public void li_review(Model model, /* LI_VO vo, */Page_DTO dto) {
+	public void li_review(Model model, Page_DTO dto) {
 		log.info("----------------------후기 게시판view-------------------");
 		log.info("게시판 :"+dto.getBoard());
 		dto.setBoard("후기게시판");
  
-		/*
-		 * vo.setLi_b_type("장비게시판");
-		 */		
-		log.info("어뤠이"+dto.getTypeArr());
-		log.info("종목"+dto.getSearch_filter());
-		log.info("텍스트"+dto.getInput_text());
+		log.info("어레이 : "+dto.getTypeArr());
+		log.info("종목 : "+dto.getSearch_filter());
+		log.info("텍스트 : "+dto.getInput_text());
+		log.info("정렬 : "+dto.getSort());
 		
 		model.addAttribute("list", service.get_list(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		log.info("page = "+ dto.getPage());
 		log.info("게시물수" + dto.getAmount());
+		
 	}
 	
 	
@@ -211,14 +223,18 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,@RequestParam String index) {
+	public void board_page(LI_VO vo,Model model,HttpSession session) {
 		
 		log.info("---------------------------상세 페이지-----------------------");
-		
-		
-		model.addAttribute("page",service.detail_page(index));
+		log.info("increse_service 실행");
+		service.increse_see(vo, session);
+		log.info("increse_service 실행완료------------------------------");
+		log.info("상세페이지 불러오기 실행 ");
+		model.addAttribute("page",service.detail_page(vo.getLi_index()));
+		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
-		log.info(index);
+		log.info(vo.getLi_index());
+		
 		
 	}
 	
@@ -229,6 +245,107 @@ public class LI_controller {
 	
 	
 	
+	@ResponseBody
+	@RequestMapping("/like")//게시판 index를 ajax 통신으로 받아옴
+	public String like(LI_VO vo, GOOD_VO good_vo, HttpSession session) {
+		log.info("컨트롤러 like~~~~");
+		
+		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
+		String m_index = "admin";
+		int good_check = 0;
+		int good_cnt = 0;	
+		
+		JsonObject obj = new JsonObject();
+		log.info("----------------------좋아요 -----------------------");
+		
+		//구글링에선 어레이리스트인데 스트링으로 해도될거같음
+		//ArrayList<String> msgs = new ArrayList<String>();
+		String msgs;
+		HashMap<String,Object> hashMap = new HashMap<String,Object>();
+		
+		
+		
+		log.info("li_index : "+vo.getLi_index());
+		//hashmap에 게시판,멤버 index 저장
+		hashMap.put("board_index", vo.getLi_index());
+		hashMap.put("m_index", m_index);
+		
+		good_check = service.good_check(hashMap);
+		good_cnt = service.good_cnt(hashMap);
+		
+		log.info(service.good_check(hashMap));
+		
+		//service.increse_good(hashMap);
+
+		
+		if(good_check == 0) {
+		      msgs="좋아요!";
+//		      liketoProc.like_check(hashMap);
+		      service.increse_good(hashMap);
+		      good_check++;
+		      good_cnt++;
+//		      boardProc.like_cnt_up(boardno);   //좋아요 갯수 증가
+		    } else {
+		      msgs="좋아요 취소";
+//		      liketoProc.like_check_cancel(hashMap);
+		      service.decrese_good(hashMap);
+		      good_check--;
+		      good_cnt--;
+//		      boardProc.like_cnt_down(boardno);   //좋아요 갯수 감소
+		    }
+		
+//		    obj.put("boardno", liketoVO.getBoardno());
+//		    obj.put("like_check", like_check);
+//		    obj.put("like_cnt", like_cnt);
+//		    obj.put("msg", msgs);
+
+		log.info("체크 : "+good_check);
+		log.info("좋아요갯수 : "+good_cnt);
+		log.info("메세지 : "+msgs);
+		
+		obj.addProperty("good_cnt", good_cnt);
+		obj.addProperty("m_index", "admin");
+		obj.addProperty("board", vo.getLi_index());
+		obj.addProperty("good_check", good_check);
+		obj.addProperty("msg",msgs);
+		
+		/*
+		 * int like_cnt = vo.getLi_good(); int like_check = 0; like_check =
+		 * service.increse_good(hashMap);
+		 * 
+		 * 
+		 * log.info(vo.getLi_index()); obj.addProperty("hi", "hi");
+		 */
+	
+		return obj.toString();
+	}
+	
+	
+	
+	@ResponseBody
+	@RequestMapping("/like_check")//게시판 like check
+	public String like_check(LI_VO vo) {
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		String m_index = "admin";
+		int good_check = 0;
+		
+		JsonObject obj = new JsonObject();
+		HashMap<String,Object> hashMap = new HashMap<String,Object>();
+		
+		hashMap.put("board_index", vo.getLi_index());
+		hashMap.put("m_index", m_index);
+		
+		good_check = service.good_check(hashMap);
+		
+		log.info("좋아요 체크 :"+ good_check);
+		
+		obj.addProperty("m_index", m_index);
+		obj.addProperty("board", vo.getLi_index());
+		obj.addProperty("good_check", good_check);
+		
+		return obj.toString();
+	}
 	
 	
 	
@@ -239,7 +356,7 @@ public class LI_controller {
 
 		log.info("-----------------------맵핑  error-------------------");
 		
-	}
+	}  
 	 
 	
 	 
