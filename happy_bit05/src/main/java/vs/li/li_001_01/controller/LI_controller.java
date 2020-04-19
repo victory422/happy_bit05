@@ -303,6 +303,7 @@ public class LI_controller {
 		log.info("좋아요갯수 : "+good_cnt);
 		log.info("메세지 : "+msgs);
 		
+		obj.addProperty("good_cnt", good_cnt);
 		obj.addProperty("m_index", "admin");
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);

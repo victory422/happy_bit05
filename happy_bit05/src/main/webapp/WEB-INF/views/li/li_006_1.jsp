@@ -35,6 +35,7 @@
 					        like_img = "/resources/img/like.jpg";
 					      }
 					      $('#like_img').attr('src', like_img);
+					     
 				},
 				 error: function(request, status, error){
 					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -60,7 +61,7 @@
 					<h1>제목 : ${board.li_title }</h1>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
-					<h6><span id="good_cnt">추천수: ${board.li_good } </span>조회수:${board.li_see } </h6>
+					<h6>추천수:<span id="good_cnt"> ${board.li_good }</span>조회수:${board.li_see } </h6>
 					작성일자:${board.li_date }
 				</div>
 			</div>
@@ -143,7 +144,7 @@
 			      }      
 			      $('')
 			      $('#like_img').attr('src', like_img);
-			      $('#good_cnt').attr('value',data.good_cnt);
+			      $('#good_cnt').text(data.good_cnt);
 			      /* $('#like_check').html(data.like_check); */
 			    },
 			    error: function(request, status, error){
