@@ -37,7 +37,9 @@ public class LI_controller {
 
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
-	public void li_review(Model model, Page_DTO dto) {
+	public void li_review(Model model, Page_DTO dto, HttpSession session) {
+		
+		
 		log.info("----------------------후기 게시판view-------------------");
 		log.info("게시판 :"+dto.getBoard());
 		dto.setBoard("후기게시판");
@@ -51,6 +53,8 @@ public class LI_controller {
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		log.info("page = "+ dto.getPage());
 		log.info("게시물수" + dto.getAmount());
+		
+		
 		
 	}
 	
@@ -225,6 +229,8 @@ public class LI_controller {
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
 	public void board_page(LI_VO vo,Model model,HttpSession session) {
 		
+		
+		
 		log.info("---------------------------상세 페이지-----------------------");
 		log.info("increse_service 실행");
 		service.increse_see(vo, session);
@@ -234,7 +240,22 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
+		log.info("세션 m_index : "+session.getAttribute("m_index"));
 		
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		
+		hashmap.put("board_index", vo.getLi_index());
+		hashmap.put("m_index",  session.getAttribute("m_index"));
+		
+		int row_check = service.good_count(hashmap);
+		
+		if(row_check == 0) {
+			log.info("로우 생성중");
+			service.good_insert(hashmap);
+			log.info("로우 생성완료");
+		}else {
+			log.info("로우가 이미 생성되어있음");
+		}
 		
 	}
 	
@@ -246,12 +267,13 @@ public class LI_controller {
 	
 	
 	@ResponseBody
-	@RequestMapping("/like")//게시판 index를 ajax 통신으로 받아옴
+	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
 	public String like(LI_VO vo, GOOD_VO good_vo, HttpSession session) {
+		session.setAttribute("m_index", "admin3");
+		
 		log.info("컨트롤러 like~~~~");
 		
 		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
-		String m_index = "admin";
 		int good_check = 0;
 		int good_cnt = 0;	
 		
@@ -261,19 +283,19 @@ public class LI_controller {
 		//구글링에선 어레이리스트인데 스트링으로 해도될거같음
 		//ArrayList<String> msgs = new ArrayList<String>();
 		String msgs;
-		HashMap<String,Object> hashMap = new HashMap<String,Object>();
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		
 		
 		log.info("li_index : "+vo.getLi_index());
 		//hashmap에 게시판,멤버 index 저장
-		hashMap.put("board_index", vo.getLi_index());
-		hashMap.put("m_index", m_index);
+		hashmap.put("board_index", vo.getLi_index());
+		hashmap.put("m_index", session.getAttribute("m_index"));
 		
-		good_check = service.good_check(hashMap);
-		good_cnt = service.good_cnt(hashMap);
+		good_check = service.good_check(hashmap);
+		good_cnt = service.good_cnt(hashmap);
 		
-		log.info(service.good_check(hashMap));
+		log.info(service.good_check(hashmap));
 		
 		//service.increse_good(hashMap);
 
@@ -281,14 +303,14 @@ public class LI_controller {
 		if(good_check == 0) {
 		      msgs="좋아요!";
 //		      liketoProc.like_check(hashMap);
-		      service.increse_good(hashMap);
+		      service.increse_good(hashmap);
 		      good_check++;
 		      good_cnt++;
 //		      boardProc.like_cnt_up(boardno);   //좋아요 갯수 증가
 		    } else {
 		      msgs="좋아요 취소";
-//		      liketoProc.like_check_cancel(hashMap);
-		      service.decrese_good(hashMap);
+//		      liketoProc.like_check_cancel(hashmap);
+		      service.decrese_good(hashmap);
 		      good_check--;
 		      good_cnt--;
 //		      boardProc.like_cnt_down(boardno);   //좋아요 갯수 감소
@@ -321,10 +343,9 @@ public class LI_controller {
 	}
 	
 	
-	
 	@ResponseBody
-	@RequestMapping("/like_check")//게시판 like check
-	public String like_check(LI_VO vo) {
+	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
+	public String like_check(LI_VO vo ,HttpSession session) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		String m_index = "admin";
@@ -334,7 +355,7 @@ public class LI_controller {
 		HashMap<String,Object> hashMap = new HashMap<String,Object>();
 		
 		hashMap.put("board_index", vo.getLi_index());
-		hashMap.put("m_index", m_index);
+		hashMap.put("m_index",session.getAttribute("m_index"));
 		
 		good_check = service.good_check(hashMap);
 		

@@ -52,8 +52,8 @@
 	<insert id="insert" parameterType="LI_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 		<![CDATA[ 
-		insert into item (li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title) 
-		values ('li_'||seq_test.nextval, #{li_b_type}, #{m_index}, #{li_category}, #{li_text}, #{li_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{li_title})
+		insert into item (li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title,li_see,li_good) 
+		values ('li_'||seq_test.nextval, #{li_b_type}, #{m_index}, #{li_category}, #{li_text}, #{li_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{li_title}, 0, 0)
 		]]>
 	</insert>
 

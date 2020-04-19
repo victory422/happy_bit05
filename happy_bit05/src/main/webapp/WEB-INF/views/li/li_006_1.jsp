@@ -30,9 +30,9 @@
 				data: 'li_index=' +li_index,
 				success: function(data) {
 					 if(data.good_check == 0){
-					        like_img = "/resources/img/dislike.jpg";
+					        like_img = "/resources/img/dislike.png";
 					      } else {
-					        like_img = "/resources/img/like.jpg";
+					        like_img = "/resources/img/like.png";
 					      }
 					      $('#like_img').attr('src', like_img);
 					     
@@ -61,7 +61,7 @@
 					<h1>제목 : ${board.li_title }</h1>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
-					<h6>추천수:<span id="good_cnt"> ${board.li_good }</span>조회수:${board.li_see } </h6>
+					<h6>추천수:<span class="good_cnt"> ${board.li_good }</span>조회수:${board.li_see } </h6>
 					작성일자:${board.li_date }
 				</div>
 			</div>
@@ -87,11 +87,11 @@
 				<c:choose>
 					<c:when test="${board.m_index ne null}">
 						<a href='javascript: like_func();'><img
-							src="/resources/img/dislike.jpg" id='like_img'></a>
+							src="/resources/img/dislike.png" id='like_img'></a>좋아요<span class="good_cnt"> ${board.li_good }</span>
 					</c:when>
 					<c:otherwise>
 						<a href='javascript: login_need();'><img
-							src="/resources/img/like.jpg"></a>
+							src="/resources/img/like.png"></a>좋아요<span class="good_cnt"> ${board.li_good }</span>
 					</c:otherwise>
 				</c:choose>
 
@@ -138,13 +138,13 @@
 			      alert(msg);
 			      
 			      if(data.good_check == 0){
-			        like_img = "/resources/img/dislike.jpg";
+			        like_img = "/resources/img/dislike.png";
 			      } else {
-			        like_img = "/resources/img/like.jpg";
+			        like_img = "/resources/img/like.png";
 			      }      
 			      $('')
 			      $('#like_img').attr('src', like_img);
-			      $('#good_cnt').text(data.good_cnt);
+			      $('.good_cnt').text(data.good_cnt);
 			      /* $('#like_check').html(data.like_check); */
 			    },
 			    error: function(request, status, error){
