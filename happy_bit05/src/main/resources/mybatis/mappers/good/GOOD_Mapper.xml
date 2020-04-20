@@ -40,5 +40,21 @@
   	 ]]>
   	</select>
 	
+	<!-- 좋아요 체크 row 만드는 쿼리 -->
+	<select id="good_count" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			 SELECT count(board_index)
+			 FROM good_check
+			 WHERE m_index = #{m_index} AND board_index = #{board_index}
+		]]>
+	</select>
+	
+	<!-- 로우 인서트 -->
+	<insert id="check_row_insert" parameterType="HashMap">
+		<![CDATA[
+			INSERT INTO good_check (m_index, board_index,good_check) 
+			values (#{m_index}, #{board_index}, 0)
+		]]>
+	</insert>
 
 </mapper>
