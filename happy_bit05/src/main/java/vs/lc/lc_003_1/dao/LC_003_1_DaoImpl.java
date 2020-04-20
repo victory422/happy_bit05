@@ -18,6 +18,7 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 	@Override
 	public LC_003_1_VO getLC(String lc_index) {
 		// TODO Auto-generated method stub
+		System.out.println("DAO에서 번호는??? : " + lc_index);
 		return session.selectOne("LC_003_01", lc_index);
 	}
 

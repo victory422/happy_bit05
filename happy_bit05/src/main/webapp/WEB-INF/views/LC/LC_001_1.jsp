@@ -99,8 +99,8 @@
 							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">게시판</font></h5>    
 						</div>
 						<select class="custom-select d-block w-15" id="lc_type" name="lc_type">
-						 <option value>육상</option>
-						 <option>자전거</option>
+						 <option value="lc_course_001">육상</option>
+						 <option value="lc_course_002">자전거</option>
 						</select>
 					</div>
 			</li>
