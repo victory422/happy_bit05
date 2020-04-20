@@ -17,6 +17,7 @@ public class LI_VO {
 	private byte[] li_picture;
 	private String li_date;
 	private String li_title;
-	private int li_see,li_good;	
+	private int li_see,li_good;
+	
 	
 }

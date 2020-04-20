@@ -4,32 +4,60 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <title>장비 게시판(글작성)</title>
+<style>
+.align-center { text-align: center; } 
+</style>
+
 <script type="text/javascript"
 	src="../../../resources/CKEditorSample/ckeditor/ckeditor.js"></script>
 	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script type="text/javascript">
+  	function check_fn(){
+
+  		var type = $('select[name=li_type]').val()
+  		var type_check = "종목선택"
+  		
+  		
+  		var category = $('select[name=li_category]').val()
+  		var category_check = "장비선택"
+
+  		var title = $('input[name=li_title]').val()
+  		if(title == ''){
+  			alert('제목을 입력해주세요.')
+  			return false
+  		}else if(title.length >30){
+  			alert('제목을 줄여주세요.')
+  		}
+  		
+  		if(type == type_check || category == category_check){
+  			alert('카테고리를 골라주세요.')
+  			return false
+  		}
+  			
+  		return true
+  	}
+  </script>
 <%@ include file="../includes/middle.jsp"%>
 	<div class="container">
-		<form id="form" method="post">
-			<div class="content" style="width: 75%; margin-top: 30px;">
-				<div>
+			<form id="form" method="post" onsubmit="return check_fn()">
+			
 					<div class="col-sm-12">
 						<h1>장비 게시판 <small> ${b_type }  글작성 </small> </h1> <!-- 현재 임시방편 게시판 유형 결정되면 변수로 변경 -->
 						<br>
-						<div class="input-group mb-1">
-							<div class="input-group-prepend">
-								<label class="input-group-text">제목</label>
+							<div class="input-group mb-1" style="width: 75%;">
+								<div class="input-group-prepend align-center">
+									<label class="input-group-text">제목</label>
+								</div>
+								<input name="li_title" type="text" class="form-control" >
 							</div>
-							<input name="li_title" type="text" class="form-control">
-						</div>
 					</div>
-				</div>
 				<br>
 				<div>
-					<div class="col-sm-8">
-						<div class="input-group mb-2">
+					<div class="col-sm-12" style="text-align: center;">
+						<div class="input-group mb-12">
 							<label class="input-group-text">카테고리 
 							<select
 								name="li_type" class="custom-select custom-select-sm"
@@ -42,7 +70,7 @@
 							<select name="li_category" class="custom-select custom-select-sm"
 								style="margin-left: 10px">
 									<option selected>장비선택</option>
-									<option value="스포츠웨어">스포츠웨어</option>
+									<option value="운동복">운동복</option>
 									<option value="안전장비">안전장비</option>
 									<option value="신발">신발</option>
 									<option value="기타">기타</option>
@@ -83,14 +111,13 @@
 		      </div> -->
 	
 				<div class="row justify-content-md-center">
-					<button type="submit" class="btn btn-primary" 
-						style="width: 12%; font-weight: bold; margin-bottom: 30px">미리보기</button>
+					<button type="submit" class="btn btn-danger" 
+						style="width: 10%; font-weight: bold; margin-bottom: 30px">취소</button>
 					<button type="submit" id="btnsave" class="btn btn-outline-secondary"
-						style="width: 12%; font-weight: bold; margin-bottom: 30px; margin-left: 10px">등
+						style="width: 10%; font-weight: bold; margin-bottom: 30px; margin-left: 10px">등
 						록</button>
 				</div>
-			</div>
-		</form>
-	
-	</div>
+			
+			</form>
+		</div>
 <%@ include file="../includes/footer.jsp"%>

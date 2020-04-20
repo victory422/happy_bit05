@@ -214,7 +214,7 @@ public class LI_controller {
 		model.addAttribute("message", "ok");
 		
 		
-		return url_mapping(vo.getLi_b_type());
+		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
 	
 	
@@ -229,14 +229,20 @@ public class LI_controller {
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
 	public void board_page(LI_VO vo,Model model,HttpSession session) {
 		
+		session.setAttribute("m_index", "admin3");
 		
+		//이전페이지로 넘어갈 페이지 경로
 		
 		log.info("---------------------------상세 페이지-----------------------");
+		log.info("게시판 : "+vo.getLi_b_type());
 		log.info("increse_service 실행");
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
+		
+		model.addAttribute("back_url",(url_mapping(vo.getLi_b_type())));
+		
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
@@ -269,7 +275,7 @@ public class LI_controller {
 	@ResponseBody
 	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
 	public String like(LI_VO vo, GOOD_VO good_vo, HttpSession session) {
-		session.setAttribute("m_index", "admin3");
+		
 		
 		log.info("컨트롤러 like~~~~");
 		
@@ -397,15 +403,15 @@ public class LI_controller {
 		String url_value = "";
 		log.info("넘어가는 페이지 "+board_type);
 		if(board_type.equals("후기게시판")) {
-			url_value="redirect:/li/li_001_1";
+			url_value="/li/li_001_1";
 		}else if(board_type.equals("추천게시판")){
-			url_value="redirect:/li/li_002_1";
+			url_value="/li/li_002_1";
 		}else if(board_type.equals("관리게시판")){
-			url_value="redirect:/li/li_003_1";
+			url_value="/li/li_003_1";
 		}else if(board_type.equals("자랑게시판")){
-			url_value="redirect:/li/li_004_1";
+			url_value="/li/li_004_1";
 		}else if(board_type.equals("장비게시판")){
-			url_value="redirect:/li/li_001_1";
+			url_value="/li/li_001_1";
 			log.info("test if문 (완선되면삭제)");
 		}
 		else {
