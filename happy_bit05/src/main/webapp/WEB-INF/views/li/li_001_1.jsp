@@ -77,8 +77,8 @@
 	<form method="get">
 	
 	<!-- 넘겨줄값들 -->
-<input type="hidden" name="li_b_type" value="후기게시판">
-
+<input type="hidden" name="li_b_type" value="후기게시판"/>
+<input type="hidden" name="back_url" value="li_001_jsp"/>
 
 	<div class="container">
 		<div style="margin-top: 30px;" class="row">
@@ -105,7 +105,7 @@
 				<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
 					style="margin-left: 10px; width: 15%">
 					<option value=null selected>장비선택</option>
-					<option value="스포츠웨어">스포츠웨어</option>
+					<option value="운동복">운동복</option>
 					<option value="안전장비">안전장비</option>
 					<option value="신발">신발</option>
 					<option value="기타">기타</option>
@@ -136,23 +136,23 @@
 					<!-- <tr><td><h2>전체글</h2></td>
 					<td style="text-align: right;"><input type="checkbox"></td>
 					</tr> -->
-					<tr class="active">
-						<td>게시물 번호</td>
-						<td>종목</td>
-						<td class="">게시글 제목</td>
-						<td>장비 종류</td>
-						<td>작성자</td>
-						<td>작성날자</td>
-						<td>조회수</td>
-						<td>좋아요</td>
+					<tr class="active" style="text-align: center;">
+						<td width="8%">게시물 번호</td>
+						<td width="8%">종목</td>
+						<td width="32%">게시글 제목</td>
+						<td width="12%">장비 종류</td>
+						<td width="8%">작성자</td>
+						<td width="16%">작성날자</td>
+						<td width="8%">조회수</td>
+						<td width="8%">좋아요</td>
 					</tr>
 					<tbody id="table_list">
 						<c:forEach var="board" items="${list }">
 						
-							<tr class="success">
+							<tr class="success" style="text-align: center;">
 								<td>${board.li_index }</td>
 								<td>${board.li_type }</td>
-								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }'">${board.li_title }</td>
+								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}'"><button type="button" onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}'" class="btn btn-link">${board.li_title }</button></td>
 								<td>${board.li_category }</td>
 								<td>${board.m_index }</td>
 								<td>${board.li_date }</td>

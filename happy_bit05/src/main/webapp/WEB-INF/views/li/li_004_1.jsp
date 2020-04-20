@@ -93,7 +93,7 @@
 			<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
 				style="margin-left: 10px; width: 15%">
 				<option value=null selected>장비선택</option>
-				<option value="스포츠웨어">스포츠웨어</option>
+				<option value="운동복">운동복</option>
 				<option value="안전장비">안전장비</option>
 				<option value="신발">신발</option>
 				<option value="기타">기타</option>

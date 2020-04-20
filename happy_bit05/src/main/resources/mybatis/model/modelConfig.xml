@@ -5,7 +5,6 @@
 <configuration>
 	<typeAliases>
 	
-	<typeAlias type="vs.ac.ac_001_1.domain.AcVO" alias="AcVO"/>
 	<typeAlias type="vs.li.li_001_01.vo.LI_VO" alias="LI_VO" />
 	<typeAlias type="vs.lt.lt_001_01.vo.LT_VO" alias="LT_VO" />
 		</typeAliases> 

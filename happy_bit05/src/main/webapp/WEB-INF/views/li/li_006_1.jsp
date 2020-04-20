@@ -9,6 +9,12 @@
 .text_container {
 	background-color: #eee
 }
+.box {
+  display: flex;
+}
+.push {
+    margin-left: auto;
+}
 </style>
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -82,22 +88,26 @@
 				<h2>내용:</h2>
 				<div class="text_container">${board.li_text }</div>
 			</div>
-			<div id="">
-			<!-- 좋아요 기능 -->
-				<c:choose>
-					<c:when test="${board.m_index ne null}">
-						<a href='javascript: like_func();'><img
-							src="/resources/img/dislike.png" id='like_img'></a>좋아요<span class="good_cnt"> ${board.li_good }</span>
-					</c:when>
-					<c:otherwise>
-						<a href='javascript: login_need();'><img
-							src="/resources/img/like.png"></a>좋아요<span class="good_cnt"> ${board.li_good }</span>
-					</c:otherwise>
-				</c:choose>
-
-
+			<div class="box">
+				<div id="">
+				<!-- 좋아요 기능 -->
+					<c:choose>
+						<c:when test="${board.m_index ne null}">
+							<a href='javascript: like_func();'><img
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+						</c:when>
+						<c:otherwise>
+							<a href='javascript: login_need();'><img
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="push">
+					<button class="btn btn-info" onclick="location.href='${back_url}'">
+						목록으로 돌아가기 
+					</button>
+				</div>
 			</div>
-
 			<!-- 로그인이 되어있고, 본인 글이 아닐경우에만 추천할 수 있도록 버튼을 출력 -->
 			<%--     <c:if test = "${board.li_index != null and sessionScope.user_id != dto.user_id">
     
