@@ -28,7 +28,70 @@
 	<resultMap id="clobMap" type="java.util.HashMap">
 		<result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
 	</resultMap>
+	
+		<!-- 검색하기 -->
+	<sql id="criteria" >
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+				<foreach item="type" collection="typeArr">
+					<trim prefix="OR">
+						<choose>
+							<when test = "type == 'normal'.toString()">
+								lc_title like '%'||#{keyword}||'%') or (m_index like '%'||#{keyword}||'%'
+							</when>
+							<when test = "type == 'area'.toString()">
+								lc_area1 like '%'||#{keyword}||'%') or (lc_area2 like '%'||#{keyword}||'%') or
+								(lc_area3 like '%'||#{keyword}||'%')
+							</when>
+						</choose>
+					</trim>
+				</foreach>
+			</trim>
+	</sql>
+	
+	
+	<!-- 리스트 뽑아오기 -->
+	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
+		<![CDATA[
+			select lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
+						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record
+			from
+				(
+					select /*+INDEX_DESC(course lc_index) */
+						rownum rn, lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
+						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record
+					from
+						course
+					where
+		]]>	
+			<include refid="criteria"></include>
+		<![CDATA[
+					rownum <= #{pageNum} * #{amount}
+				)
+				where rn > (#{pageNum} -1) * #{amount}
+		]]>
+	</select>
+	
+	<!-- 게시글 갯수 세기 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from course where 
+			<include refid="criteria"></include>
+		lc_index like 'lc_%'
+	</select>
+	
+	<!-- 좋아요 많은 순서대로 가져오기 -->
+	<select id="LC_002_01_good" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
+		<![CDATA[
+			select * from(
+				select *
+				from course
+				where lc_index like 'lc_%'
+				order by lc_good desc
+			)	
+			where rownum <= 4
+		]]>
+	</select>
 
+	<!-- 게시글 업로드 -->
 	<insert id="lc_001_01">
 		<![CDATA[   
 		insert into course(lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle, lc_area1,
@@ -38,6 +101,7 @@
 			]]>
 	</insert> 
 	
+	<!-- 지도 업로드 -->
 	<insert id="lc_001_01_map">
 		<selectKey keyProperty="lc_index" order="BEFORE" resultType="String">
 		<![CDATA[ 
@@ -49,6 +113,7 @@
 			#{lc_index}, #{lc_address}, #{lc_xy_arr})
 	</insert>
 	
+	<!-- 썸네일 업로드 -->
 	<update id="lc_001_01_thumbnail" parameterType="java.util.Map">
 		<selectKey keyProperty="lc_index2" order="BEFORE" resultType="String">
 			<![CDATA[ 
@@ -61,12 +126,42 @@
 		where lc_index = #{lc_index2}
 	</update>
 	
-	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
+<!-- 	<select id="LC_002_01_search" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
 		<![CDATA[
-			select * from course where lc_index like 'lc_%'
-		]]>	
+			select * from course
+		]]>
+		
+		<where>
+			<if test = "type == 'normal'.toString()">
+				lc_title like '%'||#{keyword}||'%' or m_index like '%'||#{keyword}||'%'
+			</if>
+			<if test = "type == 'area'.toString()">
+				lc_area1 like '%'||#{keyword}||'%' or lc_area2 like '%'||#{keyword}||'%' or
+				lc_area3 like '%'||#{keyword}||'%'
+			</if>
+		</where>
 	</select>
 	
+	<select id="LC_002_01_search_good" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
+		<![CDATA[
+			select * from course
+			where rownum >= 4
+			and
+		]]>
+		
+		<where>
+			<if test = "type == 'normal'.toString()">
+				(lc_title like '%'||#{keyword}||'%' or m_index like '%'||#{keyword}||'%')
+			</if>
+			<if test = "type == 'area'.toString()">
+				(lc_area1 like '%'||#{keyword}||'%' or lc_area2 like '%'||#{keyword}||'%' or
+				lc_area3 like '%'||#{keyword}||'%')
+			</if>
+		</where>
+		
+		order by lc_good desc
+	</select> -->
+		
 	<select id="LC_003_01" resultMap="lc_getResult">
 		<![CDATA[
 			select * from course a join map b 
