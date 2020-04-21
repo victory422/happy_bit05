@@ -17,6 +17,7 @@
 .distanceInfo:after {content:none;}
 .course-text {margin-bottom:30px;}
 .input-group-prepend {width:80px;}
+.map {margin:0;}
 </style>
 
 <!-- =====================================================================================================================	-->	
@@ -24,14 +25,30 @@
 
 	<div class="container col-md-10 bg-light">
 	
-		<div class="row justify-content-center .d-block col-10">
-			HOME > 코스 > ${lc_get.lc_type }
+		HOME > 코스 > ${lc_get.lc_type }
+			<hr/>
+
+		<div class="row justify-content-center col-10" style="margin:auto;">
+			<div class="w-100"></div>
+			<div class = "col-12">
+				${lc_get.lc_type }
+				<br/>
+				<div><h5 class="section-heading text-uppercase">${lc_get.lc_title }</h5></div>
+				<br/>
+				<div style="float:left;">
+					${lc_get.m_index } | ${lc_get.lc_date }
+				</div>
+				
+				<div style="float:right;">
+					조회수 ${lc_get.lc_see } | 댓글 | 하트 ${lc_get.lc_good }
+				</div>
+			</div>
 			<hr/>
 			<div class="w-100"></div>
+			<div class="w-100"></div>
+				<div id="map" class="col-md-8" style="width:800px;height:500px;"></div>
 			
-				<div id="map" class="col-6" style="width:600px;height:500px;"></div>
-			
-		<div class="col-4" id="mapText">
+		<div class="col-md-4" id="mapText">
 			<div class="p-4">
 			<h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 거리 : <span id="distance" name="distance">${lc_get.lc_distance } km</span>
@@ -67,10 +84,6 @@
 			${lc_get.lc_text }
 			</div>
 	    </div>
-	    
-		<div class="col-2 .d-none .d-xl-block">
-			
-		</div>
 		
 		
 		
