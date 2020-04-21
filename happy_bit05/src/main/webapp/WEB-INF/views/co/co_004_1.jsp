@@ -41,7 +41,9 @@
 				<tr> 
 				<td>접수기간 : ${data.co_b_period }</td>
 				<td>
-				<form role="form" action="co_001_1" method="get">
+				<form role="form" action="co_001_1" method = "get">
+					<input type="hidden" name="co_b_index" value="${data.co_b_index }">
+					 
 					<button type="submit" class="btn btn-primary float-right">대회 접수</button>
 				</form>
 				</td>
@@ -62,8 +64,8 @@
 						<div class="input-group">
 							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요."> 
 							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>
-							</span> <input type="hidden" id="co_b_index" name="co_b_index"value="${data.co_b_index}">
+								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>								
+							</span> <input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->
 						</div>
 					</form>
 				</div>
@@ -83,7 +85,7 @@ $(document).ready(function() {
 	commentList();
 });
 
-var co_b_index = $('#co_b_index').val();//게시글 넘버 변수에 넣어주기
+var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
 
 $('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
 	var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
@@ -96,7 +98,7 @@ function commentList() {
 	$.ajax({
 		url : '/comment/list',
 		type : 'get',
-		data : {data : co_b_index},
+		data : {data : board_index},
 		success : function(data) {
 			//console.log(value.com_index1);
 			var a = '';
@@ -210,7 +212,7 @@ function commentDelete(com_index){
 }
 //대댓글 폼생성
 function dedet(com_index){
-	alert(co_b_index);
+	alert(board_index);
 	
 
 		var textareaTag = "<hr><div style='margin-left:50px;'><textarea rows='2' cols='130' name='test1_"+com_index+"'></textarea>";
@@ -225,12 +227,12 @@ function dedet(com_index){
 //대댓글 작성
 function dedetinsert(com_index){
 	
-		alert(co_b_index); 
+		alert(board_index); 
 	var test1 = $('[name=test1_'+com_index+']').val();
 	$.ajax({
 		url : '/comment/dedetinsert',
 		type : 'post',
-		data : {"com_text" : test1, "com_index" : com_index, "co_b_index" : co_b_index},
+		data : {"com_text" : test1, "com_index" : com_index, "board_index" : board_index},
 		success : function(data){
 			if(data == 1)				
 				alert("대댓글 작성");

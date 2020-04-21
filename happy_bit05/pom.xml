@@ -2,10 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion> 
 	<groupId>org.ma</groupId>
 	<artifactId>ma_001</artifactId>
-	<name>voiceless_screaming</name>
+	<name>voiceless_screaming</name> 
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -112,6 +112,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+		
 
 
 		<!-- @Inject -->
@@ -226,8 +227,7 @@
 			<groupId>poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.13-all</version>
-		</dependency>
-
+		</dependency>		
 		<!-- 타일즈 관련 라이브러리 -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>

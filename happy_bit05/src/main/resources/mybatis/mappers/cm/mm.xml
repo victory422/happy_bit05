@@ -14,15 +14,15 @@
 	SELECT
 	*
 	FROM board_com
-	where co_b_index = #{data}
+	where board_index = #{data}
 	and com_index1 is null 
 </select>
 
 <!-- 댓글 작성 -->
 <insert id="commentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	INSERT INTO
-	board_com(com_index, com_text,co_b_index)
-	VALUES(com_index.nextval,#{com_text},#{co_b_index})
+	board_com(com_index, com_text,board_index)
+	VALUES(com_index.nextval,#{com_text},#{board_index})
 </insert>
 
 
@@ -45,8 +45,8 @@
 <!-- 대댓글 작성 -->
 <insert id="dcommentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	insert into
-	board_com(com_index, com_text, com_index1, co_b_index)
-	values(com_index.nextval, #{com_text}, #{com_indexl}, #{co_b_index})
+	board_com(com_index, com_text, com_index1, board_index)
+	values(com_index.nextval, #{com_text}, #{com_indexl}, #{board_index})
 	
 </insert>
 <!-- 대댓글 리스트 -->

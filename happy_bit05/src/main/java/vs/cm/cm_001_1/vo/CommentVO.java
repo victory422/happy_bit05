@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class CommentVO {
 
 	private String com_index;
-	private String co_b_index;
+	private String board_index;
 	private String com_text;
 	private int com_good;
 	private String com_writer;
@@ -26,10 +26,10 @@ public class CommentVO {
 		this.com_index = com_index;
 	}
 	public String getCo_b_index() {
-		return co_b_index;
+		return board_index;
 	}
 	public void setCo_b_index(String co_b_index) {
-		this.co_b_index = co_b_index;
+		this.board_index = co_b_index;
 	}
 	public String getCom_text() {
 		return com_text;

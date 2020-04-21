@@ -27,6 +27,7 @@
 <body>
 <div class="container">
 <%@include file="../includes/topbar.jsp"%>
+<%@include file="../includes/middle.jsp" %>
 	<div class="row col-12" >
 		<div class="col-lg-12">
 			<div class="panel panel-default">
