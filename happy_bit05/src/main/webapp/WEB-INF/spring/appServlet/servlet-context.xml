@@ -28,7 +28,6 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-<<<<<<< HEAD
 
 	
 	<!-- 다중파일 업로드 -->
@@ -38,9 +37,7 @@
 		<beans:property name="maxInMemorySize" value="1000000" />
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
-=======
->>>>>>> LeeHyuckHee
-	
+
 	<context:component-scan base-package="vs" />
 	
 	
