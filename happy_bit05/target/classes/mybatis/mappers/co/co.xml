@@ -11,4 +11,14 @@
 	]]>
 	</select>
 
+	<select id="co_appdetail" resultType="vs.ac.ac_001_1.vo.AcVO" parameterType="String">
+	<![CDATA[	
+		
+		select * from competition where co_b_index = #{co_b_index}
+
+	]]>	
+	</select>
+
+	
+	
 </mapper>

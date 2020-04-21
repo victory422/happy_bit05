@@ -1,6 +1,8 @@
 <%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +11,7 @@
 </head>
 <body>
 <div class="container">
-	<form class="form-horizontal" role="form" method="post"
-		action="javascript:alert( 'success!' );">
+	<form class="form-horizontal" role="form" method="post" action="ap_001_1">
 		<div class="form-group">
 			<label for="provision" class="col-lg-5 control-label">참가자 유의사항 및 참가동의서</label>
 			<div class="col-lg-10" id="provision">
@@ -52,18 +53,24 @@
 				</div>
 			</div>
 		</div>
-		<table class="table table-striped table-bordered table-hover">														
+		<c:forEach items="${ data}" var="data">
+		<input type="hidden" name="co_title" value="${data.co_b_title }">
+		<input type="hidden" name="co_price" value="${data.co_b_price}">
+		<input type="hidden" name="co_area" value="${data.co_b_area }">
+		<div style="border:0px solid #eee; padding:0px;">
+ 		<table class="table table-striped table-bordered">	
+ 			<tbody>													
 						<tr>
 							<td>대회명 </td>
-							<td><input type="text" value="비트캠프"></td>							
+							<td>${data.co_b_title }</td>							
 						</tr>
 						<tr>
 							<td>대회 일시</td>
-							<td><input type="text" value="2020-06-20~2020-06-21"></td>
+							<td>${data.co_b_day }</td>
 						</tr>
 						<tr>
-							<td>장소 </td>
-							<td><input type="text" value="철원종합운동장"></td>
+							<td>장소 </td> 
+							<td>${data.co_b_area }</td>
 						</tr>
 						<tr>
 							<td>성별</td>
@@ -71,11 +78,30 @@
 						</tr>
 						<tr>
 							<td>기념품 </td>
+							<td style="padding-left:15px;">
+							<div>
+								<c:set var="co_souvenir" value="${data.co_souvenir }"/>
+								<c:forTokens var="co_souveniradd" items="${co_souvenir }" delims=",">
+								<label><input type="radio">${co_souveniradd }<br></label>
+								</c:forTokens>
+							</div>
+							</td>
 						</tr>
 						
 						<tr>
 							<td>단체/소속</td>
 							<td><input type="text" value="비트캠프"></td>
+						</tr>
+						<tr>
+							<th>종목/등급</th>
+							<td style="padding-left:15px;">
+							<div>
+							<c:set var="co_rating" value="${data.co_rating }"/>
+							<c:forTokens var="co_ratingadd" items="${co_rating }" delims=",">							
+							<label><input type="radio">${co_ratingadd }<br></label>
+							</c:forTokens>
+							</div>
+							</td>
 						</tr>
 						<tr>
 							<td>생년월일 </td>
@@ -91,10 +117,25 @@
 						</tr>
 						<tr>
 							<td>참가비</td>
-							<td><input type="text" value="50000"></td>
-						</tr>							
+							<td>
+								${data.co_b_price }							
+							<input type="hidden" value="${data.co_b_price }" id="amount">
+								<input type="hidden" value="${data.co_b_index }" id="co_b_index">
+								<input type='button' class="float-right" onclick="kakaopay()" value="결제하기">	
+							<c:if test="${param.kakaotest != '1'}">
+					  		  	<label class="float-right"> 결제전</label>
+							</c:if>
+							<c:if test="${param.kakaotest == '1'}">
+								<label class="float-right">결제완료</label>					
+							</c:if>
+							</td>
+
+							
+						</tr>
+						</tbody>						 	
 					</table>
-		
+					</div>
+	 	</c:forEach>
 		<div class="form-group">
 			<div class="col-lg-offset-2 col-lg-10">
 				<button type="submit" class="btn btn-primary">Sign in</button>
@@ -102,5 +143,53 @@
 		</div>
 	</form>
 </div>
+ 
+
+<script>
+
+
+function kakaopay(){
+	
+	var amount = $('#amount').val();
+	var co_b_index = $('#co_b_index').val();
+	$.ajax({
+        url : '/kakaopay',
+        type : 'post',
+        data : {amount : amount, co_b_index : co_b_index},
+        success : function(data){
+    	     location.href =data;
+        	 		
+        } 
+    });
+} 
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </body>
 <%@include file="../includes/footer.jsp"%>

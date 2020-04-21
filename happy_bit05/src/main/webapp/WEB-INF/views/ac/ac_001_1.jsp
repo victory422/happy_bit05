@@ -81,7 +81,7 @@
 					<label class="input-group-text">기념품</label>
 				</div>
 				
-				<input type="text" class="form-control" id ="ac_souvenirid">
+				<input type="text" class="form-control" name="co_souvenir" id="ac_souvenirid">
 				<button class="btn btn-primary" type="button" id="ac_souveniradd">추가</button>	
 				
 			</div>
@@ -100,7 +100,7 @@
 					<label class="input-group-text">종목/등급</label>
 				</div>
 				
-				<input type="text" class="form-control" id ="ac_rating">
+				<input type="text" class="form-control" name="co_rating" id="ac_rating">
 				<button class="btn btn-primary" type="button" id="ac_ratingadd">추가</button>	
 				
 			</div>

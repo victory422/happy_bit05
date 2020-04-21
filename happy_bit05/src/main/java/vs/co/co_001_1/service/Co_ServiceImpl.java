@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.cm.cm_001_1.mapper.CoMapper;
+import vs.co.co_001_1.vo.CoVO;
 
 
 @Service
 public class Co_ServiceImpl implements Co_Service {
 
+	@Autowired
+	private CoMapper comapper;
+	
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -26,7 +31,7 @@ public class Co_ServiceImpl implements Co_Service {
 			return list;
 
 		} catch (Exception e) {
-			System.out.println("ac_List ¿¡·¯ " + e);
+			System.out.println("ac_List ï¿½ï¿½ï¿½ï¿½ " + e);
 			return null;
 		}
 
@@ -43,13 +48,26 @@ public class Co_ServiceImpl implements Co_Service {
 		return co_detail;
 		
 		}catch(Exception e) {
-			System.out.println("co.co_detail¿¡·¯ : " + e);
+			System.out.println("co.co_detailï¿½ï¿½ï¿½ï¿½ : " + e);
 			
 			return null;
 		}
 	}
-	
-	
+	//ëŒ€íšŒ ì ‘ìˆ˜ ë¦¬ìŠ¤íŠ¸
+	@Override
+	public List<AcVO> ap_list(String co_b_index) throws Exception{
+		 
+		 
+		return comapper.ap_list(co_b_index);
+		
+	}
+	 
+	//ëŒ€íšŒ ì ‘ìˆ˜ 
+	@Override
+	public int ap_insert(CoVO covo) throws Exception{
+		 
+		return comapper.ap_insert(covo); 
+	}
 	
 	
 }

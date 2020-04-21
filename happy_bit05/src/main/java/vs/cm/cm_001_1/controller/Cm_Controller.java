@@ -68,7 +68,7 @@ public class Cm_Controller {
 	//댓글 작성
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	@ResponseBody
-	private int mCommentServiceInsert(@RequestParam("co_b_index") String com_index, @RequestParam("com_text") String com_text) throws Exception{
+	private int mCommentServiceInsert(@RequestParam("board_index") String com_index, @RequestParam("com_text") String com_text) throws Exception{
 		 
 		System.out.println(com_index);
 		System.out.println(com_text);
@@ -84,15 +84,15 @@ public class Cm_Controller {
 	//대댓글 작성
 	@RequestMapping(value="/dedetinsert" ,method = RequestMethod.POST)
 	@ResponseBody
-	private int dCommentServiceInsert(@RequestParam("com_index") String com_index, @RequestParam("com_text") String com_text,@RequestParam("co_b_index") String co_b_index) throws Exception {
+	private int dCommentServiceInsert(@RequestParam("com_index") String com_index, @RequestParam("com_text") String com_text,@RequestParam("board_index") String board_index) throws Exception {
 		
 		System.out.println(com_index);
 		System.out.println(com_text);
-		System.out.println(co_b_index);
+		System.out.println(board_index);
 	
 		comment.setCom_indexl(com_index);
 		comment.setCom_text(com_text);
-		comment.setCo_b_index(co_b_index);
+		comment.setCo_b_index(board_index);
 		return cm_service.dcommentInsert(comment);
 	}
 	 
