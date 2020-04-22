@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import vs.ac.ac_001_1.vo.AcVO;
 import vs.cm.cm_001_1.mapper.CoMapper;
+import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.vo.CoVO;
 
 
@@ -21,12 +22,27 @@ public class Co_ServiceImpl implements Co_Service {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<AcVO> co_List(AcVO acvo) {
+	public int get_total(Page_DTO dto) {
+		
+		try {
+			
+			return sqlSession.selectOne("ac.get_total",dto);
+			
+		}catch(Exception e) {
+			System.out.println("get_total : " + e);
+		}
+		
+		return 0;
+	}
+	
+	//대회 게시판 리스트 
+	@Override
+	public List<AcVO> co_List(Page_DTO dto) {
 		List<AcVO> list;
 		 
 		try {
  
-			list = sqlSession.selectList("ac.ac_list", acvo);
+			list = sqlSession.selectList("ac.ac_list", dto);
 
 			return list;
 
@@ -36,6 +52,7 @@ public class Co_ServiceImpl implements Co_Service {
 		}
 
 	}
+	//대회 게시판 상세보기
 	@Override
 	public List<AcVO> co_detail(String co_b_index) {
  

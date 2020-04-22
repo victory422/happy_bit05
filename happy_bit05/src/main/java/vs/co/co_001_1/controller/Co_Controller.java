@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ibleaders.utility.ib_json.JSONObject;
 
+import lombok.extern.log4j.Log4j;
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.service.Co_Service;
 import vs.co.co_001_1.vo.CoVO;
+import vs.co.co_001_1.vo.PageUtil;
 
 @Controller
 @RequestMapping("/co/*")
@@ -22,12 +25,15 @@ public class Co_Controller {
 	private Co_Service co_service;
 	
 	@GetMapping(value="/co_003_1")
-	public void co_List(Model model, AcVO acvo) throws Exception{
+	public void co_List(Model model,Page_DTO dto) throws Exception{
 		
-		 model.addAttribute("data", co_service.co_List(acvo)); 
+		 model.addAttribute("data", co_service.co_List(dto)); 
+		model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
+		System.out.println("page : " + dto.getPage());
+		System.out.println("Amount : " + dto.getAmount());
 		
 	}
-	
+	 
 	@GetMapping("/co_004_1")
 	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) {
 
@@ -49,10 +55,12 @@ public class Co_Controller {
 	//대회 접수
 	@PostMapping("/ap_001_1")
 	public String ap_insert(CoVO covo) throws Exception {
+		System.out.println(covo.getCo_area());
+		System.out.println(covo.getCo_m_event() + "기념품");
 		
 		co_service.ap_insert(covo);
 		
-		return "redirect:/co/co_003_1";
+		return "redirect:/co/co_003_1?test1=1";
 		
 	}
 	

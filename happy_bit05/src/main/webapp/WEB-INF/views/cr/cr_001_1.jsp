@@ -2,6 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%
+    // 인코딩
+    request.setCharacterEncoding("UTF-8");
+%>
 <html>
 <head>
 <title>Insert title here</title>
@@ -24,8 +28,9 @@
 <link href="../../../resources/css/modern-business.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
 <%@include file="../includes/topbar.jsp"%>
+<%@include file="../includes/middle.jsp" %>
+<div class="container">
 	<div class="row col-12" >
 		<div class="col-lg-12">
 			<div class="panel panel-default">

@@ -11,6 +11,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vs.ac.ac_001_1.service.Ac_Service;
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.service.Co_Service; 
+import vs.co.co_001_1.vo.PageUtil;
 
 @Controller
 @RequestMapping("/ac/*")
@@ -18,18 +21,21 @@ public class Ac_Controller {
 	
 	@Autowired
 	private Ac_Service ac_service;
-
+	@Autowired
+	private Co_Service co_service;
 	@GetMapping(value="/ac_002_1")
-	public void ac_List(Model model ,AcVO acvo) throws Exception {
+	public void ac_List(Model model,Page_DTO dto) throws Exception {
 		
-		
-		 model.addAttribute("data", ac_service.ac_List(acvo)); 
+		 
+		 model.addAttribute("data", ac_service.ac_List(dto));
+		 model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
 		
 	}
 	
 	@PostMapping("/ac_001_1.do")
 	public String ac_register(AcVO acvo, RedirectAttributes rttr) {
 		
+
 		System.out.println("register:" + acvo);
 		
 		ac_service.ac_insert(acvo);
