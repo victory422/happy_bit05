@@ -36,10 +36,6 @@
   		return true
   	}
   	
-  	(function() {
-		
-  	})()
-  	
 
   </script>
 <%@ include file="../includes/middle.jsp"%>

@@ -240,7 +240,7 @@ public class LI_controller {
 		model.addAttribute("msg",msg);
 		
 		//+url_mapping(vo.getLi_b_type())
-		return "redirect:/li/li_001_1";
+		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
 	
 	
@@ -268,7 +268,9 @@ public class LI_controller {
 		
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		
-		model.addAttribute("back_url",(url_mapping(vo.getLi_b_type())));
+		
+		log.info("너라ㅣㅇ너라ㅣㅇㅁㄹ"+vo.getLi_b_type());
+		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
 		model.addAttribute("page_num", dto.getPage());
 		
@@ -431,10 +433,8 @@ public class LI_controller {
 	public String url_mapping(String board_type) {
 		String url_value = "";
 		log.info("넘어가는 페이지 "+board_type);
-		if(board_type == null){
-			url_value="404";
-		}else if
-	(board_type.equals("후기게시판")) {
+
+		if (board_type.equals("후기게시판")) {
 			url_value="/li/li_001_1";
 		}else if(board_type.equals("추천게시판")){
 			url_value="/li/li_002_1";
