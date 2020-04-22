@@ -16,7 +16,7 @@
  <!-- 추천수 증가 쿼리 -->
  	<update id="like_check" parameterType="HashMap">
 	 	<![CDATA[
-		    UPDATE good_check
+		    UPDATE good
 		    SET good_check = good_check + 1 
 		    WHERE m_index=#{m_index} AND board_index=#{board_index}
 		]]>
@@ -25,7 +25,7 @@
 	<!-- 추천수 감소 쿼리 -->
 	  <update id="like_check_cancel" parameterType="HashMap">
 	  <![CDATA[
-		    UPDATE good_check
+		    UPDATE good
 		    SET good_check = 0
 		    WHERE m_index=#{m_index} AND board_index=#{board_index}
     	]]>
@@ -35,7 +35,7 @@
   	<select id="check" resultType="int" parameterType="HashMap">
   	 <![CDATA[
   	 	SELECT good_check
-  	 	FROM good_check
+  	 	FROM good
   	 	WHERE m_index = #{m_index} AND board_index = #{board_index}
   	 ]]>
   	</select>
@@ -44,7 +44,7 @@
 	<select id="good_count" resultType="int" parameterType="HashMap">
 		<![CDATA[
 			 SELECT count(board_index)
-			 FROM good_check
+			 FROM good
 			 WHERE m_index = #{m_index} AND board_index = #{board_index}
 		]]>
 	</select>
@@ -52,7 +52,7 @@
 	<!-- 로우 인서트 -->
 	<insert id="check_row_insert" parameterType="HashMap">
 		<![CDATA[
-			INSERT INTO good_check (m_index, board_index,good_check) 
+			INSERT INTO good (m_index, board_index,good_check) 
 			values (#{m_index}, #{board_index}, 0)
 		]]>
 	</insert>
