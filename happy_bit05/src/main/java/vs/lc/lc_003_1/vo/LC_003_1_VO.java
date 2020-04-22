@@ -1,5 +1,8 @@
 package vs.lc.lc_003_1.vo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,4 +32,5 @@ public class LC_003_1_VO {
 	//지도정보
 	private String lc_address;	//출발지 상세
 	private String lc_xy_arr;	//좌표
+	
 }

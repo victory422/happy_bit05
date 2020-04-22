@@ -21,13 +21,15 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 	public LC_003_1_VO getLC(String lc_index) {
 		// TODO Auto-generated method stub
 		System.out.println("DAO에서 번호는??? : " + lc_index);
-		return session.selectOne("LC_003_01", lc_index);
+		return session.selectOne("lc_003_01", lc_index);
 	}
 
 	@Override
 	public int modifyLC(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
-		return session.update("LC_003_02", vo);
+		
+		System.out.println(vo.getLc_index());
+		return session.update("lc_003_02", vo);
 	}
 
 	@Override

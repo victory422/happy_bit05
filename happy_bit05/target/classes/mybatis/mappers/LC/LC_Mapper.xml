@@ -148,7 +148,7 @@
 	
 
 	<!-- 상세보기 -->	
-	<select id="LC_003_01" resultMap="lc_getResult">
+	<select id="lc_003_01" resultMap="lc_getResult">
 		<![CDATA[
 			select * from course a join map b 
 				on b.lc_index = a.lc_index

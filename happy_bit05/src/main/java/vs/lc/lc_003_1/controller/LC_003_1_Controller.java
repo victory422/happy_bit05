@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class LC_003_1_Controller {
 		
 		return "LC/LC_003_1";
 	}
-	
+
 	//수정 패이지 가기
 	@RequestMapping(value="lc_modify")
 	public String modifyLC(@RequestParam("lc_index") String lc_index, Model model) {
@@ -44,12 +45,14 @@ public class LC_003_1_Controller {
 		return "LC/LC_003_2";
 	}
 	
-	@RequestMapping(value="lc_update")
+	//수정하기
+	@RequestMapping(value="lc_update", method = RequestMethod.POST)
 	public String updateLC(LC_003_1_VO vo, Model model) {
 		
 		try {
 			Map<String, Object> hmap = new HashMap<String, Object>();
 			hmap.put("lc_thumbnail", vo.getLc_thumbnail().getBytes());
+			hmap.put("lc_index", vo.getLc_index());
 			
 			service.modifyLC(vo);
 			service.modifyLC_thumbnail(hmap);
@@ -57,7 +60,7 @@ public class LC_003_1_Controller {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		return "lc/003/lc_get?lc_index=" + vo.getLc_index();
+		return "../../lc/003/lc_get?lc_index=" + vo.getLc_index();
 	}
 	
 }
