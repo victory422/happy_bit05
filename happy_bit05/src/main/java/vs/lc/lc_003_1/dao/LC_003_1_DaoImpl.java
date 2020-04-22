@@ -38,5 +38,17 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 		return session.update("lc_003_02_thumbnail", hmap);
 	}
 
+	@Override
+	public int deleteLC(String lc_index) {
+		// TODO Auto-generated method stub
+		return session.delete("lc_003_03", lc_index);
+	}
+
+	@Override
+	public int deleteLC_map(String lc_index) {
+		// TODO Auto-generated method stub
+		return session.delete("lc_003_03_map", lc_index);
+	}
+
 
 }

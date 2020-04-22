@@ -89,7 +89,10 @@
 		</form>
 		
 		<div class="row">
-			<h3>코스</h3>
+			<div class="col-6"><h3>코스</h3></div>
+			<div class="col-6" style="text-align:right;">
+				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write'">글쓰기</button>
+			</div>
 		</div>
 		
 		<br>

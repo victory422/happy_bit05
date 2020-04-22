@@ -108,7 +108,7 @@
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
 					</form>
 					<form>
-						<button type="button" class="btn btn-secondary">삭제하기</button>
+						<button type="button" class="btn btn-secondary" onclick="location.href='lc_delete?lc_index=${lc_get.lc_index}'">삭제하기</button>
 					</form>
 					
 				</div>

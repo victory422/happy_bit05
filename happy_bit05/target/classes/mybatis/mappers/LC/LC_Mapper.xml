@@ -172,4 +172,18 @@
 			where lc_index = #{lc_index}
 		]]>	
 	</update>
+	
+	<!-- 게시글 삭제하기 -->
+	<delete id="lc_003_03">
+		<![CDATA[ 
+			delete from course where lc_index = #{lc_index}
+		]]>
+	</delete>
+	
+	<!-- 지도 정보 삭제하기 -->
+	<delete id="lc_003_03_map">
+		<![CDATA[ 
+			delete from map where lc_index = #{lc_index}
+		]]>
+	</delete>
 </mapper>

@@ -63,4 +63,17 @@ public class LC_003_1_Controller {
 		return "../../lc/003/lc_get?lc_index=" + vo.getLc_index();
 	}
 	
+	//삭제하기
+	@RequestMapping(value="lc_delete")
+	public String deleteLC(@RequestParam("lc_index") String lc_index, Model model) {
+		try {
+			service.deleteLC(lc_index);
+			service.deleteLC_map(lc_index);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return "redirect:/lc/002/list";
+	}
+	
 }

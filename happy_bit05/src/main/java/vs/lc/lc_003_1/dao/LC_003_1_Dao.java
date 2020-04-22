@@ -11,4 +11,8 @@ public interface LC_003_1_Dao {
 	public int modifyLC(LC_003_1_VO vo);
 	
 	public int modifyLC_thumbnail(Map<String, Object> hmap);
+	
+	public int deleteLC(String lc_index);
+	
+	public int deleteLC_map(String lc_index);
 }
