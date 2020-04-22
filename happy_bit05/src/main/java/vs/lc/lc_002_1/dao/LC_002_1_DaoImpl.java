@@ -30,22 +30,10 @@ public class LC_002_1_DaoImpl implements LC_002_1_Dao{
 	}
 	
 	@Override
-	public List<LC_002_1_VO> getGood() {
+	public List<LC_002_1_VO> getGood(Criteria cri) {
 		// TODO Auto-generated method stub
 		
-		return session.selectList("lc.LC_002_01_good");
-	}
-
-	@Override
-	public List<LC_002_1_VO> getSearch(String keyword) {
-		// TODO Auto-generated method stub
-		return session.selectList("lc.LC_002_01_search", keyword);
-	}
-
-	@Override
-	public List<LC_002_1_VO> getSearch_good(String keyword) {
-		// TODO Auto-generated method stub
-		return session.selectList("lc.LC_002_01_search_good", keyword);
+		return session.selectList("lc.LC_002_01_good", cri);
 	}
 
 	@Override
