@@ -1,11 +1,13 @@
-<%@ include file="../includes/topbar.jsp"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ include file="../includes/topbar.jsp"%>
 <%@ include file="../includes/middle.jsp"%>
-
+	
+	
 <style>
 .dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
 .dotOverlay {position:relative;bottom:10px;border-radius:6px;border: 1px solid #ccc;border-bottom:2px solid #ddd;float:left;font-size:12px;padding:5px;background:#fff;}
@@ -17,43 +19,34 @@
 .distanceInfo:after {content:none;}
 .course-text {margin-bottom:30px;}
 .input-group-prepend {width:80px;}
-.map {margin:0;}
 </style>
+<!-- 	-------------------------------------------------------------------------------------->	
 
-<!-- =====================================================================================================================	-->	
-
-
-	<div class="container col-md-10 bg-light" style="padding:30px;">
+	<!-- ck에디터 -->
+	<script type="text/javascript"
+	src="../../../resources/CKEditorSample/ckeditor/ckeditor.js"></script>
 	
-		HOME > 코스 > ${lc_get.lc_type }
-			<hr/>
-
-		<div class="row justify-content-center col-11" style="margin:auto;">
-			<div class="w-100"></div>
-			<div class = "col-12" style="margin-bottom:30px;">
-				${lc_get.lc_type }
-				<br/>
-				<div><h5>${lc_get.lc_title }</h5></div>
-				<br/>
-				<div style="margin-bottom:50px;">
-					<div style="float:left;">
-						${lc_get.m_index } | ${lc_get.lc_date }
-					</div>
-					
-					<div style="float:right;">
-						조회수 ${lc_get.lc_see } | 댓글 | 하트 ${lc_get.lc_good }
-					</div>
-				</div>
-
-				<hr/>
-			</div>
-			
-				<div id="map" class="col-md-8" style="width:800px;height:500px;"></div>
-			
-		<div class="col-md-4" id="mapText">
+<!-- 	-------------------------------------------------------------------------------------->	
+<!-- 지도 부분 -->
+ 	<div class="container">
+ 	
+ 	<form:form name="update" action="" method="post" enctype="multipart/form-data">
+	
+		<h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
+	       	 코스 등록
+	      </font></font></h3>
+		<br>
+		
+		<div class="row justify-content-center">
+		
+			<div id="map" class="col-8" style="width:500px;height:500px;"></div>
+		
+		
+		<div class="col-4" id="mapText">
 			<div class="p-4">
 			<h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 거리 : <span id="distance" name="distance">${lc_get.lc_distance } km</span>
+	       	 <input type="hidden" id="lc_distance" name="lc_distance"/>
 	     	 </font></font></h3>
 	     	 </div>
 	   		<br>
@@ -61,6 +54,7 @@
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 도보 시간 : <span id="run" name="run">${lc_get.lc_run }</span>
+	       	 <input type="hidden" id="lc_run" name="lc_run"/>
 	      </font></font></h3>
 	      </div>
 	      <br>
@@ -68,6 +62,7 @@
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	자전거 시간 : <span id="cycle" name="cycle">${lc_get.lc_cycle }</span>
+	       	<input type="hidden" id="lc_cycle" name="lc_cycle"/>
 	      </font></font></h3>
 	      </div>
 	      <br>
@@ -75,77 +70,114 @@
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 출발지 : <span id="address" name="address">${lc_get.lc_address }</span>
+	       	 <input type="hidden" id="lc_address" name="lc_address"/>
 	      </font></font></h3>
 	      </div>
 	      <br>
 	    </div>
+	    </div>
 	    
-	    <div class="w-100"><hr></div>
-	    <div style="margin-top:30px;margin-bottom:30px;"></div>
-	    
-		    <div class="col-11" style="margin:auto;">
-			${lc_get.lc_text }
-			</div>
-			
-		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
+	    <h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
+	       	 상세 정보
+	      </font></font></h3>
+		<br>
 		
-		<div class = "col-12" style="margin-bottom:30px;">
-			<div style="margin-bottom:50px;">
-				<div style="float:left;">
-					${lc_get.m_index } | ${lc_get.lc_date }
-				</div>
-				
-				<div style="float:right;">
-					댓글 0 개     |    
-					<a href="#">신고</a>
-				</div>
-			</div>
+		<div class="row justify-content-left">
+		
+		<ul class="list-unstyled" style="margin-left:30px;">
+			<li class="course-text">
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">제목</font></h5>    
+						</div>
+						<input type="text" class="form-control" id="lc_title" name="lc_title" placeholder="제목을 입력해주세요." value="${lc_get.lc_title }">
+					</div>
+			</li>
 			
-			<div class="w-100">
-				<div style="float:left;">
-					<form action="lc_modify?">
-						<button type="submit" class="btn btn-secondary">수정하기</button>
-						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
-					</form>
-					<form>
-						<button type="button" class="btn btn-secondary">삭제하기</button>
-					</form>
-					
-				</div>
+			<li class="course-text">
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">게시판</font></h5>    
+						</div>
+						<select class="custom-select d-block w-15" id="lc_type" name="lc_type">
+						 <option value="육상"
+						 	<c:out value="${lc_get.lc_type eq '육상' ? 'selected':''}"/>>육상</option>
+						 <option value="자전거"
+						 	<c:out value="${lc_get.lc_type eq '육상' ? 'selected':''}"/>>자전거</option>
+						</select>
+					</div>
+			</li>
+			
+			<li class="course-text">
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">지역</font></h5>    
+						</div>
+						
+						<div class="col-md-2" style="margin-left:-15px;">
+						<text class="form-control" id="area1" name="area1" readonly>${lc_get.lc_area1 }</text>
+						<input type="hidden" id="lc_area1" name="lc_area1" value="${lc_get.lc_area1 }"/>
+						</div>
+						
+						<div class="col-md-2">
+						<text class="form-control" id="area2" name="area2" readonly>${lc_get.lc_area2 }</text>
+						<input type="hidden" id="lc_area2" name="lc_area2" value="${lc_get.lc_area2 }"/>
+						</div>
+						
+						<div class="col-md-2">
+						<text class="form-control" id="area3" name="area3" readonly>${lc_get.lc_area3 }</text>
+						<input type="hidden" id="lc_area3" name="lc_area3" value="${lc_get.lc_area3 }"/>
+						</div>
+					</div>
+			</li>
+		
+			
+			<li class="course-text">
+
+					<div class="input-group mb-1">
+						<div class="input-group-prepend">
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">썸네일</font></h5>    
+						</div>
+						<div class="custom-file">
+                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="lc_thumbnail" value="${lc_get.lc_thumbnail }">
+             			</div>
+					</div>
+			</li>
 				
-				<div style="float:right;">
-					<button type="button" class="btn btn-secondary">목록으로</button>
-					<button type="button" class="btn btn-secondary">댓글</button>
-				</div>
-			</div>
-			<br>
-			<div class="w-100"></div>
-			<br>
-			<div class="w-100">
-				<div style="float:left;">
-					<button type="button" class="btn btn-secondary">블라인드</button>
+			<li class="course-text">
 					
-				</div>
+					<div class="col_c" style="margin-bottom: 30px">
+						<div class="input-group">
+						<div class="input-group-prepend">
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">내용</font></h5>    
+						</div>
+							<textarea class="textarea" name="lc_text" id="lc_text">${lc_get.lc_text }</textarea>
+							<script type="text/javascript">
+								CKEDITOR.replace('lc_text');
+							</script>
+						</div>
+					</div>
+			</li>
 				
-				<div style="float:right;">
-					<button type="button" class="btn btn-secondary">관심코스</button>
-					<button type="button" class="btn btn-info">좋아요</button>
-				</div>
-			</div>
+			</ul>
 		</div>
 		
-		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
+		<input type="submit" value="업로드" />
 		
-	    </div>
+		<input type="text" id="lc_xy_arr" name="lc_xy_arr"/>
+		</form:form>
 		
-		
-		
-	</div>	
-<!-- =====================================================================================================================	-->	
+	</div>
 	
+	
+	
+<!-- 	-------------------------------------------------------------------------------------->	
+<!-- 스크립트 부분 -->
+<!-- 스크립트 부분 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=12678188621fb459c68a7473a7071d75&libraries=services"></script>
 	<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
+	
 	<script type="text/javascript">
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -275,7 +307,13 @@
 	    }
 	}
 	
-
+		
+		
+		
 	</script>
+	
+	
+<!-- 	-------------------------------------------------------------------------------------->	
+
 
 <%@ include file="../includes/footer.jsp"%>

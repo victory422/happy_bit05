@@ -25,7 +25,6 @@ public class LC_002_1_DaoImpl implements LC_002_1_Dao{
 		
 		System.out.println(cri.getKeyword());
 		System.out.println(cri.getType());
-		System.out.println(cri.getTypeArr()[0]);
 		
 		return session.selectList("lc.LC_002_01", cri);
 	}

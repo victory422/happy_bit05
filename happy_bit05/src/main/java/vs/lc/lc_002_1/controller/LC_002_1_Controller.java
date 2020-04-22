@@ -73,7 +73,9 @@ public class LC_002_1_Controller {
 				}
 			}
 			
-			if(!(cri.getType().equals("normal"))) {
+			if(cri.getType() == null) {
+				model.addAttribute("lc_good", listGood);
+			}else if(!(cri.getType().equals("normal"))) {
 				model.addAttribute("lc_good", listGood);
 			}
 			

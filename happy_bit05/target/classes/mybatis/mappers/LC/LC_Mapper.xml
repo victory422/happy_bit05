@@ -147,7 +147,7 @@
 	</update>
 	
 
-		
+	<!-- 상세보기 -->	
 	<select id="LC_003_01" resultMap="lc_getResult">
 		<![CDATA[
 			select * from course a join map b 
@@ -156,4 +156,20 @@
 		]]>	
 	</select>
 	
+	<!-- 내용 수정하기 -->
+	<update id="lc_003_02">
+		<![CDATA[ 
+			update course set lc_title=#{lc_title}, lc_type=#{lc_type}, lc_text=#{lc_text} 
+			where lc_index = #{lc_index}
+		]]>	
+	</update>
+	
+	<!-- 썸네일 수정하기 -->
+	<update id="lc_003_02_thumbnail" parameterType="java.util.Map">	
+		<![CDATA[ 
+			update course
+			set lc_thumbnail = #{lc_thumbnail}
+			where lc_index = #{lc_index}
+		]]>	
+	</update>
 </mapper>

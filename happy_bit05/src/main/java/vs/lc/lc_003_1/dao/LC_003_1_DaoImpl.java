@@ -1,5 +1,7 @@
 package vs.lc.lc_003_1.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +22,18 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 		// TODO Auto-generated method stub
 		System.out.println("DAO에서 번호는??? : " + lc_index);
 		return session.selectOne("LC_003_01", lc_index);
+	}
+
+	@Override
+	public int modifyLC(LC_003_1_VO vo) {
+		// TODO Auto-generated method stub
+		return session.update("LC_003_02", vo);
+	}
+
+	@Override
+	public int modifyLC_thumbnail(Map<String, Object> hmap) {
+		// TODO Auto-generated method stub
+		return session.update("lc_003_02_thumbnail", hmap);
 	}
 
 
