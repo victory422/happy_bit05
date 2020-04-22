@@ -3,6 +3,7 @@ package vs.li.li_001_01.controller;
 import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,7 +34,6 @@ public class LI_controller {
 
 	@Autowired
 	private LI_Service service;
-	
 
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
@@ -49,8 +49,18 @@ public class LI_controller {
 		log.info("텍스트 : "+dto.getInput_text());
 		log.info("정렬 : "+dto.getSort());
 		
-		model.addAttribute("list", service.get_list(dto));
+		List<LI_VO> vo = service.get_list(dto);
+		
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("list", vo);
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
+		model.addAttribute("page", dto.getPage());
+		log.info("검색 type : "+dto.getType());
+		
+		for(int i= 0; i<dto.getTypeArr().length; i++) {
+		model.addAttribute("type"+i,dto.getTypeArr()[i]);
+		}
+		
 		log.info("page = "+ dto.getPage());
 		log.info("게시물수" + dto.getAmount());
 		
@@ -178,7 +188,18 @@ public class LI_controller {
 
 		log.info("-----------------------글 작성view-------------------");
 		
+		List<LI_VO> aa = new ArrayList<LI_VO>();
+		
+		aa.add(vo);
+		
 		model.addAttribute("b_type", vo.getLi_b_type());
+		
+		if(vo.getLi_index  () != null) {	
+		model.addAttribute("page",service.detail_page(vo.getLi_index()));
+		}
+		String msg = "작성";
+		model.addAttribute("msg",msg);
+		
 		log.info(vo.getLi_b_type());
 	}
 	
@@ -208,13 +229,18 @@ public class LI_controller {
 		
 		//게시판유형에맞게 url 변수
 		model.addAttribute("board_type", vo.getLi_b_type());
-		
-		
+
 		//작성 완료 메세지
 		model.addAttribute("message", "ok");
 		
+		//상세페이지
+		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		
-		return "redirect:"+url_mapping(vo.getLi_b_type());
+		String msg = "작성";
+		model.addAttribute("msg",msg);
+		
+		//+url_mapping(vo.getLi_b_type())
+		return "redirect:/li/li_001_1";
 	}
 	
 	
@@ -227,7 +253,7 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpSession session) {
+	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
 		
 		session.setAttribute("m_index", "admin3");
 		
@@ -239,9 +265,12 @@ public class LI_controller {
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
+		
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		
 		model.addAttribute("back_url",(url_mapping(vo.getLi_b_type())));
+
+		model.addAttribute("page_num", dto.getPage());
 		
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
@@ -402,7 +431,10 @@ public class LI_controller {
 	public String url_mapping(String board_type) {
 		String url_value = "";
 		log.info("넘어가는 페이지 "+board_type);
-		if(board_type.equals("후기게시판")) {
+		if(board_type == null){
+			url_value="404";
+		}else if
+	(board_type.equals("후기게시판")) {
 			url_value="/li/li_001_1";
 		}else if(board_type.equals("추천게시판")){
 			url_value="/li/li_002_1";

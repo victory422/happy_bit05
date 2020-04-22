@@ -21,6 +21,22 @@
 		config.resize_enabled = false;  //  false로 상태 변경
 		
 		
+		config.enterMode = CKEDITOR.ENTER_BR;
+
+		config.basicEntities = false;
+
+		config.entities_greek = false; 
+
+		config.entities_latin = false; 
+
+		config.entities_additional = '';
+
+		config.fillEmptyBlocks = false;
+
+		config.autoparagraph = false
+
+
+		
 
 		
 		// Remove some buttons provided by the standard plugins, which are

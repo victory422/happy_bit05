@@ -12,6 +12,8 @@ public class PageUtil {
 	private Page_DTO dto;
 	private int total, start, end;
 	private boolean prev, next;
+	
+	private int end_page,last_page;
 
 	public PageUtil(Page_DTO dto, int total) {
 
@@ -31,8 +33,9 @@ public class PageUtil {
 
 		if (realEnd > tempEnd) {
 			this.end = tempEnd;
-
-		} else {
+		} else if((total % 10) == 0){
+			this.end = realEnd;
+		}else {
 			this.end = realEnd + 1;
 		}
 

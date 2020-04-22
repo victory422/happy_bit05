@@ -15,6 +15,16 @@
 .push {
     margin-left: auto;
 }
+.text_padding {
+  padding-top: 3%;
+  padding-right: 3%;
+  padding-bottom: 3%;
+  padding-left: 3%;
+}
+.padding_1{
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
 </style>
 </head>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -53,13 +63,21 @@
 	</script>
 <%@ include file="../includes/middle.jsp"%>
 <body>
+<form>
 	<c:forEach var="board" items="${page }">
 	<!--에이작스로 넘겨룰 히든값  -->
-		<input type="hidden" id="li_index" value="${board.li_index }"/>
+		<input type="hidden" id="li_index" name="li_index" value="${board.li_index }"/>
 		<input type="hidden" id="m_index" value="${board.m_index }"/>
 		<input type="hidden" id="good_click_check" value="null"/>
 		
+	<!-- 수정할떄 넘겨줄값들 -->
 		
+		<input type="hidden" name="li_b_type" value=${board.li_b_type }>
+		<!-- 
+		<input type="hidden" name="li_type" value="${board.li_type }">
+		<input type="hidden" name="li_title" value="${board.li_title }">
+		<input type="hidden" name="li_category" value="${board.li_category }">
+				 -->
 		<div class="container">
 
 			<div class="row board_style">
@@ -67,7 +85,7 @@
 					<h1>제목 : ${board.li_title }</h1>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
-					<h6>추천수:<span class="good_cnt"> ${board.li_good }</span>조회수:${board.li_see } </h6>
+					<h6>추천수:<span class="good_cnt"> ${board.li_good }</span> 조회수:${board.li_see } </h6>
 					작성일자:${board.li_date }
 				</div>
 			</div>
@@ -86,10 +104,10 @@
 			<br>
 			<div>
 				<h2>내용:</h2>
-				<div class="text_container">${board.li_text }</div>
+				<div class="text_container text_padding">${board.li_text }</div>
 			</div>
 			<div class="box">
-				<div id="">
+				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
 					<c:choose>
 						<c:when test="${board.m_index ne null}">
@@ -102,8 +120,11 @@
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<div class="push">
-					<button class="btn btn-info" onclick="location.href='${back_url}'">
+				<div class="push padding_1">
+					<button class="btn btn-info" onclick="modify()">
+						수정하기 
+					</button>
+					<button class="btn btn-info" onclick="location.href='${back_url}?page=${page_num }'">
 						목록으로 돌아가기 
 					</button>
 				</div>
@@ -124,6 +145,7 @@
 
 		</div>
 	</c:forEach>
+	</form>
 <!-- 좋아요 함수 -->
 	<script type="text/javascript">
 	
@@ -163,6 +185,9 @@
 			  });
 			}
 
+		function modify(){
+			$('form').attr('action','/li/li_005_1').submit()
+		}
 
 
 //	출처: https://shxrecord.tistory.com/6 [첫 발]
