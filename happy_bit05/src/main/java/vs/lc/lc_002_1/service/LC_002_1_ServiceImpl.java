@@ -26,22 +26,10 @@ public class LC_002_1_ServiceImpl implements LC_002_1_Service{
 	}
 
 	@Override
-	public List<LC_002_1_VO> getGood() {
+	public List<LC_002_1_VO> getGood(Criteria cri) {
 		// TODO Auto-generated method stub
 		
-		return dao.getGood();
-	}
-
-	@Override
-	public List<LC_002_1_VO> getSearch(String keyword) {
-		// TODO Auto-generated method stub
-		return dao.getSearch(keyword);
-	}
-
-	@Override
-	public List<LC_002_1_VO> getSearch_good(String keyword) {
-		// TODO Auto-generated method stub
-		return dao.getSearch_good(keyword);
+		return dao.getGood(cri);
 	}
 
 	@Override

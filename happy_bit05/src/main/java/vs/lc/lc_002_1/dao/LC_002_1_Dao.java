@@ -9,11 +9,7 @@ public interface LC_002_1_Dao {
 	
 	public List<LC_002_1_VO> getList(Criteria cri);
 	
-	public List<LC_002_1_VO> getGood();
-
-	public List<LC_002_1_VO> getSearch(String keyword);
-	
-	public List<LC_002_1_VO> getSearch_good(String keyword);
+	public List<LC_002_1_VO> getGood(Criteria cri);
 
 	public int getTotalCount(Criteria cri);
 }

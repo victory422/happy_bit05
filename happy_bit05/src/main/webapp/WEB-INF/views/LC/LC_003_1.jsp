@@ -23,29 +23,31 @@
 <!-- =====================================================================================================================	-->	
 
 
-	<div class="container col-md-10 bg-light">
+	<div class="container col-md-10 bg-light" style="padding:30px;">
 	
 		HOME > 코스 > ${lc_get.lc_type }
 			<hr/>
 
-		<div class="row justify-content-center col-10" style="margin:auto;">
+		<div class="row justify-content-center col-11" style="margin:auto;">
 			<div class="w-100"></div>
-			<div class = "col-12">
+			<div class = "col-12" style="margin-bottom:30px;">
 				${lc_get.lc_type }
 				<br/>
-				<div><h5 class="section-heading text-uppercase">${lc_get.lc_title }</h5></div>
+				<div><h5>${lc_get.lc_title }</h5></div>
 				<br/>
-				<div style="float:left;">
-					${lc_get.m_index } | ${lc_get.lc_date }
+				<div style="margin-bottom:50px;">
+					<div style="float:left;">
+						${lc_get.m_index } | ${lc_get.lc_date }
+					</div>
+					
+					<div style="float:right;">
+						조회수 ${lc_get.lc_see } | 댓글 | 하트 ${lc_get.lc_good }
+					</div>
 				</div>
-				
-				<div style="float:right;">
-					조회수 ${lc_get.lc_see } | 댓글 | 하트 ${lc_get.lc_good }
-				</div>
+
+				<hr/>
 			</div>
-			<hr/>
-			<div class="w-100"></div>
-			<div class="w-100"></div>
+			
 				<div id="map" class="col-md-8" style="width:800px;height:500px;"></div>
 			
 		<div class="col-md-4" id="mapText">
@@ -78,11 +80,57 @@
 	      <br>
 	    </div>
 	    
-	    <div class="w-100"></div>
+	    <div class="w-100"><hr></div>
+	    <div style="margin-top:30px;margin-bottom:30px;"></div>
 	    
-		    <div>
+		    <div class="col-11" style="margin:auto;">
 			${lc_get.lc_text }
 			</div>
+			
+		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
+		
+		<div class = "col-12" style="margin-bottom:30px;">
+			<div style="margin-bottom:50px;">
+				<div style="float:left;">
+					${lc_get.m_index } | ${lc_get.lc_date }
+				</div>
+				
+				<div style="float:right;">
+					댓글 0 개     |    
+					<a href="#">신고</a>
+				</div>
+			</div>
+			
+			<div class="w-100">
+				<div style="float:left;">
+					<button type="button" class="btn btn-secondary">수정하기</button>
+					<button type="button" class="btn btn-secondary">삭제하기</button>
+					
+				</div>
+				
+				<div style="float:right;">
+					<button type="button" class="btn btn-secondary">목록으로</button>
+					<button type="button" class="btn btn-secondary">댓글</button>
+				</div>
+			</div>
+			<br>
+			<div class="w-100"></div>
+			<br>
+			<div class="w-100">
+				<div style="float:left;">
+					<button type="button" class="btn btn-secondary">블라인드</button>
+					
+				</div>
+				
+				<div style="float:right;">
+					<button type="button" class="btn btn-secondary">관심코스</button>
+					<button type="button" class="btn btn-info">좋아요</button>
+				</div>
+			</div>
+		</div>
+		
+		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
+		
 	    </div>
 		
 		

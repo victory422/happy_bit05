@@ -28,7 +28,7 @@ public class LC_002_1_Controller {
 	public String getList(Criteria cri, Model model) {
 			
 			List<LC_002_1_VO> listVO = service.getList(cri);
-			List<LC_002_1_VO> listGood = service.getGood();
+			List<LC_002_1_VO> listGood = service.getGood(cri);
 			int total = service.getTotal(cri);
 			
 			//리스트 썸네일 인코딩, 디코딩 작업.
@@ -73,8 +73,10 @@ public class LC_002_1_Controller {
 				}
 			}
 			
+			if(!(cri.getType().equals("normal"))) {
+				model.addAttribute("lc_good", listGood);
+			}
 			
-			model.addAttribute("lc_good", listGood);
 			model.addAttribute("lc_list", listVO);
 			model.addAttribute("pageUtil", new PageDTO(cri, total));
 			
@@ -82,59 +84,5 @@ public class LC_002_1_Controller {
 	}
 	
 	
-	//검색 관련 컨트롤러
-	@RequestMapping(value="search")
-	public String getSearch(@RequestParam("keyword") String keyword, Model model) {
-		List<LC_002_1_VO> listVO = service.getSearch(keyword);
-		List<LC_002_1_VO> listGood = service.getSearch_good(keyword);
-		
-		//리스트 썸네일 인코딩, 디코딩 작업.
-		for(int i = 0; i < listVO.size(); i++) {
-			
-			LC_002_1_VO vo = listVO.get(i);
-			
-			if(vo.getLc_thumbnail() != null) {
-				
-				byte[] imageContent = Base64.getEncoder().encode(vo.getLc_thumbnail());
-				
-				//System.out.println("대체 뭐야........" + imageContent);
-				String thumbnail = new String(imageContent);
-				
-				//System.out.println(thumbnail);
-			
-				vo.setLc_request(thumbnail);
-			// model.addAttribute("thumbnail"+i, thumbnail);
-			}else {
-				vo.setLc_request("");
-			}
-		}
-		
-		//추천수 썸네일 인코딩, 디코딩 작업.
-		for(int i = 0; i < listGood.size(); i++) {
-			
-			LC_002_1_VO vo = listGood.get(i);
-			
-			if(vo.getLc_thumbnail() != null) {
-				
-				byte[] imageContent = Base64.getEncoder().encode(vo.getLc_thumbnail());
-				
-				//System.out.println("대체 뭐야........" + imageContent);
-				String thumbnail = new String(imageContent);
-				
-				//System.out.println(thumbnail);
-			
-				vo.setLc_request(thumbnail);
-			// model.addAttribute("thumbnail"+i, thumbnail);
-			}else {
-				vo.setLc_request("");
-			}
-		}
-		
-		
-		model.addAttribute("lc_good", listGood);
-		model.addAttribute("lc_list", listVO);
-		
-		log.info("컨트롤러 end...." + System.currentTimeMillis());
-		return "LC/LC_002_1";
-	}
+	
 }
