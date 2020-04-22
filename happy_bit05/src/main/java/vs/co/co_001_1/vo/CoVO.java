@@ -12,9 +12,16 @@ public class CoVO {
 	private String co_receipt;
 	private String co_payday;
 	private String co_state;
-	private String co_event;
-	private String co_souvenir;
+	private String co_m_event;
+	private String co_m_souvenir;
+	private String co_b_index;
 	
+	public String getCo_b_index() {
+		return co_b_index;
+	}
+	public void setCo_b_index(String co_b_index) {
+		this.co_b_index = co_b_index;
+	}
 	public String getCo_paper_index() {
 		return co_paper_index;
 	}
@@ -57,17 +64,17 @@ public class CoVO {
 	public void setCo_state(String co_state) {
 		this.co_state = co_state;
 	}
-	public String getCo_event() {
-		return co_event;
+	public String getCo_m_event() {
+		return co_m_event;
 	}
-	public void setCo_event(String co_event) {
-		this.co_event = co_event;
+	public void setCo_m_event(String co_event) {
+		this.co_m_event = co_event;
 	}
-	public String getCo_souvenir() {
-		return co_souvenir;
+	public String getCo_m_souvenir() {
+		return co_m_souvenir;
 	}
-	public void setCo_souvenir(String co_souvenir) {
-		this.co_souvenir = co_souvenir;
+	public void setCo_m_souvenir(String co_souvenir) {
+		this.co_m_souvenir = co_souvenir;
 	}
 	
 	

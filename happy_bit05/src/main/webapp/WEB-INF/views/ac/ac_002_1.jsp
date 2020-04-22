@@ -65,6 +65,21 @@
 						</div>
 					</div>
 				</div>
+				<!-- 페이징  -->
+					<div class="col-md-10">
+						<ul class="pagination d-flex justify-content-center">
+							<c:if test="${pageUtil.prev }">
+								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.start-1}">Previous</a></li>
+							</c:if>
+							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/ac/ac_002_1?page=${pNum }">${pNum }</a></li>
+							</c:forEach>
+							<c:if test="${pageUtil.next }">
+								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.end+1 }">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
 				<!-- /.table-responsive -->
 				<form role="form" action="ac_001_1" method="get">
 					<button type="submit" class="btn btn-primary float-right">글작성</button>

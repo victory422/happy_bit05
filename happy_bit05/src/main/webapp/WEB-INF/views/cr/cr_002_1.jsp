@@ -1,6 +1,10 @@
 <%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+    // 인코딩
+    request.setCharacterEncoding("UTF-8");
+%>
 
 <html>
 <title>Insert title here</title>

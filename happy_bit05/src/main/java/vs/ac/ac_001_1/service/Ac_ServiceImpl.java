@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.co.co_001_1.dto.Page_DTO;
 
 @Service
 public class Ac_ServiceImpl implements Ac_Service {
@@ -16,14 +17,13 @@ public class Ac_ServiceImpl implements Ac_Service {
 	@Autowired
 	private SqlSession sqlSession;
 
-	@Override
-	public List<AcVO> ac_List(AcVO acvo) {
+	public List<AcVO> ac_List(Page_DTO dto) {
 		List<AcVO> list;
 		
 		
 		try {
  
-			list = sqlSession.selectList("ac.ac_list", acvo);
+			list = sqlSession.selectList("ac.ac_list",dto);
 
 			return list;
 

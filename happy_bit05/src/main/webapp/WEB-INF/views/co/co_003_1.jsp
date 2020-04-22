@@ -1,10 +1,11 @@
+<%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@include file="../includes/middle.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<html>
-<head>
-<title>Insert title here</title>
+
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -23,11 +24,7 @@
 	<!-- Custom styles for this template -->
 <link href="../../../resources/css/modern-business.css" rel="stylesheet">
 
-</head>
-<body>
 <div class="container">
-<%@include file="../includes/topbar.jsp"%>
-<%@include file="../includes/middle.jsp" %>
 	<div class="row col-12" >
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -55,17 +52,46 @@
 						</tr>
 						<tr>
 							<td>장소 : ${data.co_b_area}</td>
-						</tr>
+						</tr>					
 					</table>
 					</a>								
 						</c:forEach>
 					</div>
 				</div>
+				<!-- 페이징  -->
+					<div class="col-md-10">
+						<ul class="pagination d-flex justify-content-center">
+							<c:if test="${pageUtil.prev }">
+								<li class="page-item"><a class="page-link" href="/co/co_003_1?page=${pageUtil.start-1}">Previous</a></li>
+							</c:if>
+							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/co/co_003_1?page=${pNum }">${pNum }</a></li>
+							</c:forEach>
+							<c:if test="${pageUtil.next }">
+								<li class="page-item"><a class="page-link" href="/co/co_003_1?page=${pageUtil.end+1 }">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
 			</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
 </div>
-	<%@include file="../includes/footer.jsp"%>
-</body>
+
+<script>
+
+$(document).ready(function(){
+
+	
+	
+	alert(${param.test1});
+	
+})
+
+</script>
+	<%@include file="../includes/footer.jsp"%>		
+	
+	
+	

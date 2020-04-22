@@ -14,7 +14,27 @@ select *
 
 <insert id="ap_insert" parameterType="vs.co.co_001_1.vo.CoVO">
 
-	insert into 
+	insert into participant(
+				co_paper_index,
+				 co_title,
+				 co_price, 
+			     co_area,
+			     co_payday, 
+			     co_state,		     
+			     co_m_event,
+			     co_m_souvenir,
+				 co_b_index				  
+				 )
+	values('ca_'||co_paper_index.nextval,
+			#{co_title},
+			#{co_price},
+			#{co_area},
+			sysdate,
+			'참가',		
+			#{co_m_event},
+			#{co_m_souvenir},
+			#{co_b_index}		
+			)
 
 
 </insert>

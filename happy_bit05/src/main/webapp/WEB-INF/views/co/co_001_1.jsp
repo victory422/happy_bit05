@@ -57,6 +57,7 @@
 		<input type="hidden" name="co_title" value="${data.co_b_title }">
 		<input type="hidden" name="co_price" value="${data.co_b_price}">
 		<input type="hidden" name="co_area" value="${data.co_b_area }">
+		<input type="hidden" name="co_b_index" value="${data.co_b_index }">
 		<div style="border:0px solid #eee; padding:0px;">
  		<table class="table table-striped table-bordered">	
  			<tbody>													
@@ -82,28 +83,24 @@
 							<div>
 								<c:set var="co_souvenir" value="${data.co_souvenir }"/>
 								<c:forTokens var="co_souveniradd" items="${co_souvenir }" delims=",">
-								<label><input type="radio">${co_souveniradd }<br></label>
+								<label><input type="radio" name="co_m_souvenir" value="${co_souveniradd }">${co_souveniradd }<br></label>
 								</c:forTokens>
 							</div>
 							</td>
-						</tr>
-						
-						<tr>
-							<td>단체/소속</td>
-							<td><input type="text" value="비트캠프"></td>
-						</tr>
+						</tr>				
 						<tr>
 							<th>종목/등급</th>
 							<td style="padding-left:15px;">
 							<div>
 							<c:set var="co_rating" value="${data.co_rating }"/>
 							<c:forTokens var="co_ratingadd" items="${co_rating }" delims=",">							
-							<label><input type="radio">${co_ratingadd }<br></label>
+							<label><input type="radio" name="co_m_event" value="${co_ratingadd }">${co_ratingadd }<br></label>
 							</c:forTokens>
 							</div>
 							</td>
 						</tr>
 						<tr>
+						
 							<td>생년월일 </td>
 							<td><input type="text" value="94/01/14"></td>
 						</tr>
