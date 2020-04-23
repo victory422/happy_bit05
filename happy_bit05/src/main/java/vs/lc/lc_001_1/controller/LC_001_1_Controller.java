@@ -37,8 +37,6 @@ public class LC_001_1_Controller {
 	@RequestMapping(value = "uploadCourse", method = RequestMethod.POST)
 	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model) {
 		
-		
-		
 		System.out.println("컨트롤러 : " + vo);
 		//System.out.println("컨트롤러 : " + vo2);
 		System.out.println("모델 : " + model);

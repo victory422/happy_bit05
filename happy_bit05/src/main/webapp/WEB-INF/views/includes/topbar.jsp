@@ -42,8 +42,9 @@
 						aria-haspopup="true" aria-expanded="false"> 코스 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
-							<a class="dropdown-item" href="portfolio-1-col.html" href="/lc/002/list?lc_type='육상'">육상</a> <a
-								class="dropdown-item" href="portfolio-2-col.html" href="/lc/002/list?lc_type='자전거'">자전거</a>
+							<a class="dropdown-item"  href="/lc/002/list?lc_type=육상">육상</a> <a
+								class="dropdown-item"  href="/lc/002/list?lc_type=자전거">자전거</a><a
+								class="dropdown-item"  href="/lc/002/list?lc_type=">전체</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"

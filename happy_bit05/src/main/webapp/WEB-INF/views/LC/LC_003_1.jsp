@@ -114,8 +114,21 @@
 				</div>
 				
 				<div style="float:right;">
-					<button type="button" class="btn btn-secondary">목록으로</button>
-					<button type="button" class="btn btn-secondary">댓글</button>
+					<form id='openForm' action="../002/list" method="get">
+						<button type="submit" class="btn btn-secondary">목록으로</button>
+ 						<input type="hidden" id="lc_type" name="lc_type" value='<c:out value="${cri.lc_type }"/>' />
+						<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'/>
+						<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>' />
+						<c:choose>
+						<c:when test='${cri.type eq ""}'>
+							<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>' />
+						</c:when>
+						<c:when test='${cri.keyword eq ""}'>
+							<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>' />
+						</c:when>
+						</c:choose>
+					</form>
+						<button type="button" class="btn btn-secondary">댓글</button>
 				</div>
 			</div>
 			<br>
