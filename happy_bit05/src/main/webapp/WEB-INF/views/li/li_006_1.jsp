@@ -58,13 +58,17 @@
 				 }
 				 })
 			})();
+
 	})
-	
+	  	
 	</script>
 <%@ include file="../includes/middle.jsp"%>
 <body>
 
 	<c:forEach var="board" items="${page }">
+
+		<div class="container">
+<form id="page_info">
 	
 	<!--에이작스로 넘겨룰 히든값  -->
 		<input type="hidden" id="li_index" name="li_index" value="${board.li_index }"/>
@@ -78,8 +82,9 @@
 		<input type="hidden" name="li_title" value="${board.li_title }">
 		<input type="hidden" name="li_category" value="${board.li_category }">
 				 -->
-		<div class="container">
-<form>
+				 
+ <input type="hidden" name="status" value=1>
+ 
 			<div class="row board_style">
 				<div class="col-md-8">
 					<h1>제목 : ${board.li_title }</h1>
@@ -121,10 +126,8 @@
 					</c:choose>
 				</div>
 				<div class="push padding_1">
-					<button class="btn btn-info" onclick="modify()">
-						수정하기 
-					</button>
-					<button  class="btn btn-info" onclick="fn_golist()">
+						<button class="btn btn-info" onclick="modify()">수정하기</button>
+						<button  class="btn btn-info" onclick="fn_golist()">
 						목록으로 돌아가기  ${back_url}
 					</button>
 				</div>
@@ -137,7 +140,7 @@
 						<div class="input-group">
 							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요."> 
 							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>								
+								<button class="btn btn-default" type="button" id="commentInsertBtn" >등록</button>							
 							</span> <input type="hidden" id="board_index" name="board_index"value="${board.li_index}"><!-- value값 게시판에 맞게 바꾸세요 -->
 						</div>
 					</form>
@@ -209,19 +212,24 @@
 		function fn_golist(){
 			var a = '${back_url}?page=${page_num}'
 			alert(a)
-			location.href = a
-			//$('form').attr('action',a).submit()
+			$('form').attr('action',a).submit()
 		}
 
 
 //	출처: https://shxrecord.tistory.com/6 [첫 발]
-
+document.addEventListener('keydown', function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  };
+}, true);
 
 
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
-	
 	commentList();
+	
+	$()
+
 });
 
 var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기

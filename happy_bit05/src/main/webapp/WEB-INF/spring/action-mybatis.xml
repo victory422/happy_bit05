@@ -49,5 +49,8 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
- 	
+	 
+	<mybatis-spring:scan base-package="vs.cm.cm_001_1.mapper"/>
+	
+	
 </beans>

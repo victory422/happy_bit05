@@ -159,5 +159,13 @@ where rn > ((#{page}-1) * #{amount})
     	]]>
   	</update>
 
+	<!-- 게시물 수정 쿼리 -->
+		<update id="board_modify">
+			<![CDATA[
+				UPDATE item
+				SET li_category=#{li_category} , li_text=#{li_text}, li_type=#{li_type}, li_title=#{li_title}
+				WHERE li_index=#{li_index}
+			]]>
+		</update>
 
 </mapper>

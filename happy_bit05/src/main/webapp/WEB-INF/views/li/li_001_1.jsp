@@ -112,10 +112,26 @@
 				<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
 					style="margin-left: 10px; width: 15%">
 					<option value=null>장비선택</option>
-					<option value="운동복">운동복</option>
-					<option value="안전장비">안전장비</option>
-					<option value="신발">신발</option>
-					<option value="기타">기타</option>
+					<option value="운동복"
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '운동복'?'selected':''}"/>
+					</c:forEach>
+					>운동복</option>
+					<option value="안전장비"
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '안전장비'?'selected':''}"/>
+					</c:forEach>
+					>안전장비</option>
+					<option value="신발"
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '신발'?'selected':''}"/>
+					</c:forEach>
+					>신발</option>
+					<option value="기타"
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '기타'?'selected':''}"/>
+					</c:forEach>
+					>기타</option>
 				</select>
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
@@ -225,7 +241,7 @@
 		
 		function page_put()
 		{
-			alert($('input[name=page]').val(1))
+			('input[name=page]').val(1)
 		}
 	</script>
 

@@ -55,7 +55,12 @@ public class LI_controller {
 		List<LI_VO> vo = service.get_list(dto);
 		
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		//가져오는 값이없을때 오류나서 try catch
+		try {
 		log.info(vo.get(0));
+		}catch(Exception e){
+			System.out.println("검색결과가 없습니다."+e);
+		}
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
 		
@@ -253,6 +258,8 @@ public class LI_controller {
 		log.info("제목-----"+vo.getLi_title());
 		log.info("게시판유형@@@@@"+vo.getLi_b_type());
 		
+		
+		
 		service.li_regist(vo);
 
 		log.info("---------작성 완료----------------");
@@ -275,8 +282,14 @@ public class LI_controller {
 	
 	
 	
-	
-	
+	//수정
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modify(LI_VO vo,Model model) {
+		
+		service.modify(vo);
+		
+		return "redirect:"+url_mapping(vo.getLi_b_type());
+	}
 	
 	
 	

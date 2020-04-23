@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vs.cm.cm_001_1.mapper.CmMapper">
+
+<!-- 댓글 갯수 -->
+<select id="commentCount" resultType="int">
+	SELECT
+	COUNT(*)
+	FROM board_com
+</select>
+<!-- 댓글 목록 -->
+<select id="commentList" resultType="vs.cm.cm_001_1.vo.CommentVO" parameterType="String">
+	SELECT
+	*
+	FROM board_com
+	where board_index = #{data}
+	and com_index1 is null 
+</select>
+
+<!-- 댓글 작성 -->
+<insert id="commentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
+	INSERT INTO
+	board_com(com_index, com_text,board_index)
+	VALUES(com_index.nextval,#{com_text},#{board_index})
+</insert>
+
+
+<!-- 댓글 수정 -->
+<update id="commentUpdate" parameterType="vs.cm.cm_001_1.vo.CommentVO">
+	update board_com
+		set
+		com_text = #{com_text}
+		where com_index = #{com_index}
+</update>
+
+
+
+
+<!-- 댓글 삭제 -->
+<delete id="commentDelete" parameterType="String">
+        DELETE FROM board_com WHERE com_index = #{com_index}
+    </delete>
+
+<!-- 대댓글 작성 -->
+<insert id="dcommentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
+	insert into
+	board_com(com_index, com_text, com_index1, board_index)
+	values(com_index.nextval, #{com_text}, #{com_indexl}, #{board_index})
+	
+</insert>
+<!-- 대댓글 리스트 -->
+<select id="dcommentList" resultType="vs.cm.cm_001_1.vo.CommentVO" parameterType="String">
+	SELECT
+		*
+	FROM board_com
+	where com_index1 = #{com_index}
+</select>
+
+
+
+</mapper>
