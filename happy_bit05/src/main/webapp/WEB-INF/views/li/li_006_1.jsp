@@ -71,7 +71,6 @@
 		<input type="hidden" id="good_click_check" value="null"/>
 		
 	<!-- 수정할떄 넘겨줄값들 -->
-		
 		<input type="hidden" name="li_b_type" value=${board.li_b_type }>
 		<!-- 
 		<input type="hidden" name="li_type" value="${board.li_type }">
@@ -124,8 +123,8 @@
 					<button class="btn btn-info" onclick="modify()">
 						수정하기 
 					</button>
-					<button class="btn btn-info" onclick="location.href='${back_url}?page=${page_num }'">
-						목록으로 돌아가기 
+					<button  class="btn btn-info" onclick="fn_golist()">
+						목록으로 돌아가기  ${back_url}
 					</button>
 				</div>
 			</div>
@@ -187,6 +186,13 @@
 
 		function modify(){
 			$('form').attr('action','/li/li_005_1').submit()
+		}
+		
+		function fn_golist(){
+			var a = '${back_url}?page=${page_num}'
+			alert(a)
+			window.location.href = a
+			//$('form').attr('action',a).submit()
 		}
 
 

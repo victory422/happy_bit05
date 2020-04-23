@@ -74,7 +74,6 @@
 </head>
 <body>
 <%@ include file="../includes/middle.jsp"%>
-
 	<!-- 넘겨줄값들 -->
 <input type="hidden" name="li_b_type" value="후기게시판"/>
 <!-- <input type="hidden" name="back_url" value="li_001_1.jsp"/>  -->
@@ -94,14 +93,10 @@
 			</div>
 			<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
-			
 			<label class="input-group-text col-sm-12">
-			
 				<select
-				
 					id="type" name="type" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
-					
 					<option value=null>종목선택</option>
 					<option value="육상" 
 					<c:forEach var="type1" items="${type }">
@@ -113,9 +108,7 @@
 					<c:out value="${type1 eq '자전거'?'selected':''}"/>
 					</c:forEach>
 					>자전거</option>
-					
 				</select> 
-	
 				<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
 					style="margin-left: 10px; width: 15%">
 					<option value=null>장비선택</option>
@@ -123,11 +116,6 @@
 					<option value="안전장비">안전장비</option>
 					<option value="신발">신발</option>
 					<option value="기타">기타</option>
-									<%-- <c:forEach items=”${사용할변수}” var=”넘어온데이터”>
-									<option value=”${사용할변수.값}”
-										${아이템.변수}
-									</option> 
-								</c:forEach>--%>
 				</select>
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
@@ -139,12 +127,11 @@
 				</select>
 					<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="검색어 입력" onsubmit="page_put()"/>
 			</label>
-			
 			</div>
 		</div>
 	</form>	
-	<form method="get">
 		<input type="hidden" name=page value="${page }">
+		
 		<!-- 게시글 리스트 출력 테이블 -->
 			<div class="table-responsive">
 				<table class="table table-hover" style="margin-top: 30px;">
@@ -155,19 +142,19 @@
 						<td width="8%">게시물 번호</td>
 						<td width="8%">종목</td>
 						<td width="32%">게시글 제목</td>
-						<td width="12%">장비 종류</td>
-						<td width="8%">작성자</td>
+						<td width="10%">장비 종류</td>
+						<td width="10%">작성자</td>
 						<td width="16%">작성날자</td>
 						<td width="8%">조회수</td>
 						<td width="8%">좋아요</td>
 					</tr>
 					<tbody id="table_list">
 						<c:forEach var="board" items="${list }">
-						
-						
 							<tr class="success" style="text-align: center;">
 								<td>${board.li_index }</td>
-								<td>${board.li_type }</td>
+								<td>
+									<c:out value="${board.li_type eq 'all'?'전체': board.li_type}"/>
+								</td>
 								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}&page=${page}'"><button type="button" onclick="location.href='/li/li_006_1?page=${page }&li_index=${board.li_index }&li_b_type=${board.li_b_type}'" class="btn btn-link">${board.li_title }</button></td>
 								<td>${board.li_category }</td>
 								<td>${board.m_index }</td>
@@ -175,7 +162,6 @@
 								<td>${board.li_see }</td>
 								<td>${board.li_good }</td>
 							</tr>
-						
 						</c:forEach>
 					</tbody>
 				</table>
