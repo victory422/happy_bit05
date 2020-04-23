@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,7 @@ public class LI_controller {
 		
 		
 		log.info("----------------------후기 게시판view-------------------");
+		log.info("gdgd"+dto.getPage());
 		log.info("게시판 :"+dto.getBoard());
 		dto.setBoard("후기게시판");
  
@@ -49,7 +51,18 @@ public class LI_controller {
 		log.info("텍스트 : "+dto.getInput_text());
 		log.info("정렬 : "+dto.getSort());
 		
+
 		List<LI_VO> vo = service.get_list(dto);
+		
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		//가져오는 값이없을때 오류나서 try catch
+		try {
+		log.info(vo.get(0));
+		}catch(Exception e){
+			System.out.println("검색결과가 없습니다."+e);
+		}
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		
 		
 		model.addAttribute("type",dto.getTypeArr());
 		model.addAttribute("list", vo);
@@ -119,15 +132,37 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_002_1", method = RequestMethod.GET)
-	public void li_recommendation(Model model , Page_DTO dto) {
+	public void li_recommendation(Model model , Page_DTO dto, HttpSession session) {
 
 		log.info("-----------------------추천 게시판view-------------------");
 		dto.setBoard("추천게시판");
 		
-		model.addAttribute("list", service.get_list(dto));
+		log.info("게시판 :"+dto.getBoard());
+		
+		log.info("어레이 : "+dto.getTypeArr());
+		log.info("종목 : "+dto.getSearch_filter());
+		log.info("텍스트 : "+dto.getInput_text());
+		log.info("정렬 : "+dto.getSort());
+		
+		List<LI_VO> vo = service.get_list(dto);
+		
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("list", vo);
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
+		model.addAttribute("page", dto.getPage());
 		log.info("page = "+ dto.getPage());
 		log.info("게시물수" + dto.getAmount());
+		
+		
+		log.info("검색 type : "+dto.getType());
+		
+		for(int i= 0; i<dto.getTypeArr().length; i++) {
+		model.addAttribute("type"+i,dto.getTypeArr()[i]);
+		}
+		
+		log.info("page = "+ dto.getPage());
+		log.info("게시물수" + dto.getAmount());
+		
 	}
 	
 	
@@ -144,7 +179,7 @@ public class LI_controller {
 	public void li_management(Model model , Page_DTO dto) {
 
 		log.info("-----------------------관리 게시판view-------------------");
-		dto.setBoard("추천게시판");
+		dto.setBoard("관리게시판");
 		
 		model.addAttribute("list", service.get_list(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
@@ -223,6 +258,8 @@ public class LI_controller {
 		log.info("제목-----"+vo.getLi_title());
 		log.info("게시판유형@@@@@"+vo.getLi_b_type());
 		
+		
+		
 		service.li_regist(vo);
 
 		log.info("---------작성 완료----------------");
@@ -245,8 +282,14 @@ public class LI_controller {
 	
 	
 	
-	
-	
+	//수정
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modify(LI_VO vo,Model model) {
+		
+		service.modify(vo);
+		
+		return "redirect:"+url_mapping(vo.getLi_b_type());
+	}
 	
 	
 	
@@ -269,7 +312,6 @@ public class LI_controller {
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		
 		
-		log.info("너라ㅣㅇ너라ㅣㅇㅁㄹ"+vo.getLi_b_type());
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
 		model.addAttribute("page_num", dto.getPage());

@@ -6,99 +6,175 @@
 	pageEncoding="UTF-8"%>
 <html>
 <title>추천 게시판</title>
- <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<style>
+
+	.redfamily {
+	color: red;	
+}
+.search-box,.close-icon,.search-wrapper {
+	position: relative;
+	padding: 10px;
+}
+.search-wrapper {
+	width: 500px;
+	margin: auto;
+	margin-top: 50px;
+}
+.search-box {
+	width: 80%;
+	border: 1px solid #ccc;
+  outline: 0;
+  border-radius: 15px;
+}
+.search-box:focus {
+	box-shadow: 0 0 15px 5px #b0e0ee;
+	border: 2px solid #bebede;
+}
+.close-icon {
+	border:1px solid transparent;
+	background-color: transparent;
+	display: inline-block;
+	vertical-align: middle;
+  outline: 0;
+  cursor: pointer;
+}
+.close-icon:after {
+	content: "X";
+	display: block;
+	width: 15px;
+	height: 15px;
+	position: absolute;
+	background-color: #FA9595;
+	z-index:1;
+	right: 35px;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	padding: 2px;
+	border-radius: 50%;
+	text-align: center;
+	color: white;
+	font-weight: normal;
+	font-size: 12px;
+	box-shadow: 0 0 2px #E50F0F;
+	cursor: pointer;
+}
+.search-box:not(:valid) ~ .close-icon {
+	display: none;
+}
+
+</style>
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-
+</head>
+<body>
 <%@ include file="../includes/middle.jsp"%>
-	<form method="get" action="/li/li_005_1">
+	<!-- 넘겨줄값들 -->
 <input type="hidden" name="li_b_type" value="추천게시판">
+	<input type="hidden" name="page" value="1"/>
 
 	<div class="container">
-	<div style="margin-top: 30px;">
-		<h1>장비게시판<small> (추천게시판)</small></h1>
-		</div>
+		<form method="get">
+		<div style="margin-top: 30px;" class="row">
+			<div class="col-md-10">
+				<h1>장비게시판<small> (추천게시판)</small></h1>
+			</div>
+			<div class="col-md-2">				
+				<select name="amount" id="list_mount">
+					<option value="15">15개씩 보기</option>
+					<option value="30">30개씩 보기</option>
+				</select>	
+			</div>
 		
 		<!-- 체크박스 부분 -->
-	<div class="input-group mb-12" style="margin-top: 30px;">
-	
-		<label class="input-group-text col-sm-12">
-			<select
-				id="type" name="type" class="custom-select custom-select-sm-1"
-				style="margin-left: 10px; width: 15%">
-				<option value=null selected>종목선택</option>
-				<option value="육상">육상</option>
-				<option value="자전거">자전거</option>
-			</select> 
-			<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
-				style="margin-left: 10px; width: 15%">
-				<option value=null selected>장비선택</option>
-				<option value="운동복">운동복</option>
-				<option value="안전장비">안전장비</option>
-				<option value="신발">신발</option>
-				<option value="기타">기타</option>
-								<%-- <c:forEach items=”${사용할변수}” var=”넘어온데이터”>
-								<option value=”${사용할변수.값}”
-									${아이템.변수}
-								</option> 
-							</c:forEach>--%>
-			</select>
-			<select
-				id="type" name="search_filter" class="custom-select custom-select-sm-1"
-				style="margin-left: 10px; width: 15%">
-					<option value=null selected>제목</option>
-					<option value="내용">내용</option>
-					<option value="all">제목+내용</option>
-					<option value="작성자">작성자</option>
-			</select>
-			<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="Enter search term" />
-		</label>
-		
-	</div>
-
-	
+	<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
+			<label class="input-group-text col-sm-12">
+				<select
+					id="type" name="type" class="custom-select custom-select-sm-1"
+					style="margin-left: 10px; width: 15%">
+					<option value=null>종목선택</option>
+					<option value="육상" 
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '육상'?'selected':''}"/>
+					</c:forEach>
+					>육상 </option>
+					<option value="자전거" 
+					<c:forEach var="type1" items="${type }">
+					<c:out value="${type1 eq '자전거'?'selected':''}"/>
+					</c:forEach>
+					>자전거</option>
+				</select> 
+				<select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
+					style="margin-left: 10px; width: 15%">
+					<option value=null>장비선택</option>
+					<option value="운동복">운동복</option>
+					<option value="안전장비">안전장비</option>
+					<option value="신발">신발</option>
+					<option value="기타">기타</option>
+				</select>
+				<select
+					id="type" name="search_filter" class="custom-select custom-select-sm-1"
+					style="margin-left: 10px; width: 15%">
+						<option value=null selected>제목</option>
+						<option value="내용">내용</option>
+						<option value="all">제목+내용</option>
+						<option value="작성자">작성자</option>
+				</select>
+					<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="검색어 입력" onsubmit="page_put()"/>
+			</label>
+			</div>
+		</div>
+	</form>	
+		<input type="hidden" name=page value="${page }">
 	
 	<!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive">
-			<table class="table table-hover" style="margin-top: 30px;">
-				<!-- <tr><td><h2>전체글</h2></td>
-				<td style="text-align: right;"><input type="checkbox"></td>
-				</tr> -->
-				<tr class="active">
-					<td>게시물 번호</td>
-					<td>종목</td>
-					<td>게시글 제목</td>
-					<td>장비 종류</td>
-					<td>작성자</td>
-					<td>작성날자</td>
-					<td>조회수</td>
-					<td>좋아요</td>
-				</tr>
-				<tbody id="table_list">
-					<c:forEach var="board" items="${list }">
-					
-						<tr class="success">
-							<td>${board.li_index }</td>
-							<td>${board.li_type }</td>
-							<td onclick="location.href='/li/li_006_1?index=${board.li_index }'"">${board.li_title }</td>
-							<td>${board.li_category }</td>
-							<td>${board.m_index }</td>
-							<td>${board.li_date }</td>
-							<td>${board.li_see }</td>
-							<td>${board.li_good }</td>
-						</tr>
-					
-					</c:forEach>
-				</tbody>
-			</table>
+				<table class="table table-hover" style="margin-top: 30px;">
+					<!-- <tr><td><h2>전체글</h2></td>
+					<td style="text-align: right;"><input type="checkbox"></td>
+					</tr> -->
+					<tr class="active" style="text-align: center;">
+						<td width="8%">게시물 번호</td>
+						<td width="8%">종목</td>
+						<td width="32%">게시글 제목</td>
+						<td width="10%">장비 종류</td>
+						<td width="10%">작성자</td>
+						<td width="16%">작성날자</td>
+						<td width="8%">조회수</td>
+						<td width="8%">좋아요</td>
+					</tr>
+					<tbody id="table_list">
+						<c:forEach var="board" items="${list }">
+							<tr class="success" style="text-align: center;">
+								<td>${board.li_index }</td>
+								<td>
+									<c:out value="${board.li_type eq 'all'?'전체': board.li_type}"/>
+								</td>
+								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}&page=${page}'"><button type="button" onclick="location.href='/li/li_006_1?page=${page }&li_index=${board.li_index }&li_b_type=${board.li_b_type}'" class="btn btn-link">${board.li_title }</button></td>
+								<td>${board.li_category }</td>
+								<td>${board.m_index }</td>
+								<td>${board.li_date }</td>
+								<td>${board.li_see }</td>
+								<td>${board.li_good }</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 			
-			<div id="row">
-				<div class="col-md-6">
-					<a href="/li/li_005_1?li_b_type=추천게시판"><button type="button" class="btn btn-success">글작성</button></a>
-				</div>
+				<div id="row">
+					<div class="col-md-6">
+						<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성</button></a>
+					</div>
 			<!-- 페이징  -->
-				<div class="col-md-12">
+				<div class="col-md-10">
 					<ul class="pagination d-flex justify-content-center">
 						<c:if test="${pageUtil.prev }">
 							<li class="page-item"><a class="page-link" href="/li/li_002_1?page=${pageUtil.start-1}">Previous</a></li>
@@ -114,6 +190,42 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	</form>	
+		
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('select[name=amount]').on('change',function(){
+				alert('change!!')
+				$(this).attr('selected','selected')
+				alert('selected!!')
+				$('form').attr('action','/li/li_002_1').submit();
+				
+			})
+			
+			$('a.page_now').on('click',function(){
+				//alert($('input[name=page]').val($(this).text()))
+				//alert($('select[name=type]').val())
+				
+				var a =$('select[name=type]').length;
+				//배열생성
+				var aArr = new Array(a);
+				
+				//필터값들 스트링으로 변환
+				for(var i=0; i<a; i++){
+					aArr[i] = $('select[name=type]').eq(i).val();
+					//alert(aArr[i]);
+				}
+				//선택한 종목값
+				//aArr[1]
+				//선택한 장비값
+				//aArr[2]
+				//현재 선택된 a태그안  
+				$(this).attr('href',"/li/li_002_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
+				})
+		});
+		
+		function page_put()
+		{
+			alert($('input[name=page]').val(1))
+		}
+	</script>
 	<%@ include file="../includes/footer.jsp"%>

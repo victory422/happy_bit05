@@ -62,12 +62,12 @@
 	<select id="get_list" resultType="LI_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-	 select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title, li_see, li_good
+	 select li_index, li_b_type, m_index, li_category, li_date, li_text, li_type, li_title, li_see, li_good
 	 from(
 		select rownum rn, a.*
 		from
 		        (
-			        select li_index, li_b_type, li_category, li_date, li_text, li_type, li_title, li_see, li_good
+			        select li_index, li_b_type, m_index, li_category, li_date, li_text, li_type, li_title, li_see, li_good
 			        from item
 			        where 
 			        ]]>
@@ -159,5 +159,13 @@ where rn > ((#{page}-1) * #{amount})
     	]]>
   	</update>
 
+	<!-- 게시물 수정 쿼리 -->
+		<update id="board_modify">
+			<![CDATA[
+				UPDATE item
+				SET li_category=#{li_category} , li_text=#{li_text}, li_type=#{li_type}, li_title=#{li_title}
+				WHERE li_index=#{li_index}
+			]]>
+		</update>
 
 </mapper>
