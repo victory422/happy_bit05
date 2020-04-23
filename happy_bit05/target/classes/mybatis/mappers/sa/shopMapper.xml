@@ -8,30 +8,30 @@
 	<insert id="saleInsert" parameterType="java.util.Map">
 		<![CDATA[
 			INSERT INTO sales VALUES (
-			'testcode',
-			#{sp_prod_id},
+			#{prod_id}||TO_CHAR(SYSDATE,'YYMMDD')||'D'||#{sale_code_sub},
+			#{prod_id},
 			#{sale_price},
 			#{sale_quantity},
 			#{sale_name},
 			#{sale_name_sub},
-			'000',
-			'200410',
-			'true',
+			#{sale_code_sub},
+			TO_CHAR(SYSDATE,'YYMMDD'),
+			#{sale_view},
 			#{sale_thumbmail},
-			#{sale_detail},
-			'1.0'
-		
+			#{sale_pointRate},
+			#{sale_detail}
 		)
 		]]>
 	</insert>
 
-	<select id="getList2" resultType="java.lang.String"
-		resultMap="selectProductsList">
+	<select id="paging_total" resultType="int">
 		<![CDATA[
-		select * from products
+		select count(*) from products
+		where SP_PROD_ID like '%'||#{input_text}||'%'
 		]]>
 	</select>
 
+	<!--  
 	<resultMap type="map" id="selectProductsList">
 		<result column="SP_PROD_ID" property="prod_id" />
 		<result column="SP_VEND_ID" property="vend_id" />
@@ -40,14 +40,47 @@
 		<result column="SP_CATE_ID" property="cate_id" />
 		<result column="SP_PROD_DATE" property="prod_date" />
 	</resultMap>
-
-	<select id="searchProducts" resultMap="selectProductsList">
+ 	-->
+ 	
+	<select id="searchProducts" parameterType="java.util.Map" 
+		resultType="java.util.Map">
 		<![CDATA[
-		select * from products where SP_PROD_ID like '%'||#{key}||'%'
+			 select *
+	 from(
+		select rownum rn, a.*
+		from
+		        (
+			        select *
+			        from products
+			        where SP_PROD_ID like '%'||#{input_text}||'%'
+			        )a
+		where rownum <= (#{page} * #{amount})
+		)
+	where rn > ((#{page}-1) * #{amount})
+		
 		]]>
 	</select>
-	
 
+
+	<!-- 리스트 페이징해서 출력하는 쿼리 -->
+	<select id="get_list" parameterType="java.util.Map"
+		resultType="java.util.Map">
+
+		<!-- CDATA 범위안에 태그처리를 막아줌 -->
+		<![CDATA[ 
+	 select *
+	 from(
+		select rownum rn, a.*
+		from
+		        (
+			        select *
+			        from products
+			        )a
+		where rownum <= (#{page} * #{amount})
+		)
+	where rn > ((#{page}-1) * #{amount})
+]]>
+	</select>
 
 
 </mapper>
