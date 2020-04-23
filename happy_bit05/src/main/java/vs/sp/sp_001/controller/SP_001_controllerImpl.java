@@ -20,10 +20,22 @@ public class SP_001_controllerImpl implements SP_001_Controller{
 
 		return mav;
 		
+	}
+	
+	
+	@Override
+	@RequestMapping(value="/sp/board")
+	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("/sp mapping");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("li/li_001_1");
+
+		return mav;
 		
 	}
 	
-		
+	
 	
 	
 	

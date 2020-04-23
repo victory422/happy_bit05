@@ -10,12 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 public class SP_003_controllerImpl implements SP_003_Controller{
 	
 	@Override
-	@RequestMapping(value="")
-	public ModelAndView SP_003(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("/sp_003 mapping");
+	@RequestMapping(value="/sp/payment")
+	public ModelAndView SP_003_1(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("/sp/payment mapping");
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("");
+		mav.setViewName("/sp/sp_003_1");
 
 		return mav;
 		

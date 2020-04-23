@@ -22,11 +22,11 @@
 		<div class="row">
 			<div class="col-lg-4 col-sm-6 portfolio-item">
 				<div class="card h-100">
-					<a href="sp/spcode"><img class="card-img-top"
+					<a href="/sp/spcode"><img class="card-img-top"
 						src="http://placehold.it/700x400" alt=""></a>
 					<div class="card-body">
 						<h4 class="card-title">
-							<a href="sp/spcode">Project One</a>
+							<a href="/sp/spcode">Project One</a>
 						</h4>
 						<h5>24.4$</h5>
 						<p class="card-text">Lorem ipsum dolor sit amet, consectetur

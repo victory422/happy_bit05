@@ -10,5 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 public interface SP_001_Controller {
 
 	public ModelAndView SP_001(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+
+	ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 	}

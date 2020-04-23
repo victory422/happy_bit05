@@ -12,5 +12,7 @@ public interface SP_002_Controller {
 	public ModelAndView SP_002(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	ModelAndView SP_002_4(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+
+	ModelAndView SP_002_4_2(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 	}

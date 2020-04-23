@@ -58,7 +58,7 @@
       <servlet-class>com.ckfinder.connector.ConnectorServlet</servlet-class>
       <init-param>
          <param-name>XMLConfig</param-name>
-         <param-value>/WEB-INF/config/ckfinder-config.xml</param-value>
+         <param-value>/WEB-INF/config/config.xml</param-value>
       </init-param>
       <init-param>
          <param-name>debug</param-name>

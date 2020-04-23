@@ -1,3 +1,4 @@
+
 package vs.sp.sp_002.controller;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,16 +26,24 @@ public class SP_002_controllerImpl implements SP_002_Controller{
 	@Override
 	@RequestMapping(value="/sp/cart")
 	public ModelAndView SP_002_4(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("/jbgn2 mapping");
+		System.out.println("/sp_002_4 mapping");
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("sp/sp_002_4");
+
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/sp/cart2")
+	public ModelAndView SP_002_4_2(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("/sp_002_4_1 mapping");
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("sp/sp_002_4_1");
 
 		return mav;
 	}
-
-	
-		
 	
 	
 	
