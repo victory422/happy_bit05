@@ -47,8 +47,6 @@
 						aria-haspopup="true" aria-expanded="false"> 코스 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
-							<a class="dropdown-item" href="/lc/uploadCourse">코스 업로드</a> <a
-								class="dropdown-item" href="/LC/lc_002_1">코스 보기</a>
 							<a class="dropdown-item"  href="/lc/002/list?lc_type=육상">육상</a> <a
 								class="dropdown-item"  href="/lc/002/list?lc_type=자전거">자전거</a>
 						</div></li>
