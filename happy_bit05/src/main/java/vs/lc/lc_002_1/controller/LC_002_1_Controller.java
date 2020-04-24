@@ -26,8 +26,6 @@ public class LC_002_1_Controller {
 	//리스트 가져오기
 	@RequestMapping(value="list")
 	public String getList(Criteria cri, Model model) {
-		
-			System.out.println("cri가 받은 타입 : " + cri.getLc_type());
 			
 			List<LC_002_1_VO> listVO = service.getList(cri);
 			List<LC_002_1_VO> listGood = service.getGood(cri);
