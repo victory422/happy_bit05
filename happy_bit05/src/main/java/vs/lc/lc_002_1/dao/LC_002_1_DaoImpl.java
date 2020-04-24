@@ -39,6 +39,8 @@ public class LC_002_1_DaoImpl implements LC_002_1_Dao{
 	@Override
 	public int getTotalCount(Criteria cri) {
 		// TODO Auto-generated method stub
+		
+		System.out.println("lc_type = " + cri.getLc_type());
 		return session.selectOne("getTotalCount", cri);
 	}
 

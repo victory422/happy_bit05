@@ -11,4 +11,8 @@ public interface LC_003_1_Service {
 	public boolean modifyLC(LC_003_1_VO vo);
 	
 	public boolean modifyLC_thumbnail(Map<String, Object> hmap);
+	
+	public boolean deleteLC(String lc_index);
+	
+	public boolean deleteLC_map(String lc_index);
 }

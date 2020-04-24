@@ -119,18 +119,13 @@ public class LI_ServiceImpl implements LI_Service {
 	@Override
 	public void increse_see(LI_VO vo, HttpSession session ) {
 		try {
-			log.info("111111111111111111111111111111111111");
 			long update_time = 0; //null을 방지하기 위해 초기값을 null로 설정함
 	        if(session.getAttribute("update_time_"+vo.getLi_index())!=null) {
-	        	log.info("2222222222222222222222222222222222222222222222222");    
 	            //최근에 조회수를 올린 시간이 null이 아니면
 	            update_time = (long)session.getAttribute("update_time_"+vo.getLi_index());
-	            log.info("333333333333333333333333333333333333333333333");
 	        }
-	        log.info("444444444444444444444444444444444444444444444444444");
 	       
 	        long current_time = System.currentTimeMillis();
-	        log.info("55555555555555555555555555555555555555555555555555555555");
 	        //일정 시간이 경과한 후에 조회수를 증가시킨다.
 	        log.info("지난시간 : ");
 	        log.info(current_time - update_time);
@@ -143,12 +138,10 @@ public class LI_ServiceImpl implements LI_Service {
 	        	log.info("보드 인덱스: : "+ vo.getLi_index());
 	        	String index = (String)vo.getLi_index();
 	            sqlsession.update("li.board_see",index);
-	            log.info("66666666666666666666666666666666666666666666666666666666");
 	            log.info("조회수 증가");
 	            
 	            //조회수를 올린 시간을 저장함
 	            session.setAttribute("update_time_"+vo.getLi_index(), current_time);
-	            log.info("7777777777777777777777777777777777777777777777");
 	        }else
 	        	log.info("조회수 유지");
 	
@@ -220,6 +213,16 @@ public class LI_ServiceImpl implements LI_Service {
 		sqlsession.insert("good.check_row_insert",hashmap);
 		
 		log.info("로우 인서트 ");
+	}
+	
+	@Override
+	public void modify(LI_VO vo) {
+		
+		sqlsession.update("li.board_modify",vo);
+		
+		log.info("---------------------------------------------------------");
+		log.info("-----------------------수정--------------------------------");
+		
 	}
 }
 

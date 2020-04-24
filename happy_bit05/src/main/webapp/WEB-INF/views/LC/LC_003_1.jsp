@@ -108,14 +108,21 @@
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
 					</form>
 					<form>
-						<button type="button" class="btn btn-secondary">삭제하기</button>
+						<button type="button" class="btn btn-secondary" onclick="location.href='lc_delete?lc_index=${lc_get.lc_index}'">삭제하기</button>
 					</form>
 					
 				</div>
 				
 				<div style="float:right;">
-					<button type="button" class="btn btn-secondary">목록으로</button>
-					<button type="button" class="btn btn-secondary">댓글</button>
+					<form id='openForm' action="../002/list" method="get">
+						<button type="submit" class="btn btn-secondary">목록으로</button>
+ 						<input type="hidden" id="lc_type" name="lc_type" value='<c:out value="${lc_get.lc_type }"/>' />
+						<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'/>
+						<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>' />
+						<input type="hidden" name="type" value='<c:out value="${cri.type }"/>' />
+						<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>' />
+					</form>
+						<button type="button" class="btn btn-secondary">댓글</button>
 				</div>
 			</div>
 			<br>

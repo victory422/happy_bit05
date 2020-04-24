@@ -52,7 +52,7 @@
 	<div class="album py-5">
 		<div class="container">
 		
-		<form id="searchForm" name="searchForm" action="/lc/002/list" method="get" >
+		<form id="searchForm" name="searchForm" action="/lc/002/list?lc_type=${pageUtil.cri.lc_type }" method="get" >
 		<div class="row">
 			<div class="input-group mb-12 d-flex bd-highlight" style="margin-bottom : 30px;">
 			<label class="input-group-text col-sm-12">
@@ -86,10 +86,15 @@
 		
 			<input type="hidden" name="pageNum" value='<c:out value="${pageUtil.cri.pageNum }"/>'/>
 			<input type="hidden" name="amount" value='<c:out value="${pageUtil.cri.amount }"/>'/>
+			<input type="hidden" id="lc_type" name="lc_type" value='<c:out value="${pageUtil.cri.lc_type }"/>' />
+			
 		</form>
 		
 		<div class="row">
-			<h3>코스</h3>
+			<div class="col-6"><h3>${pageUtil.cri.lc_type } 코스</h3></div>
+			<div class="col-6" style="text-align:right;">
+				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write'">글쓰기</button>
+			</div>
 		</div>
 		
 		<br>
@@ -102,7 +107,7 @@
 				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc1.lc_request}" height="200"/>
 				</svg>
 				<div class="card-body">
-					<a href="../../lc/003/lc_get?lc_index=<c:out value='${lc1.lc_index}'/>">
+					<a class="move" href="<c:out value='${lc1.lc_index}'/>">
 						<p class="card-text">${lc1.lc_title}</p>
 					</a>
 					<p class="card-text">${lc1.m_index}</p>
@@ -128,7 +133,7 @@
 				</svg>
 				<div class="card-body">
 					<a class="move" href="<c:out value='${lc.lc_index}'/>">
-					<p class="card-text">${lc.lc_title}</p>
+						<p class="card-text">${lc.lc_title}</p>
 					</a>
 					<p class="card-text">${lc.m_index}</p>
 					<p class="card-text">조회수 : ${lc.lc_see}<br>추천수 : ${lc.lc_good}</p>
@@ -157,8 +162,16 @@
 		</div>
 		
 		<form id='actionForm' action="/lc/002/list" method='get'>
+			<c:choose>
+				<c:when test="${pageUtil.cri.lc_type } != null">
+					<input type="hidden" name="lc_type" value='${pageUtil.cri.lc_type }'/>
+				</c:when>
+			</c:choose>
 			<input type="hidden" name="pageNum" value='${pageUtil.cri.pageNum }'/>
 			<input type="hidden" name="amount" value='${pageUtil.cri.amount }'/>
+			<input type="hidden" name="type" value='<c:out value="${pageUtil.cri.type }"/>'/>
+			<input type="hidden" name="keyword" value='<c:out value="${pageUtil.cri.keyword }"/>'/>
+			
 		</form>
 		
 		</div>
