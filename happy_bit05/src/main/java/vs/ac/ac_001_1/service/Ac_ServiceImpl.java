@@ -48,7 +48,7 @@ public class Ac_ServiceImpl implements Ac_Service {
 		sqlSession.update("ac.ac_001_01_thumbnail", hmap);
 		
 	}
-	
+
 	
 	
 }
