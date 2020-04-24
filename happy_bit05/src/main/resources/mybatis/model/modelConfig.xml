@@ -6,4 +6,5 @@
 	<typeAliases>
 		<typeAlias type="vs.ac.ac_001_1.vo.AcVO" alias="AcVO" />
 		</typeAliases> 
+		   
 </configuration>
