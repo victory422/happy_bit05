@@ -59,6 +59,9 @@
 							<a class="dropdown-item" href="blog-home-1.html">메뉴1</a> <a
 								class="dropdown-item" href="blog-home-2.html">메뉴2</a> <a
 								class="dropdown-item" href="blog-post.html">메뉴3</a> 
+							<a class="dropdown-item" href="/co/co_003_1">대회게시판</a> <a
+								class="dropdown-item" href="/cr/cr_001_1">대회후기게시판</a> <a
+								class="dropdown-item" href="blog-post.html">메뉴3</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
