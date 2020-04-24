@@ -30,23 +30,13 @@
 				<div class="input-group mb-3">
 					<select class="custom-select" id="inputGroupSelect03" name="co_r_type">
 						<option selected>분류</option>
-						<option value="사이클">사이클</option>
-						<option value="마라톤">마라톤</option>
+						<option value="육상">육상</option>
+						<option value="자전거">자전거</option>
 					</select>
 				</div>
 			</div>
 			
 		</div>		
-		<!--
-		<div class="col-sm-6">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<label class="input-group-text">대회이름</label>
-				</div>
-				<input type="text" class="form-control" name="co_r_">
-			</div>		
-		</div>
--->
 		<hr>
 
 		<div class="row justify-content-md-center">

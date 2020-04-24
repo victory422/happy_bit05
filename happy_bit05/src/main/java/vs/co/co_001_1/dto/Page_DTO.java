@@ -12,12 +12,12 @@ public class Page_DTO {
 	//-----------------------------
 	private String board;
 	private String sort;
-	/*
+	
 	//검색 필터 관련 변수----------------------------
 	private String input_text; //입력 텍스트
 	private String type; //필터 옵션 밸류
 	private String search_filter;
-	*/
+	
 	
 	public Page_DTO(int page, int amount) {
 		this.page = page;
@@ -28,7 +28,7 @@ public class Page_DTO {
 		amount = 5;
 		
 	}
-/*
+
 	public String[] getTypeArr() {
 		return type == null? new String[] {}: type.split(",");
 	}
@@ -36,5 +36,5 @@ public class Page_DTO {
 	public String[] getSearch_filterArr() {
 		return search_filter == null? new String[] {}: search_filter.split("");
 	}
-	*/
+	
 }

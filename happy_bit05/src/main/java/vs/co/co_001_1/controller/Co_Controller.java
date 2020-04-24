@@ -1,5 +1,8 @@
 package vs.co.co_001_1.controller;
 
+import java.util.Base64;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,18 +30,49 @@ public class Co_Controller {
 	@GetMapping(value="/co_003_1")
 	public void co_List(Model model,Page_DTO dto) throws Exception{
 		
-		 model.addAttribute("data", co_service.co_List(dto)); 
+		List<AcVO> acvo = co_service.co_List(dto);
+		//리스트 썸네일 인코딩, 디코딩 작업.
+        for(int i = 0; i < acvo.size(); i++) {
+           
+           AcVO vo = acvo.get(i);
+            
+           if(vo.getCo_thumbnail() != null) {
+              
+              byte[] imageContent = Base64.getEncoder().encode(vo.getCo_thumbnail());
+              
+              //System.out.println("대체 뭐야........" + imageContent);
+              String thumbnail = new String(imageContent);
+              
+              System.out.println(vo.getCo_request() + "ㅇㅇㅇㅇㅇ");	
+              //System.out.println(thumbnail);
+           
+              vo.setCo_request(thumbnail);
+           // model.addAttribute("thumbnail"+i, thumbnail);
+           }else {
+              vo.setCo_request("");
+           }
+        }
+
+		System.out.println(dto.getType());
+		
+		model.addAttribute("data", acvo);
 		model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
 		System.out.println("page : " + dto.getPage());
 		System.out.println("Amount : " + dto.getAmount());
 		
+
+		for(int i= 0; i<dto.getTypeArr().length; i++) {
+		model.addAttribute("type"+i,dto.getTypeArr()[i]);
+		}
+		
 	}
-	 
+	 //대회 상세페이지
 	@GetMapping("/co_004_1")
 	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) {
 
 		model.addAttribute("data", co_service.co_detail(co_b_index));
-		
 	}
 	
 	//대회 접수 페이지

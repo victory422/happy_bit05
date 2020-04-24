@@ -149,6 +149,9 @@ function kakaopay(){
 	
 	var amount = $('#amount').val();
 	var co_b_index = $('#co_b_index').val();
+	
+	alert(amount);
+	
 	$.ajax({
         url : '/kakaopay',
         type : 'post',

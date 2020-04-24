@@ -21,6 +21,8 @@ public class Co_ServiceImpl implements Co_Service {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	
 	@Override
 	public int get_total(Page_DTO dto) {
 		
@@ -41,7 +43,11 @@ public class Co_ServiceImpl implements Co_Service {
 		List<AcVO> list;
 		 
 		try {
- 
+			if(dto.getInput_text() == null || dto.getInput_text().equals("")){
+				dto.setInput_text("");
+			}
+			
+		
 			list = sqlSession.selectList("ac.ac_list", dto);
 
 			return list;
@@ -84,6 +90,17 @@ public class Co_ServiceImpl implements Co_Service {
 	public int ap_insert(CoVO covo) throws Exception{
 		 
 		return comapper.ap_insert(covo); 
+	}
+
+	@Override
+	public List<AcVO> search_list(AcVO vo) {
+		
+		try {
+			return sqlSession.selectList("ac.search_list", vo);
+		} catch (Exception e) {
+			System.out.println("검색필터 에러"+e);
+			return null;
+		}
 	}
 	
 	

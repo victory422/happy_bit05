@@ -3,20 +3,88 @@
 
 <mapper namespace="ac">
 
-	<select id="ac_list" resultType="vs.ac.ac_001_1.vo.AcVO">		
+<resultMap type="AcVO" id="requestVO">
+	<result property="co_b_index" column="co_b_index"/>
+	<result property="co_b_title" column="co_b_title"/>
+	<result property="co_b_text" column="co_b_text" jdbcType="CLOB" javaType="java.lang.String"/>
+	<result property="co_b_day" column="co_b_day"/>
+	<result property="co_b_see" column="co_b_see"/>
+	<result property="co_b_good" column="co_b_good"/>
+	<result property="co_b_date" column="co_b_date"/>
+	<result property="co_b_area" column="co_b_area"/>
+	<result property="co_b_period" column="co_b_period"/>
+	<result property="co_b_type" column="co_b_type"/>
+	<result property="co_b_price" column="co_b_price"/>
+	<result property="co_souvenir" column="co_souvenir"/>
+	<result property="co_rating" column="co_rating"/>
+	<result property="co_thumbnail" column="co_b_thumbnail"/>
+</resultMap>
+
+
+
+<resultMap id="clobMap" type="java.util.HashMap">
+      <result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
+   </resultMap>
+
+
+<sql id="Page_DTO">
+		<trim prefix="(" suffix=") and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<when test="type == '육상'.toString()">
+							co_b_type like '%'||'육상'||'%'
+						</when>
+						<when test="type == '자전거'.toString()">
+							co_b_type like '%'||'자전거'||'%'
+						</when>
+						<!-- 
+						<when test="type == '운동복'.toString()">
+							li_category like '%'||'운동복'||'%'
+						</when>
+						<when test="type == '안전장비'.toString()">
+							li_category like '%'||'안전장비'||'%'
+						</when>
+						<when test="type == '신발'.toString()">
+							li_category like '%'||'신발'||'%'
+						</when>
+						<when test="type == '기타'.toString()">
+							li_category like '%'||'기타'||'%'
+						</when>
+						 -->
+						<when test="search_filter == 'all'.toString()">
+								co_b_title like '%'||#{input_text}||'%') or (co_b_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '내용'.toString()">
+							co_b_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '장소'.toString()">
+							co_b_area like '%'||#{input_text}||'%'
+						</when>
+						<otherwise>
+							co_b_title like '%'||#{input_text}||'%'
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+
+
+	<select id="ac_list" resultMap="requestVO">		
 		<![CDATA[ 
 		select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, 
-					co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating
+					co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail
 	 from(
 		select rownum rn, a.*
 		from
 		        (
 			        select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, 
-							co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating
+							co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail
 			        from competition
 			        where 
 			        ]]>
-			        	<!-- <include refid="Page_DTO"/>-->
+			        	 <include refid="Page_DTO"/>
 			        <![CDATA[ 
 			        co_b_index > '0'
 			        order by to_number(substr(co_b_index, 4)) desc
@@ -41,7 +109,17 @@
 				 )
 		]]>
 	</insert>
-
+	<update id="ac_001_01_thumbnail" parameterType="java.util.Map">
+      <selectKey keyProperty="co_index2" order="BEFORE" resultType="String">
+         <![CDATA[ 
+            select max(co_b_index) from competition
+         ]]>   
+      </selectKey>
+      
+      update competition
+      set co_b_thumbnail = #{co_b_thumbnail}
+      where co_b_index = #{co_index2}
+   </update>
 	<!-- 게시물 총합 출력 쿼리 -->
 	<select id="get_total" resultType="int">
 		select count(co_b_index) from
@@ -49,6 +127,8 @@
 	
 
 	</select>
+
+
 
 </mapper>
 

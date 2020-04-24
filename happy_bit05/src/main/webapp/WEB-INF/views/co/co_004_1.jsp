@@ -3,9 +3,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px">
 			<c:forEach items="${data}" var="data">
+			
+			<h1>${data.co_b_index }</h1>
 			<table class="table table-striped col-12">
 			<thead>
 				<tr>
@@ -35,7 +43,7 @@
 				</tr>
 			</thead>			 
 			</table>
-			
+			 
 				<!--  댓글  -->
 				<div class="container">
 					<label for="content"><h3>댓글</h3></label>
@@ -43,8 +51,9 @@
 						<div class="input-group">
 							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요."> 
 							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>								
-							</span> <input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->
+								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>		
+								<input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->						
+							</span> 
 						</div>
 					</form>
 				</div>
@@ -63,8 +72,9 @@ $(document).ready(function() {
 	
 	commentList();
 });
-
+ 
 var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+//var board_index = "${param.co_b_index}";
 
 $('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
 	var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴

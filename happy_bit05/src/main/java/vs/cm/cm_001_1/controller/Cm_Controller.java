@@ -29,7 +29,7 @@ public class Cm_Controller {
 	@ResponseBody
 	private List<CommentVO> mCommentServiceList(Model model,@RequestParam String data) throws Exception {
 		
-		
+		System.out.println(data);
 		
 		return cm_service.commentList(data);
 		

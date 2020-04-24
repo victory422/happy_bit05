@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.vo.PageUtil;
 import vs.cr.cr_001_1.service.Cr_Service;
 import vs.cr.cr_001_1.vo.CrVO;
 
@@ -20,9 +22,12 @@ public class Cr_Controller {
 	
 	//대회 후기 리스트
 	@GetMapping("cr_001_1")
-	public void cr_List(Model model, CrVO crvo) throws Exception {
+	public void cr_List(Model model, Page_DTO dto) throws Exception {
 		
-		model.addAttribute("data", cr_service.Cr_List(crvo));
+		model.addAttribute("data", cr_service.Cr_List(dto));
+		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
 		
 	}
 	//대회 후기 작성폼이동
