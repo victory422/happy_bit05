@@ -13,6 +13,10 @@ public interface Co_Service {
 	
 	public int get_total(Page_DTO dto);
 	
+	public List<AcVO> search_list(AcVO vo);
+	
+	
+	
 	public List<AcVO> co_detail(String co_b_index);
 	
 	public List<AcVO> ap_list(String co_b_index) throws Exception;

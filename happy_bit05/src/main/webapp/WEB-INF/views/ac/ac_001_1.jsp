@@ -1,31 +1,21 @@
 <%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
+
 <html>
 <title>Insert title here</title>
-</head>
-
 <script type="text/javascript"
 	src="../../../resources/CKEditorSample/ckeditor/ckeditor.js"></script>
- 
+	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script type="text/javascript"></script>
+</head>
+
 <div class="container" style="margin-top:20px; margin-bottom:20px;">
 	<div class="content" style="width: 1000px">
-		<form action="ac_001_1.do" method="post"> 
+		<form action="ac_001_1.do" method="post" enctype="multipart/form-data"> 
 		<div class="row justify-content-md-center">
 			<div class="col-sm-9">
 				<div class="input-group mb-3">
@@ -40,8 +30,8 @@
 				<div class="input-group mb-3">
 					<select class="custom-select" id="inputGroupSelect03" name="co_b_type">
 						<option selected>분류</option>
-						<option value="사이클">사이클</option>
-						<option value="마라톤">마라톤</option>
+						<option value="육상">육상</option>
+						<option value="자전거">자전거</option>
 					</select>
 				</div>
 			</div>
@@ -113,7 +103,7 @@
 		<div class="row justify-content-md-center">
 			<div class="col_c" style="margin-bottom: 100px">
 				<div class="input-group">
-					<textarea class="form-control" id="p_content" name="co_b_text"></textarea>
+					<textarea class="textarea" id="p_content" name="co_b_text"></textarea>
 					
 					<script type="text/javascript">
 							CKEDITOR.replace('p_content')                                                                              
@@ -121,6 +111,17 @@
 				</div>
 			</div>
 		</div>
+		 
+		 
+		<div class="input-group mb-1">
+                  <div class="input-group-prepend">
+                     <h5 class="my-0 font-weight-normal"><font style="font-weight:bold">썸네일</font></h5>    
+                  </div>
+                  <div class="custom-file">
+                        &nbsp;<input type="file" class="form-control-file" name="co_b_thumbnail">
+                      </div>
+               </div>
+               
 		<div class="row justify-content-md-center">
 			<button type="submit" class="btn btn-outline-secondary"
 				style="width: 20%; font-weight: bold">등 록</button>

@@ -3,30 +3,17 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<html>
-<head>
-<title>Insert title here</title>
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-	crossorigin="anonymous"></script>
 <script
-	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-	crossorigin="anonymous"></script>
-</head>
-<body>
-
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px">
 			<c:forEach items="${data}" var="data">
+			
+			<h1>${data.co_b_index }</h1>
 			<table class="table table-striped col-12">
 			<thead>
 				<tr>
@@ -56,7 +43,7 @@
 				</tr>
 			</thead>			 
 			</table>
-			
+			 
 				<!--  댓글  -->
 				<div class="container">
 					<label for="content"><h3>댓글</h3></label>
@@ -64,8 +51,9 @@
 						<div class="input-group">
 							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요."> 
 							<span class="input-group-btn">
-								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>								
-							</span> <input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->
+								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>		
+								<input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->						
+							</span> 
 						</div>
 					</form>
 				</div>
@@ -84,8 +72,9 @@ $(document).ready(function() {
 	
 	commentList();
 });
-
+ 
 var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+//var board_index = "${param.co_b_index}";
 
 $('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
 	var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴

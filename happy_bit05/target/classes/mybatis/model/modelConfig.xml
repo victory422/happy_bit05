@@ -8,5 +8,6 @@
 	<typeAlias type="vs.li.li_001_01.vo.LI_VO" alias="LI_VO" />
 	<typeAlias type="vs.lt.lt_001_01.vo.LT_VO" alias="LT_VO" />
 			<typeAlias type="vs.lc.lc_003_1.vo.LC_003_1_VO" alias="LC_003_1_VO"/>
+		<typeAlias type="vs.ac.ac_001_1.vo.AcVO" alias="AcVO" />
 		</typeAliases> 
 </configuration>

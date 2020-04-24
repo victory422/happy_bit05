@@ -3,14 +3,72 @@
 
 <mapper namespace="vs.cm.cm_001_1.mapper.CrMapper">
 <!-- 대회 후기 리스트 -->
-<select id="cr_list" resultType="vs.cr.cr_001_1.vo.CrVO">
-<![CDATA[
-select *
-from competition_review
-order by co_r_index desc
-]]>
-
-</select>
+<sql id="Page_DTO">
+		<trim prefix="(" suffix=") and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<when test="type == '육상'.toString()">
+							co_r_type like '%'||'육상'||'%'
+						</when>
+						<when test="type == '자전거'.toString()">
+							co_r_type like '%'||'자전거'||'%'
+						</when>
+						<!-- 
+						<when test="type == '운동복'.toString()">
+							li_category like '%'||'운동복'||'%'
+						</when>
+						<when test="type == '안전장비'.toString()">
+							li_category like '%'||'안전장비'||'%'
+						</when>
+						<when test="type == '신발'.toString()">
+							li_category like '%'||'신발'||'%'
+						</when>
+						<when test="type == '기타'.toString()">
+							li_category like '%'||'기타'||'%'
+						</when>
+						 -->
+						<when test="search_filter == 'all'.toString()">
+								co_r_title like '%'||#{input_text}||'%') or (co_r_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '내용'.toString()">
+							co_r_text like '%'||#{input_text}||'%'
+						</when>
+						<!-- 
+						<when test="search_filter == '장소'.toString()">
+							co_r_area like '%'||#{input_text}||'%'
+						</when> -->
+						<otherwise>
+							co_r_title like '%'||#{input_text}||'%'
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+<select id="cr_list" resultType="vs.cr.cr_001_1.vo.CrVO">		
+		<![CDATA[ 
+		select co_r_index, co_r_title, co_r_text,
+				co_r_see,co_r_good,co_r_day,co_r_type
+	 from(
+		select rownum rn, a.*
+		from
+		        (
+			        select co_r_index, co_r_title, co_r_text,
+						co_r_see,co_r_good,co_r_day,co_r_type
+			        from competition_review
+			        where 
+			        ]]>
+			        	 <include refid="Page_DTO"/>
+			        <![CDATA[ 
+			        co_r_index > '0'
+			        order by to_number(substr(co_r_index, 4)) desc
+		        )a
+		where rownum <= (#{page} * #{amount})
+		)
+	where rn > ((#{page}-1) * #{amount})
+	]]>
+	</select>
 
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
@@ -18,5 +76,11 @@ order by co_r_index desc
 	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type})
 
 </insert>
+<!-- 게시물 총합 출력 쿼리 -->
+	<select id="get_total" resultType="int">
+		select count(co_r_index) from
+		competition_review 
+	
 
+	</select>
 </mapper>

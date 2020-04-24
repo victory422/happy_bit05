@@ -1,6 +1,7 @@
 package vs.ac.ac_001_1.vo;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class AcVO {
@@ -18,6 +19,28 @@ public class AcVO {
 	private String co_b_price;
 	private String co_souvenir;
 	private String co_rating;
+	private MultipartFile co_b_thumbnail;
+	private byte[] co_thumbnail;
+	private String co_request;
+	
+	public byte[] getCo_thumbnail() {
+		return co_thumbnail;
+	}
+	public void setCo_thumbnail(byte[] co_thumbnail) {
+		this.co_thumbnail = co_thumbnail;
+	}
+	public String getCo_request() {
+		return co_request;
+	}
+	public void setCo_request(String co_request) {
+		this.co_request = co_request;
+	}
+	public MultipartFile getCo_b_thumbnail() {
+		return co_b_thumbnail;
+	}
+	public void setCo_b_thumbnail(MultipartFile co_b_thumbnail) {
+		this.co_b_thumbnail = co_b_thumbnail;
+	}
 	
 	public String getCo_rating() {
 		return co_rating;
