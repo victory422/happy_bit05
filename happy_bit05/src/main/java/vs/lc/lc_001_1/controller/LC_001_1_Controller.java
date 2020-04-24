@@ -29,15 +29,13 @@ public class LC_001_1_Controller {
 	
 	private LC_001_1_Service service;
 	
-	@RequestMapping(value = "test")
-	public String testGo() {
-		return "LC/LC_Test";
+	@RequestMapping(value = "write")
+	public String writeLC() {
+		return "LC/LC_001_1";
 	}
 
 	@RequestMapping(value = "uploadCourse", method = RequestMethod.POST)
 	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model) {
-		
-		
 		
 		System.out.println("컨트롤러 : " + vo);
 		//System.out.println("컨트롤러 : " + vo2);
@@ -58,7 +56,7 @@ public class LC_001_1_Controller {
 		}
 		
 		
-		return "redirect:/";
+		return "redirect:/lc/002/list";
 	}
 	
 	@RequestMapping(value = "uploadCourse2", method = RequestMethod.POST)

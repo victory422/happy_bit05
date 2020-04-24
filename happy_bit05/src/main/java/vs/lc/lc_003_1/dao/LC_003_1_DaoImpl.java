@@ -21,19 +21,33 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 	public LC_003_1_VO getLC(String lc_index) {
 		// TODO Auto-generated method stub
 		System.out.println("DAO에서 번호는??? : " + lc_index);
-		return session.selectOne("LC_003_01", lc_index);
+		return session.selectOne("lc_003_01", lc_index);
 	}
 
 	@Override
 	public int modifyLC(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
-		return session.update("LC_003_02", vo);
+		
+		System.out.println(vo.getLc_index());
+		return session.update("lc_003_02", vo);
 	}
 
 	@Override
 	public int modifyLC_thumbnail(Map<String, Object> hmap) {
 		// TODO Auto-generated method stub
 		return session.update("lc_003_02_thumbnail", hmap);
+	}
+
+	@Override
+	public int deleteLC(String lc_index) {
+		// TODO Auto-generated method stub
+		return session.delete("lc_003_03", lc_index);
+	}
+
+	@Override
+	public int deleteLC_map(String lc_index) {
+		// TODO Auto-generated method stub
+		return session.delete("lc_003_03_map", lc_index);
 	}
 
 

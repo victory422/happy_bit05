@@ -36,4 +36,16 @@ public class LC_003_1_ServiceImpl implements LC_003_1_Service{
 		return dao.modifyLC_thumbnail(hmap) == 1;
 	}
 
+	@Override
+	public boolean deleteLC(String lc_index) {
+		// TODO Auto-generated method stub
+		return dao.deleteLC(lc_index) == 1;
+	}
+
+	@Override
+	public boolean deleteLC_map(String lc_index) {
+		// TODO Auto-generated method stub
+		return dao.deleteLC_map(lc_index) == 1;
+	}
+
 }

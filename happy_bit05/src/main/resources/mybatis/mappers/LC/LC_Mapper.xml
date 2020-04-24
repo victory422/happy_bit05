@@ -29,7 +29,7 @@
 		<result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
 	</resultMap>
 	
-		<!-- 검색하기 -->
+	<!-- 카테고리별 검색하기 -->
 	<sql id="criteria" >
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 				<foreach item="type" collection="typeArr">
@@ -47,6 +47,22 @@
 				</foreach>
 			</trim>
 	</sql>
+	
+	 <!-- 타입별 검색하기 -->
+	 <sql id="type_match" >
+		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+					<trim prefix="OR">
+						<choose>
+							<when test = "lc_type == '육상'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+							<when test = "lc_type == '자전거'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+						</choose>
+					</trim>
+			</trim>
+	</sql> 
 	
 	
 	<!-- 리스트 뽑아오기 -->
@@ -85,13 +101,17 @@
 				)
 				where rn > (#{pageNum} -1) * #{amount}
 		]]>
+				<include refid="type_match"></include>
 	</select>
 	
 	<!-- 게시글 갯수 세기 -->
 	<select id="getTotalCount" resultType="int">
-		select count(*) from course where 
+		select count(lc_index) from
+			( select * from course where 
 			<include refid="criteria"></include>
-		lc_index like 'lc_%'
+			lc_index like 'lc_%'
+			<include refid="type_match"></include>
+			)
 	</select>
 	
 	<!-- 좋아요 많은 순서대로 가져오기 -->
@@ -109,6 +129,7 @@
 			)	
 			where rownum <= 4
 		]]>
+			<include refid="type_match"></include>
 	</select>
 
 	<!-- 게시글 업로드 -->
@@ -148,7 +169,7 @@
 	
 
 	<!-- 상세보기 -->	
-	<select id="LC_003_01" resultMap="lc_getResult">
+	<select id="lc_003_01" resultMap="lc_getResult">
 		<![CDATA[
 			select * from course a join map b 
 				on b.lc_index = a.lc_index
@@ -172,4 +193,18 @@
 			where lc_index = #{lc_index}
 		]]>	
 	</update>
+	
+	<!-- 게시글 삭제하기 -->
+	<delete id="lc_003_03">
+		<![CDATA[ 
+			delete from course where lc_index = #{lc_index}
+		]]>
+	</delete>
+	
+	<!-- 지도 정보 삭제하기 -->
+	<delete id="lc_003_03_map">
+		<![CDATA[ 
+			delete from map where lc_index = #{lc_index}
+		]]>
+	</delete>
 </mapper>

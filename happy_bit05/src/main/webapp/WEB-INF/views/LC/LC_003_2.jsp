@@ -30,7 +30,9 @@
 <!-- 지도 부분 -->
  	<div class="container">
  	
- 	<form:form name="update" action="" method="post" enctype="multipart/form-data">
+ 	<form:form name="update" action="lc_update" method="post" enctype="multipart/form-data">
+	
+		<input type="hidden" name="lc_index" value="${lc_get.lc_index }" />
 	
 		<h3 class="pb-4 mb-4 font-italic border-bottom" style="margin-top:50px"><font style="vertical-align: inherit; font-weight:bold;"><font style="vertical-align: inherit;">
 	       	 코스 등록
