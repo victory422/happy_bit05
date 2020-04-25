@@ -6,7 +6,7 @@
 <resultMap type="AcVO" id="requestVO">
 	<result property="co_b_index" column="co_b_index"/>
 	<result property="co_b_title" column="co_b_title"/>
-	<result property="co_b_text" column="co_b_text" jdbcType="CLOB" javaType="java.lang.String"/>
+	<result property="co_b_text" column="co_b_text"/>
 	<result property="co_b_day" column="co_b_day"/>
 	<result property="co_b_see" column="co_b_see"/>
 	<result property="co_b_good" column="co_b_good"/>

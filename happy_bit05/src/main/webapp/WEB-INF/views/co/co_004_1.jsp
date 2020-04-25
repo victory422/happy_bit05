@@ -45,25 +45,32 @@
 			</table>
 			 
 				<!--  댓글  -->
+				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; padding: 5px;" >
+					<div class="row col-12" >
+					<div class="col-lg-12">
 				<div class="container">
-					<label for="content"><h3>댓글</h3></label>
+				<label for="content">댓글쓰기</label>
+				</div>
 					<form name="commentInsertForm">
 						<div class="input-group">
-							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요."> 
+							<input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요." style="margin-bottom: 25px;"> 
 							<span class="input-group-btn">
 								<button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>		
 								<input type="hidden" id="board_index" name="board_index"value="${data.co_b_index}"><!-- value값 게시판에 맞게 바꾸세요 -->						
-							</span> 
+							</span>
+							<div class="container"><b>Comments</b></div>
+							<div class="container" style="border:1px solid black;">
+							<div class="commentList"></div>
+						</div>
 						</div>
 					</form>
+					</div>
+					</div>
 				</div>
 				<!-- 댓글 마무리 -->
 		</c:forEach>
 		</div>
 
-		<div class="container">
-			<div class="commentList"></div>
-		</div>
 	</div>
  
 <script>
