@@ -13,39 +13,33 @@
 		<div class="content" style="width: 1000px">
 			<c:forEach items="${data}" var="data">
 			
-			<h1>${data.co_b_index }</h1>
-			<table class="table table-striped col-12">
-			<thead>
-				<tr>
-				<td><h1>제목 : ${data.co_b_title }</h1></td>
-				</tr>
-				<tr>
-				<td class="">작성자 : 이찬영</td>
-				<td>종목 : ${data.co_b_type }</td>
-				<td>추천수 : ${data.co_b_good }</td>
-				<td>조회수 : ${data.co_b_see }</td>
-				</tr>
-				<tr> 
-				<td>접수기간 : ${data.co_b_period }</td>
-				<td>
-				<form role="form" action="co_001_1" method = "get">
-					<input type="hidden" name="co_b_index" value="${data.co_b_index }">
-					 
-					<button type="submit" class="btn btn-primary float-right">대회 접수</button>
-				</form>
-				</td>
-				</tr>		
-				<tr>
-				<td><h2>내용</h2></td>
-				</tr>		
-				<tr>
-				<td>${data.co_b_text }</td>
-				</tr>
-			</thead>			 
-			</table>
+	    <div class="row board_style">
+				<div class="col-md-8">
+					<h1>제목 : ${board.co_b_title }</h1>
+				</div>
+				<div class="col-md-4" style="text-align: right;">
+					<h6>추천수:<span class="good_cnt"></span> 조회수:${board.co_b_see } </h6>
+				</div>
+			</div>
+
+			<br>
+
+			<div class="row board_style">
+				<div class="col-sm-12">
+					<h4>
+						장비게시판<small> (후기게시판) </small>
+					</h4>
+				</div>
+			</div>
+
+			<br>
+			<div>
+				<h2>내용:</h2>
+				<div class="text_container text_padding">${board.co_b_text }</div>
+			</div>
 			 
 				<!--  댓글  -->
-				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; padding: 5px;" >
+				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:100px; padding: 5px;" >
 					<div class="row col-12" >
 					<div class="col-lg-12">
 				<div class="container">

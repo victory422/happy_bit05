@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-top: 100px; margin-bottom:100px;">
 	<form class="form-horizontal" role="form" method="post" action="ap_001_1">
 		<div class="form-group">
 			<label for="provision" class="col-lg-5 control-label">참가자 유의사항 및 참가동의서</label>
