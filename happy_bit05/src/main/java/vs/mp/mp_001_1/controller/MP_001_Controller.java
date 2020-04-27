@@ -1,4 +1,4 @@
-package vs.mp.lo_001_1.controller;
+package vs.mp.mp_001_1.controller;
 
 import java.util.HashMap;
 import java.util.Map;
