@@ -5,13 +5,30 @@
 	pageEncoding="UTF-8"%>
 <html>
 <title>회원가입</title>
+
+<script>
+
+	function sub(){
+		var a = document.getElementById("form").m_birth_yy.value;
+		var b = document.getElementById("form").m_birth_mm.value;
+		var c = document.getElementById("form").m_birth_dd.value;
+		if(c.length==1) c= '0'+c;
+		var d = a+b+c;
+		document.getElementById("form").m_birth.value=d;
+		document.getElementById("form").submit();
+	}
+	
+	
+</script>
+
+
 </head>
 <body>
 	<div id="wrap">
 		<br> <br> <b><font size="6" color="gray">회원가입</font></b> <br>
 		<br> <br>
 
-		<form action="/ms/regist" method="post">
+		<form id="form" action="/ms/regist" method="post" onSubmit="return sub()">
 			<table>
 				<tr>
 					<td id="title">아이디</td>
@@ -20,7 +37,8 @@
 				</tr>
 				<tr>
 					<td id="title">닉네임</td>
-					<td><input type="text" name="m_nickName" maxlength="20">
+					<td><input type="text" 
+					name="m_nickName" maxlength="20">
 						<input type="button" value="중복확인"></td>
 				</tr>
 
@@ -49,8 +67,9 @@
 
 				<tr>
 					<td id="title">생일</td>
-					<td><input type="text" name="m_birth_yy" maxlength="4"
-						placeholder="년(4자)" size="6"> <select name="m_birth_mm">
+					<td><input type="text" id="m_birth_yy" name="m_birth_yy" maxlength="4"
+						placeholder="년(4자)" size="6"> 
+						<select id="m_birth_mm" name="m_birth_mm">
 							<option value="">월</option>
 							<option value="01">1</option>
 							<option value="02">2</option>
@@ -65,8 +84,11 @@
 							<option value="11">11</option>
 							<option value="12">12</option>
 
-					</select> <input type="text" name="m_birth_dd" maxlength="2" placeholder="일"
-						size="4"></td>
+						</select> 
+						<input type="text" id="m_birth_dd" name="m_birth_dd" 
+						maxlength="2" placeholder="일" size="4">
+						<input type="hidden" name="m_birth" value="">
+					</td>
 				</tr>
 
 				<tr>
@@ -98,11 +120,11 @@
 				<tr>
 					<td id="title">사진</td>
 					<td><input type="file" name="m_picture" size=40></td>
-					<td><input type="submit" value="업로드"></td>
+					<td><input type="button" value="업로드"></td>
 				</tr>
 			</table>
 			<br> 
-			<input type="submit" value="가입" /> 
+			<input type="button" value="가입" onClick="sub()"/> 
 			<input type="reset" value="취소" />
 		</form>
 </body>

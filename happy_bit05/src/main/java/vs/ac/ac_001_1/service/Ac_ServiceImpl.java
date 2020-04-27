@@ -18,7 +18,7 @@ public class Ac_ServiceImpl implements Ac_Service {
 	@Autowired
 	private SqlSession sqlSession;
 
-	public List<AcVO> ac_List(Page_DTO dto) {
+	public Page_DTO ac_List(Page_DTO dto) {
 		List<AcVO> list;
 		
 		
@@ -26,7 +26,7 @@ public class Ac_ServiceImpl implements Ac_Service {
  
 			list = sqlSession.selectList("ac.ac_list",dto);
 
-			return list;
+			return dto;
 
 		} catch (Exception e) {
 			System.out.println("ac_List ���� " + e);

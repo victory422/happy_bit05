@@ -14,8 +14,7 @@ import vs.sa.sa_002.dto.Page_DTO;
 @Controller
 public interface MP_001_Controller {
 
-	ModelAndView MP_001_1(String str, HttpServletRequest request, HttpServletResponse response)
-			throws Exception;
+	ModelAndView MP_001_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 
 }

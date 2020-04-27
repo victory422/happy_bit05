@@ -11,6 +11,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vs.ac.ac_001_1.service.Ac_Service;
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.co.co_001_1.dto.Page_DTO;
  
 @Controller
 @RequestMapping("/ac/*")
@@ -20,10 +21,10 @@ public class Ac_Controller {
 	private Ac_Service ac_service;
 
 	@GetMapping(value="/ac_002_1")
-	public void ac_List(Model model ,AcVO acvo) throws Exception {
+	public void ac_List(Model model ,Page_DTO dto) throws Exception {
 		
 		
-		 model.addAttribute("data", ac_service.ac_List(acvo)); 
+		 model.addAttribute("data", ac_service.ac_List(dto)); 
 		
 	}
 	
