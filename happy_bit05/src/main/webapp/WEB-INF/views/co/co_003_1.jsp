@@ -11,6 +11,9 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  
+  
+ 
 <div class="container">
 	<div class="row col-12" >
 		<div class="col-lg-12">
@@ -72,13 +75,13 @@
 					<div>
 						<c:forEach items="${data}" var="data">
 						
-					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
+					<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
 						<tr>
-							<td rowspan="4" style="width:200px; height: 125px;"><img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 125px;"></td>
-							<td>제목 : ${data.co_b_title}</td>
+							<td rowspan="4" style="width:200px; height: 125px; padding: 0;"><img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 180px; padding: 0;"></td>
+							<td ><h2>제목 : ${data.co_b_title}</h2></td>
 						</tr>
 						<tr>
-							<td>일자 : ${data.co_b_day}</td>
+							<td >일자 : ${data.co_b_day}</td>
 						</tr>
 						<tr>
 							<td>장소 : ${data.co_b_area}</td>

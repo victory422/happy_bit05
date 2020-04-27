@@ -73,7 +73,7 @@ public class Cm_Controller {
 		System.out.println(com_index);
 		System.out.println(com_text);
 		
-		comment.setCo_b_index(com_index);
+		comment.setBoard_index(com_index);
 		comment.setCom_text(com_text);
 		
 		//comment.setCom_writer("�մ�");
@@ -90,9 +90,9 @@ public class Cm_Controller {
 		System.out.println(com_text);
 		System.out.println(board_index);
 	
-		comment.setCom_indexl(com_index);
+		comment.setCom_index1(com_index);
 		comment.setCom_text(com_text);
-		comment.setCo_b_index(board_index);
+		comment.setBoard_index(board_index);
 		return cm_service.dcommentInsert(comment);
 	}
 	 

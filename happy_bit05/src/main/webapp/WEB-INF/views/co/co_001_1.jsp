@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-top: 100px; margin-bottom:100px;">
 	<form class="form-horizontal" role="form" method="post" action="ap_001_1">
 		<div class="form-group">
 			<label for="provision" class="col-lg-5 control-label">참가자 유의사항 및 참가동의서</label>
@@ -83,7 +83,7 @@
 							<div>
 								<c:set var="co_souvenir" value="${data.co_souvenir }"/>
 								<c:forTokens var="co_souveniradd" items="${co_souvenir }" delims=",">
-								<label><input type="radio" name="co_m_souvenir" value="${co_souveniradd }">${co_souveniradd }<br></label>
+								<label style="display:inherit"><input type="radio" name="co_m_souvenir" value="${co_souveniradd }">${co_souveniradd }<br></label>
 								</c:forTokens>
 							</div>
 							</td>
@@ -94,7 +94,7 @@
 							<div>
 							<c:set var="co_rating" value="${data.co_rating }"/>
 							<c:forTokens var="co_ratingadd" items="${co_rating }" delims=",">							
-							<label><input type="radio" name="co_m_event" value="${co_ratingadd }">${co_ratingadd }<br></label>
+								<label style="display: inherit"><input type="radio" name="co_m_event" value="${co_ratingadd }">${co_ratingadd }<br></label>
 							</c:forTokens>
 							</div>
 							</td>
@@ -118,12 +118,14 @@
 								${data.co_b_price }							
 							<input type="hidden" value="${data.co_b_price }" id="amount">
 								<input type="hidden" value="${data.co_b_index }" id="co_b_index">
-								<input type='button' class="float-right" onclick="kakaopay()" value="결제하기">	
+								<!--  <input type='button' class="float-right" onclick="kakaopay()" value="결제하기">-->
 							<c:if test="${param.kakaotest != '1'}">
-					  		  	<label class="float-right"> 결제전</label>
+					  		  	<label class="float-right">
+					  		  		<input type='button' class="float-right" onclick="kakaopay()" value="결제하기">
+					  		  	</label>
 							</c:if>
 							<c:if test="${param.kakaotest == '1'}">
-								<label class="float-right">결제완료</label>					
+								<label class="float-right"><img src='../resources/img/check.jpg'></label>					
 							</c:if>
 							</td>
 

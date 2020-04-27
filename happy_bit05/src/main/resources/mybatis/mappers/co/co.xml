@@ -15,7 +15,7 @@
 	<![CDATA[	
 		
 		select * from competition where co_b_index = #{co_b_index}
-
+		
 	]]>	
 	</select>
 
