@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import vs.ac.ac_001_1.vo.AcVO;
 import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.vo.CoVO;
 
 @Service
 public class Ac_ServiceImpl implements Ac_Service {
@@ -48,7 +49,17 @@ public class Ac_ServiceImpl implements Ac_Service {
 		sqlSession.update("ac.ac_001_01_thumbnail", hmap);
 		
 	}
-	
+	/*
+	@Override
+	public List<CoVO> ac_mlist(String co_b_index) {
+		
+		List<CoVO> mlist;
+		
+		mlist = sqlSession.selectList("ac.ac_mlist",co_b_index);
+		
+		return mlist;
+	}
+	*/
 	
 	
 }

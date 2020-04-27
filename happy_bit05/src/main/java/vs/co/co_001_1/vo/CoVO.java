@@ -15,7 +15,15 @@ public class CoVO {
 	private String co_m_event;
 	private String co_m_souvenir;
 	private String co_b_index;
+	private String m_index;
 	
+	
+	public String getM_index() {
+		return m_index;
+	}
+	public void setM_index(String m_index) {
+		this.m_index = m_index;
+	}
 	public String getCo_b_index() {
 		return co_b_index;
 	}

@@ -17,7 +17,7 @@ public class Cm_ServiceImpl implements Cm_Service{
 	//댓글 리스트
 	@Override 
 	public List<CommentVO> commentList(String data) throws Exception{
-		
+	
 		return commentmapper.commentList(data);
 	} 
 		

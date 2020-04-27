@@ -28,7 +28,7 @@ public class Ac_Controller {
 	@GetMapping(value="/ac_002_1")
 	public void ac_List(Model model,Page_DTO dto) throws Exception {
 		
-		 model.addAttribute("data", dto);
+		 model.addAttribute("data", ac_service.ac_List(dto));
 		 model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
 		
 	}
@@ -66,9 +66,12 @@ public class Ac_Controller {
 	 //대회 상세페이지
 	@GetMapping("/ac_003_1")
 	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) {
-
+		
+		
+	//model.addAttribute("member", ac_service.ac_mlist(co_b_index));
 		model.addAttribute("data", co_service.co_detail(co_b_index));
 	}
+	
 	
 	
 }

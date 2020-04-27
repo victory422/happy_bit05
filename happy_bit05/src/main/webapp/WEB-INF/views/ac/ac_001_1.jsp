@@ -11,6 +11,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script type="text/javascript"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <div class="container" style="margin-top:20px; margin-bottom:20px;">
@@ -107,7 +109,7 @@
 					
 					<script type="text/javascript">
 							CKEDITOR.replace('p_content')                                                                              
-						</script>
+					</script>
 				</div>
 			</div>
 		</div>
@@ -130,9 +132,13 @@
 	</div>
 </div>
 
+
+</body>
+
  
 <script>
- 
+
+
 
 $('#ac_souveniradd').click(function(){
 		

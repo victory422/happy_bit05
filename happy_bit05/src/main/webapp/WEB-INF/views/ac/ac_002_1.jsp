@@ -25,6 +25,7 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
+  
 <div class="container"> 
 	<div class="row">
 		<div class="col-lg-12">
@@ -72,6 +73,7 @@
 									</option> 
 								</c:forEach>--%>
 				</select> -->
+				
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
@@ -98,7 +100,7 @@
 								<th>참가자 리스트</th>
 							</tr>
 						</thead>
-				<c:forEach items="${data}" var="data">							
+						<c:forEach items="${data}" var="data">
 							<tr>
 								<td><label class="custom-control-label" for="jb-radio-1"></label></td>
 								<td>${data.co_b_title}</td>
@@ -109,7 +111,7 @@
 								<td><button type="button" class="btn btn-primary">접수중</button></td>
 								<td><button type="button" class="btn btn-primary" onclick="location.href='ac_003_1?co_b_index=${data.co_b_index}'">상세보기</button></td>
 							</tr>
-				</c:forEach>
+					</c:forEach>
 						</table>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true">

@@ -9,16 +9,18 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  
+			
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px">
 			<c:forEach items="${data}" var="data">
-			
-	    <div class="row board_style">
+			<div class="row board_style">
 				<div class="col-md-8">
-					<h1>제목 : ${board.co_b_title }</h1>
+					<h1>제목 : ${data.co_b_title }</h1>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
-					<h6>추천수:<span class="good_cnt"></span> 조회수:${board.co_b_see } </h6>
+					<h6>추천수:<span class="good_cnt"> 10</span> 조회수:60 </h6>
+					작성일자:${data.co_b_date }
 				</div>
 			</div>
 
@@ -29,17 +31,39 @@
 					<h4>
 						장비게시판<small> (후기게시판) </small>
 					</h4>
+					<button onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
+					<h6>종목: ${data.co_b_type }</h6>
 				</div>
 			</div>
+			<hr>
 
-			<br>
-			<div>
-				<h2>내용:</h2>
-				<div class="text_container text_padding">${board.co_b_text }</div>
+			<div style="margin-bottom: 50px">
+				<div class="text_container text_padding">${data.co_b_text }</div>
 			</div>
-			 
+			<div class="box">
+				<div id="" class="padding_1">
+				<!-- 좋아요 기능 -->
+					<c:choose>
+						<c:when test="${board.m_index ne null}">
+							<a href='javascript: like_func();'><img
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+						</c:when>
+						<c:otherwise>
+							<a href='javascript: login_need();'><img
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="push padding_1">
+						<button class="btn btn-info" onclick="modify()">수정하기</button>
+						<button  class="btn btn-info" onclick="fn_golist()">
+						목록으로 돌아가기  ${back_url}
+					</button>
+				</div>
+			</div>
+			
 				<!--  댓글  -->
-				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:100px; padding: 5px;" >
+				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:30px; padding: 5px;" >
 					<div class="row col-12" >
 					<div class="col-lg-12">
 				<div class="container">
@@ -90,23 +114,34 @@ function commentList() {
 		type : 'get',
 		data : {data : board_index},
 		success : function(data) {
+			console.log('test',JSON.stringify(data))
 			//console.log(value.com_index1);
 			var a = '';
 			$.each(data,function(key, value) {
-				a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-				a += 	'<div class="commentInfo'+value.com_index+'">'+ '댓글번호 : '+ value.com_index ;
-				//댓글이 안달린놈은 버튼 안나오게
-				//if(value.com_index1 != null){
+					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+					a += 	'<div class="commentInfo'+value.com_index+'">'+ '댓글번호 : '+ value.com_index ;		
 					a +=	'<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
-				//}
-				a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
-				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
-                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
-                a +=	'</div>';             
-				a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
-				a +='</div>';				
+					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
+					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
+	                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
+	                a +=	'</div>';             
+					a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
+				/*
+					if(value.com_dedetflag == 1){					
+						a += '<div class="commentArea1'+value.com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px; margin-left: 50px;">';
+						a += 	'<div class="commentInfo'+value.com_index1+'">'+ '상위 댓글 번호 : '+ value.com_index1 ;
+						a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
+						a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
+		                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	
+		                a +=	'</div>'; 
+		                a += 	'<div class="commentContent1'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
+		                a +='</div>'
+					}
+					a +='</div>';
+				*/
 			});
 			$(".commentList").html(a);
+			
 		}
 	});
 }
@@ -123,15 +158,17 @@ function dedetlist(com_index){
 		data : {'com_index' : com_index},
 		success : function(data){
 			$.each(data,function(key, value){
-				a += '<div class="commentArea1'+com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px; margin-left: 50px;">';
+				a += '<div class="commentArea1'+com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
 				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '상위 댓글 번호 : '+ value.com_index1 ;
-				a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
+				a += 		"<img src='../resources/img/reply.png' class='float-left'>";
 				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
                 a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	
                 a +=	'</div>'; 
                 a += 	'<div class="commentContent1'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
                 a +='</div>'
 			});
+			
+			
 			if($("#a"+com_index).text() == '댓글보기'){
 				$(".commentContent" + com_index).append(a);
 				$("#a"+com_index).text("댓글지우기");
@@ -139,11 +176,13 @@ function dedetlist(com_index){
 				$(".commentArea1" + com_index).remove();
 				$("#a"+com_index).text("댓글보기");
 			}
+			
 
 		}
 	})	
 
 }
+
 
 //댓글작성
 function commentInsert(insertData) {
@@ -205,7 +244,7 @@ function dedet(com_index){
 	alert(board_index);
 	
 
-		var textareaTag = "<hr><div style='margin-left:50px;'><textarea rows='2' cols='130' name='test1_"+com_index+"'></textarea>";
+		var textareaTag = "<hr><div style='margin-left:50px;'><textarea rows='2' cols='105' name='test1_"+com_index+"'></textarea>";
 			//textareaTag += "<input type='hidden' id='co_b_index' name='co_b_index'>";
 			textareaTag += "<button type='button'  class='btn btn-outline-secondary' style='margin-bottom:25px' onclick='dedetinsert("+com_index+")'>완료</button></div>"
 	    $(".commentContent" + com_index).append(textareaTag);

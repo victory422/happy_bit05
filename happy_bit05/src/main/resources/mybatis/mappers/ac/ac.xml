@@ -3,6 +3,7 @@
 
 <mapper namespace="ac">
 
+
 <resultMap type="AcVO" id="requestVO">
 	<result property="co_b_index" column="co_b_index"/>
 	<result property="co_b_title" column="co_b_title"/>
@@ -19,6 +20,17 @@
 	<result property="co_rating" column="co_rating"/>
 	<result property="co_thumbnail" column="co_b_thumbnail"/>
 </resultMap>
+
+<!-- 
+<resultMap type="CoVO" id="requestCo">
+	<result property="" column=""/>
+	
+
+
+
+
+</resultMap>
+-->
 
 
 
