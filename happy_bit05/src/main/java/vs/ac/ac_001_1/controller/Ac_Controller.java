@@ -30,7 +30,7 @@ public class Ac_Controller {
 		
 		 model.addAttribute("data", ac_service.ac_List(dto));
 		 model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
-		
+		 
 	}
 	
 	@RequestMapping(value = "ac_001_1.do", method = RequestMethod.POST)
