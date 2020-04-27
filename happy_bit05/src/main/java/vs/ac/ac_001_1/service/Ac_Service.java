@@ -8,7 +8,6 @@ import vs.co.co_001_1.dto.Page_DTO;
 
 public interface Ac_Service {
 	
-	public List<AcVO> ac_List(Page_DTO dto);
 	
 	public void ac_insert(AcVO acvo);
 	

@@ -1,6 +1,7 @@
 package vs.ms.ms_001.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +23,7 @@ public interface MS_001_Controller {
 
 //	ModelAndView MS_001_regist(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	MS_001_VO test(MS_001_VO ms_001_vo) throws Exception;
+	ModelAndView test(MS_001_VO ms_001_vo, HttpServletRequest request, HttpServletResponse respons) throws Exception;
 
 
 

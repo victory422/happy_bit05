@@ -18,8 +18,6 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 	private MS_001_SaService ms_001_Service;
 	private MS_001_VO ms_001_vo;
 	
-
-	
 	
 	@Override
 	@RequestMapping(value="/ms")
@@ -34,13 +32,16 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 	
 	@Override
 	@RequestMapping(value="/ms/regist")
-	public  MS_001_VO test(MS_001_VO ms_001_vo) throws Exception {
+	public  ModelAndView test(MS_001_VO ms_001_vo,
+			HttpServletRequest request, HttpServletResponse respons) throws Exception {
+		
 		System.out.println("ms회원가입 regist mav");
 		System.out.println(ms_001_vo);
+		ms_001_Service.memberVO(ms_001_vo);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("mp/mp_001_1");
-		
-		return ms_001_vo;
+		mav.setViewName("lo/lo_001_1");
+		request.setAttribute("memberList", ms_001_vo);
+		return mav;
 	}
 	
 	

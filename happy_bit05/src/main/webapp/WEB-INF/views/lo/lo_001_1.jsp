@@ -14,7 +14,7 @@
 	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="styles.css">
+
 </head>
 <body>
 	<div class="container">
@@ -25,19 +25,19 @@
 
 				</div>
 				<div class="card-body">
-					<form>
+					<form action="/lo/login" method="post">
 						<div class="input-group form-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" class="form-control" id="user_id" placeholder="id">
+							<input type="text" class="form-control" name="m_id" placeholder="id">
 
 						</div>
 						<div class="input-group form-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="password" class="form-control"
+							<input type="password" class="form-control" name="m_pw"
 								placeholder="password">
 						</div>
 						<div class="row align-items-center remember">
@@ -46,9 +46,13 @@
 						</div>
 						<div class="form-group">
 							<input type="submit" value="Login"
-								class="btn float-right login_btn"><br>
-							<br> <input type="submit" value="회원가입"
-								class="btn float-right member_btn">
+								class="btn float-right login_btn">
+						</div>
+					
+						<br>
+						<div class="form-group">
+							<input type="submit" value="회원가입" onclick="javascript: form.action='/ms';"
+							class="btn float-right member_btn"></button>
 						</div>
 					</form>
 				</div>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="member">
+	<insert id="get_member"
+		parameterType="vs.ms.ms_001.vo.MS_001_VO">
+		<![CDATA[
+			INSERT INTO member VALUES (
+			(select count(*) from member)+1,
+			#{m_id},
+			#{m_pw1},
+			#{m_name},
+			#{m_gender},
+			#{m_birth},
+			#{m_email_1},
+			#{m_tel},
+			#{m_address},
+			#{m_picture},
+			#{m_nickName},
+			'1',
+			0,
+			0
+		)
+		]]>
+	</insert>
+
+	<select id="login" parameterType="vs.lo.lo_001.vo.LO_001_VO"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM member 
+			WHERE 
+			M_ID = #{m_id}
+			AND
+			M_PW_1 = #{m_pw}
+		]]>
+	</select>
+
+	<select id="getList" parameterType="vs.lo.lo_001.vo.LO_001_VO"
+		resultType="vs.lo.lo_001.vo.LO_001_VO">
+		<![CDATA[
+			SELECT 
+			M_INDEX as m_index,
+			M_ID as m_id,
+			M_PW_1 as m_pw,
+			M_NAME as m_name,
+			M_GENDER as m_gender,
+			M_BIRTH as m_birth,
+			M_EMAIL as m_email_1,
+			M_TEL as m_tel, 
+			M_ADDRESS as m_address, 
+			
+			M_NICKNAME as m_nickName,
+			M_STATE as m_state,
+			M_COUNT as m_count,
+			M_POINT as m_point
+			FROM member
+			WHERE 
+			M_ID = #{m_id}
+			AND
+			M_PW_1 = #{m_pw}
+		]]>
+	</select>
+
+
+
+
+</mapper>
+
+
+  
+  
