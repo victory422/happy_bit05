@@ -19,6 +19,7 @@ public class LC_001_1_DaoImpl implements LC_001_1_Dao{
 	@Override
 	public void insert(LC_001_1_VO vo, LC_001_1_MapVO vo2) {
 		System.out.println("dao 단 : " + vo);
+		System.out.println("dao단 : " + vo2);
 		
 		sqlSession.insert("lc.lc_001_01", vo);
 		sqlSession.insert("lc.lc_001_01_map", vo2);
