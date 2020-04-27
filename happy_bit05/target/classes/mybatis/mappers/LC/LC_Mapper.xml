@@ -137,7 +137,7 @@
 		<![CDATA[   
 		insert into course(lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle, lc_area1,
 			lc_area2, lc_area3, lc_text, lc_date, lc_good, lc_see, lc_record)
-		values('lc_'||seq_course.nextval, #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
+		values('lc_'||lpad(seq_course.nextval, 10, '0'), #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
 			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, #{lc_text}, sysdate, 0, 0, 0)
 			]]>
 	</insert> 
@@ -149,22 +149,23 @@
 			select max(lc_index) from course
 		]]>	
 		</selectKey>
-		
-		insert into map values(
-			#{lc_index}, #{lc_address}, #{lc_xy_arr})
+		<![CDATA[ 
+			insert into map values(#{lc_index}, #{lc_address}, #{lc_xy_arr})
+		]]>	
 	</insert>
 	
 	<!-- 썸네일 업로드 -->
 	<update id="lc_001_01_thumbnail" parameterType="java.util.Map">
-		<selectKey keyProperty="lc_index2" order="BEFORE" resultType="String">
+		<selectKey keyProperty="lc_index" order="BEFORE" resultType="String">
 			<![CDATA[ 
 				select max(lc_index) from course
 			]]>	
 		</selectKey>
-		
-		update course
-		set lc_thumbnail = #{lc_thumbnail}
-		where lc_index = #{lc_index2}
+		<![CDATA[ 
+			update course
+			set lc_thumbnail = #{lc_thumbnail}
+			where lc_index = #{lc_index}
+		]]>	
 	</update>
 	
 
