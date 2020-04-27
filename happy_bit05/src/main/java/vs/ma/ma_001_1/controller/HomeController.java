@@ -37,7 +37,11 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+<<<<<<< HEAD
 		return "/home";
+=======
+		return "MA/MA_001";
+>>>>>>> KimRyangKwon
 	}
 	
 }

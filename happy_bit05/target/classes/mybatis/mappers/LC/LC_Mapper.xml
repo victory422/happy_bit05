@@ -207,4 +207,39 @@
 			delete from map where lc_index = #{lc_index}
 		]]>
 	</delete>
+	
+	<!-- 관심코스 등록 여부 확인. -->
+	<select id="lc_003_04_search" resultType="java.lang.Integer">
+		<![CDATA[ 
+			select count(mp_index) from mycourse
+			where lc_index = #{lc_index}
+			and m_index = #{m_index}
+		]]>
+	</select>
+	
+	<!-- 관심코스 등록 -->
+	<insert id="lc_003_04">
+		<![CDATA[ 
+			insert into mycourse values('mp_'||SEQ_INTEREST, #{lc_index}, #{m_index})
+		]]>
+	</insert>
+	
+	<!--  관심코스 삭제 -->
+	<delete id="lc_003_04_delete">
+		<![CDATA[ 
+			delete from mycourse 
+			where lc_index = #{lc_index}
+			and m_index = #{m_index}
+		]]>
+	</delete>
+	
+	
+	
+	<!-- ===================================================================================== -->
+	<select id="ma_001_1" resultType="MA_001_1_VO">
+		<![CDATA[ 
+			select * from course
+			where lc_area2 = #{lc_area2}
+		]]>
+	</select>
 </mapper>

@@ -15,4 +15,10 @@ public interface LC_003_1_Service {
 	public boolean deleteLC(String lc_index);
 	
 	public boolean deleteLC_map(String lc_index);
+	
+	public boolean myCourseSearch(LC_003_1_VO vo);
+	
+	public void myCourseInsert(LC_003_1_VO vo);
+	
+	public boolean myCourseDelete(LC_003_1_VO vo);
 }

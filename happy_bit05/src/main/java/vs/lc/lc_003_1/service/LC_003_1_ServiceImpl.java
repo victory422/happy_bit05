@@ -48,4 +48,22 @@ public class LC_003_1_ServiceImpl implements LC_003_1_Service{
 		return dao.deleteLC_map(lc_index) == 1;
 	}
 
+	@Override
+	public boolean myCourseSearch(LC_003_1_VO vo) {
+		// TODO Auto-generated method stub
+		return dao.myCourseSearch(vo) == 1;
+	}
+
+	@Override
+	public void myCourseInsert(LC_003_1_VO vo) {
+		// TODO Auto-generated method stub
+		dao.myCourseInsert(vo);
+	}
+
+	@Override
+	public boolean myCourseDelete(LC_003_1_VO vo) {
+		// TODO Auto-generated method stub
+		return dao.myCourseDelete(vo) == 1;
+	}
+
 }

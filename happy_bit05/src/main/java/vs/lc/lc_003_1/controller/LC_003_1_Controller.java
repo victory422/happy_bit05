@@ -80,4 +80,21 @@ public class LC_003_1_Controller {
 		return "redirect:/lc/002/list";
 	}
 	
+	@RequestMapping(value="lc_myCourse")
+	public String myCourse(LC_003_1_VO vo, Model model) {
+		
+		try {
+			if(service.myCourseSearch(vo) == true) {
+				service.myCourseDelete(vo);
+			}else {
+				service.myCourseInsert(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
 }
