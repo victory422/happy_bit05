@@ -207,4 +207,16 @@
 			delete from map where lc_index = #{lc_index}
 		]]>
 	</delete>
+	
+	
+	
+	
+	
+	<!-- ===================================================================================== -->
+	<select id="ma_001_1" resultType="MA_001_1_VO">
+		<![CDATA[ 
+			select * from course
+			where lc_area2 = #{lc_area2}
+		]]>
+	</select>
 </mapper>
