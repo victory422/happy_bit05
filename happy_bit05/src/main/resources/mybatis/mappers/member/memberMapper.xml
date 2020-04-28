@@ -33,14 +33,15 @@
 
 	<select id="getMCList" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
 		<![CDATA[
-			select lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
+			select lc_index, a.m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
 						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, 
-						 lc_good, lc_see, lc_record, rn
+						 lc_good, lc_see, lc_record, rownum rn
 			from
 				(
-					select /*+INDEX_DESC(course lc_index) */
-						rownum rn, lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record
+					select 
+						lc_index, m_index, lc_title, lc_type, lc_distance, 
+						lc_run, lc_cycle, lc_area1, lc_area2, lc_area3, lc_thumbnail, 
+						lc_text, lc_date, lc_good, lc_see, lc_record
 					from
 						course
 					where
@@ -67,8 +68,9 @@
 			
 		<![CDATA[
 					rownum <= #{page} * #{amount}
-				)
-				where rn > (#{page} -1) * #{amount}
+				) a, member b
+				where rownum > (#{page} -1) * #{amount}
+				and a.m_index = b.m_index
 		]]>
 		<include refid="type_match"></include>
 	</select>
@@ -135,7 +137,9 @@
 
 	<select id="mc_paging_total" resultType="int">
 		<![CDATA[
-		select count(*) from course
+		select count(*) 
+		from course a, member b
+		where a.m_index = #{m_index}
 		]]>
 	</select>
 
@@ -153,8 +157,6 @@
 			</trim>
 		</trim>
 	</sql>
-
-
 
 
 </mapper>

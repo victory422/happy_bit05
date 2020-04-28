@@ -24,13 +24,17 @@
 	width: 100%;
 }
 
-<script>
+</style>
 
-
+<script type="text/javascript">
+	var session = ${sessionVO};
+	var login = document.getElementById("login");
+	alert(session);
+	if(session == null) {
+		$("#login").remove();
+	}
 </script>
 
-
-</style>
 </head>
 
 <body>
@@ -97,9 +101,9 @@
 						aria-haspopup="true" aria-expanded="false"> 내 정보 </a>
 						<div class="dropdown-menu dropdown-menu-right" id="loginCheck"
 							aria-labelledby="navbarDropdownPortfolio">
-							<a class="dropdown-item" href="/lo">로그인</a> 
+							<a class="dropdown-item" id="login" href="/lo">로그인</a> 
 							<a class="dropdown-item" href="/mp">내 정보 보기</a> 
-							<a class="dropdown-item" href="/mp/myCourse/page=1">내 관심코스</a>
+							<a class="dropdown-item" href="/mp/myCourse/">내 관심코스</a>
 							<a class="dropdown-item" href="/lo/logout">로그아웃</a>
 						</div></li>
 

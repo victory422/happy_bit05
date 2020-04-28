@@ -16,25 +16,35 @@
 		</div>
 		<div class="col-md-8">
 			<div class="card h-100">
-				<h5 class="card-header">개인기록</h5>
+				
+				<table class="table table-hover" style="margin-top: 0px; background-color: #343a40;">
+					<tr class="active" style="font-weight :bold; color: white;">
+						<td>No</td>
+						<td>종목</td>
+						<td>제목</td>
+						<td>거리</td>
+						<td>평균기록</td>
+						<td>등록일</td>
+					</tr>
+					<tr class="active" style="color: white;">
+						<td>${val.rn}</td>
+						<td>${val.lc_type}</td>
+						<td>${val.lc_title}</td>
+						<td>${val.lc_distance}</td>
+						<td>${val.lc_run}</td>
+						<td>${val.lc_date}</td>
+					</tr>
+				</table>
 
 				<!--=======================================================-->
 				<div class="table-responsive">
-					<table class="table table-hover" style="margin-top: 30px;">
-						<tr class="active">
+					<table class="table table-hover" style="margin-top: 2px;">
+						<tr class="active" style="font-weight :bold; background-color: #e9ecef;">
 							<td>No</td>
-							<td>썸네일</td>
-							<td>제목</td>
-							<td>코스유형</td>
-							<td>거리<small>(km)</small></td>
-							<td>도보시간</td>
-							<td>자전거시간</td>
-							<td>지역</td>
-							<td>추천수</td>
-							<td>평균기록</td>
-							<td>등록일</td>
-							<td>원글보기</td>
-
+							<td>일자</td>
+							<td>종목</td>
+							<td>기록</td>
+							<td>게시여부</td>
 
 						</tr>
 						<c:if test="${empty listVO }">
@@ -45,16 +55,9 @@
 							<c:forEach var="val" items="${listVO }" varStatus="status">
 								<tr class="success" onclick="location.href='#'">
 									<td>${val.rn}</td>
-									<td>${val.lc_thumbnail}</td>
-									<td>${val.lc_title}</td>
-									<td>${val.lc_type}</td>
-									<td>${val.lc_distance}</td>
-									<td>${val.lc_run}</td>
-									<td>${val.lc_cycle}</td>
-									<td>${val.lc_address}</td>
-									<td>${val.lc_good}</td>
-									<td>${val.lc_record}</td>
 									<td>${val.lc_date}</td>
+									<td>${val.lc_type}</td>
+									<td>${val.lc_run}</td>
 									<td>
 										<button
 											onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">

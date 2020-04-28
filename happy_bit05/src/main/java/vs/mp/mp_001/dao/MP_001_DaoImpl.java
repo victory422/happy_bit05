@@ -26,6 +26,7 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		log.info("코스 리스트 DAO.....");
 		log.info("----------------");
 		List<MP_001_3_VO> list = session.selectList("member.getMCList", dto);
+		log.info(list);
 		return list;
 		
 	}
