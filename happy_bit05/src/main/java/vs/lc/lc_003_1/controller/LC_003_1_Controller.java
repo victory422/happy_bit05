@@ -55,11 +55,9 @@ public class LC_003_1_Controller {
 			System.out.println("관심코스를 위한 게시글 번호 : " + vo.getLc_index());
 			
 			if(service.myCourseSearch(vo) == true) {
-				service.myCourseDelete(vo);
-				model.addAttribute("search", "empty");
-			}else {
-				service.myCourseInsert(vo);
 				model.addAttribute("search", "not_empty");
+			}else {
+				model.addAttribute("search", "empty");
 			}
 	
 			model.addAttribute("member", session.getAttribute("sessionVO"));

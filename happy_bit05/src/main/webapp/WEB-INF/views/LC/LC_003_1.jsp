@@ -37,7 +37,7 @@
 				<br/>
 				<div style="margin-bottom:50px;">
 					<div style="float:left;">
-						${lc_get.m_index } | ${lc_get.lc_date }
+						${lc_get.m_nickname } | ${lc_get.lc_date }
 					</div>
 					
 					<div style="float:right;">
@@ -92,7 +92,7 @@
 		<div class = "col-12" style="margin-bottom:30px;">
 			<div style="margin-bottom:50px;">
 				<div style="float:left;">
-					${lc_get.m_index } | ${lc_get.lc_date }
+					${lc_get.m_nickname } | ${lc_get.lc_date }
 				</div>
 				
 				<div style="float:right;">
@@ -103,6 +103,7 @@
 			
 			<div class="w-100">
 				<div style="float:left;">
+					<c:if test="${member.m_index eq lc_get.m_index }">
 					<form action="lc_modify?">
 						<button type="submit" class="btn btn-secondary">수정하기</button>
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
@@ -110,6 +111,7 @@
 					<form>
 						<button type="button" class="btn btn-secondary" onclick="location.href='lc_delete?lc_index=${lc_get.lc_index}'">삭제하기</button>
 					</form>
+					</c:if>
 					
 				</div>
 				
@@ -136,7 +138,7 @@
 				
 				<div id="member_menu" style="float:right;">
 					<c:if test="${member ne null}">
-						<button type='button' class='btn btn-secondary' id='myCourse' name='myCourse'></button>	
+						<button type='button' class='btn btn-secondary' id='myCourse' name='myCourse' onclick="myCourseIn()"></button>	
 						<button type='button' class='btn btn-info'>좋아요</button>
 					</c:if>
 				</div>
@@ -293,12 +295,40 @@
 	//------------------------------------------------------------------------------------------
 	// 관심코스 등록.
 	
+	
+	var lc_index = document.getElementById("myCourse_lc_index").value;
+	var m_index = document.getElementById("myCourse_m_index").value;
+	var myCourse = document.getElementById("myCourse");
+	var member_menu = document.getElementById("member_menu");
+	
+
+	function myCourseIn(){
+		
+		$.ajax({
+			type:'post',
+			url:'/lc/003/lc_myCourse',
+			data: {'m_index' : m_index,
+				   'lc_index' : lc_index},
+			success : function(){
+				if(document.getElementById("empty_search").value == "empty"){
+					console.log('test', JSON.stringify(m_index));
+					myCourse.innerText = "관심 코스 해제";
+					document.getElementById("empty_search").value = "not_empty";
+					alert("관심코스가 추가되었습니다.");
+				}else if(document.getElementById("empty_search").value == "not_empty"){
+					myCourse.innerText = "관심 코스";
+					document.getElementById("empty_search").value = "empty";
+					alert("관심코스가 해제되었습니다.");
+				}
+			}
+		});
+	}; 
+	
+
+	</script>
+	<script>
 	$(document).ready(function(){
 		
-		var lc_index = document.getElementById("myCourse_lc_index").value;
-		var m_index = document.getElementById("myCourse_m_index").value;
-		var myCourse = document.getElementById("myCourse");
-		var member_menu = document.getElementById("member_menu");
 		
 		//관심코스 등록되어 있는지 검색.
 		if(m_index != null){
@@ -314,31 +344,8 @@
 				
 		}
 		
-		
-		$("#myCourse").click(function(){
-			
-			$.ajax({
-				type:'post',
-				url:'/lc/003/lc_myCourse',
-				data: {'m_index' : m_index,
-					   'lc_index' : lc_index},
-				success : function(){
-					if(document.getElementById("empty_search").value == "empty"){
-						console.log('test', JSON.stringify(m_index));
-						myCourse.innerText = "관심 코스 해제";
-						document.getElementById("empty_search").value = "not_empty";
-						alert("관심코스가 추가되었습니다.");
-					}else if(document.getElementById("empty_search").value == "not_empty"){
-						myCourse.innerText = "관심 코스";
-						document.getElementById("empty_search").value = "empty";
-						alert("관심코스가 해제되었습니다.");
-					}
-				}
-			});
-		}); 
 	});
 	
-
 	</script>
 
 <%@ include file="../includes/footer.jsp"%>

@@ -162,7 +162,7 @@
 		
 		<input type="submit" value="업로드" />
 		
-		<input type="text" id="lc_xy_arr" name="lc_xy_arr"/>
+		<input type="hidden" id="lc_xy_arr" name="lc_xy_arr"/>
 		</form>
 		
 	</div>
