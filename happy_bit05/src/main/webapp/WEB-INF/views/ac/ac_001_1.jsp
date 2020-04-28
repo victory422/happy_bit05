@@ -65,7 +65,8 @@
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<label class="input-group-text">접수기한</label>
-					  
+					
+					 <!--  
 					<div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
                             <input type="text" id="saleCloseDay" class="form-control text-center" aria-label="Date-Time" readonly>
                             <span class="tui-ico-date"></span>
@@ -77,9 +78,10 @@
                             <span class="tui-ico-date"></span>
                             <div id="wrapper1"></div>
                     </div>
+                    -->
                    
 				</div>
-				<!--  <input type="text" class="form-control" name="co_b_period">-->	
+				 <input type="text" class="form-control" name="co_b_period">
 			</div>
 		</div>
 		
@@ -153,7 +155,7 @@
 
  
 <script>
-
+/*
 function getWriteSaleCloseDatePicker() {
     let startDatePicker = new tui.DatePicker('#wrapper', {
       date: new Date(),
@@ -168,7 +170,7 @@ function getWriteSaleCloseDatePicker() {
   }
   
 getWriteSaleCloseDatePicker();
-
+*/
 $('#ac_souveniradd').click(function(){
 		
 	var ac_text = '';

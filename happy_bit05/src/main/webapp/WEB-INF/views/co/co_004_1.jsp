@@ -27,11 +27,8 @@
 			<br>
 
 			<div class="row board_style">
-				<div class="col-sm-12">
-					<h4>
-						장비게시판<small> (후기게시판) </small>
-					</h4>
-					<button onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
+				<div class="col-sm-12">				
+					<button class="float-right" onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
 					<h6>종목: ${data.co_b_type }</h6>
 				</div>
 			</div>
@@ -55,8 +52,7 @@
 					</c:choose>
 				</div>
 				<div class="push padding_1">
-						<button class="btn btn-info" onclick="modify()">수정하기</button>
-						<button  class="btn btn-info" onclick="fn_golist()">
+						<button  class="btn btn-info" onclick="location.href='/co/co_003_1'">
 						목록으로 돌아가기  ${back_url}
 					</button>
 				</div>
@@ -273,3 +269,12 @@ function dedetinsert(com_index){
 </script>
 
 <%@include file="../includes/footer.jsp"%>
+
+
+
+
+
+
+
+
+

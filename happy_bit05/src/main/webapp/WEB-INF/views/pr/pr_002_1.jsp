@@ -66,9 +66,7 @@
 <c:forEach items="${data}" var="data">	
 	
 	<input type="hidden" name="pr_index${data.pr_index }" value="${data.pr_index}">
-	
-	<table class="table table-bordered table-hover"
-		style="margin-top: 30px;">
+	<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">
 
 		<tr>
 			<td><h2>제목 : ${data.pr_title }</h2> ${data.pr_index }</td>
