@@ -38,8 +38,19 @@ select *
 
 
 </insert>
+<!-- m.m_id,m.m_nickname,m.m_tel,m.m_name,p.co_state,m.m_gender,p.co_title,p.co_area -->
+<select id="ac_detail" resultType="vs.co.co_001_1.vo.CoVO" parameterType="String">
+	<![CDATA[	
+		
 
+select *
+    from member m, participant p
+    where m.m_index = p.m_index
+ 	and p.co_b_index = #{co_b_index}
 
+		
+	]]>	
+	</select>
 
 
 </mapper>

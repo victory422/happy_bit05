@@ -15,5 +15,5 @@ public interface Ac_Service {
 	
 	public void insertTu(Map<String, Object> hmap);
 	
-	//public List<CoVO> ac_mlist(String co_b_index);
+	public List<CoVO> ac_detail(String co_b_index) throws Exception ;
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import vs.ac.ac_001_1.vo.AcVO;
+import vs.cm.cm_001_1.mapper.CoMapper;
 import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.vo.CoVO;
 
@@ -19,6 +20,9 @@ public class Ac_ServiceImpl implements Ac_Service {
 	@Autowired
 	private SqlSession sqlSession;
 
+	@Autowired
+	private CoMapper comapper;
+	
 	public List<AcVO> ac_List(Page_DTO dto) {
 		List<AcVO> list;
 		
@@ -49,17 +53,15 @@ public class Ac_ServiceImpl implements Ac_Service {
 		sqlSession.update("ac.ac_001_01_thumbnail", hmap);
 		
 	}
-	/*
 	@Override
-	public List<CoVO> ac_mlist(String co_b_index) {
+	public List<CoVO> ac_detail(String co_b_index) throws Exception {
+	
 		
-		List<CoVO> mlist;
+		System.out.println(co_b_index + "service");
 		
-		mlist = sqlSession.selectList("ac.ac_mlist",co_b_index);
-		
-		return mlist;
+		return comapper.ac_detail(co_b_index);
 	}
-	*/
+	
 	
 	
 }

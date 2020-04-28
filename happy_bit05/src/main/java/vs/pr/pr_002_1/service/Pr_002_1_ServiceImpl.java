@@ -39,4 +39,11 @@ public class Pr_002_1_ServiceImpl implements Pr_002_1_Service{
 		return 0;
 	}
 
+
+	@Override
+	public List<Pr_002_1VO> chart_list() {
+		
+		return prmapper.chart_list();
+	}
+
 }

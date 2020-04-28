@@ -63,13 +63,13 @@ public class Ac_Controller {
 		
 	}
 	
-	 //대회 상세페이지
+	 //대회 참가자 상세페이지
 	@GetMapping("/ac_003_1")
-	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) {
+	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) throws Exception  {
 		
+		System.out.println(co_b_index);
 		
-	//model.addAttribute("member", ac_service.ac_mlist(co_b_index));
-		model.addAttribute("data", co_service.co_detail(co_b_index));
+		model.addAttribute("data", ac_service.ac_detail(co_b_index));
 	}
 	
 	

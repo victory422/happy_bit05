@@ -13,4 +13,9 @@ public interface PrMapper {
 	public List<Pr_002_1VO> pr_list(Page_DTO dto);
 	
 	public int get_total(Page_DTO dto);
+	
+	public List<Pr_002_1VO> chart_list();
+	
+	//개인기록 상세보기
+	public List<Pr_002_1VO> pr_detail(String pr_index);
 }

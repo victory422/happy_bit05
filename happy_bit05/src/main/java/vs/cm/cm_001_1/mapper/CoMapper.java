@@ -12,5 +12,8 @@ public interface CoMapper {
 
 	//대회 접수 
 	public int ap_insert(CoVO covo) throws Exception;
+	
+	//대회 참가자 리스트
+	public List<CoVO> ac_detail(String co_b_index) throws Exception;
 
 }
