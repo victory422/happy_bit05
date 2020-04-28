@@ -102,16 +102,16 @@
 					<h1 class="h3 mb-4 text-RED-900">My Page</h1>
 					
 					
-						<p>id : ${loginVO.m_id}</p>
-						<p>nickName : ${loginVO.m_nickName}</p>
-						<p>pw : ${loginVO.m_pw}</p>
-						<p>name : ${loginVO.m_name}</p>
-						<p>gender : ${loginVO.m_gender}</p>
-						<p>birth : ${loginVO.m_birth}</p>
-						<p>email : ${loginVO.m_email_1}</p>
-						<p>tel : ${loginVO.m_tel}</p>
-						<p>address : ${loginVO.m_address}</p>
-						<p>picture : ${loginVO.m_picture}</p>
+						<p>id : ${sessionVO.m_id}</p>
+						<p>nickName : ${sessionVO.m_nickName}</p>
+						<p>pw : ${sessionVO.m_pw}</p>
+						<p>name : ${sessionVO.m_name}</p>
+						<p>gender : ${sessionVO.m_gender}</p>
+						<p>birth : ${sessionVO.m_birth}</p>
+						<p>email : ${sessionVO.m_email_1}</p>
+						<p>tel : ${sessionVO.m_tel}</p>
+						<p>address : ${sessionVO.m_address}</p>
+						<p>picture : ${sessionVO.m_picture}</p>
 					 
 					
 

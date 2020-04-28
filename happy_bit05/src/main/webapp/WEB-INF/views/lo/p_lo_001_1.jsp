@@ -25,7 +25,7 @@
 
 				</div>
 				<div class="card-body">
-					<div>${loginVO.loginMsg }</div>
+					<div>${LO_001_VO.loginMsg }</div>
 				</div>
 				<div class="card-footer"></div>
 				<div class="form-group">
