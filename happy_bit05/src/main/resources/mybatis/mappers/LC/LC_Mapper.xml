@@ -221,7 +221,7 @@
 	<!-- 관심코스 등록 -->
 	<insert id="lc_003_04">
 		<![CDATA[ 
-			insert into mycourse values('mp_'||SEQ_INTEREST, #{lc_index}, #{m_index})
+			insert into mycourse values('mp_'||lpad(SEQ_INTEREST.nextval,10,'0'), #{lc_index}, #{m_index})
 		]]>
 	</insert>
 	

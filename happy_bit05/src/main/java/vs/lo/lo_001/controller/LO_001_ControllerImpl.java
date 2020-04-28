@@ -43,8 +43,8 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 		
 		if(vo.getLoginCheck()==1) {
 			HttpSession session = request.getSession();
-			session.setAttribute("session", vo);
-			System.out.println("session value : "+session.getAttribute("session"));
+			session.setAttribute("sessionVO", vo);
+			System.out.println("session value : "+session.getAttribute("sessionVO"));
 		}
 		return mav;
 	}
@@ -58,7 +58,7 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 			System.out.println("logout page");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/home");
-			session.removeAttribute("session");
+			session.removeAttribute("sessionVO");
 			System.out.println(session);
 		
 		return mav;
