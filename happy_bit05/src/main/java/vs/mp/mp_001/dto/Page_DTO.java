@@ -14,6 +14,7 @@ public class Page_DTO {
 	private String lc_type;
 	private String type;
 	private String keyword;
+	private String m_index;
 	
 	
 	public Page_DTO(int page, int amount) {
@@ -24,6 +25,7 @@ public class Page_DTO {
 		page = 1;
 		amount = 5;
 		lc_type = "";
+		m_index = "0";
 		
 		
 	}
