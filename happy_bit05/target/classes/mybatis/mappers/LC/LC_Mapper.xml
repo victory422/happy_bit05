@@ -137,7 +137,7 @@
 		<![CDATA[   
 		insert into course(lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle, lc_area1,
 			lc_area2, lc_area3, lc_text, lc_date, lc_good, lc_see, lc_record)
-		values('lc_'||seq_course.nextval, #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
+		values('lc_'||lpad(seq_course.nextval, 10, '0'), #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
 			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, #{lc_text}, sysdate, 0, 0, 0)
 			]]>
 	</insert> 
@@ -149,22 +149,23 @@
 			select max(lc_index) from course
 		]]>	
 		</selectKey>
-		
-		insert into map values(
-			#{lc_index}, #{lc_address}, #{lc_xy_arr})
+		<![CDATA[ 
+			insert into map values(#{lc_index}, #{lc_address}, #{lc_xy_arr})
+		]]>	
 	</insert>
 	
 	<!-- 썸네일 업로드 -->
 	<update id="lc_001_01_thumbnail" parameterType="java.util.Map">
-		<selectKey keyProperty="lc_index2" order="BEFORE" resultType="String">
+		<selectKey keyProperty="lc_index" order="BEFORE" resultType="String">
 			<![CDATA[ 
 				select max(lc_index) from course
 			]]>	
 		</selectKey>
-		
-		update course
-		set lc_thumbnail = #{lc_thumbnail}
-		where lc_index = #{lc_index2}
+		<![CDATA[ 
+			update course
+			set lc_thumbnail = #{lc_thumbnail}
+			where lc_index = #{lc_index}
+		]]>	
 	</update>
 	
 
@@ -207,4 +208,39 @@
 			delete from map where lc_index = #{lc_index}
 		]]>
 	</delete>
+	
+	<!-- 관심코스 등록 여부 확인. -->
+	<select id="lc_003_04_search" resultType="java.lang.Integer">
+		<![CDATA[ 
+			select count(mp_index) from mycourse
+			where lc_index = #{lc_index}
+			and m_index = #{m_index}
+		]]>
+	</select>
+	
+	<!-- 관심코스 등록 -->
+	<insert id="lc_003_04">
+		<![CDATA[ 
+			insert into mycourse values('mp_'||SEQ_INTEREST, #{lc_index}, #{m_index})
+		]]>
+	</insert>
+	
+	<!--  관심코스 삭제 -->
+	<delete id="lc_003_04_delete">
+		<![CDATA[ 
+			delete from mycourse 
+			where lc_index = #{lc_index}
+			and m_index = #{m_index}
+		]]>
+	</delete>
+	
+	
+	
+	<!-- ===================================================================================== -->
+	<select id="ma_001_1" resultType="MA_001_1_VO">
+		<![CDATA[ 
+			select * from course
+			where lc_area2 = #{lc_area2}
+		]]>
+	</select>
 </mapper>
