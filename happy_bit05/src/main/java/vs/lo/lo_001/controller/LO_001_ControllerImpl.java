@@ -38,13 +38,15 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 		List<LO_001_VO> list = service.login(vo);
 		vo = list.get(0);
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("loginVO", vo);
-		mav.setViewName("lo/p_lo_001_1");
 		
 		if(vo.getLoginCheck()==1) {
 			HttpSession session = request.getSession();
-			session.setAttribute("session", vo);
-			System.out.println("session value : "+session.getAttribute("session"));
+			session.setAttribute("sessionVO", vo);
+			System.out.println("session value : "+session.getAttribute("sessionVO"));
+			mav.addObject(session.getAttribute("sessionVO"));
+			mav.setViewName("lo/p_lo_001_1");
+		}else {
+			mav.setViewName("lo/lo");
 		}
 		return mav;
 	}
@@ -58,8 +60,8 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 			System.out.println("logout page");
 			ModelAndView mav = new ModelAndView();
 			mav.setViewName("/home");
-			session.removeAttribute("session");
-			System.out.println(session);
+			session.removeAttribute("sessionVO");
+			System.out.println(session.getAttribute("sessionVO"));
 		
 		return mav;
 	}

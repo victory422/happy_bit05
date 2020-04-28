@@ -38,10 +38,10 @@ public class SA_002_ControllerImpl implements SA_002_Controller {
 		List<Map<String,String>> list = sa_002_Service.searchProducts(pagedto);
 		System.out.println("this page is : "+pagedto.getPage());
 		pageutil = sa_002_Service.paging(pagedto);
+		request.setAttribute("pageUtil", pageutil);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/sa/sa_002_4");
 		request.setAttribute("list", list);
-		request.setAttribute("pageUtil", pageutil);
 		System.out.println("mav완료");
 		
 		return mav;
