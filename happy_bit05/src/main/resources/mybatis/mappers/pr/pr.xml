@@ -24,10 +24,10 @@
 				<trim prefix="and">
 					<choose>
 						<when test="type == '육상'.toString()">
-							co_b_type like '%'||'육상'||'%'
+							pr_type like '%'||'육상'||'%'
 						</when>
 						<when test="type == '자전거'.toString()">
-							co_b_type like '%'||'자전거'||'%'
+							pr_type like '%'||'자전거'||'%'
 						</when>
 						<!-- 
 						<when test="type == '운동복'.toString()">
@@ -43,18 +43,20 @@
 							li_category like '%'||'기타'||'%'
 						</when>
 						 -->
+						 <!--  
 						<when test="search_filter == 'all'.toString()">
-								co_b_title like '%'||#{input_text}||'%') or (co_b_text like '%'||#{input_text}||'%'
+								pr_title like '%'||#{input_text}||'%') or (pr_text like '%'||#{input_text}||'%'
 						</when>
 						<when test="search_filter == '내용'.toString()">
-							co_b_text like '%'||#{input_text}||'%'
+							pr_text like '%'||#{input_text}||'%'
 						</when>
 						<when test="search_filter == '장소'.toString()">
-							co_b_area like '%'||#{input_text}||'%'
+							pr_area like '%'||#{input_text}||'%'
 						</when>
 						<otherwise>
-							co_b_title like '%'||#{input_text}||'%'
+							pr_title like '%'||#{input_text}||'%'
 						</otherwise>
+						-->
 					</choose>
 				</trim>
 			</foreach>
@@ -78,6 +80,7 @@
 			        	 <include refid="Page_DTO"/>
 			        <![CDATA[ 
 			        pr_index > '0'
+			        and pr_public = '게시'
 			        order by to_number(substr(pr_index, 4)) desc
 		        )a
 		where rownum <= (#{page} * #{amount})
@@ -95,5 +98,19 @@
 	
 
 	</select>
+
+
+<!-- 평균차트 -->
+<select id="chart_list" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO">
+<![CDATA[
+	select distinct
+	    (select round(avg(pr_record),2) from myrecord 
+	        where mp_index = '5'
+	        ) as a
+	    from myrecord
+]]>	
+</select>
+
+
 
 </mapper>

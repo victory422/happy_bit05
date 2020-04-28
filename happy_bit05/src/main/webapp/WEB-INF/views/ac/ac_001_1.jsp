@@ -13,6 +13,8 @@
   <script type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 </head>
 
 <div class="container" style="margin-top:20px; margin-bottom:20px;">
@@ -44,6 +46,7 @@
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<label class="input-group-text">일자</label>
+					
 				</div>
 				<input type="text" class="form-control" name="co_b_day">
 			</div>
@@ -62,11 +65,32 @@
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<label class="input-group-text">접수기한</label>
+					  
+					<div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
+                            <input type="text" id="saleCloseDay" class="form-control text-center" aria-label="Date-Time" readonly>
+                            <span class="tui-ico-date"></span>
+                            <div id="wrapper"></div>
+                    </div>
+                    &nbsp; ~ &nbsp;
+                    <div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
+                            <input type="text" id="saleCloseDay" class="form-control text-center" aria-label="Date-Time" readonly>
+                            <span class="tui-ico-date"></span>
+                            <div id="wrapper1"></div>
+                    </div>
+                   
 				</div>
-				<input type="text" class="form-control" name="co_b_period">	
+				<!--  <input type="text" class="form-control" name="co_b_period">-->	
 			</div>
 		</div>
 		
+		<div class="col-sm-6">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<label class="input-group-text">참가비</label>
+				</div>
+				<input type="text" class="form-control" name="co_b_price">	
+			</div>
+		</div>
 		<div class="col-sm-6 ac_sou">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -76,14 +100,6 @@
 				<input type="text" class="form-control" name="co_souvenir" id="ac_souvenirid">
 				<button class="btn btn-primary" type="button" id="ac_souveniradd">추가</button>	
 				
-			</div>
-		</div>
-		<div class="col-sm-6">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<label class="input-group-text">참가비</label>
-				</div>
-				<input type="text" class="form-control" name="co_b_price">	
 			</div>
 		</div>
 		<div class="col-sm-6 ac_rat">
@@ -138,7 +154,20 @@
  
 <script>
 
+function getWriteSaleCloseDatePicker() {
+    let startDatePicker = new tui.DatePicker('#wrapper', {
+      date: new Date(),
+      language: 'ko',
+      input: {
+        element: '#saleCloseDay',
+        format: 'yyyy-MM-dd'
+      }
+    });
 
+    return startDatePicker;
+  }
+  
+getWriteSaleCloseDatePicker();
 
 $('#ac_souveniradd').click(function(){
 		

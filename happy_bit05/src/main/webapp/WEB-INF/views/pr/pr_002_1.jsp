@@ -63,15 +63,19 @@
 		</div>
 	</form>
 
-<c:forEach items="${data}" var="data">
+<c:forEach items="${data}" var="data">	
+	
+	<input type="hidden" name="pr_index${data.pr_index }" value="${data.pr_index}">
+	
 	<table class="table table-bordered table-hover"
 		style="margin-top: 30px;">
 
 		<tr>
-			<td><h2>제목 : ${data.pr_title }</h2></td>
-			
-			<!--  <td id="container" rowspan="5"
-				style="width: 500px; height: 200px; padding: 0;"></td>-->
+			<td><h2>제목 : ${data.pr_title }</h2> ${data.pr_index }</td>
+	
+			  <td id='container' rowspan="5"
+				style="width: 500px; height: 200px; padding: 0;"></td>
+
 		</tr>
 		<tr>
 			<td>일자 : ${data.pr_recordDate } &emsp; 작성자 : 이찬영 &emsp; 장소 : 불광천</td>
@@ -80,7 +84,7 @@
 			<td>조회수 : ${data.pr_see } &emsp; 추천수 : ${data.pr_good }</td>
 		</tr>
 		<tr>
-			<td>기록 : ${pr_record }</td>
+			<td>기록 : ${data.pr_record }</td>
 		</tr>
 
 	</table>
@@ -109,29 +113,81 @@
 
 
 <script>
-	/*
-	 document.addEventListener('DOMContentLoaded', function() {
 
-	 var myChart = Highcharts.chart('container', {
-	 chart : {
-	 type : 'bar'
-	 },
-	 title : {
-	 text : '불광천'
-	 },
-	 xAxis : {
-	 categories : [ '평균기록' ]
-	 },
-	 yAxis : {
-	 title : {
-	 text : '평균 차트'
-	 }
-	 },
-	 series : [ {
-	 name : '남자',
-	 data : [ 40.70 ]
-	 } ]
+
+$(document).ready(function(){
+	
+	
+	$('a.page_now').on('click',function(){
+		//alert($('input[name=page]').val($(this).text()))
+		//alert($('select[name=type]').val())
+		
+		var a =$('select[name=type]').length;
+		//배열생성
+		var aArr = new Array(a);
+		
+		//필터값들 스트링으로 변환
+		for(var i=0; i<a; i++){
+			aArr[i] = $('select[name=type]').eq(i).val();
+			//alert(aArr[i]);
+		}
+		
+		//선택한 종목값
+		//aArr[1]
+		//선택한 장비값
+		//aArr[2]
+		//현재 선택된 a태그안  
+		$(this).attr('href',"/pr/pr_002_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
+		})
+	
+	//alert(${param.test1});
+		function page_put(){
+		console.log($('input[name=page]').val(1))
+	}
+	
+})
+
+
+/*
+$(document).ready(function() {
+	
+	chartlist();
+});
+
+
+function chartlist(){
+
+	 $.ajax({
+		url : '/pr/chart',
+		type : 'post',
+		data : {'pr_index' : pr_index},
+        	success : function(data){
+        		console.log("test", JSON.stringify(data));
+			 var myChart = Highcharts.chart('container', {
+			 chart : {
+			 type : 'bar'
+			 },
+			 title : {
+			 text : '불광천'
+			 },
+			 xAxis : {
+			 categories : [ '평균기록' ]
+			 },
+			 yAxis : {
+			 title : {
+			 text : '평균 차트'
+			 }
+			 },
+			 series : [ {
+			 name : '남자',
+			 data : [ 40.70 ]
+			 } ]
+			 });
+        } 
 	 });
-	 });
-	 */
+}; 
+*/
 </script>
+
+
+<%@include file="../includes/footer.jsp"%>
