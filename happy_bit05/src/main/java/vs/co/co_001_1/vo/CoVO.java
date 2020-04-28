@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CoVO {
-	
+	//대회참가자
 	private String co_paper_index;
 	private String co_title;
 	private String co_price;
@@ -16,8 +16,43 @@ public class CoVO {
 	private String co_m_souvenir;
 	private String co_b_index;
 	private String m_index;
+	//맴버
+	private String m_id;
+	private String m_name;
+	private String m_gender;
+	private String m_tel;
+	private String m_nickname;
 	
-	
+	public String getM_id() {
+		return m_id;
+	}
+	public void setM_id(String m_id) {
+		this.m_id = m_id;
+	}
+	public String getM_name() {
+		return m_name;
+	}
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
+	}
+	public String getM_gender() {
+		return m_gender;
+	}
+	public void setM_gender(String m_gender) {
+		this.m_gender = m_gender;
+	}
+	public String getM_tel() {
+		return m_tel;
+	}
+	public void setM_tel(String m_tel) {
+		this.m_tel = m_tel;
+	}
+	public String getM_nickname() {
+		return m_nickname;
+	}
+	public void setM_nickname(String m_nickname) {
+		this.m_nickname = m_nickname;
+	}
 	public String getM_index() {
 		return m_index;
 	}

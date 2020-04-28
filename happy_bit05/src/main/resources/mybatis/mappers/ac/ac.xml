@@ -137,9 +137,10 @@
 		select count(co_b_index) from
 		competition 
 	
-
 	</select>
-
+	
+	
+	
 
 
 </mapper>
