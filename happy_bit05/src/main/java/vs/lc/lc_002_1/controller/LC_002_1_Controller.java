@@ -3,10 +3,12 @@ package vs.lc.lc_002_1.controller;
 import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -14,6 +16,7 @@ import vs.lc.lc_002_1.service.LC_002_1_Service;
 import vs.lc.lc_002_1.vo.Criteria;
 import vs.lc.lc_002_1.vo.LC_002_1_VO;
 import vs.lc.lc_002_1.vo.PageDTO;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @RequestMapping("/lc/002/*")
@@ -25,7 +28,7 @@ public class LC_002_1_Controller {
 
 	//리스트 가져오기
 	@RequestMapping(value="list")
-	public String getList(Criteria cri, Model model) {
+	public String getList(Criteria cri, Model model,HttpServletRequest request) {
 			
 			List<LC_002_1_VO> listVO = service.getList(cri);
 			List<LC_002_1_VO> listGood = service.getGood(cri);
@@ -73,10 +76,19 @@ public class LC_002_1_Controller {
 				}
 			}
 			
+			
 			if(cri.getType() == null) {
 				model.addAttribute("lc_good", listGood);
 			}else if(!(cri.getType().equals("normal"))) {
 				model.addAttribute("lc_good", listGood);
+			}
+			
+			
+			HttpSession session = request.getSession();
+			
+			if(session.getAttribute("sessionVO") != null) {
+				LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
+				model.addAttribute("m_index", vo.getM_index());
 			}
 			
 			model.addAttribute("lc_list", listVO);

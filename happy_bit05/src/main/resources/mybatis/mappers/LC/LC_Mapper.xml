@@ -23,6 +23,7 @@
 		<result property="lc_record" column="lc_record"/>
 		<result property="lc_address" column="lc_address"/>
 		<result property="lc_xy_arr" column="lc_xy_arr" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="m_nickname" column="m_nickname"/>
 	</resultMap>
 	
 	<resultMap id="clobMap" type="java.util.HashMap">
@@ -69,14 +70,16 @@
 	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
 		<![CDATA[
 			select lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record
+						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record, m_nickname
 			from
 				(
 					select /*+INDEX_DESC(course lc_index) */
-						rownum rn, lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record
+						rownum rn, c.lc_index, c.m_index, c.lc_title, c.lc_type, c.lc_distance, c.lc_run, c.lc_cycle,
+						 c.lc_area1, c.lc_area2, c.lc_area3, c.lc_thumbnail, c.lc_text, c.lc_date, c.lc_good, c.lc_see, c.lc_record, m.m_nickname
 					from
-						course
+						course c join member m
+					on
+						m.m_index = c.m_index
 					where
 		]]>	
 		
@@ -85,7 +88,7 @@
 					<trim prefix="OR">
 						<choose>
 							<when test = "type == 'normal'.toString()">
-								lc_title like '%'||#{keyword}||'%') or (m_index like '%'||#{keyword}||'%'
+								lc_title like '%'||#{keyword}||'%') or (m_nickname like '%'||#{keyword}||'%'
 							</when>
 							<when test = "type == 'area'.toString()">
 								lc_area1 like '%'||#{keyword}||'%') or (lc_area2 like '%'||#{keyword}||'%') or
@@ -101,7 +104,18 @@
 				)
 				where rn > (#{pageNum} -1) * #{amount}
 		]]>
-				<include refid="type_match"></include>
+				<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+					<trim prefix="OR">
+						<choose>
+							<when test = "lc_type == '육상'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+							<when test = "lc_type == '자전거'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+						</choose>
+					</trim>
+			</trim>
 	</select>
 	
 	<!-- 게시글 갯수 세기 -->
@@ -119,7 +133,13 @@
 		<![CDATA[
 			select * from(
 				select *
-				from course
+				from (select /*+INDEX_DESC(course lc_index) */
+						rownum rn, c.lc_index, c.m_index, c.lc_title, c.lc_type, c.lc_distance, c.lc_run, c.lc_cycle,
+						 c.lc_area1, c.lc_area2, c.lc_area3, c.lc_thumbnail, c.lc_text, c.lc_date, c.lc_good, c.lc_see, c.lc_record, m.m_nickname
+					from
+						course c join member m
+					on
+						m.m_index = c.m_index)
 				where
 		]]>
 				<include refid="criteria"></include>
@@ -171,10 +191,17 @@
 
 	<!-- 상세보기 -->	
 	<select id="lc_003_01" resultMap="lc_getResult">
+	
 		<![CDATA[
-			select * from course a join map b 
-				on b.lc_index = a.lc_index
-				where b.lc_index = #{lc_index}
+			select * from (
+					select a.lc_index, a.m_index, a.lc_title, a.lc_type, a.lc_distance, a.lc_run, a.lc_cycle, a.lc_area1, a.lc_area2, 
+					a.lc_area3, a.lc_thumbnail, a.lc_text, a.lc_date, a.lc_good, a.lc_see, a.lc_record, c.m_nickname 
+					from course a join member c
+					on c.m_index = a.m_index
+					where rownum >= 0
+				) d join map b 
+				on b.lc_index = d.lc_index
+				where d.lc_index = #{lc_index} 
 		]]>	
 	</select>
 	
@@ -221,7 +248,7 @@
 	<!-- 관심코스 등록 -->
 	<insert id="lc_003_04">
 		<![CDATA[ 
-			insert into mycourse values('mp_'||SEQ_INTEREST, #{lc_index}, #{m_index})
+			insert into mycourse values('mp_'||lpad(SEQ_INTEREST.nextval,10,'0'), #{lc_index}, #{m_index})
 		]]>
 	</insert>
 	
