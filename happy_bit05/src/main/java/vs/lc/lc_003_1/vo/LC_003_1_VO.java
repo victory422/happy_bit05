@@ -30,4 +30,7 @@ public class LC_003_1_VO {
 	private String lc_address;	//출발지 상세
 	private String lc_xy_arr;	//좌표
 	
+	//멤버 내용.
+	private String m_nickname; //멤버 닉네임 받아올떄.
+	
 }

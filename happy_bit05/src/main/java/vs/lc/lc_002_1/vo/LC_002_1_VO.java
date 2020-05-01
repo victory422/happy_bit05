@@ -25,4 +25,7 @@ public class LC_002_1_VO {
 	private int lc_good;		//좋아요
 	private int lc_see;			//조회수
 	private String lc_record;	//평균 기록
+	
+	//멤버 내용.
+	private String m_nickname; //멤버 닉네임 받아올떄.
 }

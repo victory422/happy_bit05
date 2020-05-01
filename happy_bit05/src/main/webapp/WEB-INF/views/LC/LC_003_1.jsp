@@ -37,7 +37,7 @@
 				<br/>
 				<div style="margin-bottom:50px;">
 					<div style="float:left;">
-						${lc_get.m_index } | ${lc_get.lc_date }
+						${lc_get.m_nickname } | ${lc_get.lc_date }
 					</div>
 					
 					<div style="float:right;">
@@ -92,7 +92,7 @@
 		<div class = "col-12" style="margin-bottom:30px;">
 			<div style="margin-bottom:50px;">
 				<div style="float:left;">
-					${lc_get.m_index } | ${lc_get.lc_date }
+					${lc_get.m_nickname } | ${lc_get.lc_date }
 				</div>
 				
 				<div style="float:right;">
@@ -103,6 +103,7 @@
 			
 			<div class="w-100">
 				<div style="float:left;">
+					<c:if test="${member.m_index eq lc_get.m_index }">
 					<form action="lc_modify?">
 						<button type="submit" class="btn btn-secondary">수정하기</button>
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
@@ -110,6 +111,7 @@
 					<form>
 						<button type="button" class="btn btn-secondary" onclick="location.href='lc_delete?lc_index=${lc_get.lc_index}'">삭제하기</button>
 					</form>
+					</c:if>
 					
 				</div>
 				
@@ -134,15 +136,21 @@
 					
 				</div>
 				
-				<div style="float:right;">
-					<button type="button" class="btn btn-secondary">관심코스</button>
-					<button type="button" class="btn btn-info">좋아요</button>
+				<div id="member_menu" style="float:right;">
+					<c:if test="${member ne null}">
+						<button type='button' class='btn btn-secondary' id='myCourse' name='myCourse' onclick="myCourseIn()"></button>	
+						<button type='button' class='btn btn-info'>좋아요</button>
+					</c:if>
 				</div>
 			</div>
 		</div>
 		
 		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
 		
+		<!-- 관심코스와 좋아요에 필요한 파라미터들. -->
+		<input type="hidden" id="myCourse_lc_index" name="myCourse_lc_index" value='<c:out value="${lc_get.lc_index}" />'/> 	
+		<input type="hidden" id="myCourse_m_index" name="myCourse_m_index" value="${member.m_index }" />
+		<input type="hidden" id="empty_search" name="empty_search" value="${search}" />	
 	    </div>
 		
 		
@@ -153,6 +161,7 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=12678188621fb459c68a7473a7071d75&libraries=services"></script>
 	<!-- services와 clusterer, drawing 라이브러리 불러오기 -->
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script type="text/javascript">
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -282,7 +291,61 @@
 	    }
 	}
 	
+	
+	//------------------------------------------------------------------------------------------
+	// 관심코스 등록.
+	
+	
+	var lc_index = document.getElementById("myCourse_lc_index").value;
+	var m_index = document.getElementById("myCourse_m_index").value;
+	var myCourse = document.getElementById("myCourse");
+	var member_menu = document.getElementById("member_menu");
+	
 
+	function myCourseIn(){
+		
+		$.ajax({
+			type:'post',
+			url:'/lc/003/lc_myCourse',
+			data: {'m_index' : m_index,
+				   'lc_index' : lc_index},
+			success : function(){
+				if(document.getElementById("empty_search").value == "empty"){
+					console.log('test', JSON.stringify(m_index));
+					myCourse.innerText = "관심 코스 해제";
+					document.getElementById("empty_search").value = "not_empty";
+					alert("관심코스가 추가되었습니다.");
+				}else if(document.getElementById("empty_search").value == "not_empty"){
+					myCourse.innerText = "관심 코스";
+					document.getElementById("empty_search").value = "empty";
+					alert("관심코스가 해제되었습니다.");
+				}
+			}
+		});
+	}; 
+	
+
+	</script>
+	<script>
+	$(document).ready(function(){
+		
+		
+		//관심코스 등록되어 있는지 검색.
+		if(m_index != null){
+			
+			if(document.getElementById("empty_search").value == "empty"){
+				myCourse.innerText = "관심코스";
+				console.log("Dddd");
+							
+			}else if(document.getElementById("empty_search").value == "not_empty"){
+				myCourse.innerText = "관심코스 해제";		
+				console.log("fffff");
+			}
+				
+		}
+		
+	});
+	
 	</script>
 
 <%@ include file="../includes/footer.jsp"%>

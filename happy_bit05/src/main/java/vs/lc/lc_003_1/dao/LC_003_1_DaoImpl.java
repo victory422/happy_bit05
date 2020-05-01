@@ -53,19 +53,19 @@ public class LC_003_1_DaoImpl implements LC_003_1_Dao{
 	@Override
 	public int myCourseSearch(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
-		return session.selectOne("lc_003_4_search", vo);
+		return session.selectOne("lc_003_04_search", vo);
 	}
 
 	@Override
 	public void myCourseInsert(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
-		session.insert("lc_003_4", vo);
+		session.insert("lc_003_04", vo);
 	}
 
 	@Override
 	public int myCourseDelete(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
-		return session.delete("lc_003_4_delete", vo);
+		return session.delete("lc_003_04_delete", vo);
 	}
 
 }

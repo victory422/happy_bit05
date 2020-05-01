@@ -5,13 +5,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.xml.ws.soap.AddressingFeature.Responses;
 
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
@@ -20,6 +24,7 @@ import lombok.extern.log4j.Log4j;
 import vs.lc.lc_001_1.service.LC_001_1_Service;
 import vs.lc.lc_001_1.vo.LC_001_1_MapVO;
 import vs.lc.lc_001_1.vo.LC_001_1_VO;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @RequestMapping("/lc/001/*")
@@ -35,7 +40,7 @@ public class LC_001_1_Controller {
 	}
 
 	@RequestMapping(value = "uploadCourse", method = RequestMethod.POST)
-	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model) {
+	public String insertCourse(LC_001_1_VO vo, LC_001_1_MapVO vo2, Model model, HttpServletRequest request) {
 		
 		System.out.println("컨트롤러 : " + vo);
 		//System.out.println("컨트롤러 : " + vo2);
@@ -46,7 +51,10 @@ public class LC_001_1_Controller {
 			Map<String, Object> hmap = new HashMap<String, Object>();
 			hmap.put("lc_thumbnail", vo.getLc_thumbnail().getBytes());
 			
-			vo.setM_index("guest");
+			HttpSession session = request.getSession();
+			LO_001_VO sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+			
+			vo.setM_index(sessionVO.getM_index());
 			
 			service.courseInsert(vo, vo2);
 			service.thumbnailInsert(hmap);
@@ -54,6 +62,8 @@ public class LC_001_1_Controller {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
+		
 		
 		
 		return "redirect:/lc/002/list";

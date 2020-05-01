@@ -93,7 +93,9 @@
 		<div class="row">
 			<div class="col-6"><h3>${pageUtil.cri.lc_type } 코스</h3></div>
 			<div class="col-6" style="text-align:right;">
-				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write'">글쓰기</button>
+				<c:if test="${m_index ne null}">
+				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write?m_index=${m_index}'">글쓰기</button>
+				</c:if>
 			</div>
 		</div>
 		
@@ -110,7 +112,7 @@
 					<a class="move" href="<c:out value='${lc1.lc_index}'/>">
 						<p class="card-text">${lc1.lc_title}</p>
 					</a>
-					<p class="card-text">${lc1.m_index}</p>
+					<p class="card-text">${lc1.m_nickname}</p>
 					<p class="card-text">조회수 : ${lc1.lc_see}<br>추천수 : ${lc1.lc_good}</p>
 				</div>
 				</div>
@@ -135,7 +137,7 @@
 					<a class="move" href="<c:out value='${lc.lc_index}'/>">
 						<p class="card-text">${lc.lc_title}</p>
 					</a>
-					<p class="card-text">${lc.m_index}</p>
+					<p class="card-text">${lc.m_nickname}</p>
 					<p class="card-text">조회수 : ${lc.lc_see}<br>추천수 : ${lc.lc_good}</p>
 				</div>
 				</div>
