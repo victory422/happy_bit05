@@ -363,6 +363,7 @@ function myPosition(){
 	    
 	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
 	    navigator.geolocation.getCurrentPosition(function(position) {
+	    	
 	        
 	        var lat = position.coords.latitude, // 위도
 	            lon = position.coords.longitude; // 경도
@@ -406,6 +407,7 @@ function myPositionOnly(){
 	    
 	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
 	    navigator.geolocation.getCurrentPosition(function(position) {
+	    	
 	        
 	        var lat = position.coords.latitude, // 위도
 	            lon = position.coords.longitude; // 경도
@@ -432,12 +434,13 @@ function myPositionOnly(){
 	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
 	function displayMarker2(locPosition) {
 
+		
 	    // 마커를 생성합니다
-	    var marker = new kakao.maps.Marker({  
-	        map: map, 
-	        position: locPosition
-	    });    
-	}    
+	    marker.setPosition(locPosition);
+	        
+	};    
+	
+	//기존의 마커를 지우는 함수입니다.
 }
 
 //코스 다음 경로보기.
@@ -562,6 +565,52 @@ for (var i = 0; i < positions.length; i ++) {
 }
 
 function aa() {
+	 $.ajax({
+	url: "../mb/load",
+	type: "GET",
+	cache: false,
+	dataType: "json",
+	success: function(data) {
+		 /* alert('success'+data); */
+		 //lat 오차범위 첫번째
+		 
+		  myPositionOnly();
+		 
+		  console.log('그그'+$('#mylat').val());
+		 console.log('느느'+xy_arr[0]);
+		 
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
+		 
+		 console.log(targetLat);
+		 console.log(lineLat);
+		 if(targetLat == lineLat){
+			//먼저 Lat이 오차범위안에 있는지 확인 
+			
+			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
+			var targetLon = Math.floor($('#mylon').val()*100)/100
+			var lineLon = Math.floor(xy_arr[1]*100)/100
+		 
+			if(targetLon == lineLon){
+				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
+				//Lat과 Lon이 같다면 Start에 요소 추가구문
+				console.log("22221111");
+			}
+		 }else{
+			 document.getElementById('startbtn').className = "btn btn-lg btn-danger";
+		 }
+	},
+	 error: function(request, status, error){
+		 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		 console.log('error:'+error);
+	 }
+	
+	 });
+
+}
+
+
+function aa2() {
 	 $.ajax({
 	url: "../mb/load",
 	type: "GET",
