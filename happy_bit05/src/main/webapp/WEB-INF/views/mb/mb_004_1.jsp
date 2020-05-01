@@ -174,7 +174,7 @@
 </div>
 
 <script>
-    var time = 0;
+var time = 0;
 var starFlag = true;
 $(document).ready(function(){
   buttonEvt();
@@ -189,6 +189,7 @@ function buttonEvt(){
   var min = 0;
   var sec = 0;
   var timer;
+  var record_arr = xy_arr;
 
   // start btn
   $(".btnStart").click(function(){
@@ -230,7 +231,41 @@ function buttonEvt(){
       clearInterval(startTimer);
       
       //내 위치 추적, 좌표 지우기.
-      
+      recordStart = setInterval(function(){
+    	  
+    	  //내 위치 가져오기
+    	  myPositionOnly();
+    	  
+    	  //내 위치 좌표
+    	  var targetLat = Math.floor(parseFloat($('#mylat').val())*1000)/1000;
+    	  //경로 위치 좌표.
+ 		  var lineLat = Math.floor(parseFloat(xy_arr[0])*1000)/1000;
+    	  
+    	  //위도 오차범위 검색.
+    	  if(targetLat == lineLat){
+    		  
+    		//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
+  			var targetLon = Math.floor($('#mylon').val()*100)/100
+  			var lineLon = Math.floor(xy_arr[1]*100)/100
+  			
+  			//경도 오차범위 검색.
+  			if(targetLon == lineLon){
+  				
+  				//내 위치 불러오기.
+	    		 var mylat = document.getElementById('mylat').value;
+	    		 var mylon = document.getElementById('mylon').value;
+	    		  
+	    		 record_arr.splice(0,2);
+	    		  
+	    		 xy_arr[0] = mylat;
+	    		 xy_arr[1] = mylon;
+	    		  
+	    		 for(var i =  0; i < record_arr.size(); i++){
+	    		  xy_arr[i+2] = record_arr[i];
+	    		 }
+  			}
+    	  }
+      }, 3000);
     }
   });
 
@@ -311,7 +346,6 @@ if (navigator.geolocation) {
 }
 
 //5초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
-
 (aa()); 
 
 $(function startEvent() {
@@ -363,6 +397,46 @@ function myPosition(){
 	    
 	    // 지도 중심좌표를 접속위치로 변경합니다
 	    map.setCenter(locPosition);      
+	}    
+}
+
+// 내 위치만 가져오기
+function myPositionOnly(){
+	if (navigator.geolocation) {
+	    
+	    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+	    navigator.geolocation.getCurrentPosition(function(position) {
+	        
+	        var lat = position.coords.latitude, // 위도
+	            lon = position.coords.longitude; // 경도
+	            
+	        
+	        var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+	        document.getElementById("mylat").value = lat;
+	        document.getElementById("mylon").value = lon;
+	        
+	        // 마커와 인포윈도우를 표시합니다
+	        displayMarker2(locPosition);
+	            
+	      });
+	    
+	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+	    
+	    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+	        message = 'geolocation을 사용할수 없어요..'
+	        
+	    displayMarker2(locPosition);
+	}
+	
+	
+	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+	function displayMarker2(locPosition) {
+
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({  
+	        map: map, 
+	        position: locPosition
+	    });    
 	}    
 }
 
@@ -497,7 +571,7 @@ function aa() {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
 		 
-		  myPosition();
+		  myPositionOnly();
 		 
 		  console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
