@@ -66,10 +66,10 @@
 							장비 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">후기 게시판</a> <a
-								class="dropdown-item" href="/li/li_002_1?li_b_type=추천게시판">추천 게시판</a> <a
-								class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">관리 게시판</a> <a
-								class="dropdown-item" href="/li/li_004_1?li_b_type=장비게시판">장비 게시판</a>
+							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">후기쓰기</a> <a
+								class="dropdown-item" href="/li/li_002_1?li_b_type=추천게시판">추천하기</a> <a
+								class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">관리하기</a> <a
+								class="dropdown-item" href="/li/li_004_1?li_b_type=장비게시판">자랑하기</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
@@ -77,8 +77,8 @@
 							트레이닝 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="/lt/lt_001_1">질문 게시판</a> <a
-								class="dropdown-item" href="/lt/lt_002_1">공유 게시판</a>
+							<a class="dropdown-item" href="/lt/lt_001_1">질문</a> <a
+								class="dropdown-item" href="/lt/lt_002_1">공유</a>
 						</div></li>
 					<li class="nav-item"><a class="nav-link" href="/SP/SP_001_1">shop</a>
 					</li>

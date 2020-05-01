@@ -49,6 +49,7 @@
   </script>
 <%@ include file="../includes/middle.jsp"%>
 	<div class="container">
+	
 		 <form id="form" method="post" onsubmit="return check_fn()" >
 			<c:forEach var="board" items="${page }">
 				<input type="hidden" name="li_index" value="${board.li_index }"/>
@@ -95,7 +96,8 @@
 									<option>종목선택</option>
 									<option value="all">모두</option>
 									<option value="육상"
-									<c:forEach var="load" items="${type }">
+									<c:forEach var="load" items="${page }">
+									
 					<c:out value="${load.li_type eq '육상'?'selected':''}"/>
 					</c:forEach>
 									>육상</option>
