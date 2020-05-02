@@ -12,7 +12,7 @@
 
 
     <!-- Bootstrap core CSS -->
-    <link href="../../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/happy_bit05/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -495,7 +495,7 @@ function displayCircleDot(position) {
 for(var i = 0; i < xy_arr.length; i+=2){
 	linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-}.
+}
 
 	
 
