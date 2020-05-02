@@ -314,6 +314,14 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption); 
 
+
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* 위치 띄워주는 함수들. */
+
+
+/* 페이지 들어왔을때 경로 첫 지점 보여주기. */
 //HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 if (navigator.geolocation) {
     
@@ -357,6 +365,7 @@ $(function startEvent() {
 });
 
 
+/* 내 위치랑 마커 가져오기. */
 //HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 function myPosition(){
 	if (navigator.geolocation) {
@@ -374,7 +383,7 @@ function myPosition(){
 	        document.getElementById("mylon").value = lon;
 	        
 	        // 마커와 인포윈도우를 표시합니다
-	        displayMarker(locPosition);
+	        displayMyMarker(locPosition);
 	            
 	      });
 	    
@@ -383,22 +392,9 @@ function myPosition(){
 	    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
 	        message = 'geolocation을 사용할수 없어요..'
 	        
-	    displayMarker(locPosition);
+	    displayMyMarker(locPosition);
 	}
-	
-	
-	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-	function displayMarker(locPosition) {
-
-	    // 마커를 생성합니다
-	    var marker = new kakao.maps.Marker({  
-	        map: map, 
-	        position: locPosition
-	    }); 
-	    
-	    // 지도 중심좌표를 접속위치로 변경합니다
-	    map.setCenter(locPosition);      
-	}    
+	   
 }
 
 // 내 위치만 가져오기
@@ -417,8 +413,8 @@ function myPositionOnly(){
 	        document.getElementById("mylat").value = lat;
 	        document.getElementById("mylon").value = lon;
 	        
-	        // 마커와 인포윈도우를 표시합니다
-	        displayMarker2(locPosition);
+	      	//마커 위치, 현재 위치로 옮기기.
+	        myMarker.setPosition(locPosition);
 	            
 	      });
 	    
@@ -427,20 +423,10 @@ function myPositionOnly(){
 	    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
 	        message = 'geolocation을 사용할수 없어요..'
 	        
-	    displayMarker2(locPosition);
+	        //마커 위치, 현재 위치로 옮기기.
+	        myMarker.setPosition(locPosition);
 	}
 	
-	
-	// 지도에 마커와 인포윈도우를 표시하는 함수입니다
-	function displayMarker2(locPosition) {
-
-		
-	    // 마커를 생성합니다
-	    marker.setPosition(locPosition);
-	        
-	};    
-	
-	//기존의 마커를 지우는 함수입니다.
 }
 
 //코스 다음 경로보기.
@@ -467,11 +453,15 @@ function coursePosition(){
 	    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
 	        message = 'geolocation을 사용할수 없어요..'
 	        
-	    displayMarker(locPosition, message);
 	}
 }
 
-//선긋는 부분.
+
+/* ---------------------------------------------------------------------------------------- */
+/* 지도에 경로 표시하는 함수들. */
+
+
+//선긋는 함수.
 var xy = document.getElementById("xy_arr").value;
 var xy_arr = xy.split(',');
 
@@ -505,7 +495,9 @@ function displayCircleDot(position) {
 for(var i = 0; i < xy_arr.length; i+=2){
 	linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-}
+}.
+
+	
 
 for(var i = 0; i < linePath.length; i++){
 	console.log(linePath[i]);
@@ -520,9 +512,36 @@ var polyline = new kakao.maps.Polyline({
     strokeStyle: 'solid' // 선의 스타일입니다
 });
 
+
 // 지도에 선을 표시합니다 
 polyline.setMap(map);  
-	
+
+
+
+
+/* ---------------------------------------------------------------------------------------------------- */
+/* 마커 관련 함수들. */
+
+// 지도에 마커와 인포윈도우를 표시하는 함수입니다
+function displayMarker(locPosition) {
+
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({  
+        map: map, 
+        position: locPosition
+    });       
+}
+
+// 내 위치를 표시하는 마커입니다.
+function displayMyMarker(locPosition) {
+
+    // 마커를 생성합니다
+    var myMarker = new kakao.maps.Marker({  
+        map: map, 
+        position: locPosition
+    });       
+} 
+
 
 //마커 표시하기.
 var positions = [
@@ -549,14 +568,14 @@ for (var i = 0; i < positions.length; i ++) {
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    
 	    // 마커를 생성합니다
-	    var marker = new kakao.maps.Marker({
+	    var courseMarker = new kakao.maps.Marker({
 	        map: map, // 마커를 표시할 지도
 	        position: positions[i].latlng, // 마커를 표시할 위치
 	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	        image : markerImage // 마커 이미지 
 	    });
     }else{
-    	var marker = new kakao.maps.Marker({
+    	var courseMmarker = new kakao.maps.Marker({
     		position: positions[i].latlng
     	});
     	
@@ -564,6 +583,10 @@ for (var i = 0; i < positions.length; i ++) {
     }
 }
 
+
+/* ------------------------------------------------------------------------------------------------------- */
+
+/* 페이지 열렸을 때 내 위치와 시작위치의 오차 확인 */
 function aa() {
 	 $.ajax({
 	url: "../mb/load",
@@ -610,6 +633,7 @@ function aa() {
 }
 
 
+/* 모르겠음.. 몬가.. 몬가 하나 더 있음... */
 function aa2() {
 	 $.ajax({
 	url: "../mb/load",
