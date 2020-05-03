@@ -12,7 +12,7 @@
 
 
     <!-- Bootstrap core CSS -->
-    <link href="../../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -350,7 +350,7 @@ if (navigator.geolocation) {
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
         message = 'geolocation을 사용할수 없어요..'
         
-    displayMarker(locPosition, message);
+    displayMarker(locPosition);
 }
 
 //5초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
@@ -359,7 +359,7 @@ if (navigator.geolocation) {
 $(function startEvent() {
         	
         startTimer = setInterval(function(){
-        	aa();
+        	aa2();
         },6000);
         
 });
@@ -384,7 +384,7 @@ function myPosition(){
 	        
 	        // 마커와 인포윈도우를 표시합니다
 	        displayMyMarker(locPosition);
-	            
+	        map.setCenter(locPosition);    
 	      });
 	    
 	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -495,7 +495,7 @@ function displayCircleDot(position) {
 for(var i = 0; i < xy_arr.length; i+=2){
 	linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-}.
+}
 
 	
 
@@ -522,24 +522,33 @@ polyline.setMap(map);
 /* ---------------------------------------------------------------------------------------------------- */
 /* 마커 관련 함수들. */
 
+ var myMarker = new kakao.maps.Marker({  
+        map: map, 
+        position: locPosition
+    })
+
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 function displayMarker(locPosition) {
 
     // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({  
+    var marker = new kakao.maps.Marker({  u
         map: map, 
         position: locPosition
-    });       
+    }); 
+    
+    marker.setMap(map);
 }
 
 // 내 위치를 표시하는 마커입니다.
 function displayMyMarker(locPosition) {
 
     // 마커를 생성합니다
-    var myMarker = new kakao.maps.Marker({  
+  /*   var myMarker = new kakao.maps.Marker({  
         map: map, 
         position: locPosition
-    });       
+    });  */ 
+    
+    myMarker.setMap(map);
 } 
 
 
@@ -575,7 +584,7 @@ for (var i = 0; i < positions.length; i ++) {
 	        image : markerImage // 마커 이미지 
 	    });
     }else{
-    	var courseMmarker = new kakao.maps.Marker({
+    	var marker = new kakao.maps.Marker({
     		position: positions[i].latlng
     	});
     	
@@ -597,7 +606,7 @@ function aa() {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
 		 
-		  myPositionOnly();
+		  myPosition();
 		 
 		  console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
