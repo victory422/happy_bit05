@@ -88,7 +88,12 @@ public class Co_ServiceImpl implements Co_Service {
 	//대회 접수 
 	@Override
 	public int ap_insert(CoVO covo) throws Exception{
-		 
+		
+		
+		
+		sqlSession.update("ac.updateCount", covo);
+		
+		
 		return comapper.ap_insert(covo); 
 	}
 

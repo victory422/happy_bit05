@@ -1,13 +1,8 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<%@ include file="../includes/sidebar.jsp" %>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -23,8 +18,14 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
 	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
 	crossorigin="anonymous"></script>
-</head>
-<body>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  
+  
   
 <div class="container"> 
 	<div class="row">
@@ -101,17 +102,24 @@
 							</tr>
 						</thead>
 						<c:forEach items="${data}" var="data">
+						${data.co_b_state }
 							<tr>
 								<td><label class="custom-control-label" for="jb-radio-1"></label></td>
 								<td>${data.co_b_title}</td>
 								<td>${data.co_b_day}</td>
 								<td>${data.co_b_price}</td>
+								<td>${data.co_b_count}</td>
 								<td>0</td>
-								<td>0</td>
-								<td><button type="button" class="btn btn-primary">접수중</button></td>
+								<c:if test="${data.co_b_state eq '접수가능'}">
+								<td><button type="button" class="btn btn-primary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
+								</c:if>
+								<c:if test="${data.co_b_state eq '접수종료'}">
+								<td><button type="button" class="btn btn-secondary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
+								</c:if>
+								
 								<td><button type="button" class="btn btn-primary" onclick="location.href='ac_003_1?co_b_index=${data.co_b_index}'">상세보기</button></td>
 							</tr>
-					</c:forEach>
+					</c:forEach> 
 						</table>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true">
@@ -180,5 +188,44 @@ $(document).ready(function(){
 	
 })
 
+
+	$('.statechange').on("click", function() {
+		
+		
+		
+		var co_b_state = $(this).text();
+		console.log("state",co_b_state);
+		var co_b_index = $(this).val();
+		console.log("index",co_b_index);
+		$.ajax({
+			url : '/ac/statechange',
+			type : 'post',
+			data : {
+				'co_b_index' : co_b_index
+			},
+			success : function(data) {
+				if(co_b_state == '접수가능'){
+					
+					$('#statechange'+co_b_index).text("접수종료");			
+					$('#statechange'+co_b_index).removeClass("btn btn-primary");
+					$('#statechange'+co_b_index).addClass("btn btn-secondary");
+
+				}else{
+					
+					$('#statechange'+co_b_index).text("접수가능");			
+					$('#statechange'+co_b_index).removeClass("btn btn-secondary");
+					$('#statechange'+co_b_index).addClass("btn btn-primary");
+
+					
+				}
+
+			},
+			error : function(xhr, status, error){
+				console.log(xhr);
+				console.log(status);
+				console.log(error);
+			}
+		});
+	});
 </script>
 </html>

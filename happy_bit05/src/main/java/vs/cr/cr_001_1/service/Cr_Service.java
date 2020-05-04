@@ -16,4 +16,9 @@ public interface Cr_Service {
 	
 	public int get_total(Page_DTO dto);
 	
+	public List<CrVO> cr_detail(String co_r_index);
+	//대회 후기 삭제
+	public int cr_delete(String co_r_index);
+	//대회 후기 수정
+	public int cr_update(CrVO crvo);
 }

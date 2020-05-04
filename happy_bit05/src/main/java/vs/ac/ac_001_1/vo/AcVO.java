@@ -14,7 +14,10 @@ public class AcVO {
 	private int co_b_good;
 	private String co_b_date;
 	private String co_b_area;
-	private String co_b_period;
+	private String co_b_start;
+	private String co_b_state;
+	private String co_b_count;
+	private String co_b_end;
 	private String co_b_type;
 	private String co_b_price;
 	private String co_souvenir;
@@ -23,6 +26,30 @@ public class AcVO {
 	private byte[] co_thumbnail;
 	private String co_request;
 	
+	public String getCo_b_count() {
+		return co_b_count;
+	}
+	public void setCo_b_count(String co_b_count) {
+		this.co_b_count = co_b_count;
+	}
+	public String getCo_b_state() {
+		return co_b_state;
+	}
+	public void setCo_b_state(String co_b_state) {
+		this.co_b_state = co_b_state;
+	}
+	public String getCo_b_start() {
+		return co_b_start;
+	}
+	public void setCo_b_start(String co_b_start) {
+		this.co_b_start = co_b_start;
+	}
+	public String getCo_b_end() {
+		return co_b_end;
+	}
+	public void setCo_b_end(String co_b_end) {
+		this.co_b_end = co_b_end;
+	}
 	public byte[] getCo_thumbnail() {
 		return co_thumbnail;
 	}
@@ -84,12 +111,6 @@ public class AcVO {
 	}
 	public void setCo_b_area(String co_b_area) {
 		this.co_b_area = co_b_area;
-	}
-	public String getCo_b_period() {
-		return co_b_period;
-	}
-	public void setCo_b_period(String co_b_period) {
-		this.co_b_period = co_b_period;
 	}
 	public String getCo_b_type() {
 		return co_b_type;

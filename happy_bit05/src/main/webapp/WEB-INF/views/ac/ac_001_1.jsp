@@ -46,12 +46,38 @@
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<label class="input-group-text">일자</label>
-					
+					<div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
+                            <input type="text" name="co_b_day"id="date" class="form-control text-center" aria-label="Date-Time" readonly>
+                            <span class="tui-ico-date"></span>
+                            <div id="wrapper2"></div>
+                    </div>
 				</div>
-				<input type="text" class="form-control" name="co_b_day">
 			</div>
-			  
 		</div>
+		<div class="col-sm-6">
+			<div class="input-group mb-3">
+				<div class="input-group-prepend">
+					<label class="input-group-text">접수기한</label>
+					
+					   
+					<div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
+                            <input type="text" name="co_b_start"id="start" class="form-control text-center" aria-label="Date-Time" readonly>
+                            <span class="tui-ico-date"></span>
+                            <div id="wrapper"></div>
+                    </div>
+                    &nbsp; ~ &nbsp;
+                      <div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
+                            <input type="text" name="co_b_end"id="end" class="form-control text-center" aria-label="Date-Time" readonly>
+                            <span class="tui-ico-date"></span>
+                            <div id="wrapper1"></div>
+                    </div>
+                    
+                   
+				</div>
+				 <!-- <input type="text" class="form-control" name="co_b_period"> -->
+			</div>
+		</div>
+		
 		<div class="col-sm-6">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -61,30 +87,6 @@
 			</div>
 		
 		</div>
-		<div class="col-sm-6">
-			<div class="input-group mb-3">
-				<div class="input-group-prepend">
-					<label class="input-group-text">접수기한</label>
-					
-					 <!--  
-					<div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
-                            <input type="text" id="saleCloseDay" class="form-control text-center" aria-label="Date-Time" readonly>
-                            <span class="tui-ico-date"></span>
-                            <div id="wrapper"></div>
-                    </div>
-                    &nbsp; ~ &nbsp;
-                    <div class="tui-datepicker-input tui-datetime-input tui-has-focus" style="z-index: 1; height: 38px;">
-                            <input type="text" id="saleCloseDay" class="form-control text-center" aria-label="Date-Time" readonly>
-                            <span class="tui-ico-date"></span>
-                            <div id="wrapper1"></div>
-                    </div>
-                    -->
-                   
-				</div>
-				 <input type="text" class="form-control" name="co_b_period">
-			</div>
-		</div>
-		
 		<div class="col-sm-6">
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
@@ -155,13 +157,13 @@
 
  
 <script>
-/*
+
 function getWriteSaleCloseDatePicker() {
     let startDatePicker = new tui.DatePicker('#wrapper', {
       date: new Date(),
       language: 'ko',
       input: {
-        element: '#saleCloseDay',
+        element: '#start',
         format: 'yyyy-MM-dd'
       }
     });
@@ -170,7 +172,37 @@ function getWriteSaleCloseDatePicker() {
   }
   
 getWriteSaleCloseDatePicker();
-*/
+
+function getWriteSaleCloseDatePicker1() {
+    let endDatePicker = new tui.DatePicker('#wrapper1', {
+      date: new Date(),
+      language: 'ko',
+      input: {
+        element: '#end',
+        format: 'yyyy-MM-dd'
+      }
+    });
+
+    return endDatePicker;
+  }
+  
+getWriteSaleCloseDatePicker1();
+
+
+function getWriteSaleCloseDatePicker2() {
+    let DatePicker = new tui.DatePicker('#wrapper2', {
+      date: new Date(),
+      language: 'ko',
+      input: {
+        element: '#date',
+        format: 'yyyy-MM-dd'
+      }
+    });
+
+    return DatePicker;
+  }
+  
+getWriteSaleCloseDatePicker2();
 $('#ac_souveniradd').click(function(){
 		
 	var ac_text = '';

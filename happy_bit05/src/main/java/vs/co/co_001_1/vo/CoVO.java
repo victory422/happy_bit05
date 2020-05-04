@@ -22,7 +22,26 @@ public class CoVO {
 	private String m_gender;
 	private String m_tel;
 	private String m_nickname;
+	//대회 일시(조인)
+	private String co_b_day;
+	private String co_b_count;
 	
+	
+	
+	
+	public String getCo_b_count() {
+		return co_b_count;
+	}
+	public void setCo_b_count(String co_b_count) {
+		this.co_b_count = co_b_count;
+	}
+	
+	public String getCo_b_day() {
+		return co_b_day;
+	}
+	public void setCo_b_day(String co_b_day) {
+		this.co_b_day = co_b_day;
+	}
 	public String getM_id() {
 		return m_id;
 	}

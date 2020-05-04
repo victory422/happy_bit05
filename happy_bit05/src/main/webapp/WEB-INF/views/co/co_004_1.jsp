@@ -12,49 +12,58 @@
   
 			
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
-		<div class="content" style="width: 1000px">
+		<div class="content">
 			<c:forEach items="${data}" var="data">
-			<div class="row board_style">
-				<div class="col-md-8">
-					<h1>제목 : ${data.co_b_title }</h1>
-				</div>
-				<div class="col-md-4" style="text-align: right;">
-					<h6>추천수:<span class="good_cnt"> 10</span> 조회수:60 </h6>
-					작성일자:${data.co_b_date }
-				</div>
-			</div>
-
-			<br>
-
-			<div class="row board_style">
+			<table style="width:100%;">
+				<tr>
+					<td style="width:80%"><span style="font-size:1.5rem;">${data.co_b_title }&emsp; </span> 종목: ${data.co_b_type }</td>
+					<td style="width:20%; text-align: right;">${data.co_b_date }</td>
+				</tr>
+				<tr>
+					<td>작성자 : 관리자</td>
+					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> 10</span> 조회수:60 </h6></td>
+				</tr>
+				
+			</table>
+			<%-- <div class="row board_style">
 				<div class="col-sm-12">				
 					<button class="float-right" onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
-					<h6>종목: ${data.co_b_type }</h6>
 				</div>
-			</div>
+			</div> --%>
 			<hr>
-
+			<div style="text-align: right">
+				<button type="button" class="btn btn-primary" onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
+			</div>
 			<div style="margin-bottom: 50px">
 				<div class="text_container text_padding">${data.co_b_text }</div>
 			</div>
 			<div class="box">
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
-					<c:choose>
-						<c:when test="${board.m_index ne null}">
-							<a href='javascript: like_func();'><img
-								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
-						</c:when>
-						<c:otherwise>
-							<a href='javascript: login_need();'><img
-								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
-						</c:otherwise>
-					</c:choose>
-				</div>
-				<div class="push padding_1">
-						<button  class="btn btn-info" onclick="location.href='/co/co_003_1'">
-						목록으로 돌아가기  ${back_url}
-					</button>
+					<table style="width:100%">
+						<tr>
+							<td style="width:60%">
+								<c:choose>
+									<c:when test="${board.m_index ne null}">
+										<a href='javascript: like_func();'><img
+											src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+									</c:when>
+									<c:otherwise>
+										<a href='javascript: login_need();'><img
+											src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<td style="width:40%; text-align: right;">
+								<div>
+									<button class="btn btn-info" onclick="location.href='/co/co_003_1'">목록으로 돌아가기 </button>
+								</div>
+								
+								
+							</td>
+						</tr>
+					</table>
+				
 				</div>
 			</div>
 			

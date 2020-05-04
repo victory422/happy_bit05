@@ -13,12 +13,14 @@
 	<result property="co_b_good" column="co_b_good"/>
 	<result property="co_b_date" column="co_b_date"/>
 	<result property="co_b_area" column="co_b_area"/>
-	<result property="co_b_period" column="co_b_period"/>
+	<result property="co_b_start" column="co_b_start"/>
+	<result property="co_b_state" column="co_b_state"/>
 	<result property="co_b_type" column="co_b_type"/>
 	<result property="co_b_price" column="co_b_price"/>
 	<result property="co_souvenir" column="co_souvenir"/>
 	<result property="co_rating" column="co_rating"/>
 	<result property="co_thumbnail" column="co_b_thumbnail"/>
+	<result property="co_b_end" column="co_b_end"/>
 </resultMap>
 
 <!-- 
@@ -85,14 +87,14 @@
 
 	<select id="ac_list" resultMap="requestVO">		
 		<![CDATA[ 
-		select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, 
-					co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail
+		select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
+					co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
 	 from(
 		select rownum rn, a.*
 		from
 		        (
-			        select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, 
-							co_b_period, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail
+			        select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
+							co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
 			        from competition
 			        where 
 			        ]]>
@@ -111,13 +113,13 @@
 	<![CDATA[
 		insert into competition(co_b_index, co_b_title, co_b_text, 
 								co_b_day, co_b_date, co_b_area,
-								co_b_period, co_b_type, co_b_price,
-								 co_souvenir, co_rating
+								co_b_start, co_b_end, co_b_type, co_b_price,
+								 co_souvenir, co_rating,co_b_state,co_b_count
 								)
 		values ('co_'||co_b_index.nextval, #{co_b_title}, #{co_b_text},
-				 #{co_b_day}, sysdate, #{co_b_area},
-				 #{co_b_period}, #{co_b_type}, #{co_b_price},
-				  #{co_souvenir}, #{co_rating}
+				 #{co_b_day}, (select to_char(sysdate,'yyyy.mm.dd  hh24:mi') from dual), #{co_b_area},
+				 #{co_b_start}, #{co_b_end}, #{co_b_type}, #{co_b_price},
+				  #{co_souvenir}, #{co_rating},'접수가능', '0'
 				 )
 		]]>
 	</insert>
@@ -138,7 +140,15 @@
 		competition 
 	
 	</select>
-	
+
+<update id="updateCount" parameterType="vs.co.co_001_1.vo.CoVO">
+
+	update competition
+	set co_b_count = (select count(*) 
+						from competition c inner join participant p
+   						 on c.co_b_index = p.co_b_index)+1	
+						
+</update>
 	
 	
 
