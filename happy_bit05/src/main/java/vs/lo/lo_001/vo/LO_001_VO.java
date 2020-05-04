@@ -13,5 +13,9 @@ public class LO_001_VO {
 	m_birth, m_email_1, m_tel, m_address, m_picture, m_index, m_state;
 	private int loginCheck, m_count, m_point;
 	
+	public LO_001_VO() {
+		loginCheck=0;
+	}
+	
 	
 }

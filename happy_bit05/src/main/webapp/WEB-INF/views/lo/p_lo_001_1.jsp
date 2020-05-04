@@ -33,8 +33,8 @@
 						<input type="submit" value="To MyPage"
 							onclick="javascript: form.action='/mp';"
 							class="btn float-right member_btn">
-						<input type="submit" value="logout"
-							onclick="javascript: form.action='/lo/logout';"
+						<input type="submit" value="Retry"
+							onclick="javascript: form.action='/lo';"
 							class="btn float-right member_btn">
 					</form>
 				</div>

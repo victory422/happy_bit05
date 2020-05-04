@@ -34,7 +34,6 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 	@RequestMapping(value="/lo/login")
 	public  ModelAndView LO_001_2 (LO_001_VO vo, HttpServletRequest request, HttpServletResponse response 
 			) throws Exception {
-		System.out.println("login page"+vo);
 		List<LO_001_VO> list = service.login(vo);
 		vo = list.get(0);
 		ModelAndView mav = new ModelAndView();
@@ -44,10 +43,9 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 			session.setAttribute("sessionVO", vo);
 			System.out.println("session value : "+session.getAttribute("sessionVO"));
 			mav.addObject(session.getAttribute("sessionVO"));
-			mav.setViewName("lo/p_lo_001_1");
-		}else {
-			mav.setViewName("lo/lo");
 		}
+			mav.setViewName("lo/p_lo_001_1");
+		
 		return mav;
 	}
 	

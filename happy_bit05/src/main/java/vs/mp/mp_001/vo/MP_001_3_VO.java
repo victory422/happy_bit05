@@ -24,7 +24,8 @@ public class MP_001_3_VO {
 	private int lc_good;		//좋아요
 	private int lc_see;			//조회수
 	private String lc_record;	//평균 기록
-	private String rn;
+	private String rn;			//lowNum
+	private String mp_index;	//MyCourse index
 	
 	//지도정보
 	private String lc_address;	//출발지 상세
