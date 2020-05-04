@@ -4,7 +4,7 @@
 
 </body>
 	<footer class="py-5 bg-dark">
-		<div class="container">
+		<div class="container" >
 			<p class="m-0 text-center text-white">footer 부분입니다.&copy;   <br>후원: 신한은행  110-411-493629 이혁희</p>
 		</div>
 		<!-- /.container -->

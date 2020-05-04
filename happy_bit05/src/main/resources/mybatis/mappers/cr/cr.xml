@@ -49,19 +49,20 @@
 <select id="cr_list" resultType="vs.cr.cr_001_1.vo.CrVO">		
 		<![CDATA[ 
 		select co_r_index, co_r_title, co_r_text,
-				co_r_see,co_r_good,co_r_day,co_r_type
+				co_r_see,co_r_good,co_r_day,co_r_type,m_nickname
 	 from(
 		select rownum rn, a.*
 		from
 		        (
-			        select co_r_index, co_r_title, co_r_text,
-						co_r_see,co_r_good,co_r_day,co_r_type
-			        from competition_review
+			        select c.co_r_index, c.co_r_title, c.co_r_text,
+						c.co_r_see,c.co_r_good,c.co_r_day,c.co_r_type,m.m_nickname
+			        from competition_review c, member m 
 			        where 
 			        ]]>
 			        	 <include refid="Page_DTO"/>
 			        <![CDATA[ 
 			        co_r_index > '0'
+			        and c.m_index = m.m_index
 			        order by to_number(substr(co_r_index, 4)) desc
 		        )a
 		where rownum <= (#{page} * #{amount})
@@ -72,8 +73,8 @@
 
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
-	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type)
-	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type})
+	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index})
 
 </insert>
 <!-- 게시물 총합 출력 쿼리 -->
@@ -83,4 +84,32 @@
 	
 
 	</select>
+
+<!-- 대회 후기 상세페이지 -->
+<select id="cr_detail" resultType="vs.cr.cr_001_1.vo.CrVO" parameterType="String">
+
+	select * from competition_review where co_r_index = #{co_r_index}
+	
+
+</select>
+	
+<!-- 대회 후기 삭제 -->
+<delete id="cr_delete" parameterType="String">
+
+	delete from competition_review where co_r_index = #{co_r_index}
+
+</delete>
+
+<!-- 대회 후기 수정 -->
+<update id="cr_update" parameterType="vs.cr.cr_001_1.vo.CrVO">
+
+	update competition_review
+	<set>
+		<if test="co_r_title != null and co_r_title != ''">co_r_title = #{co_r_title},</if>
+		<if test="co_r_text != null and co_r_text != ''">co_r_text = #{co_r_text},</if>
+		<if test="co_r_type != null and co_r_type != ''">co_r_type = #{co_r_type}</if>
+	</set>
+	where co_r_index = #{co_r_index}
+</update>
+
 </mapper>

@@ -64,6 +64,25 @@ public class Cr_ServiceImpl implements Cr_Service {
 		}
 		return 0;
 	}
+	//대회 후기 상세보기
+	@Override
+	public List<CrVO> cr_detail(String co_r_index) {
+		
+		return crmapper.cr_detail(co_r_index);
+		
+	}
+
+	@Override
+	public int cr_delete(String co_r_index) {
+	
+		return crmapper.cr_delete(co_r_index);
+	}
+
+	@Override
+	public int cr_update(CrVO crvo) {
+		
+		return crmapper.cr_update(crvo);
+	}
 	
 	
 	

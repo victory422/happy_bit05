@@ -23,7 +23,8 @@ select *
 			     co_state,		     
 			     co_m_event,
 			     co_m_souvenir,
-				 co_b_index				  
+				 co_b_index,	
+				 m_index
 				 )
 	values('ca_'||co_paper_index.nextval,
 			#{co_title},
@@ -33,24 +34,55 @@ select *
 			'참가',		
 			#{co_m_event},
 			#{co_m_souvenir},
-			#{co_b_index}		
-			)
+			#{co_b_index},	
+			#{m_index}	
+				)
+			
 
 
 </insert>
 <!-- m.m_id,m.m_nickname,m.m_tel,m.m_name,p.co_state,m.m_gender,p.co_title,p.co_area -->
-<select id="ac_detail" resultType="vs.co.co_001_1.vo.CoVO" parameterType="String">
+<select id="ac_member" resultType="vs.co.co_001_1.vo.CoVO" parameterType="String">
 	<![CDATA[	
-		
-
-select *
-    from member m, participant p
-    where m.m_index = p.m_index
- 	and p.co_b_index = #{co_b_index}
-
-		
+select m.m_id, m.m_name, m.m_tel, m.m_gender, m.m_nickname, p.co_title, p.co_area, c.co_b_day,p.co_state
+    from member m inner join participant p 
+        on m.m_index = p.m_index 
+        inner join competition c
+        on p.co_b_index = c.co_b_index
+        where p.co_b_index = #{co_b_index}
 	]]>	
 	</select>
+
+<update id="statechange" parameterType="String">
+	update competition
+		set co_b_state = case 
+        when co_b_state = '접수종료' then '접수가능'
+        when co_b_state = '접수가능' then '접수종료'
+        else co_b_state end
+		where co_b_index = #{co_b_index}
+
+</update>
+<!-- 대회 관리자 상세보기 -->
+<select id="ac_detail" resultType="vs.ac.ac_001_1.vo.AcVO" parameterType="String">
+	
+	select * from competition where co_b_index = #{co_b_index}
+
+</select>
+
+<!-- 대회 참가자 리스트 관리자 -->
+<select id="ac_memberlist" resultType="vs.co.co_001_1.vo.CoVO">
+
+	select m.m_id, m.m_name, m.m_gender, m.m_tel, m.m_nickname, p.co_state, p.co_title, c.co_b_day
+	 from 
+	participant p inner join member m
+	on p.m_index = m.m_index
+	inner join competition c
+	on p.co_b_index = c.co_b_index
+	
+	
+
+</select>
+
 
 
 </mapper>

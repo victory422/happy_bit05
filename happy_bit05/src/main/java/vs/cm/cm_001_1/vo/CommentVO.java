@@ -9,11 +9,25 @@ public class CommentVO {
 	private String board_index;
 	private String com_text;
 	private int com_good;
-	private String com_writer;
 	private String com_index1;
 	private String com_dedetflag;
 	
+	//맴버
+	private String m_index;
+	private String m_nickname;
 	
+	public String getM_index() {
+		return m_index;
+	}
+	public void setM_index(String m_index) {
+		this.m_index = m_index;
+	}
+	public String getM_nickname() {
+		return m_nickname;
+	}
+	public void setM_nickname(String m_nickname) {
+		this.m_nickname = m_nickname;
+	}
 	public String getCom_index1() {
 		return com_index1;
 	}
@@ -43,12 +57,6 @@ public class CommentVO {
 	}
 	public void setCom_good(int com_good) {
 		this.com_good = com_good;
-	}
-	public String getCom_writer() {
-		return com_writer;
-	}
-	public void setCom_writer(String com_writer) {
-		this.com_writer = com_writer;
 	}
 	public String getCom_dedetflag() {
 		return com_dedetflag;
