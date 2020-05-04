@@ -180,10 +180,6 @@
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 			center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
-<<<<<<< HEAD
-			level: 3 //지도의 레벨(확대, 축소 정도)
-=======
->>>>>>> 189f9a992f3e197dc03a2d221b2600c5dc2ff5c4
 			level: 4 //지도의 레벨(확대, 축소 정도)
 		};
 	
