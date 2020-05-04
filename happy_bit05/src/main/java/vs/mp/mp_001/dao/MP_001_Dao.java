@@ -22,4 +22,6 @@ public interface MP_001_Dao {
 
 	PageUtil GetTotal(Page_DTO dto);
 
+	List<MP_001_3_VO> getMyCourse(Page_DTO dto);
+
 }

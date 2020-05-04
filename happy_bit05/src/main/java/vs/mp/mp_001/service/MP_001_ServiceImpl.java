@@ -29,9 +29,18 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 	@Override
 	public List<MP_001_3_VO> getList(Page_DTO dto) {
 		// TODO Auto-generated method stub
-		log.info("코스 리스트 조회.......!");
+		log.info("my코스 리스트 조회.......!");
 		log.info(dto);
 		List<MP_001_3_VO> list = dao.getList(dto);
+		return list;
+	}
+	
+	@Override
+	public List<MP_001_3_VO> getMyCourse(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("my코스  상세조회.......!");
+		log.info(dto);
+		List<MP_001_3_VO> list = dao.getMyCourse(dto);
 		return list;
 	}
 

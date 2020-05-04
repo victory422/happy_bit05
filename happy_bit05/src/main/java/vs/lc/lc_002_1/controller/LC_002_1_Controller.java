@@ -26,7 +26,7 @@ public class LC_002_1_Controller {
 	//리스트 가져오기
 	@RequestMapping(value="list")
 	public String getList(Criteria cri, Model model) {
-			
+			log.info(cri);
 			List<LC_002_1_VO> listVO = service.getList(cri);
 			List<LC_002_1_VO> listGood = service.getGood(cri);
 			int total = service.getTotal(cri);
