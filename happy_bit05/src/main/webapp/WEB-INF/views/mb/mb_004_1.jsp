@@ -384,7 +384,6 @@ function myPosition(){
 	        document.getElementById("mylon").value = lon;
 	        
 	        // 마커와 인포윈도우를 표시합니다
-	        displayMyMarker(locPosition);
 	        map.setCenter(locPosition);    
 	      });
 	    
