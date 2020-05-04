@@ -339,7 +339,8 @@ if (navigator.geolocation) {
         
         var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
 
-        
+        //마커를 표시합니다.
+        displayMyMarker(locPosition);
     	 // 지도 중심좌표를 접속위치로 변경합니다
 	    map.setCenter(locPosition); 
             
@@ -350,7 +351,7 @@ if (navigator.geolocation) {
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
         message = 'geolocation을 사용할수 없어요..'
         
-    displayMarker(locPosition, message);
+    displayMarker(locPosition);
 }
 
 //5초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
@@ -359,7 +360,7 @@ if (navigator.geolocation) {
 $(function startEvent() {
         	
         startTimer = setInterval(function(){
-        	aa();
+        	aa2();
         },6000);
         
 });
@@ -384,7 +385,7 @@ function myPosition(){
 	        
 	        // 마커와 인포윈도우를 표시합니다
 	        displayMyMarker(locPosition);
-	            
+	        map.setCenter(locPosition);    
 	      });
 	    
 	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
@@ -522,24 +523,34 @@ polyline.setMap(map);
 /* ---------------------------------------------------------------------------------------------------- */
 /* 마커 관련 함수들. */
 
+// 마커 전역변수.
+var marker;
+
+// 내 위치 마커 전역변수.
+var myMarker;
+
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 function displayMarker(locPosition) {
 
-    // 마커를 생성합니다
-    var marker = new kakao.maps.Marker({  
-        map: map, 
-        position: locPosition
-    });       
+	//시작, 도착 지점을 표시하는 마커.
+	 	marker = new kakao.maps.Marker({  
+	    map: map, 
+	    position: locPosition
+	 });
+    
+    marker.setMap(map);
 }
 
 // 내 위치를 표시하는 마커입니다.
 function displayMyMarker(locPosition) {
 
-    // 마커를 생성합니다
-    var myMarker = new kakao.maps.Marker({  
-        map: map, 
-        position: locPosition
-    });       
+	//내 위치를 표시하는 마커.
+	 	myMarker = new kakao.maps.Marker({  
+	    map: map, 
+	    position: locPosition
+	 });
+    
+    myMarker.setMap(map);
 } 
 
 
@@ -575,7 +586,7 @@ for (var i = 0; i < positions.length; i ++) {
 	        image : markerImage // 마커 이미지 
 	    });
     }else{
-    	var courseMmarker = new kakao.maps.Marker({
+    	var marker = new kakao.maps.Marker({
     		position: positions[i].latlng
     	});
     	
@@ -597,9 +608,10 @@ function aa() {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
 		 
-		  myPositionOnly();
+		 //필요 없을 수도....
+		  //myPosition();
 		 
-		  console.log('그그'+$('#mylat').val());
+		 console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
 		 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
