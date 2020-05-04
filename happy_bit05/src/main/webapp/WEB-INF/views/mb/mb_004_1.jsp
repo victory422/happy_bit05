@@ -189,7 +189,7 @@ function buttonEvt(){
   var min = 0;
   var sec = 0;
   var timer;
-  var record_arr = xy_arr;
+  var record_arr = JSON.parse(JSON.stringify(xy_arr));
 
   // start btn
   $(".btnStart").click(function(){
@@ -202,7 +202,10 @@ function buttonEvt(){
       if(time == 0){
         init();
       }
-
+      
+    //startEvnet() 종료.
+      clearInterval(startTimer);
+    
       timer = setInterval(function(){
         time++;
 		console.log('11===================================>'+time);
@@ -225,9 +228,6 @@ function buttonEvt(){
         }
 
         document.getElementById("time").innerHTML = th + ":" + tm + ":" + ts;
-        
-     	 //startEvnet() 종료.
-        clearInterval(startTimer);
       
      	 //여기서부터 경로를 따라갑니다.
         console.log('스타트 인터벌 도는 중.===================================>'+time);
@@ -235,13 +235,17 @@ function buttonEvt(){
   	 	 myPositionOnly();
   	  
   		  //내 위치 좌표
-  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*1000)/1000;
+  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
   	  	//경로 위치 좌표.
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*1000)/1000;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
   	  
+  	  	console.log('targetLat = ' + targetLat);
+  	  	console.log('lineLat = ' + lineLat);
   	 	 //위도 오차범위 검색.
   	 	 if(targetLat == lineLat){
-  		  
+  		  	
+  	 		console.log('스타트 인터벌 도는 중1.===================================>'+time);
+  	 		
   			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
 			var targetLon = Math.floor($('#mylon').val()*100)/100;
 			var lineLon = Math.floor(xy_arr[1]*100)/100;
@@ -249,6 +253,7 @@ function buttonEvt(){
 			//경도 오차범위 검색.
 			if(targetLon == lineLon){
 				
+				console.log('스타트 인터벌 도는중2. ------------------------------->' + time);
 				//내 위치 불러오기.
 	    		 var mylat = document.getElementById('mylat').value;
 	    		 var mylon = document.getElementById('mylon').value;
@@ -261,19 +266,22 @@ function buttonEvt(){
 	    		 xy_arr[1] = mylon;
 	    		 
 	    		 //카피 배열을 2번째부터 넣기.
-	    		  /* for(var i =  0; i < record_arr.length; i++){
+	    		 for(var i =  0; i < record_arr.length; i++){
 	    		  xy_arr[i+2] = record_arr[i];
-	    		 }  */
+	    		 }  
 
 	    			
 	    		 //여기서부터 지도 새로 표시하는 부분입니다.
-	    		 linePath.splice(0,1);
+	    		 linePath = [];
 	    		 
 	    			//점찍는 함수.
 	    			function startingCircleDot(position) {
 	    				
+	    				//기존의 점은 지운다.
+	    				circleOverlay.setMap(null);
+	    				
 	    			    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
-	    			    var circleOverlay = new kakao.maps.CustomOverlay({
+	    			    circleOverlay = new kakao.maps.CustomOverlay({
 	    			        content: '<span class="dot"></span>',
 	    			        position: position,
 	    			        zIndex: 1
@@ -285,7 +293,7 @@ function buttonEvt(){
 	    			
 	    			for(var i = 0; i < xy_arr.length; i+=2){
 	    				linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-	    				 startingCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+	    				startingCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	    			}
 	    			
 	    				
@@ -514,6 +522,7 @@ var xy = document.getElementById("xy_arr").value;
 var xy_arr = xy.split(',');
 
 var linePath = [];
+var circleOverlay;
 
 	for(var i = 0; i < xy_arr.length; i++){
 		if(i % 2 != 0){
@@ -530,7 +539,7 @@ var linePath = [];
 	function displayCircleDot(position) {
 	
 	    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
-	    var circleOverlay = new kakao.maps.CustomOverlay({
+	    circleOverlay = new kakao.maps.CustomOverlay({
 	        content: '<span class="dot"></span>',
 	        position: position,
 	        zIndex: 1
