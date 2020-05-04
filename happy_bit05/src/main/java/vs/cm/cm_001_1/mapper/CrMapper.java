@@ -17,4 +17,12 @@ public interface CrMapper {
 	public List<CrVO> search_list(CrVO crvo);
 	
 	public int get_total(Page_DTO dto);
+	//대회 후기 상세보기
+	public List<CrVO> cr_detail(String co_r_index);
+	
+	//대회 후기 삭제
+	public int cr_delete(String co_r_index);
+	
+	//대회 후기 수정
+	public int cr_update(CrVO crvo);
 }

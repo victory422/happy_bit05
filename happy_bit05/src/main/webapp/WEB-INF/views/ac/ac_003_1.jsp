@@ -1,27 +1,27 @@
-<%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<!DOCTYPE html>
-<html>
-<head>
+<%@ include file="../includes/sidebar.jsp" %>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<div class="container" style="margin-top: 20px; margin-botton: 20px;">
+<div class="container" style="margin-top: 50px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px; margin-top:30px; ">
-			
-			${data.get(0).co_title }
-			${data.get(0).co_area }
-			${data.get(0). }
+			<table class="table table-striped col-12" style="margin-top: 50px">
+			<tr>
+				<td><h1>대회명 : ${data.get(0).co_b_title }</h1></td>
+			</tr>
+			<tr>
+				<td><h3>대회 장소 : ${data.get(0).co_b_area }</h3></td>
+			</tr>
+			<tr>
+				<td><h3>대회 일시: ${data.get(0).co_b_day }</h3></td>
+			</tr>
+			</table>
 			<table class="table table-striped col-12">
 			<thead>
 			<tr>
@@ -35,14 +35,14 @@
 			</thead>
 			
 			
-			<c:forEach items="${data }" var="data">
+			<c:forEach items="${member }" var="member">
 				<tr>
-					<td>${data.m_id }</td>
-					<td>${data.m_nickname }</td>
-					<td>${data.m_name }</td>
-					<td>${data.m_tel }</td>
-					<td>${data.m_gender }</td>
-					<td>${data.co_state }</td>
+					<td>${member.m_id }</td>
+					<td>${member.m_nickname }</td>
+					<td>${member.m_name }</td>
+					<td>${member.m_tel }</td>
+					<td>${member.m_gender }</td>
+					<td>${member.co_state }</td>
 				</tr>					 
 			</c:forEach>
 			</table>

@@ -3,6 +3,10 @@ package vs.co.co_001_1.controller;
 import java.util.Base64;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +23,7 @@ import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.service.Co_Service;
 import vs.co.co_001_1.vo.CoVO;
 import vs.co.co_001_1.vo.PageUtil;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @RequestMapping("/co/*")
@@ -87,16 +92,22 @@ public class Co_Controller {
 	
 	
 	//대회 접수
-	@PostMapping("/ap_001_1")
-	public String ap_insert(CoVO covo) throws Exception {
-		System.out.println(covo.getCo_area());
-		System.out.println(covo.getCo_m_event() + "기념품");
-		
-		co_service.ap_insert(covo);
-		
-		return "redirect:/co/co_003_1?test1=1";
-		
-	}
+		@PostMapping("/ap_001_1")
+		public String ap_insert(CoVO covo, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			HttpSession session = request.getSession();
+			LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
+			
+			System.out.println("aaaaaaaaaaaa"+vo);
+			System.out.println(covo.getCo_area());
+			System.out.println(covo.getCo_m_event() + "기념품");
+			
+
+			covo.setM_index(vo.getM_index());
+			co_service.ap_insert(covo);
+			
+			return "redirect:/co/co_003_1?test1=1";
+		}		
+	
 	
 	
 }

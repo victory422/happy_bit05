@@ -75,6 +75,7 @@
 								<th>제목</th>
 								<th>대회명</th>							
 								<th>작성자</th>
+								<th>등록일</th>
 								<th>종목</th>
 								<th>조회수</th>
 								<th>추천수</th>
@@ -84,9 +85,10 @@
 						<tbody>
 						<c:forEach items="${data}" var="data">				
 							<tr onClick = "location.href='cr_003_1?co_r_index=${data.co_r_index}'">
-							<td>${data.co_r_title}</td>
+								<td>${data.co_r_title}</td>
 								<td>${data.co_r_text }</td>
-								<td>${data.co_r_day}</td>
+								<td>${data.m_nickname }</td>
+								<td>${data.co_r_day}</td>								
 								<td>${data.co_r_type }</td>
 								<td>${data.co_r_see }</td>
 								<td>${data.co_r_good }</td>
