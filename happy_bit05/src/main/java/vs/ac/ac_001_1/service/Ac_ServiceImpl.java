@@ -54,12 +54,29 @@ public class Ac_ServiceImpl implements Ac_Service {
 		
 	}
 	@Override
-	public List<CoVO> ac_detail(String co_b_index) throws Exception {
+	public List<CoVO> ac_member(String co_b_index) throws Exception {
 	
 		
 		System.out.println(co_b_index + "service");
 		
+		return comapper.ac_member(co_b_index);
+	}
+	@Override
+	public int statechange(String co_b_index) {
+		 
+		return comapper.statechange(co_b_index);
+	}
+	@Override
+	public List<AcVO> ac_detail(String co_b_index) throws Exception {
+		
 		return comapper.ac_detail(co_b_index);
+	}
+	@Override
+	public List<CoVO> ac_memberlist(CoVO covo) throws Exception {
+		
+			System.out.println("대회 참가자 리스트 서비스");
+			
+		return comapper.ac_memberlist(covo);
 	}
 	
 	

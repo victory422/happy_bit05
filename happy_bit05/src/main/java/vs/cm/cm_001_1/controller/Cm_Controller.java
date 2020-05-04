@@ -2,6 +2,10 @@ package vs.cm.cm_001_1.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import vs.cm.cm_001_1.service.Cm_Service;
 import vs.cm.cm_001_1.vo.CommentVO;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @RequestMapping("/comment")
@@ -68,11 +73,15 @@ public class Cm_Controller {
 	//댓글 작성
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	@ResponseBody
-	private int mCommentServiceInsert(@RequestParam("board_index") String com_index, @RequestParam("com_text") String com_text) throws Exception{
-		 
+	private int mCommentServiceInsert(@RequestParam("board_index") String com_index, @RequestParam("com_text") String com_text,
+				HttpServletRequest request, HttpServletResponse response) throws Exception{
+		HttpSession session = request.getSession();
+		LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
+		System.out.println("aaaaaaaaaaaa"+vo);
 		System.out.println(com_index);
 		System.out.println(com_text);
 		
+		comment.setM_index(vo.getM_index());
 		comment.setBoard_index(com_index);
 		comment.setCom_text(com_text);
 		
@@ -84,12 +93,16 @@ public class Cm_Controller {
 	//대댓글 작성
 	@RequestMapping(value="/dedetinsert" ,method = RequestMethod.POST)
 	@ResponseBody
-	private int dCommentServiceInsert(@RequestParam("com_index") String com_index, @RequestParam("com_text") String com_text,@RequestParam("board_index") String board_index) throws Exception {
-		
+	private int dCommentServiceInsert(@RequestParam("com_index") String com_index, @RequestParam("com_text") String com_text,@RequestParam("board_index") String board_index,
+										HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
+		System.out.println("aaaaaaaaaaaa"+vo);
 		System.out.println(com_index);
 		System.out.println(com_text);
 		System.out.println(board_index);
-	
+
+		comment.setM_index(vo.getM_index());
 		comment.setCom_index1(com_index);
 		comment.setCom_text(com_text);
 		comment.setBoard_index(board_index);

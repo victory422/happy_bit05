@@ -14,6 +14,15 @@ public interface CoMapper {
 	public int ap_insert(CoVO covo) throws Exception;
 	
 	//대회 참가자 리스트
-	public List<CoVO> ac_detail(String co_b_index) throws Exception;
+	public List<CoVO> ac_member(String co_b_index) throws Exception;
 
+	//대회 접수상태 변경
+	public int statechange(String co_b_index);
+	 
+	//대회 상세보기
+	public List<AcVO> ac_detail(String co_b_index) throws Exception;
+	
+	//대회 참가자 리스트
+	public List<CoVO> ac_memberlist(CoVO covo) throws Exception;
+	
 }

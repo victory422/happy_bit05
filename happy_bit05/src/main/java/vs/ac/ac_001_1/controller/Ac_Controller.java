@@ -6,15 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import vs.ac.ac_001_1.service.Ac_Service;
 import vs.ac.ac_001_1.vo.AcVO;
 import vs.co.co_001_1.dto.Page_DTO;
-import vs.co.co_001_1.service.Co_Service; 
+import vs.co.co_001_1.service.Co_Service;
+import vs.co.co_001_1.vo.CoVO;
 import vs.co.co_001_1.vo.PageUtil;
 
 @Controller
@@ -69,9 +72,28 @@ public class Ac_Controller {
 		
 		System.out.println(co_b_index);
 		
+		model.addAttribute("member", ac_service.ac_member(co_b_index));
 		model.addAttribute("data", ac_service.ac_detail(co_b_index));
 	}
 	
+	//대회 접수상태 변경 
+	@PostMapping("/statechange")
+	@ResponseBody
+	public int statechange(@RequestParam("co_b_index") String co_b_index) {
+		
+		System.out.println(co_b_index);
+		
+		return ac_service.statechange(co_b_index);
+	}
+	//대회 참가자 리스트
+	@GetMapping("/ac_004_1")
+	public void memberlist(Model model,CoVO covo) throws Exception{
+		
+		System.out.println("대회 참가자 리스트점 뽑아주라");
+		
+		model.addAttribute("memberlist", ac_service.ac_memberlist(covo));
+		
+	}
 	
 	
 }

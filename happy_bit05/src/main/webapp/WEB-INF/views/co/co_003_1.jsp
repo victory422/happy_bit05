@@ -75,10 +75,18 @@
 					<div>
 						<c:forEach items="${data}" var="data">
 						
-					<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
+						
+						<input type="hidden" name="co_b_end" value="${data.co_b_end }">
+						
+						
+						<div data-text-content="true" style="font-weight: bold; font-size: 18px; color: rgb(41, 128, 185); margin-top: 30px;" class="float-right">${data.co_b_state}</div>
+					<table class="table table-bordered table-hover" style="margin-top: 30px; " onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
 						<tr>
-							<td rowspan="4" style="width:200px; height: 125px; padding: 0;"><img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 180px; padding: 0;"></td>
+							<td rowspan="4" style="width:200px; height: 125px; padding: 0;">
+							<img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 180px; padding: 0;">
+							</td>
 							<td ><h2>제목 : ${data.co_b_title}</h2></td>
+							
 						</tr>
 						<tr>
 							<td >일자 : ${data.co_b_day}</td>
@@ -115,8 +123,11 @@
 
 <script>
 
+var co_b_end = $('[name=co_b_end]').val();
+
 $(document).ready(function(){
 	
+	console.log(co_b_end);
 	
 	$('a.page_now').on('click',function(){
 		//alert($('input[name=page]').val($(this).text()))
@@ -145,7 +156,25 @@ $(document).ready(function(){
 		console.log($('input[name=page]').val(1))
 	}
 	
-})
+});
+
+/*
+//접수상태 자동 변화시키기
+function stateupdate(com_index){
+    
+    $.ajax({
+        url : '/co/stateup',
+        type : 'post',
+        data : {'co_b_end' : co_b_end},
+        success : function(data){
+            if(data == 1) 
+            	alert("댓글 수정");
+            	commentList(); //댓글 수정후 목록 출력 
+        }
+    });
+}
+*/
+
 
 </script>
 <%@include file="../includes/footer.jsp"%>		

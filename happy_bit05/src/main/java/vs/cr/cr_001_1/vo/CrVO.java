@@ -12,7 +12,32 @@ public class CrVO {
 	private int co_r_good;
 	private String co_r_day;
 	private String co_r_type;
+	private String co_b_index;
 	
+	//맴버
+	private String m_index;
+	private String m_nickname;
+	
+	
+	
+	public String getM_nickname() {
+		return m_nickname;
+	}
+	public void setM_nickname(String m_nickname) {
+		this.m_nickname = m_nickname;
+	}
+	public String getCo_b_index() {
+		return co_b_index;
+	}
+	public void setCo_b_index(String co_b_index) {
+		this.co_b_index = co_b_index;
+	}
+	public String getM_index() {
+		return m_index;
+	}
+	public void setM_index(String m_index) {
+		this.m_index = m_index;
+	}
 	public String getCo_r_index() {
 		return co_r_index;
 	}
