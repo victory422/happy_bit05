@@ -25,6 +25,15 @@ public interface MS_001_Controller {
 
 	ModelAndView test(MS_001_VO ms_001_vo, HttpServletRequest request, HttpServletResponse respons) throws Exception;
 
+	ModelAndView MS_001_1_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	int idCheck(String data, String area, HttpServletRequest request, HttpServletResponse respons) throws Exception;
+
+	int passwordCheck(String pw_1, String pw_2, HttpServletRequest request, HttpServletResponse respons)
+			throws Exception;
+
+	int mailCheck(MS_001_VO ms_001_vo, HttpServletRequest request, HttpServletResponse respons) throws Exception;
+
 
 
 }
