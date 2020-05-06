@@ -206,6 +206,9 @@ function buttonEvt(){
     //startEvnet() 종료.
       clearInterval(startTimer);
     
+    //마커를 지웁니다.
+		marker.setMap(null);
+    
       timer = setInterval(function(){
         time++;
 		console.log('11===================================>'+time);
@@ -217,6 +220,7 @@ function buttonEvt(){
         var th = hour;
         var tm = min;
         var ts = sec;
+        
         if(th<10){
         th = "0" + hour;
         }
@@ -254,31 +258,36 @@ function buttonEvt(){
 			if(targetLon == lineLon){
 				
 				console.log('스타트 인터벌 도는중2. ------------------------------->' + time);
-				//내 위치 불러오기.
+				 //내 위치 불러오기.
 	    		 var mylat = document.getElementById('mylat').value;
 	    		 var mylon = document.getElementById('mylon').value;
 	    		 
 	    		 //카피 배열의 0~1번째 값 삭제.
 	    		 record_arr.splice(0,2);
 	    		 
+	    		 xy_arr = [];
+	    		 
 	    		 //내 위치를 코스 배열 0~1번째에 넣기.
 	    		 xy_arr[0] = mylat;
 	    		 xy_arr[1] = mylon;
 	    		 
 	    		 //카피 배열을 2번째부터 넣기.
-	    		 for(var i =  0; i < record_arr.length; i++){
-	    		  xy_arr[i+2] = record_arr[i];
-	    		 }  
+	    		 if(record_arr.length >= 1){
+			    	 for(var i =  0; i < record_arr.length; i++){
+			    	 	xy_arr[i+2] = record_arr[i];
+			    	 }  
+	    		 }
+	    		 
 
 	    			
 	    		 //여기서부터 지도 새로 표시하는 부분입니다.
 	    		 linePath = [];
 	    		 
+		    		//기존의 점은 지운다.
+	 				deleteCircleDot();
+	    		 
 	    			//점찍는 함수.
 	    			function startingCircleDot(position) {
-	    				
-	    				//기존의 점은 지운다.
-	    				circleOverlay.setMap(null);
 	    				
 	    			    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
 	    			    circleOverlay = new kakao.maps.CustomOverlay({
@@ -289,6 +298,8 @@ function buttonEvt(){
 	    			
 	    			    // 지도에 표시합니다
 	    			    circleOverlay.setMap(map);
+	    			 	// 배열에 추가합니다
+	    			    dots.push({circle:circleOverlay});
 	    			}
 	    			
 	    			for(var i = 0; i < xy_arr.length; i+=2){
@@ -317,6 +328,16 @@ function buttonEvt(){
 	    			
 	    			// 지도에 선을 표시합니다 
 	    			polyline.setMap(map);
+	    			
+	    			if(xy_arr.length == 2){
+	    				clearInterval(timer);
+	    			      starFlag = true;
+
+	    			      var $button = $('<button class="btn btn-primary">upload업로드</button>');
+
+	    			      $('#upload').html($button);
+	    			}
+	    			
 			}
   	 	 }
   	  
@@ -406,7 +427,6 @@ if (navigator.geolocation) {
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
         message = 'geolocation을 사용할수 없어요..'
         
-    displayMarker(locPosition);
 }
 
 //2초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
@@ -522,7 +542,8 @@ var xy = document.getElementById("xy_arr").value;
 var xy_arr = xy.split(',');
 
 var linePath = [];
-var circleOverlay;
+var circleOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
+var dots = []; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 
 	for(var i = 0; i < xy_arr.length; i++){
 		if(i % 2 != 0){
@@ -547,14 +568,16 @@ var circleOverlay;
 	
 	    // 지도에 표시합니다
 	    circleOverlay.setMap(map);
+	    
+		// 배열에 추가합니다
+	    dots.push({circle:circleOverlay});
 	}
 	
 	for(var i = 0; i < xy_arr.length; i+=2){
 		linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 		 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	}
-	
-		
+
 	
 	for(var i = 0; i < linePath.length; i++){
 		console.log(linePath[i]);
@@ -573,20 +596,34 @@ var circleOverlay;
 	// 지도에 선을 표시합니다 
 	polyline.setMap(map);  
 
+	
+	// 클릭 지점에 대한 정보 (동그라미와 클릭 지점까지의 총거리)를 지도에서 모두 제거하는 함수입니다
+	function deleteCircleDot() {
+	    var i;
 
+	    for ( i = 0; i < dots.length; i++ ){
+	        if (dots[i].circle) { 
+	            dots[i].circle.setMap(null);
+	        }
+
+	    }
+
+	    dots = [];
+	}
 
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* 마커 관련 함수들. */
 
-// 마커 전역변수.
-var marker;
+// 도착지점 마커 전역변수.
+//var marker;
+var courseMarker;
 
 // 내 위치 마커 전역변수.
 var myMarker;
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-function displayMarker(locPosition) {
+/* function displayMarker(locPosition) {
 
 	//시작, 도착 지점을 표시하는 마커.
 	 	marker = new kakao.maps.Marker({  
@@ -595,7 +632,7 @@ function displayMarker(locPosition) {
 	 });
     
     marker.setMap(map);
-}
+} */
 
 // 내 위치를 표시하는 마커입니다.
 function displayMyMarker(locPosition) {
@@ -635,14 +672,19 @@ for (var i = 0; i < positions.length; i ++) {
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    
 	    // 마커를 생성합니다
-	    var courseMarker = new kakao.maps.Marker({
+	    	courseMarker = new kakao.maps.Marker({
 	        map: map, // 마커를 표시할 지도
 	        position: positions[i].latlng, // 마커를 표시할 위치
 	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	        image : markerImage // 마커 이미지 
+	    
+	    
 	    });
+	    
+	    courseMarker.setMap(map);
+	    
     }else{
-    	var marker = new kakao.maps.Marker({
+    	marker = new kakao.maps.Marker({
     		position: positions[i].latlng
     	});
     	
