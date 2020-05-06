@@ -237,7 +237,69 @@ function buttonEvt(){
         console.log('스타트 인터벌 도는 중.===================================>'+time);
   	 	 //내 위치 가져오기
   	 	 myPositionOnly();
+  	 	 
+  	 	 /* ---------------------------------------------------------------- */
+  	 	 //실시간 내 위치로 점과 선 표시하기.
   	  
+  	 	 //내 위치 좌표 가져오기.
+  	 	 var mylat = document.getElementById('mylat').value;
+	     var mylon = document.getElementById('mylon').value;
+	     
+	     map.setCenter(new kakao.maps.LatLng(mylat, mylon));
+  	 	 
+	   	 //내 위치를 코스 배열 0~1번째에 넣기.
+		 xy_arr[0] = mylat;
+		 xy_arr[1] = mylon;
+		 
+		//여기서부터 지도 새로 표시하는 부분입니다.
+		 linePath = [];
+		 
+    		//기존의 점은 지운다.
+				deleteCircleDot();
+		 
+			//점찍는 함수.
+			function startingCircleDot(position) {
+				
+			    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+			    circleOverlay = new kakao.maps.CustomOverlay({
+			        content: '<span class="dot"></span>',
+			        position: position,
+			        zIndex: 1
+			    });
+			
+			    // 지도에 표시합니다
+			    circleOverlay.setMap(map);
+			 	// 배열에 추가합니다
+			    dots.push({circle:circleOverlay});
+			}
+			
+			for(var i = 0; i < xy_arr.length; i+=2){
+				linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+				startingCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+			}
+			
+				
+			
+			for(var i = 0; i < linePath.length; i++){
+				console.log(linePath[i]);
+			}
+			
+			// 기존의 선을 지웁니다.
+			polyline.setMap(null);
+			
+			// 지도에 표시할 선을 생성합니다
+			polyline = new kakao.maps.Polyline({
+    			path: linePath, // 선을 구성하는 좌표배열 입니다
+    			strokeWeight: 7, // 선의 두께 입니다
+    			strokeColor: '#db4040', // 선의 색깔입니다
+    			strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    			strokeStyle: 'solid' // 선의 스타일입니다
+    		});
+			
+			
+			// 지도에 선을 표시합니다 
+			polyline.setMap(map);
+  	 	 /* ---------------------------------------------------------------- */
   	 	 //Lat 오차 범위 확인
   	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
 		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*10000 + 1)/10000;
@@ -341,7 +403,7 @@ function buttonEvt(){
 			}
   	 	 }
   	  
-      }, 1000);
+      }, 2000);
       
       }
   });
@@ -459,7 +521,6 @@ function myPosition(){
 	        document.getElementById("mylat").value = lat;
 	        document.getElementById("mylon").value = lon;
 	        
-	        // 마커와 인포윈도우를 표시합니다
 	        map.setCenter(locPosition);    
 	      });
 	    
