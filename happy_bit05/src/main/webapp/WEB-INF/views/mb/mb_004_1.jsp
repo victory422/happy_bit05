@@ -239,9 +239,9 @@ function buttonEvt(){
   	 	 myPositionOnly();
   	  
   		  //내 위치 좌표
-  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
+  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
   	  	//경로 위치 좌표.
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*10000)/10000;
   	  
   	  	console.log('targetLat = ' + targetLat);
   	  	console.log('lineLat = ' + lineLat);
@@ -251,8 +251,8 @@ function buttonEvt(){
   	 		console.log('스타트 인터벌 도는 중1.===================================>'+time);
   	 		
   			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-			var targetLon = Math.floor($('#mylon').val()*100)/100;
-			var lineLon = Math.floor(xy_arr[1]*100)/100;
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
+			var lineLon = Math.floor(xy_arr[1]*10000)/10000;
 			
 			//경도 오차범위 검색.
 			if(targetLon == lineLon){
@@ -713,8 +713,8 @@ function aa() {
 		 console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
-		 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*10000)/10000;
 		 
 		 console.log(targetLat);
 		 console.log(lineLat);
@@ -722,8 +722,8 @@ function aa() {
 			//먼저 Lat이 오차범위안에 있는지 확인 
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-			var targetLon = Math.floor($('#mylon').val()*100)/100
-			var lineLon = Math.floor(xy_arr[1]*100)/100
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000
+			var lineLon = Math.floor(xy_arr[1]*10000)/10000
 		 
 			if(targetLon == lineLon){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
