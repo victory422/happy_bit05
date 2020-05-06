@@ -6,129 +6,234 @@
 <html>
 <title>회원가입</title>
 
-<script>
-
-	function sub(){
-		var a = document.getElementById("form").m_birth_yy.value;
-		var b = document.getElementById("form").m_birth_mm.value;
-		var c = document.getElementById("form").m_birth_dd.value;
-		if(c.length==1) c= '0'+c;
-		var d = a+b+c;
-		document.getElementById("form").m_birth.value=d;
-		document.getElementById("form").submit();
-	}
-	
-	
-</script>
-
-
 </head>
 <body>
-	<div id="wrap">
-		<br> <br> <b><font size="6" color="gray">회원가입</font></b> <br>
-		<br> <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 col-xl-9 mx-auto">
+        <div class="card card-signin flex-row my-5">
+          <div class="card-img-left d-none d-md-flex">
+                       <!-- Background image for card set in CSS! -->
+          </div>
+      <div class="card-body">
+		<h5 class="card-title text-center">Register</h5>
+		<hr>
+		<form id="form" action="/ms/regist" class="form-signin"
+		 enctype="multipart/form-data" method="post" onSubmit="return sub()">
+			<div class="input-group">
+				<input type="text" class="form-control" id="m_id"
+					placeholder="User ID" name="m_id" required autofocus> 
+				<button type="submit" class="btn btn-secondary" id="idSearch" onclick='idNickCheck()'>
+					중복확인
+				</button>
+			</div>
+			<span id="idChk"></span>
+			<div class="input-group" style="margin-top: 15px">
+				<input type="text" class="form-control" id="m_nickName"
+					placeholder="User NickName" name="m_nickName" required> 
+				<button type="submit" class="btn btn-secondary" id="nickSearch" onclick='idNickCheck()'>
+					중복확인
+				</button>
+			</div>
+			<span id="nickChk"></span>
+			<div id="password">
+			<div class="input-group" style="margin-top: 15px">
+				<input type="password" class="form-control" id="m_pw1" onkeyup="passwordCheck(this.value)"
+					placeholder="password" name="m_pw1" required> 
+			</div>
+			<div class="input-group" style="margin-top: 5px">
+				<input type="password" class="form-control" id="m_pw2" onkeyup="passwordCheck(this.value)"
+					placeholder="password confirm" name="m_pw2" required> 
+			</div>
+			<div class="alert alert-success" id="alert-success" style="display:none">
+				비밀번호가 일치합니다.
+			</div> 
+			<div class="alert alert-danger" id="alert-danger" style="display:none">
+				비밀번호가 일치하지 않습니다.
+			</div>
+			</div>
 
-		<form id="form" action="/ms/regist" method="post" onSubmit="return sub()">
-			<table>
-				<tr>
-					<td id="title">아이디</td>
-					<td><input type="text" name="m_id" maxlength="20"> <input
-						type="button" value="중복확인"></td>
-				</tr>
-				<tr>
-					<td id="title">닉네임</td>
-					<td><input type="text" 
-					name="m_nickName" maxlength="20">
-						<input type="button" value="중복확인"></td>
-				</tr>
 
-				<tr>
-					<td id="title">비밀번호</td>
-					<td><input type="password" name="m_pw1" maxlength="15">
-					</td>
-				</tr>
+			
+			<div class="input-group" style="margin-top: 15px">
+				<input type="text" class="form-control" id="m_name"
+					placeholder="User Name" name="m_name" required> 
+			</div>
+			<div class="input-group" style="margin-top: 15px; ">
+				<input type="radio" name="m_gender" value="남" checked>남
+				&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="m_gender" value="여">여
+			</div>
+			
+			<div class="input-group" style="margin-top: 15px">
+			생년월일 &nbsp; : &nbsp;<input type="date" value="1990-01-01" min="1900-01-01" max="2020-12-31"
+			style="font-size: 16px; font-family: Consolas, sans-serif;" name="m_birth">
+			</div>
+					  
+			<div id="emailConfirm">
+			<div class="input-group" style="margin-top: 15px">
+				<input type="text" class="form-control" id="m_email_1"
+					placeholder="E-mail" name="m_email_1" required>
+				<button type="submit" class="btn btn-secondary" id="mailChk" onclick='mailCheck()'>
+					Email인증
+				</button>
+			</div>
+			<div id="mailChk2" class="input-group" style="margin-top: 5px"></div>
+			<div class="alert alert-success" id="email-success" style="display:none">
+				Email 인증완료 
+			</div> 
+			<div class="alert alert-danger" id="email-danger" style="display:none">
+				Email 인증번호가 일치하지 않습니다.
+			</div>
+			</div>
 
-				<tr>
-					<td id="title">비밀번호 확인</td>
-					<td><input type="password" name="m_pw2" maxlength="15">
-					</td>
-				</tr>
+			<div class="input-group" style="margin-top: 15px">
+				<input type="text" class="form-control" id="m_tel"
+					placeholder="Phone number" name="m_tel" required>
+			</div>
+			
+			<div class="input-group" style="margin-top: 15px">
+				<input type="text" class="form-control" id="m_address"
+					placeholder="Address" name="m_address" required>
+			</div>
+			
+			<label style="margin-top: 10px">Picture</label>
 
-				<tr>
-					<td id="title">이름</td>
-					<td><input type="text" name="m_name" maxlength="40"></td>
-				</tr>
+			<!-- 파일업로드. 안됨.
+			<div class="custom-file">&nbsp;
+          		<input type="file" class="form-control-file" 
+            		id="exampleFormControlFile1" name="m_picture">
+      		</div>
+      		 -->
 
-				<tr>
-					<td id="title">성별</td>
-					<td><input type="radio" name="m_gender" value="남" checked>남
-						<input type="radio" name="m_gender" value="여">여</td>
-				</tr>
-
-				<tr>
-					<td id="title">생일</td>
-					<td><input type="text" id="m_birth_yy" name="m_birth_yy" maxlength="4"
-						placeholder="년(4자)" size="6"> 
-						<select id="m_birth_mm" name="m_birth_mm">
-							<option value="">월</option>
-							<option value="01">1</option>
-							<option value="02">2</option>
-							<option value="03">3</option>
-							<option value="04">4</option>
-							<option value="05">5</option>
-							<option value="06">6</option>
-							<option value="07">7</option>
-							<option value="08">8</option>
-							<option value="09">9</option>
-							<option value="10">10</option>
-							<option value="11">11</option>
-							<option value="12">12</option>
-
-						</select> 
-						<input type="text" id="m_birth_dd" name="m_birth_dd" 
-						maxlength="2" placeholder="일" size="4">
-						<input type="hidden" name="m_birth" value="">
-					</td>
-				</tr>
-
-				<tr>
-					<td id="title">이메일</td>
-					<td><input type="text" name="m_email_1" maxlength="30">@
-						<select name="email_2">
-							<option>naver.com</option>
-							<option>daum.net</option>
-							<option>gmail.com</option>
-							<option>nate.com</option>
-							<option>hotmail.com</option>
-							<option>hitel.com</option>
-							<option>paran.com</option>
-							<option>yahoo.com</option>
-							<option>직접입력</option>
-					</select>
-					<td><input type="button" value="이메일 인증"></td>
-					</td>
-				</tr>
-
-				<tr>
-					<td id="title">휴대전화</td>
-					<td><input type="text" name="m_tel" /></td>
-				</tr>
-				<tr>
-					<td id="title">주소</td>
-					<td><input type="text" size="50" name="m_address" /></td>
-				</tr>
-				<tr>
-					<td id="title">사진</td>
-					<td><input type="file" name="m_picture" size=40></td>
-					<td><input type="button" value="업로드"></td>
-				</tr>
-			</table>
-			<br> 
-			<input type="button" value="가입" onClick="sub()"/> 
-			<input type="reset" value="취소" />
+			<hr> 
+			<button class="btn btn-primary btn-block text-uppercase" 
+			id="submit" type="submit">Register</button>
+			
 		</form>
+		<form>
+		 <hr class="my-4">
+	           <button class="btn  btn-google btn-block text-uppercase" 
+	           	type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google
+	           </button>
+	           <button class="btn  btn-facebook btn-block text-uppercase" 
+	          	 type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook
+	          	 </button>
+		</form>
+	</div>
+</div>
+</div>
+</div>
+</div>
 </body>
 
+<script>
+	$("#submit").attr("disabled", "disabled");
+	
+	function idNickCheck(){
+		var e = window.event;
+        btn = e.target || e.srcElement;
+		var area = btn.id;
+		var name = "";
+		if(area == 'idSearch'){
+			name = $('input[name=m_id]').val();
+		}else name = $('input[name=m_nickName]').val();
+        console.log("area : "+area);
+        console.log("name : "+name);
+		$.ajax({
+			type : "get",
+			url : '/ms/regist/idCheck',
+			data : {"data" : name, "area" : area},
+			dataType : "json",
+			success : function(data){
+				var ch = JSON.stringify(data);
+				console.log("id check success :"+ch);
+				if(area=='idSearch') {
+					if(ch<1) {
+						$('#idChk').html('<b>사용가능</b>');
+						$("#submit").removeAttr("disabled"); 
+					}else {
+						$('#idChk').html('<b>사용불가</b>');
+					}
+				}else if(area=='nickSearch'){
+					if(ch<1) {
+						$('#nickChk').html('<b>사용가능</b>');
+						$("#submit").removeAttr("disabled"); 
+					}else {
+						$('#nickChk').html('<b>사용불가</b>');
+					}
+				}
+			},
+			error : function(data) {
+				console.log("error : "+ (JSON.stringify(data)));
+			}
+		});
+	};
+	
+
+	function passwordCheck(){
+		$("#alert-success").hide();
+		$("#alert-danger").hide();
+		$("#password").keyup(function(){
+			var m_pw1 = $("#m_pw1").val();
+			var m_pw2 = $("#m_pw2").val();
+			console.log(m_pw1+","+m_pw2);
+			if(m_pw1 != "" || m_pw2 != ""){
+				if(m_pw1 == m_pw2){
+					$("#alert-success").show();
+					$("#alert-danger").hide();
+					$("#submit").removeAttr("disabled"); 
+				}else{
+					$("#alert-success").hide();
+					$("#alert-danger").show();
+				} 
+			} 
+		}); 
+	}
+	
+	function emailCheck(key){
+		$("#email-success").hide();
+		$("#email-danger").hide();
+		$("#emailConfirm").keyup(function(){
+			var m_email_1 = key;
+			var m_email_2 = $("#m_email_2").val();
+			console.log(m_pw1+","+m_pw2);
+			if(m_email_1 != "" || m_email_2 != ""){
+				if(m_email_1 == m_email_2){
+					$("#email-success").show();
+					$("#email-danger").hide();
+					$("#submit").removeAttr("disabled"); 
+				}else{
+					$("#email-success").hide();
+					$("#email-danger").show();
+				}
+			}
+		});
+	}
+	
+	function mailCheck(){
+		$.ajax({
+			type : "POST",
+			url : '/ms/regist/mailCheck',
+			data : {"m_email_1" : $('#m_email_1').val(), "m_id" : $('#m_id').val()},
+			dataType : "json",
+			success : function(data){
+				var key = JSON.stringify(data);
+				console.log("email check success! key :"+key);
+				var mailChk = "";
+				mailChk += '<div class="input-group" style="margin-top: 5px">'
+							+ '<input type="text" class="form-control" id="m_email_2"'
+							+ 'placeholder="인증번호를 입력해주세요."'
+							+ 'onkeyup="emailCheck('+key+', this.value)"></div>';
+				$('#mailChk2').html(mailChk);
+			},
+			error : function(data) {
+				console.log("error : "+ (JSON.stringify(data)));
+			}
+		});
+	}
+	
+</script>
 
 
 <%@ include file="../includes/footer.jsp"%>
