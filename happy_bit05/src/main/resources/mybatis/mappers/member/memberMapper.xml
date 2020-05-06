@@ -102,6 +102,26 @@
 		)
 		]]>
 	</insert>
+	
+	<select id="idCheck" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM member
+			WHERE
+			M_ID = #{data}
+		]]>
+	</select>
+	
+	<select id="nickCheck" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM member
+			WHERE
+			M_NICKNAME = #{data}
+		]]>
+	</select>
 
 	<select id="login" parameterType="vs.lo.lo_001.vo.LO_001_VO"
 		resultType="java.lang.Integer">
@@ -113,6 +133,7 @@
 			M_PW_1 = #{m_pw}
 		]]>
 	</select>
+	
 
 	<select id="getList" parameterType="vs.lo.lo_001.vo.LO_001_VO"
 		resultType="vs.lo.lo_001.vo.LO_001_VO">
