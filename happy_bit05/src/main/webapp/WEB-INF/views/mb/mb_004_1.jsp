@@ -713,8 +713,8 @@ function aa() {
 		 console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
-		 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*10000)/10000;
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*1000)/1000;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*1000)/1000;
 		 
 		 console.log(targetLat);
 		 console.log(lineLat);
@@ -723,8 +723,8 @@ function aa() {
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
 
-			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
-			var lineLon = Math.floor(xy_arr[1]*10000)/10000;
+			var targetLon = Math.floor($('#mylon').val()*1000)/1000;
+			var lineLon = Math.floor(xy_arr[1]*1000)/1000;
 		 
 			if(targetLon == lineLon){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
@@ -763,8 +763,8 @@ function aa2() {
 		  console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
-		 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*10000)/10000;
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*1000)/1000;
+		 var lineLat = Math.floor(parseFloat(xy_arr[0])*1000)/1000;
 		 
 		 console.log(targetLat);
 		 console.log(lineLat);
@@ -773,8 +773,8 @@ function aa2() {
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
 
-			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
-			var lineLon = Math.floor(xy_arr[1]*10000)/10000;
+			var targetLon = Math.floor($('#mylon').val()*1000)/1000;
+			var lineLon = Math.floor(xy_arr[1]*1000)/1000;
 		 
 			if(targetLon == lineLon){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";

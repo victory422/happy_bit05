@@ -43,7 +43,7 @@ public class MB_controller {
 		JsonObject obj = new JsonObject();
 		
 		//lc_index = "lc_0000000205";
-		 lc_index = "lc_0000000240";
+		 lc_index = "lc_0000000243";
 		System.out.println("컨트롤러 단에서 번호는 : " + lc_index);
 		
 		LC_003_1_VO vo = service.getLC(lc_index);
