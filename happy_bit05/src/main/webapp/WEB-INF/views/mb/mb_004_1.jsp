@@ -722,8 +722,13 @@ function aa() {
 			//먼저 Lat이 오차범위안에 있는지 확인 
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
+<<<<<<< HEAD
 			var targetLon = Math.floor($('#mylon').val()*10000)/10000
 			var lineLon = Math.floor(xy_arr[1]*10000)/10000
+=======
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
+			var lineLon = Math.floor(xy_arr[1]*10000)/10000;
+>>>>>>> develope
 		 
 			if(targetLon == lineLon){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
@@ -771,13 +776,19 @@ function aa2() {
 			//먼저 Lat이 오차범위안에 있는지 확인 
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
+<<<<<<< HEAD
 			var targetLon = Math.floor($('#mylon').val()*10000)/10000
 			var lineLon = Math.floor(xy_arr[1]*10000)/10000
+=======
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
+			var lineLon = Math.floor(xy_arr[1]*10000)/10000;
+>>>>>>> develope
 		 
 			if(targetLon == lineLon){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
 				//Lat과 Lon이 같다면 Start에 요소 추가구문
 				console.log("22221111");
+				buttonEvt();
 			}
 		 }else{
 			 document.getElementById('startbtn').className = "btn btn-lg btn-danger";
