@@ -26,7 +26,7 @@
 		<result property="lc_xy_arr" column="lc_xy_arr" jdbcType="CLOB" javaType="java.lang.String"/>
 	</resultMap>
 	
-	
+	<!-- 코스 쿼리 -->
 		<!-- 기록측정할 코스 가져오기-->	
 	<select id="LC_003_01" resultMap="lc_getResult" parameterType="String">
 		<![CDATA[
@@ -44,4 +44,18 @@
 		]]>	
 	</select>
 
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- 로그인 쿼리 -->
+		<select id="login" parameterType="vs.lo.lo_001.vo.LO_001_VO"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM member 
+			WHERE 
+			M_ID = #{m_id}
+			AND
+			M_PW_1 = #{m_pw}
+		]]>
+	</select>
+	
 </mapper>
