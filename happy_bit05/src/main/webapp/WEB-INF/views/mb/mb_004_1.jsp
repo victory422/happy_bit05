@@ -55,7 +55,7 @@
 				url: "../mb/load",
 				type: "GET",
 				cache: false,
-				dataType: "json",
+				//dataType: "json",
 				data: "hi",
 				success: function(data) {
 					 alert('success'+data);
@@ -76,11 +76,11 @@
 <!-- 지도 관련 파라미터들 -->
 
 <!-- 코스 경로 좌표 -->
-<input type="text" id="xy_arr"/>
+<!-- <input type="text" id="xy_arr"/> -->
 
 <!-- 내 위치 좌표 -->
-<input type="text" id="mylat" />
-<input type="text" id="mylon" />
+<!-- <input type="text" id="mylat" />
+<input type="text" id="mylon" /> -->
 
 
 <!-- Navigation -->
@@ -110,8 +110,8 @@
 
 <div class="container">
     <div class="row">
-        <div id='showDate'></div>
-        <div id="showmap"></div>
+        <!-- <div id='showDate'></div>
+        <div id="showmap"></div> -->
         <br>
         <br>
 
@@ -127,7 +127,7 @@
             </small></h1>
             <br>
             
-            <div id="distance"></div>
+            <h2><div id="distance"></div></h2>
 
             <button type="button" id="startbtn" class="btn btn-default btn-lg">Start</button>
             <button type="button" id="pausebtn" class="btn btn-danger btn-lg btnStop">Stop</button>
@@ -771,7 +771,7 @@ function aa() {
 	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
@@ -824,7 +824,7 @@ function aa2() {
 	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
