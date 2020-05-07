@@ -261,6 +261,22 @@
 		]]>
 	</delete>
 	
+	<!--  나의 기록 리스트-->
+	<select id="getMyRecordList" parameterType="java.lang.String" resultType="java.util.Map">
+		<![CDATA[
+			select 
+				rowNum rn, pr_index, a.mp_index, pr_title, pr_text, 
+				pr_see,pr_good, pr_resistDate, pr_recordDate, 
+				pr_record, pr_thumbnail, pr_type, pr_public
+			 from 
+				 myrecord a,
+				(select mp_index from mycourse
+				where m_index = #{m_index}) b
+			where 
+				a.mp_index = b.mp_index
+		]]>	
+	</select>
+	
 	
 	
 	<!-- ===================================================================================== -->
