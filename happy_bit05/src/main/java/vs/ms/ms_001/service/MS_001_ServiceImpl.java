@@ -53,7 +53,7 @@ public class MS_001_ServiceImpl implements MS_001_SaService {
 			final String password = "bit05happy"; //네이버 이메일 비밀번호를 입력해주세요. 
 			int port=587; //포트번호 
 			// 메일 내용 
-			String recipient = "victory422@naver.com"; 
+			String recipient = mail; 
 			//받는 사람의 메일주소를 입력해주세요. 
 			String subject = "bikendrun.shop 회원가입 인증메일";  //메일 제목 입력해주세요. 
 			//메일 내용 입력해주세요. 
