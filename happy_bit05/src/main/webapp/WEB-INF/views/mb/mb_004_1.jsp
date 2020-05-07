@@ -126,6 +126,8 @@
 
             </small></h1>
             <br>
+            
+            <div id="distance"></div>
 
             <button type="button" id="startbtn" class="btn btn-default btn-lg">Start</button>
             <button type="button" id="pausebtn" class="btn btn-danger btn-lg btnStop">Stop</button>
@@ -255,7 +257,7 @@ function buttonEvt(){
 		 linePath = [];
 		 
     		//기존의 점은 지운다.
-				deleteCircleDot();
+			deleteCircleDot();
 		 
 			//점찍는 함수.
 			function startingCircleDot(position) {
@@ -269,8 +271,9 @@ function buttonEvt(){
 			
 			    // 지도에 표시합니다
 			    circleOverlay.setMap(map);
-			 	// 배열에 추가합니다
-			    dots.push({circle:circleOverlay});
+			        
+			     // 배열에 추가합니다
+			     dots.push({circle:circleOverlay});
 			}
 			
 			for(var i = 0; i < xy_arr.length; i+=2){
@@ -296,9 +299,15 @@ function buttonEvt(){
     			strokeStyle: 'solid' // 선의 스타일입니다
     		});
 			
-			
 			// 지도에 선을 표시합니다 
 			polyline.setMap(map);
+			
+			// 남은 거리.
+			var distance = Math.round(polyline.getLength());
+			
+			// 남은 거리 화면에 보여주기.
+			document.getElementById('distance').innerHTML = '남은 거리 : ' + distance/1000 + 'km';
+			
   	 	 /* ---------------------------------------------------------------- */
   	 	 //Lat 오차 범위 확인
   	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
@@ -358,10 +367,11 @@ function buttonEvt(){
 	    			        zIndex: 1
 	    			    });
 	    			
-	    			    // 지도에 표시합니다
-	    			    circleOverlay.setMap(map);
-	    			 	// 배열에 추가합니다
-	    			    dots.push({circle:circleOverlay});
+	    			     // 지도에 표시합니다
+	    			     circleOverlay.setMap(map);
+	    			        
+	    			     // 배열에 추가합니다
+	    			     dots.push({circle:circleOverlay});
 	    			}
 	    			
 	    			for(var i = 0; i < xy_arr.length; i+=2){
@@ -666,7 +676,6 @@ var dots = []; // 선이 그려지고 있을때 클릭할 때마다 클릭 지�
 	        if (dots[i].circle) { 
 	            dots[i].circle.setMap(null);
 	        }
-
 	    }
 
 	    dots = [];
