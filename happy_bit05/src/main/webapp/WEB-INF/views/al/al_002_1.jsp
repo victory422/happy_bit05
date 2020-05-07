@@ -92,22 +92,30 @@
 						<thead>
 							<tr>
 								<th>글 번호</th>
-								<th>제목</th>
-								<th>등록날짜</th>
-								<th>조회수</th>
-								<th>추천수</th>
-								<th>회원 번호</th>
+								<th>글쓴이</th>
+								<th>글제목</th>
+								<th>신고사유</th>
+								<th>신고자</th>
+								<th>신고일자</th>
+								<th>처리상태</th>
 								
 							</tr>
 						</thead>
-						<c:forEach items="${al_list}" var="data">
+						<c:forEach items="${re_list}" var="data">
 							<tr>
-								<td>${data.boardidx }</td>
-								<td>${data.title}</td>
-								<td>${data.day}</td>
-								<td>${data.see}</td>
-								<td>${data.good}</td>
-								<td>${data.memindex}</td>
+								<td>${data.board_index }</td>
+								<td>${data.m_index}</td>
+								<td>${data.de_target}</td>
+								<td>${data.de_type}</td>
+								<td>${data.m_index2}</td>
+								<td>${data.de_date }</td>
+								<c:if test="${data.de_dispose eq '처리대기'}">
+								<td><button type="button" class="btn btn-primary disposechange" id="statechange${data.de_index }" value="${data.de_index}">${data.de_dispose }</button></td>
+								</c:if>
+								<c:if test="${data.de_dispose eq '경고'}">
+								<td><button type="button" class="btn btn-secondary disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
+								</c:if>
+								
 							</tr>
 					</c:forEach> 
 						</table>
@@ -178,6 +186,44 @@ $(document).ready(function(){
 	}
 	
 });
+
+$('.disposechange').on("click", function() {
+	
+	
+	
+	var de_dispose = $(this).text();
+	console.log("상태",de_dispose);
+	var de_index = $(this).val();
+	console.log("index",de_index);
+	$.ajax({
+		url : '/al/disposechange',
+		type : 'post',
+		data : {'de_index' : de_index},
+		success : function(data) {
+			if(de_dispose == '처리대기'){
+				
+				$('#statechange'+de_index).text("경고");			
+				$('#statechange'+de_index).removeClass("btn btn-primary");
+				$('#statechange'+de_index).addClass("btn btn-secondary");
+
+			}else{
+				
+				$('#statechange'+de_index).text("처리대기");			
+				$('#statechange'+de_index).removeClass("btn btn-secondary");
+				$('#statechange'+de_index).addClass("btn btn-primary");
+
+				
+			}
+
+		},
+		error : function(xhr, status, error){
+			console.log(xhr);
+			console.log(status);
+			console.log(error);
+		}
+	});
+});
+
 </script>
 
 </body>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="vs.cm.cm_001_1.mapper.AlMapper">
+
+
+<resultMap type="AlVO" id="requestVO">
+	<result property="boardidx" column="boardidx"/>
+	<result property="title" column="title"/>
+	<result property="day" column="day"/>
+	<result property="see" column="see"/>
+	<result property="good" column="good"/>
+	<result property="memindex" column="memindex"/>
+</resultMap>
+
+
+<sql id="Page_DTO">
+		<trim prefix="(" suffix=") and" prefixOverrides="and">
+			<foreach item='type' collection="typeArr">
+				<trim prefix="and">
+					<choose>
+						<when test="type == '육상'.toString()">
+							co_b_type like '%'||'육상'||'%'
+						</when>
+						<when test="type == '자전거'.toString()">
+							co_b_type like '%'||'자전거'||'%'
+						</when>
+						<!-- 
+						<when test="type == '운동복'.toString()">
+							li_category like '%'||'운동복'||'%'
+						</when>
+						<when test="type == '안전장비'.toString()">
+							li_category like '%'||'안전장비'||'%'
+						</when>
+						<when test="type == '신발'.toString()">
+							li_category like '%'||'신발'||'%'
+						</when>
+						<when test="type == '기타'.toString()">
+							li_category like '%'||'기타'||'%'
+						</when>
+						 -->
+						<when test="search_filter == 'all'.toString()">
+								co_b_title like '%'||#{input_text}||'%') or (co_b_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '내용'.toString()">
+							co_b_text like '%'||#{input_text}||'%'
+						</when>
+						<when test="search_filter == '장소'.toString()">
+							co_b_area like '%'||#{input_text}||'%'
+						</when>
+						<otherwise>
+							co_b_title like '%'||#{input_text}||'%'
+						</otherwise>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+<select id="al_list" resultMap="requestVO" >
+	
+select 
+case when r.co_r_index IS NOT NULL then r.co_r_INDEX    
+     when i.li_index is not null then i.li_index
+     when t.lt_index is not null then t.lt_index
+     when p.co_b_index is not null then p.co_b_index
+     ELSE C.lc_INDEX
+    end boardidx,
+case when r.co_r_title is not null then r.co_r_title
+    when i.li_title is not null then i.li_title
+    when p.co_b_title is not null then p.co_b_title
+    else c.lc_title
+    end title,
+case when r.co_r_day is not null then r.co_r_day
+    when i.li_date is not null then i.li_date
+    when t.lt_date is not null then t.lt_date
+    when p.co_b_date is not null then p.co_b_date
+    else c.lc_date
+    end day,
+case when r.co_r_see is not null then r.co_r_see
+    when i.li_see is not null then i.li_see
+    when t.lt_see is not null then t.lt_see
+    when p.co_b_see is not null then p.co_b_see
+    else c.lc_see 
+    end see,
+case when r.co_r_good is not null then r.co_r_good
+    when i.li_good is not null then i.li_good
+    when t.lt_good is not null then t.lt_good
+    when p.co_b_good is not null then p.co_b_good
+    else c.lc_good
+    end good,
+case when r.m_index is not null then r.m_index
+     when i.m_index is not null then i.m_index
+     when t.m_index is not null then t.m_index
+     when p.m_index is not null then p.m_index
+    else c.m_index
+    end memindex
+		    from member m inner join competition_review r
+		    on m.m_index = r.m_index
+		    full outer join course c
+		    on m.m_index = c.m_index
+		    full outer join item i
+		    on m.m_index = i.m_index
+		    full outer join trainning t
+		    on m.m_index = t.m_index
+		    full outer join competition p
+		    on m.m_index = p.m_index 
+</select>    
+    
+    
+<select id="re_list" resultType="vs.re.re_001_1.vo.ReVO">
+
+select * from declaration order by de_index desc
+
+
+</select>
+
+<update id="disposechange" parameterType="String">
+	update declaration
+		set de_dispose = case
+		when de_dispose = '처리대기' then '경고'
+		when de_dispose = '경고' then '처리대기'
+		else de_dispose end
+		where de_index = #{de_index}
+</update>    
+    
+    
+</mapper>
+    
+    
+   

@@ -25,7 +25,23 @@ public class AcVO {
 	private MultipartFile co_b_thumbnail;
 	private byte[] co_thumbnail;
 	private String co_request;
+	//회원 조인
+	private String m_index;
+	private String m_nickname;
 	
+	
+	public String getM_index() {
+		return m_index;
+	}
+	public void setM_index(String m_index) {
+		this.m_index = m_index;
+	}
+	public String getM_nickname() {
+		return m_nickname;
+	}
+	public void setM_nickname(String m_nickname) {
+		this.m_nickname = m_nickname;
+	}
 	public String getCo_b_count() {
 		return co_b_count;
 	}
