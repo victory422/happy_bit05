@@ -52,7 +52,7 @@
 </style>
     <script>
         $.ajax({
-				url: "../mb/load",
+				url: "https://bikendrun.shop/mb/load",
 				type: "GET",
 				cache: false,
 				dataType: "json",
@@ -768,7 +768,7 @@ for (var i = 0; i < positions.length; i ++) {
 /* 페이지 열렸을 때 내 위치와 시작위치의 오차 확인 */
 function aa() {
 	 $.ajax({
-	url: "../mb/load",
+	url: "https://bikendrun.shop/mb/load",
 	type: "GET",
 	cache: false,
 	dataType: "json",
@@ -821,7 +821,7 @@ function aa() {
 /* 모르겠음.. 몬가.. 몬가 하나 더 있음... */
 function aa2() {
 	 $.ajax({
-	url: "../mb/load",
+	url: "https://bikendrun.shop/mb/load",
 	type: "GET",
 	cache: false,
 	dataType: "json",
