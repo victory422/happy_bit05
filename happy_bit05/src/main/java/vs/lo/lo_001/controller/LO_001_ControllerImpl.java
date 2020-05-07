@@ -57,9 +57,9 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 			) throws Exception {
 			System.out.println("logout page");
 			ModelAndView mav = new ModelAndView();
-			mav.setViewName("/home");
+			mav.setViewName("MA/MA_001");
 			session.removeAttribute("sessionVO");
-			System.out.println(session.getAttribute("sessionVO"));
+			System.out.println("session : "+session.getAttribute("sessionVO"));
 		
 		return mav;
 	}

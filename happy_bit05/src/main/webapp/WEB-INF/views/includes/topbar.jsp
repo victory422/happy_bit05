@@ -27,41 +27,6 @@
 </style>
 </head>
 
-<script type="text/javascript">
-	console.log("topbar!");
-	
-	document.addEventListener("DOMContentLoaded", function() {
-	   if(window.sessionStorage) {
-
-           // 해당 예제를 실행하기전 이전 세션의 데이터를 clear( ) 메서드를 사용해 전부 삭제한다.
-           console.log(window.sessionStorage);
-           sessionStorage.clear();
-           
-       }
-       else {
-           alert("세션을 사용할 수 없는 브라우저입니다.");
-       }
-   });
-
-   function printSessionStorage() {
-	   sessionStorage.setItem("test", "test value");
-       var output = "";
-
-       // div 태그에 로컬 저장소의 내용을 출력한다.
-       for(var key in window.sessionStorage) {
-           output += "<p>";
-           // getItem( ) 메서드를 이용하여 key 값의 value 값을 찾는다.
-           output += key + " : " + sessionStorage.getItem(key);
-           output += "</p>";
-       }
-
-       console.log( output);
-   }
-   
-   printSessionStorage();
-   
-   
-</script>
 
 <body>
 
@@ -125,17 +90,19 @@
 							<a class="dropdown-item" href="/lt/lt_001_1">질문 게시판</a> <a
 								class="dropdown-item" href="/lt/lt_002_1">공유 게시판</a>
 						</div></li>
-					<li class="nav-item dropdown"><a
-						class="nav-link dropdown-toggle" href="/lo"
-						id="navbarDropdownPortfolio" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> 내 정보 </a>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="myInfo" href=""
+							id="navbarDropdownPortfolio" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"> 내 정보
+						</a>
 						<div class="dropdown-menu dropdown-menu-right" id="loginCheck"
 							aria-labelledby="navbarDropdownPortfolio">
 							<a class="dropdown-item" id="login" href="/lo">로그인</a>
 							<a class="dropdown-item" href="/mp">내 정보 보기</a> 
 							<a class="dropdown-item" href="/mp/myCourse">내 관심코스</a>
-							<a class="dropdown-item" href="/lo/logout">로그아웃</a>
-						</div></li>
+							<a class="dropdown-item" href="/lo/logout" onclick="logout()">로그아웃</a>
+						</div>
+					</li>
 
 					<li class="nav-item"><a class="nav-link" href="/SP/SP_001_1">shop</a>
 					</li>
@@ -143,3 +110,30 @@
 			</div>
 		</div>
 	</nav>
+	
+<script type="text/javascript">
+
+	//세션체크
+	console.log("세션체크 1 : "+'${sessionVO}');
+	console.log("세션체크 2 : "+sessionStorage.getItem("sessionScript"));
+	if('${sessionVO}'=="" && (sessionStorage.getItem("sessionScript")=="" || sessionStorage.getItem("sessionScript")==null )) {
+		console.log("로그인정보가 없습니다.");
+		var myInfo = document.getElementById('myInfo');
+		myInfo.text = "로그인";
+		myInfo.setAttribute('href','/lo');
+		myInfo.setAttribute('data-toggle','');
+	}else {
+		var login = document.getElementById('login');
+		login.parentNode.removeChild(login);
+		console.log("로그인중");
+	}
+	
+	function logout() {
+		sessionStorage.removeItem("sessionScript");
+		console.log("로그아웃 중. "+sessionStorage.getItem("sessionScript"));
+	}
+	
+	
+	
+</script>
+	
