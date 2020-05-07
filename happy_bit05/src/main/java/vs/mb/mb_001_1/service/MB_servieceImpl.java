@@ -1,5 +1,8 @@
 package vs.mb.mb_001_1.service;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -20,4 +23,12 @@ public class MB_servieceImpl implements MB_service{
 		
 		return dao.getLC(lc_index);
 	}
+	
+	@Override
+	public List<Map<String, String>> getMyRecordList(String m_index) {
+		return dao.getMyRecordList(m_index);
+	}
+	
+	
+	
 }
