@@ -10,6 +10,10 @@
 	<div class="row justify-content-center ">
 		<div id="map" class="col-8" style="width:100%;height:350px;"></div>
 		<div class="col-4">
+			<h4>
+				<div id="area2"></div>
+				<div id="area3"></div>
+			</h4>
 			<c:forEach var="ma" varStatus="status" items="${list}">
 			<div class="col-md-3">
 				<div class="card mb-3 shadow-sm">
@@ -20,7 +24,7 @@
 					<a class="move" href="<c:out value='${ma.lc_index}'/>">
 						<p class="card-text">${ma.lc_title}</p>
 					</a>
-					<p class="card-text">조회수 : ${ma.lc_see}<br>추천수 : ${lc.lc_good}</p>
+					<p class="card-text">조회수 : ${ma.lc_see}<br>추천수 : ${ma.lc_good}</p>
 				</div>
 				</div>
 			</div>
@@ -87,7 +91,7 @@ if (navigator.geolocation) {
       	$.ajax({
       		type: "POST",
       		async: "true",
-      		url: "/ma/001/main",
+      		url: "../ma/001/main",
       		data : {
       			lc_area2 : lc_area2,
       			lc_area3 : lc_area3
@@ -125,15 +129,6 @@ function displayMarker(locPosition, message) {
     
     var iwContent = message, // 인포윈도우에 표시할 내용
         iwRemoveable = true;
-
-    // 인포윈도우를 생성합니다
-    var infowindow = new kakao.maps.InfoWindow({
-        content : iwContent,
-        removable : iwRemoveable
-    });
-    
-    // 인포윈도우를 마커위에 표시합니다 
-    infowindow.open(map, marker);
     
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);      
