@@ -99,7 +99,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#">나의 코스</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">코스 게시판</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">기록자랑</a></li>
+                <li class="nav-item"><a class="nav-link" href="../mb/mb_006_1">나의기록</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">기록측정</a></li>
             </ul>
         </div>
