@@ -1,22 +1,16 @@
 package vs.li.li_001_01.controller;
 
-import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
@@ -223,12 +217,13 @@ public class LI_controller {
 
 		log.info("-----------------------글 작성view-------------------");
 		
+		//화면에서 넘어온 정보를 vo에  List형식으로 담아준다.
 		List<LI_VO> aa = new ArrayList<LI_VO>();
-		
 		aa.add(vo);
 		
 		model.addAttribute("b_type", vo.getLi_b_type());
 		
+		//수정시 제어문을 타서 글 데이터를 모델에 담아서 화면에 던져준다.
 		if(vo.getLi_index  () != null) {	
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		}
@@ -462,7 +457,16 @@ public class LI_controller {
 	 
 	
 	
-	
+	@ResponseBody
+	@RequestMapping("/mobile")
+	public String mobile(){
+		JsonObject obj = new JsonObject();
+		String msg = "통신성공";
+		obj.addProperty("msg", msg);
+		log.info("모바일 통신중");
+		
+		return obj.toString();
+	}
 	
 	
 	
