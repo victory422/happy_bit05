@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
+import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.service.MB_service;
 
@@ -26,7 +27,8 @@ import vs.mb.mb_001_1.service.MB_service;
 public class MB_controller {
 
 	private MB_service service;
-	private LC_003_1_VO vo;
+	private LC_003_1_VO lc_003_1_vo;
+	LO_001_Service LO_Service;
 	private final Boolean DEBUG = true;
 	
 	@RequestMapping(value="/mb_001_1")
@@ -79,23 +81,33 @@ public class MB_controller {
 	@ResponseBody
 	@RequestMapping("/courselist")
 	public List<LC_003_1_VO> list(String lc_index){
-		
+
 		return service.get_CourseList();
 	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
 	public String login(LO_001_VO LO_vo, HttpServletRequest request, HttpServletResponse response,Model model){
+		
 		System.out.println("id : "+LO_vo.getM_id());
 		System.out.println("pw : "+LO_vo.getM_pw());
 		Boolean check = false;
 		String msg = "";
 		
 		check = service.login(LO_vo);
+
+		//세션 생성
+		HttpSession session = request.getSession();
+			
+
 		
 		if(check) {
 			
-			//model.addAttribute("msg", "ok");
+			//lo 로그인 소스 긁어왔음
+			List<LO_001_VO> list = LO_Service.login(LO_vo);
+			LO_vo = list.get(0);
+			session.setAttribute("sessionVO", LO_vo);
+			
 			msg = "ok";
 			if(DEBUG) {
 				log.info("로그인 성공");
