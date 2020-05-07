@@ -1,11 +1,7 @@
 package vs.mb.mb_001_1.service;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
 import java.util.Map;
->>>>>>> OJG
-
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
 
