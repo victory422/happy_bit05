@@ -52,10 +52,10 @@
 </style>
     <script>
         $.ajax({
-				url: "https://bikendrun.shop/mb/load",
+				url: "../mb/load",
 				type: "GET",
 				cache: false,
-				dataType: "json",
+				//dataType: "json",
 				data: "hi",
 				success: function(data) {
 					 alert('success'+data);
@@ -768,10 +768,10 @@ for (var i = 0; i < positions.length; i ++) {
 /* 페이지 열렸을 때 내 위치와 시작위치의 오차 확인 */
 function aa() {
 	 $.ajax({
-	url: "https://bikendrun.shop/mb/load",
+	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
@@ -821,10 +821,10 @@ function aa() {
 /* 모르겠음.. 몬가.. 몬가 하나 더 있음... */
 function aa2() {
 	 $.ajax({
-	url: "https://bikendrun.shop/mb/load",
+	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
