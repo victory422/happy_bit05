@@ -2,40 +2,22 @@ package vs.mb.mb_001_1.controller;
 
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-<<<<<<< HEAD
-import javax.swing.text.StyledEditorKit.BoldAction;
-=======
 import javax.servlet.http.HttpSession;
->>>>>>> OJG
-
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.ibleaders.utility.ib_json.JSONArray;
-import com.ibleaders.utility.ib_json.JSONObject;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
-<<<<<<< HEAD
-import vs.lo.lo_001.service.LO_001_Service;
-=======
->>>>>>> OJG
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.service.MB_service;
-import vs.mp.mp_001.vo.MP_001_3_VO;
 
 @Log4j
 @Controller
