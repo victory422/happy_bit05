@@ -21,7 +21,7 @@ public class MB_daoImpl implements MB_dao{
 	public LC_003_1_VO getLC(String lc_index) {
 		// TODO Auto-generated method stub
 		System.out.println("DAO에서 번호는??? : " + lc_index);
-		return session.selectOne("lc.LC_003_01", lc_index);
+		return session.selectOne("lc.lc_003_01", lc_index);
 	}
 	
 	@Override
