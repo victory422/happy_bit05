@@ -1,6 +1,8 @@
 package vs.ma.ma_001_1.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
@@ -19,7 +21,11 @@ public class MA_001_1_DaoImpl implements MA_001_1_Dao{
 	@Override
 	public List<MA_001_1_VO> mainList(String lc_area2, String lc_area3) {
 		// TODO Auto-generated method stub
-		return session.selectList("lc.ma_001_1", lc_area2);
+		
+		Map<String, Object> area = new HashMap<String, Object>();
+		area.put("lc_area2", lc_area2);
+		area.put("lc_area3", lc_area3);
+		return session.selectList("lc.ma_001_1", area);
 	}
 
 }

@@ -264,10 +264,12 @@
 	
 	
 	<!-- ===================================================================================== -->
-	<select id="ma_001_1" resultType="MA_001_1_VO">
+	<select id="ma_001_1" parameterType="java.util.Map" resultType="MA_001_1_VO">
 		<![CDATA[ 
 			select * from course
 			where lc_area2 = #{lc_area2}
+			and lc_area3 = #{lc_area3}
+			order by lc_good desc
 		]]>
 	</select>
 </mapper>

@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -21,8 +23,9 @@ public class MA_001_1_Controller {
 
 	private MA_001_1_Service service;
 	
-	 @RequestMapping(value="main")
-	 public String mainList(@RequestParam("lc_area2") String lc_area2, @RequestParam("lc_area3") String lc_area3, Model model) {
+	 @ResponseBody
+	 @RequestMapping(value="main", method = RequestMethod.POST)
+	 public List<MA_001_1_VO> mainList(@RequestParam("lc_area2") String lc_area2, @RequestParam("lc_area3") String lc_area3, Model model) {
 		 
 		 List<MA_001_1_VO> listVO = service.mainList(lc_area2, lc_area3); 
 		 
@@ -47,8 +50,8 @@ public class MA_001_1_Controller {
 				}
 			}
 			
-		 model.addAttribute("list", listVO);
+		 //model.addAttribute("list", listVO);
 		 
-		 return "MA/MA_001";
+		 return listVO;
 	 }
 }
