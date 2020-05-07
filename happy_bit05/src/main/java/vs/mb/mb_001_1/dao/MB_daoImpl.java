@@ -1,6 +1,10 @@
 package vs.mb.mb_001_1.dao;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
+import java.util.Map;
+>>>>>>> OJG
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
@@ -13,6 +17,7 @@ import vs.lo.lo_001.vo.LO_001_VO;
 @Component
 @Log4j
 @AllArgsConstructor
+@Log4j
 public class MB_daoImpl implements MB_dao{
 
 	private SqlSession session;
@@ -25,6 +30,7 @@ public class MB_daoImpl implements MB_dao{
 	}
 	
 	@Override
+<<<<<<< HEAD
 	public List<LC_003_1_VO> getCourseList() {
 		System.out.println("다오");
 		return session.selectList("mb.getlist");
@@ -57,4 +63,10 @@ public class MB_daoImpl implements MB_dao{
 		
 		
 	}
+=======
+	public List<Map<String, String>> getMyRecordList(String m_index) {
+		return session.selectList("lc.getMyRecordList", m_index);
+	}
+	
+>>>>>>> OJG
 }
