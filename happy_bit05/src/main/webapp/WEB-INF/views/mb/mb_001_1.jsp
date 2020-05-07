@@ -96,7 +96,7 @@ html, body { width: 100%; height: 100%; }
 					
 						<br>
 						<div class="form-group">
-							<input type="submit" value="회원가입" onclick="javascript: form.action='/ms';"
+							<input type="button" value="회원가입" onclick="javascript: form.action='/ms';"
 							class="btn float-right member_btn">
 						</div>
 					</form>
@@ -117,7 +117,7 @@ html, body { width: 100%; height: 100%; }
 				success: function(data) {
 						if(data == 'ok'){
 							alert('로그인 성공')
-							window.location.href = "/mb/mb_003_1";
+							window.location.href = "https://bikendrun.shop/mb/mb_003_1";
 						}else{
 							alert('로그인 실패')
 							$('#check').html("로그인에 실패 하셨습니다.<br>");
