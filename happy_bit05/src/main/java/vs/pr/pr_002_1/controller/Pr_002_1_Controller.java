@@ -28,8 +28,11 @@ public class Pr_002_1_Controller {
 	@GetMapping("/pr_002_1")
 	public void pr_list(Model model,Page_DTO dto) {
 		
+		System.out.println("개인기록 리스트 ????");
+		
 		List<Pr_002_1VO> prvo = pr_service.pr_list(dto);
-		model.addAttribute("data", pr_service.pr_list(dto));
+		System.out.println(pr_service.pr_list(dto) + "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
+		model.addAttribute("data", prvo);
 		model.addAttribute("pageUtil",new PageUtil(dto,pr_service.get_total(dto)));
 		model.addAttribute("type",dto.getTypeArr());
 		model.addAttribute("page", dto.getPage());

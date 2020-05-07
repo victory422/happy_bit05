@@ -35,7 +35,7 @@
 						<c:forEach var="type1" items="${type }">
 					<c:out value="${type1 eq '자전거'?'selected':''}"/>
 					</c:forEach>>자전거</option>
-
+		
 			</select> <!-- <select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
 					style="margin-left: 10px; width: 15%">
 					<option value=null>장비선택</option>
@@ -62,12 +62,10 @@
 
 		</div>
 	</form>
-
 <c:forEach items="${data}" var="data">	
 	
 	<input type="hidden" name="pr_index${data.pr_index }" value="${data.pr_index}">
-	<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">
-
+	<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">		
 		<tr>
 			<td><h2>제목 : ${data.pr_title }</h2> ${data.pr_index }</td>
 	

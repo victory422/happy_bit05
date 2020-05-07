@@ -115,8 +115,10 @@
 <!-- 개인기록 상세보기 -->
 <select id="pr_detail" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO" parameterType="String">
 
-	select * from myrecord where pr_index = #{pr_index}
-	
+	select *
+	 from myrecord r, member m 
+	 where pr_index = #{pr_index}
+	and r.m_index = m.m_index
 
 
 </select>
