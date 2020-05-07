@@ -76,11 +76,11 @@
 <!-- 지도 관련 파라미터들 -->
 
 <!-- 코스 경로 좌표 -->
-<!-- <input type="text" id="xy_arr"/> -->
+<input type="hidden" id="xy_arr"/>
 
 <!-- 내 위치 좌표 -->
-<!-- <input type="text" id="mylat" />
-<input type="text" id="mylon" /> -->
+<input type="hidden" id="mylat" />
+<input type="hidden" id="mylon" />
 
 
 <!-- Navigation -->
