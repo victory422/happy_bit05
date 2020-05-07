@@ -110,14 +110,14 @@ html, body { width: 100%; height: 100%; }
 			var id = document.getElementById("m_id").value;
 			var pw = document.getElementById("m_pw").value;
 	        $.ajax({
-				url: "/mb/loginCheck",
+				url: "https://bikendrun.shop/mb/loginCheck",
 				type: "post",
 				cache: false,
 				data: {"m_id" : id , "m_pw" : pw},
 				success: function(data) {
 						if(data == 'ok'){
 							alert('로그인 성공')
-							window.location.href = "/mb/mb_003_1";
+							window.location.href = "https://bikendrun.shop/mb/mb_003_1";
 						}else{
 							alert('로그인 실패')
 							$('#check').html("로그인에 실패 하셨습니다.<br>");
