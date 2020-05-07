@@ -310,9 +310,9 @@ function buttonEvt(){
 			
   	 	 /* ---------------------------------------------------------------- */
   	 	 //Lat 오차 범위 확인
-  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
-		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*10000 + 1)/10000;
-		 var lineLat2 = Math.floor(parseFloat(record_arr[0])*10000 - 1)/10000;
+  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*100000)/100000;
+		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*100000 + 5)/100000;
+		 var lineLat2 = Math.floor(parseFloat(record_arr[0])*100000 - 5)/100000;
 		 
 		 console.log(targetLat);
 		 console.log(lineLat1);
@@ -322,9 +322,9 @@ function buttonEvt(){
   	 		console.log('스타트 인터벌 도는 중1.===================================>'+time);
   	 		
   			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
-			var lineLon1 = Math.floor(record_arr[1]*10000 + 1)/10000;
-			var lineLon2 = Math.floor(record_arr[1]*10000 - 1)/10000;
+			var targetLon = Math.floor($('#mylon').val()*100000)/100000;
+			var lineLon1 = Math.floor(record_arr[1]*100000 + 5)/100000;
+			var lineLon2 = Math.floor(record_arr[1]*100000 - 5)/100000;
 		 
 			if((targetLon >= lineLon2) && (targetLon <= lineLon1)){
 				
