@@ -96,7 +96,7 @@ html, body { width: 100%; height: 100%; }
 					
 						<br>
 						<div class="form-group">
-							<input type="button" value="회원가입" onclick="javascript: form.action='/ms';"
+							<input type="submit" value="회원가입" onclick="javascript: form.action='/ms';"
 							class="btn float-right member_btn">
 						</div>
 					</form>
@@ -110,7 +110,7 @@ html, body { width: 100%; height: 100%; }
 			var id = document.getElementById("m_id").value;
 			var pw = document.getElementById("m_pw").value;
 	        $.ajax({
-				url: "/mb/loginCheck",
+				url: "https://bikendrun.shop/mb/loginCheck",
 				type: "post",
 				cache: false,
 				data: {"m_id" : id , "m_pw" : pw},
