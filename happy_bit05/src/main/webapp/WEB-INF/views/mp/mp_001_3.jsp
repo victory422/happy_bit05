@@ -95,9 +95,10 @@
 		<!-- 체크박스 부분 -->
 
 		<form method="get" action="/mp/myCourse/">
+		
 			<div class="input-group mb-12" style="margin-top: 30px;">
-
-				<label class="input-group-text col-sm-12"> <select
+				<label class="input-group-text col-sm-12"> 
+				<select
 					id="cate_id" name="cate_id"
 					class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 25%">
@@ -113,7 +114,7 @@
 		</form>
 
 		<!-- 게시글 리스트 출력 테이블 -->
-		<div class="table-responsive">
+		<div class="table-responsive" id="myCourse">
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
@@ -193,10 +194,8 @@
 						</c:if>
 					</ul>
 				</div>
-
-
-
 			</div>
+			
 			<div id="detailBody" class="card-body" style="display:none">
 				<div class="row" style="margin-top: 50px; margin-bottom: 50px;">
 				<!--  Map loading -->
@@ -277,6 +276,7 @@
 	</div>
 
 	<script>
+
 	var lc_map = "";
 	function downPage(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
 			lc_index,lc_xy_arr) {

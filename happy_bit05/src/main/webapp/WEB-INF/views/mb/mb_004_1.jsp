@@ -12,7 +12,7 @@
 
 
     <!-- Bootstrap core CSS -->
-    <link href="../../../resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/happy_bit05/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -55,7 +55,7 @@
 				url: "../mb/load",
 				type: "GET",
 				cache: false,
-				dataType: "json",
+				//dataType: "json",
 				data: "hi",
 				success: function(data) {
 					 alert('success'+data);
@@ -76,11 +76,11 @@
 <!-- 지도 관련 파라미터들 -->
 
 <!-- 코스 경로 좌표 -->
-<input type="text" id="xy_arr"/>
+<input type="hidden" id="xy_arr"/>
 
 <!-- 내 위치 좌표 -->
-<input type="text" id="mylat" />
-<input type="text" id="mylon" />
+<input type="hidden" id="mylat" />
+<input type="hidden" id="mylon" />
 
 
 <!-- Navigation -->
@@ -99,7 +99,7 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="#">나의 코스</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">코스 게시판</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">기록자랑</a></li>
+                <li class="nav-item"><a class="nav-link" href="../mb/mb_006_1">나의기록</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">기록측정</a></li>
             </ul>
         </div>
@@ -110,8 +110,8 @@
 
 <div class="container">
     <div class="row">
-        <div id='showDate'></div>
-        <div id="showmap"></div>
+        <!-- <div id='showDate'></div>
+        <div id="showmap"></div> -->
         <br>
         <br>
 
@@ -126,6 +126,8 @@
 
             </small></h1>
             <br>
+            
+            <h2><div id="distance"></div></h2>
 
             <button type="button" id="startbtn" class="btn btn-default btn-lg">Start</button>
             <button type="button" id="pausebtn" class="btn btn-danger btn-lg btnStop">Stop</button>
@@ -189,7 +191,7 @@ function buttonEvt(){
   var min = 0;
   var sec = 0;
   var timer;
-  var record_arr = xy_arr;
+  var record_arr = JSON.parse(JSON.stringify(xy_arr));
 
   // start btn
   $(".btnStart").click(function(){
@@ -202,10 +204,16 @@ function buttonEvt(){
       if(time == 0){
         init();
       }
-
+      
+    //startEvnet() 종료.
+      clearInterval(startTimer);
+    
+    //마커를 지웁니다.
+		marker.setMap(null);
+    
       timer = setInterval(function(){
         time++;
-
+		console.log('11===================================>'+time);
         min = Math.floor(time/60);
         hour = Math.floor(min/60);
         sec = time%60;
@@ -214,6 +222,7 @@ function buttonEvt(){
         var th = hour;
         var tm = min;
         var ts = sec;
+        
         if(th<10){
         th = "0" + hour;
         }
@@ -225,48 +234,188 @@ function buttonEvt(){
         }
 
         document.getElementById("time").innerHTML = th + ":" + tm + ":" + ts;
-      }, 1000);
       
-      //startEvnet() 종료.
-      clearInterval(startTimer);
-      
-      //내 위치 추적, 좌표 지우기.
-      recordStart = setInterval(function(){
-    	  
-    	  //내 위치 가져오기
-    	  myPositionOnly();
-    	  
-    	  //내 위치 좌표
-    	  var targetLat = Math.floor(parseFloat($('#mylat').val())*1000)/1000;
-    	  //경로 위치 좌표.
- 		  var lineLat = Math.floor(parseFloat(xy_arr[0])*1000)/1000;
-    	  
-    	  //위도 오차범위 검색.
-    	  if(targetLat == lineLat){
-    		  
-    		//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-  			var targetLon = Math.floor($('#mylon').val()*100)/100
-  			var lineLon = Math.floor(xy_arr[1]*100)/100
-  			
-  			//경도 오차범위 검색.
-  			if(targetLon == lineLon){
-  				
-  				//내 위치 불러오기.
+     	 //여기서부터 경로를 따라갑니다.
+        console.log('스타트 인터벌 도는 중.===================================>'+time);
+  	 	 //내 위치 가져오기
+  	 	 myPositionOnly();
+  	 	 
+  	 	 /* ---------------------------------------------------------------- */
+  	 	 //실시간 내 위치로 점과 선 표시하기.
+  	  
+  	 	 //내 위치 좌표 가져오기.
+  	 	 var mylat = document.getElementById('mylat').value;
+	     var mylon = document.getElementById('mylon').value;
+	     
+	     map.setCenter(new kakao.maps.LatLng(mylat, mylon));
+  	 	 
+	   	 //내 위치를 코스 배열 0~1번째에 넣기.
+		 xy_arr[0] = mylat;
+		 xy_arr[1] = mylon;
+		 
+		//여기서부터 지도 새로 표시하는 부분입니다.
+		 linePath = [];
+		 
+    		//기존의 점은 지운다.
+			deleteCircleDot();
+		 
+			//점찍는 함수.
+			function startingCircleDot(position) {
+				
+			    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+			    circleOverlay = new kakao.maps.CustomOverlay({
+			        content: '<span class="dot"></span>',
+			        position: position,
+			        zIndex: 1
+			    });
+			
+			    // 지도에 표시합니다
+			    circleOverlay.setMap(map);
+			        
+			     // 배열에 추가합니다
+			     dots.push({circle:circleOverlay});
+			}
+			
+			for(var i = 0; i < xy_arr.length; i+=2){
+				linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+				startingCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+			}
+			
+				
+			
+			for(var i = 0; i < linePath.length; i++){
+				console.log(linePath[i]);
+			}
+			
+			// 기존의 선을 지웁니다.
+			polyline.setMap(null);
+			
+			// 지도에 표시할 선을 생성합니다
+			polyline = new kakao.maps.Polyline({
+    			path: linePath, // 선을 구성하는 좌표배열 입니다
+    			strokeWeight: 7, // 선의 두께 입니다
+    			strokeColor: '#db4040', // 선의 색깔입니다
+    			strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    			strokeStyle: 'solid' // 선의 스타일입니다
+    		});
+			
+			// 지도에 선을 표시합니다 
+			polyline.setMap(map);
+			
+			// 남은 거리.
+			var distance = Math.round(polyline.getLength());
+			
+			// 남은 거리 화면에 보여주기.
+			document.getElementById('distance').innerHTML = '남은 거리 : ' + distance/1000 + 'km';
+			
+  	 	 /* ---------------------------------------------------------------- */
+  	 	 //Lat 오차 범위 확인
+  	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*100000)/100000;
+		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*100000 + 5)/100000;
+		 var lineLat2 = Math.floor(parseFloat(record_arr[0])*100000 - 5)/100000;
+		 
+		 console.log(targetLat);
+		 console.log(lineLat1);
+		 console.log(lineLat2);
+		 if((targetLat >= lineLat2) && (targetLat <= lineLat1)){
+  		  	
+  	 		console.log('스타트 인터벌 도는 중1.===================================>'+time);
+  	 		
+  			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
+			var targetLon = Math.floor($('#mylon').val()*100000)/100000;
+			var lineLon1 = Math.floor(record_arr[1]*100000 + 5)/100000;
+			var lineLon2 = Math.floor(record_arr[1]*100000 - 5)/100000;
+		 
+			if((targetLon >= lineLon2) && (targetLon <= lineLon1)){
+				
+				console.log('스타트 인터벌 도는중2. ------------------------------->' + time);
+				 //내 위치 불러오기.
 	    		 var mylat = document.getElementById('mylat').value;
 	    		 var mylon = document.getElementById('mylon').value;
-	    		  
+	    		 
+	    		 //카피 배열의 0~1번째 값 삭제.
 	    		 record_arr.splice(0,2);
-	    		  
+	    		 
+	    		 xy_arr = [];
+	    		 
+	    		 //내 위치를 코스 배열 0~1번째에 넣기.
 	    		 xy_arr[0] = mylat;
 	    		 xy_arr[1] = mylon;
-	    		  
-	    		 for(var i =  0; i < record_arr.size(); i++){
-	    		  xy_arr[i+2] = record_arr[i];
+	    		 
+	    		 //카피 배열을 2번째부터 넣기.
+	    		 if(record_arr.length >= 1){
+			    	 for(var i =  0; i < record_arr.length; i++){
+			    	 	xy_arr[i+2] = record_arr[i];
+			    	 }  
 	    		 }
-  			}
-    	  }
-      }, 3000);
-    }
+	    		 
+
+	    			
+	    		 //여기서부터 지도 새로 표시하는 부분입니다.
+	    		 linePath = [];
+	    		 
+		    		//기존의 점은 지운다.
+	 				deleteCircleDot();
+	    		 
+	    			//점찍는 함수.
+	    			function startingCircleDot(position) {
+	    				
+	    			    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+	    			    circleOverlay = new kakao.maps.CustomOverlay({
+	    			        content: '<span class="dot"></span>',
+	    			        position: position,
+	    			        zIndex: 1
+	    			    });
+	    			
+	    			     // 지도에 표시합니다
+	    			     circleOverlay.setMap(map);
+	    			        
+	    			     // 배열에 추가합니다
+	    			     dots.push({circle:circleOverlay});
+	    			}
+	    			
+	    			for(var i = 0; i < xy_arr.length; i+=2){
+	    				linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+	    				startingCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+	    			}
+	    			
+	    				
+	    			
+	    			for(var i = 0; i < linePath.length; i++){
+	    				console.log(linePath[i]);
+	    			}
+	    			
+	    			// 기존의 선을 지웁니다.
+	    			polyline.setMap(null);
+	    			
+	    			// 지도에 표시할 선을 생성합니다
+	    			polyline = new kakao.maps.Polyline({
+		    			path: linePath, // 선을 구성하는 좌표배열 입니다
+		    			strokeWeight: 7, // 선의 두께 입니다
+		    			strokeColor: '#db4040', // 선의 색깔입니다
+		    			strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+		    			strokeStyle: 'solid' // 선의 스타일입니다
+		    		});
+	    			
+	    			
+	    			// 지도에 선을 표시합니다 
+	    			polyline.setMap(map);
+	    			
+	    			if(xy_arr.length == 2){
+	    				clearInterval(timer);
+	    			      starFlag = true;
+
+	    			      var $button = $('<button class="btn btn-primary">upload업로드</button>');
+
+	    			      $('#upload').html($button);
+	    			}
+	    			
+			}
+  	 	 }
+  	  
+      }, 2000);
+      
+      }
   });
 
   // pause btn
@@ -276,7 +425,6 @@ function buttonEvt(){
       this.style.color = "#4C4C4C";
       clearInterval(timer);
       starFlag = true;
-
 
       var $button = $('<button class="btn btn-primary">upload업로드</button>');
 
@@ -351,17 +499,17 @@ if (navigator.geolocation) {
     var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
         message = 'geolocation을 사용할수 없어요..'
         
-    displayMarker(locPosition);
 }
 
-//5초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
+//2초 마다 내위치를 비교해서 범위안에 들어와있는지 확인
 (aa()); 
 
 $(function startEvent() {
         	
         startTimer = setInterval(function(){
+        	console.log('00===================================>');
         	aa2();
-        },6000);
+        },2000);
         
 });
 
@@ -383,7 +531,6 @@ function myPosition(){
 	        document.getElementById("mylat").value = lat;
 	        document.getElementById("mylon").value = lon;
 	        
-	        // 마커와 인포윈도우를 표시합니다
 	        map.setCenter(locPosition);    
 	      });
 	    
@@ -466,70 +613,87 @@ var xy = document.getElementById("xy_arr").value;
 var xy_arr = xy.split(',');
 
 var linePath = [];
+var circleOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다
+var dots = []; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
 
-for(var i = 0; i < xy_arr.length; i++){
-	if(i % 2 != 0){
-		xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length-1);
-	}
-	else{
-		xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length);
+	for(var i = 0; i < xy_arr.length; i++){
+		if(i % 2 != 0){
+			xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length-1);
+		}
+		else{
+			xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length);
+		}
+		
+		console.log(xy_arr[i]);
 	}
 	
-	console.log(xy_arr[i]);
-}
-
-//점찍는 함수
-function displayCircleDot(position) {
-
-    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
-    var circleOverlay = new kakao.maps.CustomOverlay({
-        content: '<span class="dot"></span>',
-        position: position,
-        zIndex: 1
-    });
-
-    // 지도에 표시합니다
-    circleOverlay.setMap(map);
-}
-
-for(var i = 0; i < xy_arr.length; i+=2){
-	linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-	 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
-}
+	//점찍는 함수
+	function displayCircleDot(position) {
+	
+	    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+	    circleOverlay = new kakao.maps.CustomOverlay({
+	        content: '<span class="dot"></span>',
+	        position: position,
+	        zIndex: 1
+	    });
+	
+	    // 지도에 표시합니다
+	    circleOverlay.setMap(map);
+	    
+		// 배열에 추가합니다
+	    dots.push({circle:circleOverlay});
+	}
+	
+	for(var i = 0; i < xy_arr.length; i+=2){
+		linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+		 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+	}
 
 	
+	for(var i = 0; i < linePath.length; i++){
+		console.log(linePath[i]);
+	}
+	
+	// 지도에 표시할 선을 생성합니다
+	var polyline = new kakao.maps.Polyline({
+	    path: linePath, // 선을 구성하는 좌표배열 입니다
+	    strokeWeight: 7, // 선의 두께 입니다
+	    strokeColor: '#db4040', // 선의 색깔입니다
+	    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+	    strokeStyle: 'solid' // 선의 스타일입니다
+	});
+	
+	
+	// 지도에 선을 표시합니다 
+	polyline.setMap(map);  
 
-for(var i = 0; i < linePath.length; i++){
-	console.log(linePath[i]);
-}
+	
+	// 클릭 지점에 대한 정보 (동그라미와 클릭 지점까지의 총거리)를 지도에서 모두 제거하는 함수입니다
+	function deleteCircleDot() {
+	    var i;
 
-// 지도에 표시할 선을 생성합니다
-var polyline = new kakao.maps.Polyline({
-    path: linePath, // 선을 구성하는 좌표배열 입니다
-    strokeWeight: 7, // 선의 두께 입니다
-    strokeColor: '#db4040', // 선의 색깔입니다
-    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-    strokeStyle: 'solid' // 선의 스타일입니다
-});
+	    for ( i = 0; i < dots.length; i++ ){
+	        if (dots[i].circle) { 
+	            dots[i].circle.setMap(null);
+	        }
+	    }
 
-
-// 지도에 선을 표시합니다 
-polyline.setMap(map);  
-
-
+	    dots = [];
+	}
 
 
 /* ---------------------------------------------------------------------------------------------------- */
 /* 마커 관련 함수들. */
 
-// 마커 전역변수.
-var marker;
+// 도착지점 마커 전역변수.
+//var marker;
+var courseMarker;
 
 // 내 위치 마커 전역변수.
 var myMarker;
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
-function displayMarker(locPosition) {
+/* function displayMarker(locPosition) {
 
 	//시작, 도착 지점을 표시하는 마커.
 	 	marker = new kakao.maps.Marker({  
@@ -538,7 +702,7 @@ function displayMarker(locPosition) {
 	 });
     
     marker.setMap(map);
-}
+} */
 
 // 내 위치를 표시하는 마커입니다.
 function displayMyMarker(locPosition) {
@@ -578,14 +742,19 @@ for (var i = 0; i < positions.length; i ++) {
 	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 	    
 	    // 마커를 생성합니다
-	    var courseMarker = new kakao.maps.Marker({
+	    	courseMarker = new kakao.maps.Marker({
 	        map: map, // 마커를 표시할 지도
 	        position: positions[i].latlng, // 마커를 표시할 위치
 	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
 	        image : markerImage // 마커 이미지 
+	    
+	    
 	    });
+	    
+	    courseMarker.setMap(map);
+	    
     }else{
-    	var marker = new kakao.maps.Marker({
+    	marker = new kakao.maps.Marker({
     		position: positions[i].latlng
     	});
     	
@@ -602,7 +771,7 @@ function aa() {
 	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
@@ -610,22 +779,27 @@ function aa() {
 		 //필요 없을 수도....
 		  //myPosition();
 		 
+		 console.log('01===================================>');
 		 console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
-		 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
+		 var lineLat1 = Math.floor(parseFloat(xy_arr[0])*10000 + 1)/10000;
+		 var lineLat2 = Math.floor(parseFloat(xy_arr[0])*10000 - 1)/10000;
 		 
 		 console.log(targetLat);
-		 console.log(lineLat);
-		 if(targetLat == lineLat){
+		 console.log(lineLat1);
+		 console.log(lineLat2);
+		 if((targetLat >= lineLat2) && (targetLat <= lineLat1)){
 			//먼저 Lat이 오차범위안에 있는지 확인 
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-			var targetLon = Math.floor($('#mylon').val()*100)/100
-			var lineLon = Math.floor(xy_arr[1]*100)/100
+
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
+			var lineLon1 = Math.floor(xy_arr[1]*10000 + 1)/10000;
+			var lineLon2 = Math.floor(xy_arr[1]*10000 - 1)/10000;
 		 
-			if(targetLon == lineLon){
+			if((targetLon >= lineLon2) && (targetLon <= lineLon1)){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
 				//Lat과 Lon이 같다면 Start에 요소 추가구문
 				console.log("22221111");
@@ -650,32 +824,39 @@ function aa2() {
 	url: "../mb/load",
 	type: "GET",
 	cache: false,
-	dataType: "json",
+	//dataType: "json",
 	success: function(data) {
 		 /* alert('success'+data); */
 		 //lat 오차범위 첫번째
 		 
-		  myPositionOnly();
+		 
+		 console.log('02===================================>');
+		 myPositionOnly();
 		 
 		  console.log('그그'+$('#mylat').val());
 		 console.log('느느'+xy_arr[0]);
 		 
-		 var targetLat = Math.floor(parseFloat($('#mylat').val())*100)/100;
-		 var lineLat = Math.floor(parseFloat(xy_arr[0])*100)/100;
+		 var targetLat = Math.floor(parseFloat($('#mylat').val())*10000)/10000;
+		 var lineLat1 = Math.floor(parseFloat(xy_arr[0])*10000 + 1)/10000;
+		 var lineLat2 = Math.floor(parseFloat(xy_arr[0])*10000 - 1)/10000;
 		 
 		 console.log(targetLat);
-		 console.log(lineLat);
-		 if(targetLat == lineLat){
+		 console.log(lineLat1);
+		 console.log(lineLat2);
+		 if((targetLat >= lineLat2) && (targetLat <= lineLat1)){
 			//먼저 Lat이 오차범위안에 있는지 확인 
 			
 			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
-			var targetLon = Math.floor($('#mylon').val()*100)/100
-			var lineLon = Math.floor(xy_arr[1]*100)/100
+
+			var targetLon = Math.floor($('#mylon').val()*10000)/10000;
+			var lineLon1 = Math.floor(xy_arr[1]*10000 + 1)/10000;
+			var lineLon2 = Math.floor(xy_arr[1]*10000 - 1)/10000;
 		 
-			if(targetLon == lineLon){
+			if((targetLon >= lineLon2) && (targetLon <= lineLon1)){
 				document.getElementById('startbtn').className = "btn btn-lg btn-primary btnStart";
 				//Lat과 Lon이 같다면 Start에 요소 추가구문
 				console.log("22221111");
+				buttonEvt();
 			}
 		 }else{
 			 document.getElementById('startbtn').className = "btn btn-lg btn-danger";

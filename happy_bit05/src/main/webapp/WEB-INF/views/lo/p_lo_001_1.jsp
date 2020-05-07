@@ -14,9 +14,20 @@
 	href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
 	integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
 	crossorigin="anonymous">
+<script>
+	function nextWindow() {
+		if('${LO_001_VO.getLoginCheck()}'==1){
+			location = "/";
+		}else {
+			location = "/lo"
+		}
+	}
+	
+</script>
+
 
 </head>
-<body>
+<body onload="setTimeout('nextWindow()',1500)">
 	<div class="container">
 		<div class="d-flex justify-content-center h-100">
 			<div class="card">
