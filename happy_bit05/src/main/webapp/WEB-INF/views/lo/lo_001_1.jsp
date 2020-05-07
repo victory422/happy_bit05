@@ -45,7 +45,7 @@
 
 						</div>
 						<div class="form-group">
-							<input type="submit" value="Login"
+							<input type="submit" value="Login" onclick="'login()'"
 								class="btn float-right login_btn">
 						</div>
 					
@@ -64,6 +64,20 @@
 	</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+
+	//세션체크
+	console.log("세션체크 1 : "+'${sessionVO}');
+	console.log("세션체크 2 : "+sessionStorage.getItem("sessionScript"));
+
+	function login() {
+		sessionStorage.setItem("sessionScript",'${sessionVO}');
+		console.log("로그인 및 스크립트 세션 저장 : "+sessionStorage.getItem("sessionScript"));
+	}
+	
+	
+</script>
 
 
 
