@@ -76,11 +76,11 @@
 <!-- 지도 관련 파라미터들 -->
 
 <!-- 코스 경로 좌표 -->
-<input type="text" id="xy_arr"/>
+<!-- <input type="text" id="xy_arr"/> -->
 
 <!-- 내 위치 좌표 -->
-<input type="text" id="mylat" />
-<input type="text" id="mylon" />
+<!-- <input type="text" id="mylat" />
+<input type="text" id="mylon" /> -->
 
 
 <!-- Navigation -->
@@ -110,8 +110,8 @@
 
 <div class="container">
     <div class="row">
-        <div id='showDate'></div>
-        <div id="showmap"></div>
+        <!-- <div id='showDate'></div>
+        <div id="showmap"></div> -->
         <br>
         <br>
 
