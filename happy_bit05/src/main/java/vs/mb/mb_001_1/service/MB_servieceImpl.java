@@ -1,10 +1,8 @@
 package vs.mb.mb_001_1.service;
 
 import java.util.List;
-<<<<<<< HEAD
-=======
+
 import java.util.Map;
->>>>>>> OJG
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -31,7 +29,6 @@ public class MB_servieceImpl implements MB_service{
 	}
 	
 	@Override
-<<<<<<< HEAD
 	public List<LC_003_1_VO> get_CourseList() {
 		return dao.getCourseList();
 	}
@@ -41,12 +38,7 @@ public class MB_servieceImpl implements MB_service{
 		log.info("login서비스");
 		return dao.login(vo);
 	}
-=======
 	public List<Map<String, String>> getMyRecordList(String m_index) {
 		return dao.getMyRecordList(m_index);
 	}
-	
-	
-	
->>>>>>> OJG
 }
