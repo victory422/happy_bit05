@@ -20,7 +20,7 @@
       <div class="card-body">
 		<h5 class="card-title text-center">Register</h5>
 		<hr>
-		<form id="form" action="" class="form-signin"
+		<form id="form" action="/ms/regist" class="form-signin"
 		 enctype="multipart/form-data" method="post" onkeyup="submitConfirm(this)">
 			<div class="input-group">
 				<input type="text" class="form-control" id="m_id"
@@ -99,14 +99,11 @@
 					placeholder="Address" name="m_address" required>
 			</div>
 			
-			<label style="margin-top: 10px" >Picture</label>
+			<label style="margin-top: 20px" >Picture</label>
 
-			<!-- 파일업로드. 안됨.
-			<div class="custom-file">&nbsp;
+			<!-- 파일업로드. 안됨.-->
           		<input type="file" class="form-control-file" 
             		id="" name="m_picture">
-      		</div>
-      		 -->
 
 			<hr>
 			
@@ -180,6 +177,7 @@
 		if($('input[name=m_id]').val()!=id || $('input[name=m_nickName]').val()!=nick){
 			alert("아이디 또는 닉네임 중복확인을 다시 해주세요.");
 		}else {
+			alert("aaa");
 			document.getElementById('form').action = "/ms/regist";
 			document.getElementById('form').submit();
 		}

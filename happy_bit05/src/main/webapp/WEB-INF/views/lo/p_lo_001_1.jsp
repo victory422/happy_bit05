@@ -16,10 +16,12 @@
 	crossorigin="anonymous">
 <script>
 	function nextWindow() {
-		if('${LO_001_VO.getLoginCheck()}'==1){
+		if('${LO_001_VO.getM_id()}'=='admin'){
+			location = "/al/al_001_1";
+		}else if('${LO_001_VO.getLoginCheck()}'==1){
 			location = "/";
 		}else {
-			location = "/lo"
+			location = "/lo";
 		}
 	}
 	

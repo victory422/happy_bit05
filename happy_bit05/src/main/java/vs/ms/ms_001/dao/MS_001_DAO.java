@@ -18,6 +18,8 @@ public interface MS_001_DAO {
 
 
 	MS_001_VO memberVO(MS_001_VO list);
+	
+	public void registThumbnail(Map<String, Object> hmap);
 
 	int idCheck(String m_id);
 

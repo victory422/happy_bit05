@@ -1,5 +1,6 @@
 package vs.mp.mp_001.controller;
 
+import java.util.Base64;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +43,21 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		login.preHandle(request, response, session);
-		mav.addObject("sessionVO", session.getAttribute("sessionVO"));
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		//썸네일 주입
+		if(sessionVO.getRequest_thumbnail() != null) {
+			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
+			String thumbnail = new String(imageContent);
+			sessionVO.setM_picture(thumbnail);
+		}else {
+			sessionVO.setM_picture("");
+			System.out.println("썸네일 없음.");
+			}
+		
+		mav.addObject("sessionVO", sessionVO);
 		mav.setViewName("mp/mp_001_1");
-		System.out.println("session : "+session.getAttribute("sessionVO"));
+		System.out.println("session : "+ sessionVO);
 		System.out.println(mav + "mav완료");
 		
 		return mav;

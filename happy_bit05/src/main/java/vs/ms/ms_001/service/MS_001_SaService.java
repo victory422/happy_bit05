@@ -22,4 +22,6 @@ public interface MS_001_SaService {
 
 	void mailSender(String e_mail, String user_id, int key, HttpServletRequest request) throws AddressException, MessagingException;
 
+	void registThumbnail(Map<String, Object> hmap);
+
 }

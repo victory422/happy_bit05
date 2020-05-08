@@ -1,5 +1,6 @@
 package vs.ms.ms_001.service;
 
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -31,6 +32,12 @@ public class MS_001_ServiceImpl implements MS_001_SaService {
 	public MS_001_VO memberVO(MS_001_VO list) {
 		list = msDao.memberVO(list);
 		return list;
+	}
+	
+	
+	@Override
+	public void registThumbnail(Map<String, Object> hmap) {
+		msDao.registThumbnail(hmap);
 	}
 
 	@Override
