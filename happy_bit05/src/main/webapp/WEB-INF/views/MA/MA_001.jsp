@@ -87,25 +87,45 @@ if (navigator.geolocation) {
 	          		success : function(data){
 	          
 	          			var muteCourse = document.getElementById('muteCourse');
+	          			var positions = []; //마커가 표시될 위치들.
+	          			var content; //HTML 내용.
+	          			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	          		    var imageSize = new kakao.maps.Size(24, 35); 
+	          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
 	          			
-	          			var content;
-	          			
+	          		    //마커 생성
 	          			for(var i = 0; i < data.length; i++){
 	          				
-	        			content += '<div class="col-md-12">';
-	    				content += '<div class="card mb-3 shadow-sm">';
-	    				content += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
-	    				content += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="200"/>';
-	    				content += '</svg>';
-	    				content += '<div class="card-body">';
-	    				content += '<a class="move" href="' + data[i].lc_index + '">';
-	    				content += '<p class="card-text">' + data[i].lc_title + '</p>';
-	    				content += '</a>';
-	    				content += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
-	    				content += '</div></div></div>';
+	          				var split1 = data[i].lc_xy_arr.split(',');
+	    					split1[0] = split1[0].substring(1 , split1[0].length);
+	    					split1[1] = split1[1].substring(1, split1[1].length-1);
+	    					
+	    					var position = new kakao.maps.LatLng(split1[0], split1[1]);
+	    					
+	    					var markers = new kakao.maps.Marker({
+	    						map : map,
+	    						position : position,
+	    						image : markerImage,
+	    						clickable : true
+	    					});
+	    					
+	    					markers.setMap(map);
+	          				
+		        			content += '<div class="col-md-12">';
+		    				content += '<div class="card mb-3 shadow-sm">';
+		    				content += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
+		    				content += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="200"/>';
+		    				content += '</svg>';
+		    				content += '<div class="card-body">';
+		    				content += '<a class="move" href="' + data[i].lc_index + '">';
+		    				content += '<p class="card-text">' + data[i].lc_title + '</p>';
+		    				content += '</a>';
+		    				content += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
+		    				content += '</div></div></div>';
 	          			}
 	          			
 	    				muteCourse.innerHTML = content;
+	    					
 	          		},
 	          		error: function(request, status, error){
 	    				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
