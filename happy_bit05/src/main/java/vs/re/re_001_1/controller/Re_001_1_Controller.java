@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.service.Co_Service;
 import vs.cr.cr_001_1.service.Cr_Service;
+import vs.lc.lc_003_1.service.LC_003_1_Service;
+import vs.li.li_001_1.service.LI_Service;
 import vs.pr.pr_003_1.service.Pr_003_1_Service;
 import vs.re.re_001_1.service.Re_001_1_Service;
 import vs.re.re_001_1.vo.ReVO;
@@ -32,23 +34,30 @@ public class Re_001_1_Controller {
 	@Autowired
 	private Pr_003_1_Service pr_service;
 	
+	@Autowired
+	private LC_003_1_Service lc_service;
+	
+	@Autowired
+	private LI_Service li_service;
+	
 	//신고하기 창띄우기
 	@GetMapping("/report")
-	public void report_co(Model model,Page_DTO dto,@RequestParam("re_type") String re_type,@RequestParam("board_index") String board_index){
+	public void report_co(Model model,@RequestParam("re_type") String re_type,@RequestParam("board_index") String board_index){
 		
 		System.out.println("타입 : " +re_type);
 		System.out.println("co_b_index : "+  board_index);
-		if(re_type.equals("co")) {
-			
-			model.addAttribute("data",co_service.co_detail(board_index));
-		
-		}else if(re_type.equals("cr")) {
-		
+		if(re_type.equals("co")) {			
+			model.addAttribute("data",co_service.co_detail(board_index));		
+		}else if(re_type.equals("cr")) {		
 			model.addAttribute("data",cr_service.cr_detail(board_index));
-		}else if(re_type.equals("pr")) {
-			
+		}else if(re_type.equals("pr")) {			
 			model.addAttribute("data",pr_service.pr_detail(board_index));
+		}else if(re_type.equals("lc")) {
+			model.addAttribute("data",lc_service.getLC(board_index));
+		}else if(re_type.equals("li")) {
+			model.addAttribute("data", li_service.detail_page(board_index));
 		}
+			
 		
 	}
 		
