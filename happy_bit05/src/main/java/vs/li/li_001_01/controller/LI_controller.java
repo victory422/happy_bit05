@@ -293,9 +293,9 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpServletRequest request, HttpServletResponse response,Page_DTO dto) {
+	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
 		
-		HttpSession session = request.getSession();
+		//HttpSession session = request.getSession();
 		
 		session.setAttribute("m_index", "admin3");
 		
@@ -304,12 +304,10 @@ public class LI_controller {
 		log.info("---------------------------상세 페이지-----------------------");
 		log.info("게시판 : "+vo.getLi_b_type());
 		log.info("increse_service 실행");
-		service.increse_see(vo, request, response);
+		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
-		
-		vo = service.detail_page(vo.getLi_index());
-		
+			
 		model.addAttribute("page", service.detail_page(vo.getLi_index()));
 		
 		

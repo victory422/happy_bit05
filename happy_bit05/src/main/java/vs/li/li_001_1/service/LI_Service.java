@@ -23,10 +23,11 @@ public interface LI_Service {
 	
 	public List<LI_VO> search_list(LI_VO vo);
 	
-	public LI_VO detail_page(String index);
+	public List<LI_VO> detail_page(String index);
 	
 	//조회수
-	public void increse_see(LI_VO vo,HttpServletRequest request, HttpServletResponse response);
+	//public void increse_see(LI_VO vo,HttpServletRequest request, HttpServletResponse response);
+	public void increse_see(LI_VO vo,HttpSession session);
 	
 	//추천수 증가
 	public int increse_good(HashMap<String, Object> hashMap);

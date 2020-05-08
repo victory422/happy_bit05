@@ -100,13 +100,13 @@ public class LI_ServiceImpl implements LI_Service {
 	
 	
 	@Override
-	public LI_VO detail_page(String index) {
+	public List<LI_VO> detail_page(String index) {
 		// TODO Auto-generated method stub
-		LI_VO vvo;
+		List<LI_VO> vvo;
 		try {
 			log.info("페이지 데이터 불러오기");
 			log.info(index);
-			vvo = sqlsession.selectOne("li.detail_page",index); //상세페이지 불러오기
+			vvo = sqlsession.selectList("li.detail_page",index); //상세페이지 불러오기
 			log.info("LI_VO 리턴성공 --------------------");
 			return vvo;
 		} catch (Exception e) {
@@ -119,9 +119,10 @@ public class LI_ServiceImpl implements LI_Service {
 	//조회수를 증가하게하는 쿼리
     //조회수 처리를 할때 일정 시간이 지난후 다시 클릭할때만 조회수가 증가하도록 설정
 	@Override
-	public void increse_see(LI_VO vo,HttpServletRequest request, HttpServletResponse response) {
+	public void increse_see(LI_VO vo,HttpSession session) {
 		try {
-			HttpSession session = request.getSession();
+			//HttpSession session = request.getSession();
+			
 			long update_time = 0; //null을 방지하기 위해 초기값을 null로 설정함
 	        if(session.getAttribute("update_time_"+vo.getLi_index())!=null) {
 	            //최근에 조회수를 올린 시간이 null이 아니면
