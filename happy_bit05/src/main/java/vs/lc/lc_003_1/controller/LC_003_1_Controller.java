@@ -76,7 +76,7 @@ public class LC_003_1_Controller {
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		hashmap.put("board_index", lc_index);
-		//hashmap.put("m_index",  vo.getM_index());
+		hashmap.put("m_index",  vo.getM_index());
 		
 		log.info("난 빡빡이다. : "+hashmap.get("board_index"));
 		//log.info("나는 쀅붺이다."+hashmap.get("m_index"));

@@ -41,7 +41,7 @@
 					</div>
 					
 					<div style="float:right;">
-						조회수 ${lc_get.lc_see } | 댓글 | 하트 ${lc_get.lc_good }
+						조회수 ${lc_get.lc_see } | 댓글 | 추천수 ${lc_get.lc_good }
 					</div>
 				</div>
 
@@ -141,6 +141,7 @@
 					<c:if test="${member ne null}">
 						<button type='button' class='btn btn-secondary' id='myCourse' name='myCourse' onclick="myCourseIn()"></button>	
 						<!-- 좋아요 기능 -->
+					</c:if>
 					<c:choose>
 						<c:when test="${member.m_index ne null}">
 							<a href='javascript: like_func();'><img
@@ -151,7 +152,6 @@
 								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${lc_get.lc_good }</span>
 						</c:otherwise>
 					</c:choose>
-					</c:if>
 				</div>
 				
 			</div>
@@ -252,9 +252,14 @@
 	//var board_index = "${param.co_b_index}";
 
 	$('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
-	   var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
-	   commentInsert(insertData); //Insert 함수호출(아래)
-	   console.log($('[name=commentInsertForm]').serialize());
+		var loginCheck = document.getElementById('myCourse_m_index').value
+		if(loginCheck){
+		   var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+		   commentInsert(insertData); //Insert 함수호출(아래)
+		   console.log($('[name=commentInsertForm]').serialize());
+		}else{
+			alert("로그인 후 이용하실 수 있습니다.");
+		}
 	});
 	//댓글 목록 
 	function commentList() {
