@@ -24,4 +24,5 @@ public class MA_001_1_VO {
 	private int lc_good;		//좋아요
 	private int lc_see;			//조회수
 	private String lc_record;	//평균 기록
+	private String lc_xy_arr;   //좌표
 }

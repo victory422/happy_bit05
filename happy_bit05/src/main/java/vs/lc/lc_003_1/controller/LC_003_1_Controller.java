@@ -13,12 +13,17 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.JsonObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import vs.board.good.vo.GOOD_VO;
 import vs.lc.lc_002_1.vo.Criteria;
 import vs.lc.lc_003_1.service.LC_003_1_Service;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
+import vs.li.li_001_01.vo.LI_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
@@ -44,12 +49,13 @@ public class LC_003_1_Controller {
 		
 		System.out.println(session.getAttribute("sessionVO"));
 		
+		vo.setLc_index(lc_index);
 		
 		//관심코스 등록되있는지 확인.
 		if(session.getAttribute("sessionVO") != null) {
+			
 			member = (LO_001_VO) session.getAttribute("sessionVO");
 			vo.setM_index(member.getM_index());
-			vo.setLc_index(lc_index);
 			
 			System.out.println("관심코스를 위한 회원 번호 : " + vo.getM_index());
 			System.out.println("관심코스를 위한 게시글 번호 : " + vo.getLc_index());
@@ -62,6 +68,33 @@ public class LC_003_1_Controller {
 	
 			model.addAttribute("member", session.getAttribute("sessionVO"));
 		}
+		
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		service.increse_see(vo, session);
+		log.info("increse_service 실행완료------------------------------");
+		
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		
+		hashmap.put("board_index", lc_index);
+		hashmap.put("m_index",  vo.getM_index());
+		
+		log.info("난 빡빡이다. : "+hashmap.get("board_index"));
+		//log.info("나는 쀅붺이다."+hashmap.get("m_index"));
+		log.info("지랄: " + vo.getLc_index());
+		
+		//로그인 했을 경우에만 좋아요 체크. 없으면 에러남.
+		if(member.getM_index() != null) {
+			int row_check = service.good_count(hashmap);
+			
+			if(row_check == 0) {
+				log.info("로우 생성중");
+				service.good_insert(hashmap);
+				log.info("로우 생성완료");
+			}else {
+				log.info("로우가 이미 생성되어있음");
+			}
+		}
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		
 		model.addAttribute("lc_get",service.getLC(lc_index));
 		
@@ -154,5 +187,109 @@ public class LC_003_1_Controller {
 		
 		return "LC/LC_003_1";
 	}
+	
+	
+	//like@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	@ResponseBody
+	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
+	public String like(LC_003_1_VO vo, GOOD_VO good_vo, HttpSession session) {
+		
+		if(member.getM_index() != null) {
+			
+			log.info("컨트롤러 like~~~~");
+			
+			//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
+			int good_check = 0;
+			int good_cnt = 0;	
+			
+			JsonObject obj = new JsonObject();
+			log.info("----------------------좋아요 -----------------------");
+			
+			member = (LO_001_VO) session.getAttribute("sessionVO");
+			vo.setM_index(member.getM_index());
+			vo.setLc_index(vo.getLc_index());
+			
+			//구글링에선 어레이리스트인데 스트링으로 해도될거같음
+			//ArrayList<String> msgs = new ArrayList<String>();
+			String msgs;
+			HashMap<String,Object> hashmap = new HashMap<String,Object>();
+			
+			
+			
+			
+			log.info("lc_index : "+vo.getLc_index());
+			//hashmap에 게시판,멤버 index 저장
+			hashmap.put("board_index", vo.getLc_index());
+			hashmap.put("m_index", vo.getM_index());
+			
+			good_check = service.good_check(hashmap);
+			good_cnt = service.good_cnt(hashmap);
+			
+			log.info(service.good_check(hashmap));
+			
+			//service.increse_good(hashMap);
+	
+			
+			if(good_check == 0) {
+			      msgs="좋아요!";
+			      service.increse_good(hashmap);
+			      good_check++;
+			      good_cnt++;
+	//		      boardProc.like_cnt_up(boardno);   //좋아요 갯수 증가
+			    } else {
+			      msgs="좋아요 취소";
+			      service.decrese_good(hashmap);
+			      good_check--;
+			      good_cnt--;
+			    }
+	
+			log.info("체크 : "+good_check);
+			log.info("좋아요갯수 : "+good_cnt);
+			log.info("메세지 : "+msgs);
+			
+			obj.addProperty("good_cnt", good_cnt);
+			obj.addProperty("m_index", "admin");
+			obj.addProperty("board", vo.getLc_index());
+			obj.addProperty("good_check", good_check);
+			obj.addProperty("msg",msgs);
+		
+			return obj.toString();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
+	public String like_check(LC_003_1_VO vo ,HttpSession session) {
+		if(member.getM_index() != null) {
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			int good_check = 0;
+			
+			JsonObject obj = new JsonObject();
+			HashMap<String,Object> hashMap = new HashMap<String,Object>();
+			
+			System.out.println("m_index = " + member.getM_index());
+			
+			hashMap.put("board_index", vo.getLc_index());
+			hashMap.put("m_index",member.getM_index());
+			
+			good_check = service.good_check(hashMap);
+			
+			log.info("좋아요 체크 :"+ good_check);
+			
+			obj.addProperty("m_index", member.getM_index());
+			obj.addProperty("board", vo.getLc_index());
+			obj.addProperty("good_check", good_check);
+			
+			return obj.toString();
+		}else {
+			return null;
+		}
+	}
+	
 	
 }

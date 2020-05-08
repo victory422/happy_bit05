@@ -8,40 +8,23 @@
 
 <div class="container text-center">
 	<div class="row justify-content-center ">
-		<div id="map" class="col-8" style="width:100%;height:350px;"></div>
-		<div class="col-4">
-
-			<c:forEach var="ma" varStatus="status" items="${list}">
-			<div class="col-md-3">
-				<div class="card mb-3 shadow-sm">
-				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${ma.lc_request}" height="200"/>
-				</svg>
-				<div class="card-body">
-					<a class="move" href="<c:out value='${ma.lc_index}'/>">
-						<p class="card-text">${ma.lc_title}</p>
-					</a>
-					<p class="card-text">조회수 : ${ma.lc_see}<br>추천수 : ${lc.lc_good}</p>
-				</div>
-				</div>
-			</div>
-		</c:forEach>
+		<div id="map" class="col-8" style="width:100%;height:450px;"></div>
+		<div id="muteCourse" class="col-4">
+			<h4>
+				<div id="area2"></div>
+				<div id="area3"></div>
+			</h4>
 			
 		</div>
 	</div>
 </div>
 
-<input type="hidden" id="lc_area2" name="lc_area2"/>
-<input type="hidden" id="lc_area3" name="lc_area3"/>
+<input type="text" id="lc_area2" name="lc_area2"/>
+<input type="text" id="lc_area3" name="lc_area3"/>
 
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
 <script>
-
-//스크립트세션 주입
-sessionStorage.setItem("sessionScript", '${sessionVO}');
-console.log("홈 session : "+sessionStorage.getItem("sessionScript"));
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -82,33 +65,58 @@ if (navigator.geolocation) {
                 document.getElementById('lc_area2').value=contentArr[1];
 	            document.getElementById('lc_area3').value=contentArr[2];
 	            
+	            
 	            document.getElementById('area2').innerHTML=contentArr[1];
 	            document.getElementById('area3').innerHTML=contentArr[2];
+	            
+	            var lc_area2 = document.getElementById('lc_area2').value;
+      	      	var lc_area3 = document.getElementById('lc_area3').value;
+      	        console.log(lc_area2);
+            	console.log(lc_area3);
+	            
+	            $.ajax({
+	          		type: "POST",
+	          		cache: false,
+	          		async: "true",
+	          		url: "../ma/001/main",
+	          		data : {
+	          			"lc_area2" : lc_area2,
+	          			"lc_area3" : lc_area3
+	          		},
+	          		dataType : "json",
+	          		success : function(data){
+	          
+	          			var muteCourse = document.getElementById('muteCourse');
+	          			
+	          			var content;
+	          			
+	          			for(var i = 0; i < data.length; i++){
+	          				
+	        			content += '<div class="col-md-12">';
+	    				content += '<div class="card mb-3 shadow-sm">';
+	    				content += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
+	    				content += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="200"/>';
+	    				content += '</svg>';
+	    				content += '<div class="card-body">';
+	    				content += '<a class="move" href="' + data[i].lc_index + '">';
+	    				content += '<p class="card-text">' + data[i].lc_title + '</p>';
+	    				content += '</a>';
+	    				content += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
+	    				content += '</div></div></div>';
+	          			}
+	          			
+	    				muteCourse.innerHTML = content;
+	          		},
+	          		error: function(request, status, error){
+	    				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    				 console.log('error:'+error);
+	          		},
+	          		complete : function(){
+	          			
+	          		}
+	          	});
             }   
         });
-      
-      	var lc_area2 = document.getElementById('lc_area2').value;
-      	var lc_area3 = document.getElementById('lc_area3').value;
-      	
-      	$.ajax({
-      		type: "POST",
-      		async: "true",
-      		url: "/ma/001/main",
-      		data : {
-      			lc_area2 : lc_area2,
-      			lc_area3 : lc_area3
-      		},
-      		dataType : "text",
-      		success : function(){
-      			
-      		},
-      		error: function(){
-      			
-      		},
-      		complete : function(){
-      			
-      		}
-      	});
             
       });
     
@@ -131,15 +139,6 @@ function displayMarker(locPosition, message) {
     
     var iwContent = message, // 인포윈도우에 표시할 내용
         iwRemoveable = true;
-
-    // 인포윈도우를 생성합니다
-    var infowindow = new kakao.maps.InfoWindow({
-        content : iwContent,
-        removable : iwRemoveable
-    });
-    
-    // 인포윈도우를 마커위에 표시합니다 
-    infowindow.open(map, marker);
     
     // 지도 중심좌표를 접속위치로 변경합니다
     map.setCenter(locPosition);      
