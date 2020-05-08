@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<title>Home</title>
+<title>myrecord</title>
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -135,29 +135,7 @@ nav ul li {
 
 
 	<!-- Navigation -->
-	<nav
-		class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
-		<div class="container">
-
-
-			<a class="navbar-brand" href="#">BnR</a>
-			<button class="navbar-toggler navbar-toggler-right" type="button"
-				data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item"><a class="nav-link" href="#">나의 코스</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">코스 게시판</a></li>
-					<li class="nav-item"><a class="nav-link" href="../mb/mb_006_1">나의기록</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">기록측정</a></li>
-				</ul>
-			</div>
-		</div>
-	</nav>
-
+<%@ include file="../includes/mobile_topbar.jsp"%>
 
 
 	<div class="container">
@@ -168,13 +146,13 @@ nav ul li {
 						<tr class="active"
 							style="font-weight: bold; background-color: #e9ecef;">
 							<td>No</td>
-							<td>코스명</td>
-							<td>종목</td>
-							<td>기록</td>
-							<td>일자</td>
+							<td onclick="sort('pr_title')">코스명</td>
+							<td onclick="sort('pr_type')">종목</td>
+							<td onclick="sort('pr_record')">기록</td>
+							<td onclick="sort('pr_recorddate')">일자</td>
 
 						</tr>
-						<tbody>
+						<tbody id="vals">
 							<c:forEach var="val" items="${list }" varStatus="status">
 								<tr class="success">
 									<td>${val.RN}</td>
@@ -197,9 +175,51 @@ nav ul li {
 	</div>
 
 
-	<script type="text/javascript">
-	console.log('${list}');
+<script type="text/javascript">
+
+	function sort(type) {
+		console.log(type);	
 		
-	</script>
+		$.ajax({
+			type : "get",
+			url : '/mb_006_1/sort/',
+			data : {"type" : type},
+			dataType : "json",
+			success : function(data){
+				console.log(data);
+				var htm = '';
+				
+				htm = '<tr class="success">';
+				for(var i in data) {
+					for( var j in data[i]) {
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					}
+				}
+				htm = '</tr>';
+				
+				document.getElementById('vals').html(htm);
+				
+				
+				
+
+				
+				
+			},
+			error : function(data) {
+				console.log("error : "+ (JSON.stringify(data)));
+			}
+		});
+		
+	}
+		
+	
+
+
+	
+</script>
 </body>
 </html>

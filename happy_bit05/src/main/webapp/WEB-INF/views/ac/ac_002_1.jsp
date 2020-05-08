@@ -91,7 +91,6 @@
 					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
-								<th>선택</th>
 								<th>제목</th>
 								<th>일정</th>
 								<th>참가비</th>
@@ -102,9 +101,7 @@
 							</tr>
 						</thead>
 						<c:forEach items="${data}" var="data">
-						${data.co_b_state }
 							<tr>
-								<td><label class="custom-control-label" for="jb-radio-1"></label></td>
 								<td>${data.co_b_title}</td>
 								<td>${data.co_b_day}</td>
 								<td>${data.co_b_price}</td>

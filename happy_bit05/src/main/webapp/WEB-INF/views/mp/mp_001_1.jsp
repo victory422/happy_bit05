@@ -22,8 +22,8 @@
 
     <!-- Page Heading/Breadcrumbs -->
     <h1 class="mt-4 mb-3">My Page
-      <small>내 정보 보기</small>
-    </h1>
+    	<small>&nbsp;환영합니다! ${sessionVO.m_id}님</small>
+	</h1>
 
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
@@ -33,6 +33,29 @@
     </ol>
 
     <div class="row">
+    <!-- 내 정보 -->
+      <div class="col-lg-4 portfolio-item">
+        <div class="card h-100">
+          <div class="card-body">
+			<img alt="" id="thumbnail" src="data:image/jsp;base64, ${sessionVO.m_picture}" height="200"/>
+
+          </div>
+        </div>
+     </div>
+    <div class="col-lg-8 portfolio-item">
+        <div class="card h-100">
+          <div class="card-body">
+			<p>nickName : ${sessionVO.m_nickName}</p>
+			<!--  <p>pw : ${sessionVO.m_pw}</p>-->
+			<p>name : ${sessionVO.m_name}</p>
+			<p>gender : ${sessionVO.m_gender}</p>
+			<p>birth : ${sessionVO.m_birth}</p>
+			<p>email : ${sessionVO.m_email_1}</p>
+			<p>tel : ${sessionVO.m_tel}</p>
+			<p>address : ${sessionVO.m_address}</p>
+          </div>
+        </div>
+     </div>
     <!-- 나의 관심코스 -->
       <div class="col-lg-12 portfolio-item">
         <div class="card h-100">
@@ -106,33 +129,7 @@
     </div>
     <!-- /.row -->
 
-    <!-- Pagination -->
-    <ul class="pagination justify-content-center">
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-          <span class="sr-only">Previous</span>
-        </a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">1</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">2</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#">3</a>
-      </li>
-      <li class="page-item">
-        <a class="page-link" href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-          <span class="sr-only">Next</span>
-        </a>
-      </li>
-    </ul>
-
   </div>
-  
 </body>
 
 <script type="text/javascript">

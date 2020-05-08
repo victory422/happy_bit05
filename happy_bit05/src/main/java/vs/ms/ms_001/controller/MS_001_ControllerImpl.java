@@ -1,9 +1,11 @@
 package vs.ms.ms_001.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import lombok.extern.log4j.Log4j;
 import vs.ms.ms_001.service.MS_001_SaService;
 import vs.ms.ms_001.vo.MS_001_VO;
@@ -54,7 +57,10 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 		log.info(id);
 		System.out.println("ms회원가입 regist mav");
 		System.out.println(ms_001_vo);
+		Map<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("m_picture", ms_001_vo.getM_picture().getBytes());
 		ms_001_Service.memberVO(ms_001_vo);
+		ms_001_Service.registThumbnail(hmap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("lo/lo_001_1");
 		request.setAttribute("memberList", ms_001_vo);

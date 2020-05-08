@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -293,6 +295,8 @@ public class LI_controller {
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
 	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
 		
+		//HttpSession session = request.getSession();
+		
 		session.setAttribute("m_index", "admin3");
 		
 		//이전페이지로 넘어갈 페이지 경로
@@ -303,8 +307,8 @@ public class LI_controller {
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
-		
-		model.addAttribute("page",service.detail_page(vo.getLi_index()));
+			
+		model.addAttribute("page", service.detail_page(vo.getLi_index()));
 		
 		
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
@@ -342,7 +346,9 @@ public class LI_controller {
 	
 	@ResponseBody
 	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
-	public String like(LI_VO vo, GOOD_VO good_vo, HttpSession session) {
+	public String like(LI_VO vo, GOOD_VO good_vo, HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
 		
 		
 		log.info("컨트롤러 like~~~~");
@@ -354,17 +360,21 @@ public class LI_controller {
 		JsonObject obj = new JsonObject();
 		log.info("----------------------좋아요 -----------------------");
 		
-		//구글링에선 어레이리스트인데 스트링으로 해도될거같음
-		//ArrayList<String> msgs = new ArrayList<String>();
 		String msgs;
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		
 		
+//=========================================================수정해야함 
+		
 		log.info("li_index : "+vo.getLi_index());
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index", session.getAttribute("m_index"));
+		//m_index 테스트설정
+		hashmap.put("m_index", "admin3");
+		//m_index 세션값으로 변경해야함 
+		//hashmap.put("m_index", session.getAttribute("m_index"));
+		
 		
 		good_check = service.good_check(hashmap);
 		good_cnt = service.good_cnt(hashmap);
@@ -400,7 +410,7 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
-		obj.addProperty("m_index", "admin");
+		obj.addProperty("m_index", "admin3");
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
@@ -419,22 +429,32 @@ public class LI_controller {
 	
 	@ResponseBody
 	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
-	public String like_check(LI_VO vo ,HttpSession session) {
+	public String like_check(LI_VO vo ,HttpServletRequest request, HttpServletResponse response) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		String m_index = "admin";
+		HttpSession session = request.getSession();
+		
+		//예비 member index
+		String m_index = "admin3";
+		
 		int good_check = 0;
 		
 		JsonObject obj = new JsonObject();
 		HashMap<String,Object> hashMap = new HashMap<String,Object>();
 		
 		hashMap.put("board_index", vo.getLi_index());
-		hashMap.put("m_index",session.getAttribute("m_index"));
+		hashMap.put("m_index",m_index);
 		
+		//세션id넣어주기
+		//hashMap.put("board_index", vo.getLi_index());
+		//hashMap.put("m_index",session.getAttribute("id"));
+		
+		//좋아요를 눌렀던 게시물인지 체크
 		good_check = service.good_check(hashMap);
 		
 		log.info("좋아요 체크 :"+ good_check);
 		
+		//session값으로 바꿔야함
 		obj.addProperty("m_index", m_index);
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);

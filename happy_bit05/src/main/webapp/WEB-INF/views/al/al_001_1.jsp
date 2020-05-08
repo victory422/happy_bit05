@@ -91,35 +91,25 @@
 					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
-								<th>번호</th>
+								<th>글 번호</th>
 								<th>제목</th>
 								<th>등록날짜</th>
 								<th>조회수</th>
 								<th>추천수</th>
-								<th>종목</th>
+								<th>회원 번호</th>
 								
 							</tr>
 						</thead>
-						<c:forEach items="${cr_list}" var="data">
+						<c:forEach items="${al_list}" var="data">
 							<tr>
-								<td>${data.co_r_index }</td>
-								<td>${data.co_r_title}</td>
-								<td>${data.co_r_day}</td>
-								<td>${data.co_r_see}</td>
-								<td>${data.co_r_good}</td>
-								<td>${data.co_r_type}</td>
+								<td>${data.boardidx }</td>
+								<td>${data.title}</td>
+								<td>${data.day}</td>
+								<td>${data.see}</td>
+								<td>${data.good}</td>
+								<td>${data.memindex}</td>
 							</tr>
 					</c:forEach> 
-					<c:forEach items="${co_list}" var="data">
-							<tr>
-								<td>${data.co_b_index }</td>
-								<td>${data.co_b_title}</td>
-								<td>${data.co_b_date}</td>
-								<td>${data.co_b_see}</td>
-								<td>${data.co_b_good}</td>
-								<td>${data.co_b_type}</td>
-							</tr>
-					</c:forEach>
 						</table>
 					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 						aria-labelledby="myModalLabel" aria-hidden="true">
@@ -133,26 +123,62 @@
 					<div class="col-md-10">
 						<ul class="pagination d-flex justify-content-center">
 							<c:if test="${pageUtil.prev }">
-								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.start-1}">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="/al/al_001_1?page=${pageUtil.start-1}">Previous</a></li>
 							</c:if>
 							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
-								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/ac/ac_002_1?page=${pNum }">${pNum }</a></li>
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/al/al_001_1?page=${pNum }">${pNum }</a></li>
 							</c:forEach>
 							<c:if test="${pageUtil.next }">
-								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.end+1 }">Next</a>
+								<li class="page-item"><a class="page-link" href="/al/al_001_1?page=${pageUtil.end+1 }">Next</a>
 								</li>
 							</c:if>
 						</ul>
 					</div>
 				<!-- /.table-responsive -->
-				<form role="form" action="ac_001_1" method="get">
-					<button type="submit" class="btn btn-primary float-right">글작성</button>
-				</form>
 			</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
 	</div>
+
+<script>
+
+var co_b_end = $('[name=co_b_end]').val();
+
+$(document).ready(function(){
+	
+	console.log(co_b_end);
+	
+	$('a.page_now').on('click',function(){
+		//alert($('input[name=page]').val($(this).text()))
+		//alert($('select[name=type]').val())
+		
+		var a =$('select[name=type]').length;
+		//배열생성
+		var aArr = new Array(a);
+		
+		//필터값들 스트링으로 변환
+		for(var i=0; i<a; i++){
+			aArr[i] = $('select[name=type]').eq(i).val();
+			//alert(aArr[i]);
+		}
+		
+		//선택한 종목값
+		//aArr[1]
+		//선택한 장비값
+		//aArr[2]
+		//현재 선택된 a태그안  
+		$(this).attr('href',"/co/co_003_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
+		})
+	
+	//alert(${param.test1});
+		function page_put(){
+		console.log($('input[name=page]').val(1))
+	}
+	
+});
+</script>
+
 </body>
 </html>

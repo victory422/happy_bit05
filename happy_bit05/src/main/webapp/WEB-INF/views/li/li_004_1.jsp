@@ -5,7 +5,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
-<title>관리 게시판</title>
+<title>자랑 게시판</title>
 
 <style>
 
@@ -72,7 +72,7 @@
 <body>
 <%@ include file="../includes/middle.jsp"%>
 	<!-- 넘겨줄값들 -->
-	<input type="hidden" name="li_b_type" value="추천게시판">
+	<input type="hidden" name="li_b_type" value="자랑게시판">
 		<input type="hidden" name="page" value="1"/>
 
 	
@@ -80,7 +80,7 @@
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
 			<div class="col-md-10">
-				<h1>장비게시판<small> (관리게시판)</small></h1>
+				<h1>장비게시판<small> (자랑게시판)</small></h1>
 			</div>
 			<div class="col-md-2">				
 				<select name="amount" id="list_mount">
@@ -170,7 +170,7 @@
 			
 				<div id="row">
 					<div class="col-md-6">
-						<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성</button></a>
+						<a href="/li/li_005_1?li_b_type=자랑게시판"><button type="button" class="btn btn-success">글작성</button></a>
 					</div>
 			<!-- 페이징  -->
 				<div class="col-md-10">

@@ -64,9 +64,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="/al/al_002_1" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
+                  <p>신고 게시글 관리</p>
                 </a>
               </li>
               <li class="nav-item">

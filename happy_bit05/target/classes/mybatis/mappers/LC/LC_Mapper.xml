@@ -278,12 +278,69 @@
 	</select>
 	
 	
+		<select id="getMyRecordListSort" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+			select 
+				rowNum rn, pr_index, a.mp_index, pr_title, pr_text, 
+				pr_see,pr_good, pr_resistDate, pr_recordDate, 
+				pr_record, pr_thumbnail, pr_type, pr_public
+			 from 
+				 myrecord a,
+				(select mp_index from mycourse
+				where m_index = #{m_index}) b
+			where 
+				a.mp_index = b.mp_index
+				order by #{type} desc
+		]]>	
+	</select>
+	
+	
+	<!-- 조회수 추천수 -->
+	
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see" parameterType="String">
+		<![CDATA[
+        	UPDATE course  SET lc_see = NVL(lc_see,0)+1 where lc_index = TRIM(#{index})
+    	]]>
+    </update>
+	
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select lc_good from course where lc_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	<!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE course
+		    SET lc_good = lc_good + 1 
+		    WHERE lc_index=#{board_index}
+		]]>
+	</update>
+	
+		<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE course
+		    SET lc_good =  lc_good - 1
+		    WHERE lc_index=#{board_index}
+    	]]>
+  	</update>
+  	
+
+	
+	<!--  -->
+	
 	
 	<!-- ===================================================================================== -->
-	<select id="ma_001_1" resultType="MA_001_1_VO">
+	<select id="ma_001_1" parameterType="java.util.Map" resultType="MA_001_1_VO">
 		<![CDATA[ 
-			select * from course
-			where lc_area2 = #{lc_area2}
+			select a.lc_index, a.m_index, a.lc_title, a.lc_type, a.lc_distance, a.lc_area1, a.lc_area2, a.lc_area3, a.lc_thumbnail, a.lc_good, a.lc_see, b.lc_xy_arr
+				from course a, map b
+				where b.lc_index = a.lc_index
+				and a.lc_area2 = #{lc_area2}
+			order by lc_good desc
 		]]>
 	</select>
 </mapper>

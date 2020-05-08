@@ -2,6 +2,7 @@ package vs.mb.mb_001_1.dao;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Component;
 
@@ -57,7 +58,17 @@ public class MB_daoImpl implements MB_dao{
 		
 		
 	}
+	
+	@Override
 	public List<Map<String, String>> getMyRecordList(String m_index) {
 		return session.selectList("lc.getMyRecordList", m_index);
 	}
+	
+	@Override
+	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
+		return session.selectList("lc.getMyRecordListSort", map);
+	}
+	
+	
+	
 }

@@ -1,6 +1,7 @@
 package vs.ms.ms_001.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSession;
@@ -46,6 +47,11 @@ public class MS_001_DAOImpl implements MS_001_DAO{
 		int chk = sqlSession.selectOne("member.nickCheck", data);
 		log.info(data+"의 nickName개수 : "+chk);
 		return chk;
+	}
+
+	@Override
+	public void registThumbnail(Map<String, Object> hmap) {
+		sqlSession.update("member.get_member_thumbnail", hmap);
 	}
 	
 }

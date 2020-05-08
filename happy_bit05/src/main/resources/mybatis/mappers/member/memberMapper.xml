@@ -27,6 +27,27 @@
 		<result property="lc_xy_arr" column="lc_xy_arr" jdbcType="CLOB"
 			javaType="java.lang.String" />
 	</resultMap>
+	
+	<resultMap id="clobThumbnail" type="java.util.HashMap">
+		<result property="m_picture" column="m_picture" javaType="[B" jdbcType="BLOB"  />
+	</resultMap>
+	
+	<resultMap id="request_thumbnail" type="vs.lo.lo_001.vo.LO_001_VO">
+		<result property="m_index" column="m_index" />
+		<result property="m_id" column="m_id" />
+		<result property="m_pw" column="m_pw_1" />
+		<result property="m_name" column="m_name" />
+		<result property="m_gender" column="m_gender" />
+		<result property="m_birth" column="m_birth" />
+		<result property="m_email_1" column="m_email_1" />
+		<result property="m_tel" column="m_tel" />
+		<result property="m_address" column="m_address" />
+		<result property="request_thumbnail" column="m_picture" />
+		<result property="m_nickName" column="m_nickName" />
+		<result property="m_state" column="m_state" />
+		<result property="m_count" column="m_count" />
+		<result property="m_point" column="m_point" />
+	</resultMap>
 
 
 
@@ -84,7 +105,20 @@
 	<insert id="get_member"
 		parameterType="vs.ms.ms_001.vo.MS_001_VO">
 		<![CDATA[
-			INSERT INTO member VALUES (
+			INSERT INTO member 
+			(m_index,
+			m_id,
+			m_pw_1,
+			m_name,
+			m_gender,
+			m_birth,
+			m_email,
+			m_tel,
+			m_address,
+			m_nickname)
+			
+			
+			VALUES (
 			(select count(*) from member)+1,
 			#{m_id},
 			#{m_pw1},
@@ -94,14 +128,26 @@
 			#{m_email_1},
 			#{m_tel},
 			#{m_address},
-			#{m_picture},
-			#{m_nickName},
-			'1',
-			0,
-			0
+			#{m_nickName}
 		)
 		]]>
 	</insert>
+	
+	<!-- 썸네일 업로드 -->
+	<update id="get_member_thumbnail" parameterType="java.util.Map">
+		  
+		<selectKey keyProperty="m_index" order="BEFORE" resultType="String">
+			<![CDATA[ 
+				select count(*) from member
+			]]>	
+		</selectKey>
+		
+		<![CDATA[ 
+			update member
+			set m_picture = #{m_picture}
+			where m_index = #{m_index}
+		]]>	
+	</update>
 	
 	<select id="idCheck" parameterType="java.lang.String"
 		resultType="java.lang.Integer">
@@ -135,24 +181,10 @@
 	</select>
 	
 
-	<select id="getList" parameterType="vs.lo.lo_001.vo.LO_001_VO"
-		resultType="vs.lo.lo_001.vo.LO_001_VO">
+	<select id="getList" resultMap="request_thumbnail">
 		<![CDATA[
 			SELECT 
-			M_INDEX as m_index,
-			M_ID as m_id,
-			M_PW_1 as m_pw,
-			M_NAME as m_name,
-			M_GENDER as m_gender,
-			M_BIRTH as m_birth,
-			M_EMAIL as m_email_1,
-			M_TEL as m_tel, 
-			M_ADDRESS as m_address, 
-			
-			M_NICKNAME as m_nickName,
-			M_STATE as m_state,
-			M_COUNT as m_count,
-			M_POINT as m_point
+			*
 			FROM member
 			WHERE 
 			M_ID = #{m_id}

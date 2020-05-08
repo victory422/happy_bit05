@@ -15,26 +15,23 @@
 
 <div class="container" style="margin-top: 20px; margin-botton: 50px;">
 	<div class="content" style="width: 1000px">
-		<c:forEach items="${data}" var="data">
-			<div class="row board_style">
-				<div class="col-md-8">
-					<h1>제목 : ${data.pr_title }</h1>
-				</div>
-				<div class="col-md-4" style="text-align: right;">
-					<h6>
-						추천수:<span class="good_cnt"> 10</span> 조회수:60
-					</h6>
-					작성일자:${data.pr_resistDate }
-				</div>
-			</div>
-
+		<c:forEach items="${data}" var="data">		
+		${data.m_index }
+			<table style="width:100%;">
+				<tr>
+					<td style="width:70%"><span style="font-size:1.5rem;">${data.pr_title }&emsp; </span> 종목: ${data.pr_type }</td>
+					<td style="width:30%; text-align: right;">${data.pr_resistDate }</td>
+				</tr>
+				<tr>
+					<td>작성자 : 임시</td>
+					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> 10</span> 조회수:60</h6> </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td style="text-align: right"><a onclick="report()" class="text-muted">신고하기</a></td>
+				</tr>
+			</table>
 			<br>
-
-			<div class="row board_style">
-				<div class="col-sm-12">			
-					<h6>종목: ${data.pr_type }</h6>
-				</div>
-			</div>
 			<hr>
 
 			<div style="margin-bottom: 50px">
@@ -43,6 +40,9 @@
 			<div class="box">
 				<div id="" class="padding_1">
 					<!-- 좋아요 기능 -->
+					<table style="width:100%">
+						<tr>
+							<td style="width:60%">
 					<c:choose>
 						<c:when test="${board.m_index ne null}">
 							<a href='javascript: like_func();'><img
@@ -55,10 +55,15 @@
 								${board.li_good }</span>
 						</c:otherwise>
 					</c:choose>
-				</div>
-				<div class="push padding_1">
+					</td>
+					<td style="width:40%; text-align: right;">
+					<div>					
 					<button class="btn btn-info" onclick="location.href='/pr/pr_002_1'">목록으로돌아가기</button>
 					<button class="btn btn-info" onclick="location.href='/pr/pr_004_1?pr_index=${data.pr_index}'">수정하기</button>
+					</div>
+					</td>
+					</tr>
+					</table>
 				</div>
 			</div>
 
@@ -99,13 +104,32 @@
 
 
 <script>
+
+var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+
+
+var popupWidth = 600;
+var popupHeight = 450;
+
+var popupX = (window.screen.width / 2) - (popupWidth / 2); 
+// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+ 
+var popupY= (window.screen.height / 2) - (popupHeight / 2);
+// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+  
+//신고하기 창띄우기
+function report(){
+	//re_type 게시판 마다 맞게 바꿔주기
+	 window.open("/re/report?re_type=pr&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
+	
+}
+
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
 	
 	commentList();
 });
  
-var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
 //var board_index = "${param.co_b_index}";
 
 $('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
