@@ -53,6 +53,7 @@ public class LC_003_1_Controller {
 		
 		//관심코스 등록되있는지 확인.
 		if(session.getAttribute("sessionVO") != null) {
+			
 			member = (LO_001_VO) session.getAttribute("sessionVO");
 			vo.setM_index(member.getM_index());
 			

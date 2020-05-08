@@ -303,12 +303,10 @@
 	<!-- ===================================================================================== -->
 	<select id="ma_001_1" parameterType="java.util.Map" resultType="MA_001_1_VO">
 		<![CDATA[ 
-			select * from 
-			(select a.lc_index, a.m_index, a.lc_title, a.lc_type, a.lc_distance, a.lc_area1, a.lc_area2, a.lc_area3, a.lc_thumbnail, a.lc_good, a.lc_see, b.lc_xy_arr
+			select a.lc_index, a.m_index, a.lc_title, a.lc_type, a.lc_distance, a.lc_area1, a.lc_area2, a.lc_area3, a.lc_thumbnail, a.lc_good, a.lc_see, b.lc_xy_arr
 				from course a, map b
 				where b.lc_index = a.lc_index
 				and a.lc_area2 = #{lc_area2}
-				and a.lc_area3 = #{lc_area3})
 			order by lc_good desc
 		]]>
 	</select>
