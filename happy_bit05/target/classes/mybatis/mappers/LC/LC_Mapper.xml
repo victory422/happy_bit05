@@ -262,13 +262,53 @@
 	</delete>
 	
 	
+	<!-- 조회수 추천수 -->
+	
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see" parameterType="String">
+		<![CDATA[
+        	UPDATE course  SET lc_see = NVL(lc_see,0)+1 where lc_index = TRIM(#{index})
+    	]]>
+    </update>
+	
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select lc_good from course where lc_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	<!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE course
+		    SET lc_good = lc_good + 1 
+		    WHERE lc_index=#{board_index}
+		]]>
+	</update>
+	
+		<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE course
+		    SET lc_good =  lc_good - 1
+		    WHERE lc_index=#{board_index}
+    	]]>
+  	</update>
+  	
+
+	
+	<!--  -->
+	
 	
 	<!-- ===================================================================================== -->
 	<select id="ma_001_1" parameterType="java.util.Map" resultType="MA_001_1_VO">
 		<![CDATA[ 
-			select * from course
-			where lc_area2 = #{lc_area2}
-			and lc_area3 = #{lc_area3}
+			select * from 
+			(select a.lc_index, a.m_index, a.lc_title, a.lc_type, a.lc_distance, a.lc_area1, a.lc_area2, a.lc_area3, a.lc_thumbnail, a.lc_good, a.lc_see, b.lc_xy_arr
+				from course a, map b
+				where b.lc_index = a.lc_index
+				and a.lc_area2 = #{lc_area2}
+				and a.lc_area3 = #{lc_area3})
 			order by lc_good desc
 		]]>
 	</select>

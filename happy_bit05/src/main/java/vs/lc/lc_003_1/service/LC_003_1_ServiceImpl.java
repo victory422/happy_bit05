@@ -1,6 +1,9 @@
 package vs.lc.lc_003_1.service;
 
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Service;
 
@@ -8,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.dao.LC_003_1_Dao;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
+import vs.li.li_001_01.vo.LI_VO;
 
 @Service
 @Log4j
@@ -64,6 +68,49 @@ public class LC_003_1_ServiceImpl implements LC_003_1_Service{
 	public boolean myCourseDelete(LC_003_1_VO vo) {
 		// TODO Auto-generated method stub
 		return dao.myCourseDelete(vo) == 1;
+	}
+
+	@Override
+	public void increse_see(LC_003_1_VO vo, HttpSession session) {
+		dao.increse_see(vo, session);
+	}
+
+	@Override
+	public int increse_good(HashMap<String, Object> hashMap) {
+		return dao.increse_good(hashMap);
+	}
+
+	@Override
+	public int decrese_good(HashMap<String, Object> hashMap) {
+		
+		// TODO Auto-generated method stub
+		return dao.decrese_good(hashMap);
+	}
+
+	@Override
+	public int good_check(HashMap<String, Object> hashMap) {
+		// TODO Auto-generated method stub
+		return dao.good_check(hashMap);
+		
+	}
+
+	@Override
+	public int good_cnt(HashMap<String, Object> hashmap) {
+		// TODO Auto-generated method stub
+		return dao.good_cnt(hashmap);
+	}
+
+	@Override
+	public int good_count(HashMap<String, Object> hashmap) {
+		// TODO Auto-generated method stub
+		return dao.good_count(hashmap);
+	}
+
+	@Override
+	public void good_insert(HashMap<String, Object> hashmap) {
+		dao.good_insert(hashmap);
+		// TODO Auto-generated method stub
+		
 	}
 
 }
