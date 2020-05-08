@@ -150,8 +150,8 @@ function commentList() {
 			var a = '';
 			$.each(data,function(key, value) {
 					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-					a += 	'<div class="commentInfo'+value.com_index+'">'+ '댓글번호 : '+ value.com_index ;		
-					a +=	'<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
+					a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
+					a +=	'&emsp; <a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
 					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
 					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
 	                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
@@ -190,7 +190,7 @@ function dedetlist(com_index){
 		success : function(data){
 			$.each(data,function(key, value){
 				a += '<div class="commentArea1'+com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '상위 댓글 번호 : '+ value.com_index1 ;
+				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '작성자 : '+ value.m_nickname;
 				a += 		"<img src='../resources/img/reply.png' class='float-left'>";
 				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
                 a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	

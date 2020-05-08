@@ -48,7 +48,18 @@
 			<input type="hidden" name="title" id="title" value="${data.pr_title }">
 			<input type="hidden" name="board_index" id="board_index" value="${data.pr_index }">
 			<td style="width:85%"><c:out value="${data.pr_title }"></c:out>  </td>
-			</c:if>   
+			</c:if>
+			<c:if test="${param.re_type == 'lc'}">
+			<input type="hidden" name="title" id="title" value="${data.lc_title }">
+			<input type="hidden" name="board_index" id="board_index" value="${data.lc_index }">
+			<td style="width:85%"><c:out value="${data.lc_title }"></c:out>  </td>
+			</c:if>
+			<c:if test="${param.re_type == 'li'}">
+			<input type="hidden" name="title" id="title" value="${data.li_title }">
+			<input type="hidden" name="board_index" id="board_index" value="${data.li_index }">
+			<td style="width:85%"><c:out value="${data.li_title }"></c:out>  </td>
+			</c:if>
+			   
 			
 		</tr>
 		<tr>
