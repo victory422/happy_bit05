@@ -293,7 +293,7 @@
 				$("#tdText").html(td);
 					
 			$.ajax({  
-			    type : "get",  
+			    type : "POST",  
 			    url : "/mp/myCourse/detail",  
 			    data : { "lc_index" :lc_index, "m_index" :m_index}, 
 			    dataType : "json",

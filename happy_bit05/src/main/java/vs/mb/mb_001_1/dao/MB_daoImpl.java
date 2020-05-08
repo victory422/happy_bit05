@@ -58,8 +58,17 @@ public class MB_daoImpl implements MB_dao{
 		
 		
 	}
+	
+	@Override
 	public List<Map<String, String>> getMyRecordList(String m_index) {
 		return session.selectList("lc.getMyRecordList", m_index);
 	}
+	
+	@Override
+	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
+		return session.selectList("lc.getMyRecordListSort", map);
+	}
+	
+	
 	
 }

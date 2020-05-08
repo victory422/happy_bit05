@@ -15,4 +15,6 @@ public interface MB_dao {
 
 	List<Map<String, String>> getMyRecordList(String m_index);
 
+	List<Map<String, String>> getMyRecordListSort(Map<String, String> map);
+
 }

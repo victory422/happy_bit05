@@ -146,13 +146,13 @@ nav ul li {
 						<tr class="active"
 							style="font-weight: bold; background-color: #e9ecef;">
 							<td>No</td>
-							<td>코스명</td>
-							<td>종목</td>
-							<td>기록</td>
-							<td>일자</td>
+							<td onclick="sort('pr_title')">코스명</td>
+							<td onclick="sort('pr_type')">종목</td>
+							<td onclick="sort('pr_record')">기록</td>
+							<td onclick="sort('pr_recorddate')">일자</td>
 
 						</tr>
-						<tbody>
+						<tbody id="vals">
 							<c:forEach var="val" items="${list }" varStatus="status">
 								<tr class="success">
 									<td>${val.RN}</td>
@@ -175,9 +175,51 @@ nav ul li {
 	</div>
 
 
-	<script type="text/javascript">
-	console.log('${list}');
+<script type="text/javascript">
+
+	function sort(type) {
+		console.log(type);	
 		
-	</script>
+		$.ajax({
+			type : "get",
+			url : '/mb_006_1/sort/',
+			data : {"type" : type},
+			dataType : "json",
+			success : function(data){
+				console.log(data);
+				var htm = '';
+				
+				htm = '<tr class="success">';
+				for(var i in data) {
+					for( var j in data[i]) {
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					htm = '<td>'+data[i][j]+'</td>';
+					}
+				}
+				htm = '</tr>';
+				
+				document.getElementById('vals').html(htm);
+				
+				
+				
+
+				
+				
+			},
+			error : function(data) {
+				console.log("error : "+ (JSON.stringify(data)));
+			}
+		});
+		
+	}
+		
+	
+
+
+	
+</script>
 </body>
 </html>
