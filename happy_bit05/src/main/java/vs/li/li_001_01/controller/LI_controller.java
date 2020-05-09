@@ -38,6 +38,7 @@ public class LI_controller {
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
 	public void li_review(Model model, Page_DTO dto, HttpSession session) {
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		log.info("----------------------후기 게시판view-------------------");
 		log.info("gdgd"+dto.getPage());
@@ -67,6 +68,11 @@ public class LI_controller {
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		model.addAttribute("page", dto.getPage());
 		log.info("검색 type : "+dto.getType());
+		
+		if(member != null) {
+		//////////////////////////////////로그인 세션
+		model.addAttribute("member", member);
+		}
 		
 		for(int i= 0; i<dto.getTypeArr().length; i++) {
 		model.addAttribute("type"+i,dto.getTypeArr()[i]);
@@ -322,7 +328,10 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
-		log.info("세션 m_index : "+session.getAttribute("m_index"));
+		if(member != null) {
+		log.info("세션 m_index : "+member.getM_index());
+		}else
+			log.info("세선m_index없음 안들어옴(상세페이지 컨트롤러)");
 		
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
@@ -360,11 +369,14 @@ public class LI_controller {
 		member = (LO_001_VO) session.getAttribute("sessionVO");
 		log.info("컨트롤러 like~~~~");
 		
+		JsonObject obj = new JsonObject();
+		
+		if(member != null) {
 		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
 		int good_check = 0;
 		int good_cnt = 0;	
 		
-		JsonObject obj = new JsonObject();
+		
 		log.info("----------------------좋아요 -----------------------");
 		
 		String msgs;
@@ -378,7 +390,9 @@ public class LI_controller {
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
 		//m_index 테스트설정
+		
 		hashmap.put("m_index", member.getM_index());
+		
 		//m_index 세션값으로 변경해야함 
 		//hashmap.put("m_index", session.getAttribute("m_index"));
 		
@@ -417,7 +431,11 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
+		if(member != null) {
 		obj.addProperty("m_index", member.getM_index());
+		}else {
+			obj.addProperty("m_index", "visitor");
+		}
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
@@ -431,6 +449,11 @@ public class LI_controller {
 		 */
 	
 		return obj.toString();
+		}else {
+			obj.addProperty("msg", "no");
+			return obj.toString();
+		}
+		
 	}
 	
 	
