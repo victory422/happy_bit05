@@ -217,12 +217,9 @@ public class LI_ServiceImpl implements LI_Service {
 	
 	@Override
 	public void modify(LI_VO vo) {
-		
-		sqlsession.update("li.board_modify",vo);
-		
-		log.info("---------------------------------------------------------");
-		log.info("-----------------------수정--------------------------------");
+		// TODO Auto-generated method stub
 		
 	}
+
 }
 

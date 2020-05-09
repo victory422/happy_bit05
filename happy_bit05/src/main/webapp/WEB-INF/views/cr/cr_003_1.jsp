@@ -10,7 +10,6 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px">
 			<c:forEach items="${data}" var="data">
@@ -20,8 +19,8 @@
 					<td style="width:30%; text-align: right;">${data.co_r_day }</td>
 				</tr>
 				<tr>
-					<td>작성자 : ${data.m_nickname }</td>
-					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> 10</span> 조회수:60</h6> </td>
+					 <td>작성자 : ${data.m_nickname }</td>
+					<td style="text-align: right"><h6>추천수:<span class="good_cnt">${data.co_r_good }</span> 조회수:${data.co_r_see }</h6> </td>
 				</tr>
 				<tr>
 					<td></td>
@@ -40,19 +39,21 @@
 						<tr>
 							<td style="width:60%">
 					<c:choose>
-						<c:when test="${board.m_index ne null}">
+						<c:when test="${data.m_index ne null}">
 							<a href='javascript: like_func();'><img
-								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.co_r_good }</span>
 						</c:when>
 						<c:otherwise>
 							<a href='javascript: login_need();'><img
-								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.co_r_good }</span>
 						</c:otherwise>
 					</c:choose>
 					</td>
 					<td style="width:40%; text-align: right;">
 					<div>
-					<input class="btn btn-info" type="button" value="수정" onclick="location.href='/cr/cr_004_1?co_r_index=${data.co_r_index}'">					
+					<c:if test="${data.m_index ne null}">
+					<input class="btn btn-info" type="button" value="수정" onclick="location.href='/cr/cr_004_1?co_r_index=${data.co_r_index}'">	
+					</c:if>				
 					<input class="btn btn-info" type="button" value="삭제" onclick="cr_del()">							
 					<button  class="btn btn-info" onclick="location.href='/cr/cr_001_1'">
 					목록으로 돌아가기 
@@ -113,25 +114,68 @@ console.log("인덱스 : ",board_index);
 var popupWidth = 600;
 var popupHeight = 450;
 
-var popupX = (window.screen.width / 2) - (popupWidth / 2); 
-// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
- 
-var popupY= (window.screen.height / 2) - (popupHeight / 2);
-// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
-  
-//신고하기 창띄우기
-function report(){
-	//re_type 게시판 마다 맞게 바꿔주기
-	 window.open("/re/report?re_type=cr&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
-	
-}
 
 
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
+	//좋아요
+	(function(){
+		$.ajax({
+			url: "../cr/like_check",
+			type: "GET",
+			cache: false,
+			dataType: "json",
+			data: 'co_r_index=' +board_index,
+			success: function(data) {
+				 if(data.good_check == 0){
+				        like_img = "/resources/img/dislike.png";
+				      } else {
+				        like_img = "/resources/img/like.png";
+				      }
+				      $('#like_img').attr('src', like_img);
+				     
+			},
+			 error: function(request, status, error){
+				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			 }
+			 })
+		})();
+
 	
 	commentList();
 });
+
+
+
+function like_func(){
+
+	  $.ajax({
+		    url: "/cr/like",
+		    type: "GET",
+		    cache: false,
+		    dataType: "json",
+		    data: 'co_r_index=' +board_index,
+		    success: function(data) {
+		      var msg = '';
+		      var like_img = '';
+		      msg += data.msg;
+		      alert(msg);
+		      
+		      if(data.good_check == 0){
+		        like_img = "/resources/img/dislike.png";
+		      } else {
+		        like_img = "/resources/img/like.png";
+		      }      
+		      $('')
+		      $('#like_img').attr('src', like_img);
+		      $('.good_cnt').text(data.good_cnt);
+		      /* $('#like_check').html(data.like_check); */
+		    },
+		    error: function(request, status, error){
+		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		  });
+		}
 
 //대회 후기 게시글 삭제
 function cr_del() {
@@ -172,7 +216,7 @@ function commentList() {
 			//console.log(value.com_index1);
 			var a = '';
 			$.each(data,function(key, value) {
-					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+					a += '<div class="commentArea" style="margin-bottom: 15px;">';
 					a += 	'<div class="commentInfo'+value.com_index+'"> 작성자 : '+value.m_nickname+'';		
 					a +=	'<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
 					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
@@ -323,6 +367,7 @@ function dedetinsert(com_index){
 		}
 	})
 }
+
 
 </script>
 

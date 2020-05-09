@@ -101,15 +101,9 @@
 	</div>
  
 <script>
-//페이지 로딩시 댓글 목록
-$(document).ready(function() {
-	
-	commentList();
-});
 
-var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
-
-console.log("인덱스 : ",board_index);
+	var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+	console.log("인덱스 : ",board_index);
 
 var popupWidth = 600;
 var popupHeight = 450;
@@ -126,6 +120,11 @@ function report(){
 	 window.open("/re/report?re_type=co&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
 	
 }
+//페이지 로딩시 댓글 목록
+$(document).ready(function() {
+
+	commentList();
+});
 
 
 
@@ -150,7 +149,7 @@ function commentList() {
 			var a = '';
 			$.each(data,function(key, value) {
 					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-					a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
+					//a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
 					a +=	'&emsp; <a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
 					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
 					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';

@@ -5,6 +5,7 @@
 
 
 <resultMap type="AcVO" id="requestVO">
+	<result property="m_index" column="m_index"/>
 	<result property="co_b_index" column="co_b_index"/>
 	<result property="co_b_title" column="co_b_title"/>
 	<result property="co_b_text" column="co_b_text"/>
@@ -114,12 +115,12 @@
 		insert into competition(co_b_index, co_b_title, co_b_text, 
 								co_b_day, co_b_date, co_b_area,
 								co_b_start, co_b_end, co_b_type, co_b_price,
-								 co_souvenir, co_rating,co_b_state,co_b_count
+								 co_souvenir, co_rating,co_b_state,co_b_count,m_index
 								)
 		values ('co_'||co_b_index.nextval, #{co_b_title}, #{co_b_text},
 				 #{co_b_day}, (select to_char(sysdate,'yyyy.mm.dd  hh24:mi') from dual), #{co_b_area},
 				 #{co_b_start}, #{co_b_end}, #{co_b_type}, #{co_b_price},
-				  #{co_souvenir}, #{co_rating},'접수가능', '0'
+				  #{co_souvenir}, #{co_rating},'접수가능', '0',#{m_index}
 				 )
 		]]>
 	</insert>
