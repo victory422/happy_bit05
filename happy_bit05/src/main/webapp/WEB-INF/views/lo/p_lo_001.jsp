@@ -1,10 +1,9 @@
-<%@ include file="../includes/topbar.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <html>
-<title>Login</title>
+<title>Password Confirm</title>
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,7 +15,7 @@
 	crossorigin="anonymous">
 
 </head>
-<body>
+<body onunload="opener.pClose()"> 
 	<div class="container">
 		<div class="d-flex justify-content-center h-100">
 			<div class="card">
@@ -25,36 +24,26 @@
 
 				</div>
 				<div class="card-body">
-					<form action="/lo/login" method="post">
 						<div class="input-group form-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" class="form-control" name="m_id" placeholder="id">
+							<input type="text" class="form-control" name="m_id"  id="m_id" value="${sessionVO.m_id}" disabled="disabled">
 
 						</div>
 						<div class="input-group form-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
-							<input type="password" class="form-control" name="m_pw"
+							<input type="password" class="form-control" name="m_pw" id="m_pw"
 								placeholder="password">
 						</div>
-						<div class="row align-items-center remember">
-							<input type="checkbox">Remember
-
-						</div>
 						<div class="form-group">
-							<input type="submit" value="Login" onclick="'login()'"
+							<input type="submit" value="confirm"  onclick="login()"
 								class="btn float-right login_btn">
 						</div>
 					
 						<br>
-						<div class="form-group">
-							<input type="submit" value="회원가입" onclick="javascript: form.action='/ms';"
-							class="btn float-right member_btn"></button>
-						</div>
-					</form>
 				</div>
 				<div class="card-footer"></div>
 
@@ -67,20 +56,26 @@
 
 <script type="text/javascript">
 
-	//세션체크
-	console.log("세션체크 1 : "+'${sessionVO}');
-	console.log("세션체크 2 : "+sessionStorage.getItem("sessionScript"));
-
-	function login() {
-		sessionStorage.setItem("sessionScript",'${sessionVO.m_index}');
-		console.log("로그인 및 스크립트 세션 저장 : "+sessionStorage.getItem("sessionScript"));
-	}
+function login() {
+	var id = document.getElementById('m_id').value;
+	var pw = document.getElementById('m_pw').value;
+	var returnPw = sessionStorage.getItem("password");
+	if(pw==returnPw) {
+		alert("비밀번호가 확인되었습니다.");
+		sessionStorage.removeItem("password");
+		opener.document.getElementById("passwordConfirm2").value = 'true';
+		opener.document.getElementById("btn").removeChild;
+		window.close();
+		//window.opener.location.reload();
+	}else alert("비밀번호를 다시 확인해주세요.");
 	
+}
 	
 </script>
 
 
+	<script src="../../resources/vendor/jquery/jquery.min.js"></script>
+	<script
+		src="../../resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
-
-<%@ include file="../includes/footer.jsp"%>
+</html>
