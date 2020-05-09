@@ -20,11 +20,13 @@
 <link href="../../resources/css/modern-business.css" rel="stylesheet">
 <style>
 .carousel-item {
-     height: auto;
-     width: 100%;
+	height: auto;
+	width: 100%;
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -47,8 +49,8 @@
 						aria-haspopup="true" aria-expanded="false"> 코스 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
-							<a class="dropdown-item" href="/lc/uploadCourse">코스 업로드</a> <a
-								class="dropdown-item" href="/LC/lc_002_1">코스 보기</a>
+							<a class="dropdown-item" href="/lc/002/list?lc_type=육상">육상</a> <a
+								class="dropdown-item" href="/lc/002/list?lc_type=자전거">자전거</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
@@ -56,9 +58,16 @@
 							대회 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="blog-home-1.html">메뉴1</a> <a
-								class="dropdown-item" href="blog-home-2.html">메뉴2</a> <a
-								class="dropdown-item" href="blog-post.html">메뉴3</a> 
+							<a class="dropdown-item" href="/co/co_003_1">대회게시판</a> 
+							<a class="dropdown-item" href="/cr/cr_001_1">대회후기게시판</a>
+						</div></li>
+					<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							개인기록 </a>
+						<div class="dropdown-menu dropdown-menu-right"
+							aria-labelledby="navbarDropdownBlog">
+							<a class="dropdown-item" href="/pr/pr_002_1">개인기록 게시판</a> 
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
@@ -66,10 +75,11 @@
 							장비 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">후기쓰기</a> <a
-								class="dropdown-item" href="/li/li_002_1?li_b_type=추천게시판">추천하기</a> <a
-								class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">관리하기</a> <a
-								class="dropdown-item" href="/li/li_004_1?li_b_type=장비게시판">자랑하기</a>
+							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">후기
+								게시판</a> <a class="dropdown-item" href="/li/li_002_1?li_b_type=추천게시판">추천
+								게시판</a> <a class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">관리
+								게시판</a> <a class="dropdown-item" href="/li/li_004_1?li_b_type=장비게시판">장비
+								게시판</a>
 						</div></li>
 					<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#" id="navbarDropdownBlog"
@@ -77,12 +87,53 @@
 							트레이닝 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="/lt/lt_001_1">질문</a> <a
-								class="dropdown-item" href="/lt/lt_002_1">공유</a>
+							<a class="dropdown-item" href="/lt/lt_001_1">질문 게시판</a> <a
+								class="dropdown-item" href="/lt/lt_002_1">공유 게시판</a>
 						</div></li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" id="myInfo" href=""
+							id="navbarDropdownPortfolio" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"> 내 정보
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" id="loginCheck"
+							aria-labelledby="navbarDropdownPortfolio">
+							<a class="dropdown-item" id="login" href="/lo">로그인</a>
+							<a class="dropdown-item" href="/mp">내 정보 보기</a> 
+							<a class="dropdown-item" href="/mp/myCourse">내 관심코스</a>
+							<a class="dropdown-item" href="/lo/logout" onclick="logout()">로그아웃</a>
+						</div>
+					</li>
+
 					<li class="nav-item"><a class="nav-link" href="/SP/SP_001_1">shop</a>
 					</li>
 				</ul>
 			</div>
 		</div>
 	</nav>
+	
+<script type="text/javascript">
+
+	//세션체크
+	console.log("세션체크 1 : "+'${sessionVO}');
+	console.log("세션체크 2 : "+sessionStorage.getItem("sessionScript"));
+	if('${sessionVO}'=="" && (sessionStorage.getItem("sessionScript")=="" || sessionStorage.getItem("sessionScript")==null )) {
+		console.log("로그인정보가 없습니다.");
+		var myInfo = document.getElementById('myInfo');
+		myInfo.text = "로그인";
+		myInfo.setAttribute('href','/lo');
+		myInfo.setAttribute('data-toggle','');
+	}else {
+		var login = document.getElementById('login');
+		login.parentNode.removeChild(login);
+		console.log("로그인중");
+	}
+	
+	function logout() {
+		sessionStorage.removeItem("sessionScript");
+		console.log("로그아웃 중. "+sessionStorage.getItem("sessionScript"));
+	}
+	
+	
+	
+</script>
+	

@@ -54,7 +54,7 @@
 					     
 				},
 				 error: function(request, status, error){
-					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					colsole.log("비회원");
 				 }
 				 })
 			})();
@@ -128,8 +128,8 @@
 				<div class="push padding_1">
 						<button class="btn btn-info" onclick="modify()">수정하기</button>
 						<button  class="btn btn-info" onclick="fn_golist()">
-						목록으로 돌아가기  ${back_url}
-					</button>
+						목록으로 돌아가기 
+					</button>ㄷ
 				</div>
 			</div>
 				</form>
@@ -200,7 +200,7 @@
 			      /* $('#like_check').html(data.like_check); */
 			    },
 			    error: function(request, status, error){
-			      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			      	alert("로그인이 필요합니다.");
 			    }
 			  });
 			}

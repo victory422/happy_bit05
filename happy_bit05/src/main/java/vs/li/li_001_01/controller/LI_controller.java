@@ -301,9 +301,7 @@ public class LI_controller {
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
 	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
-		
-		//HttpSession session = request.getSession();
-		log.info(session.getAttribute("m_index"));
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//이전페이지로 넘어갈 페이지 경로
 		
@@ -329,9 +327,10 @@ public class LI_controller {
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index",  session.getAttribute("m_index"));
-		
-		if(member.getM_index() != null) {
+		if(member != null) {
+		hashmap.put("m_index", member.getM_index());
+		}
+		if(member!= null) {
 			
 			int row_check = service.good_count(hashmap);
 			
@@ -358,7 +357,7 @@ public class LI_controller {
 		
 		HttpSession session = request.getSession();
 		
-		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		log.info("컨트롤러 like~~~~");
 		
 		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
@@ -379,7 +378,7 @@ public class LI_controller {
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
 		//m_index 테스트설정
-		hashmap.put("m_index", "admin3");
+		hashmap.put("m_index", member.getM_index());
 		//m_index 세션값으로 변경해야함 
 		//hashmap.put("m_index", session.getAttribute("m_index"));
 		
@@ -418,7 +417,7 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
-		obj.addProperty("m_index", "admin3");
+		obj.addProperty("m_index", member.getM_index());
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
@@ -442,9 +441,12 @@ public class LI_controller {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		HttpSession session = request.getSession();
 		
-		LO_001_VO lo_vo = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		//예비 member index
-		String m_index = lo_vo.getM_index();
+		
+		if(member != null) {
+		String m_index = member.getM_index();
 		
 		int good_check = 0;
 		
@@ -469,6 +471,10 @@ public class LI_controller {
 		obj.addProperty("good_check", good_check);
 		
 		return obj.toString();
+		}else {
+			
+		return null;
+		}
 	}
 	
 	
