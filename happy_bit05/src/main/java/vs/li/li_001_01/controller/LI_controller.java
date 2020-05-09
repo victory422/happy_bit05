@@ -49,8 +49,18 @@ public class LI_controller {
 		log.info("텍스트 : "+dto.getInput_text());
 		log.info("정렬 : "+dto.getSort());
 		
-
+		
+		//게시글 데이터 불러오기
 		List<LI_VO> vo = service.get_list(dto);
+		
+		//멤버정보 선언
+		LO_001_VO lo_vo = null;
+
+		//session값 저장
+		if(session.getAttribute("sessionVO") != null) {
+		//멤버 정보 불러오기
+		lo_vo = (LO_001_VO) session.getAttribute("sessionVO");		
+		}
 		
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		//가져오는 값이없을때 오류나서 try catch
@@ -61,9 +71,9 @@ public class LI_controller {
 		}
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		
-		
 		model.addAttribute("type",dto.getTypeArr());
 		model.addAttribute("list", vo);
+		model.addAttribute("member",lo_vo);
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		model.addAttribute("page", dto.getPage());
 		log.info("검색 type : "+dto.getType());
@@ -300,12 +310,19 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
+	public void board_page(LI_VO vo,Model model,HttpServletRequest request, HttpServletResponse response,Page_DTO dto) {
+		
+		HttpSession session = request.getSession();
 		
 		//HttpSession session = request.getSession();
 		log.info(session.getAttribute("m_index"));
 		
 		//이전페이지로 넘어갈 페이지 경로
+		
+		//널일떄를 구분짓기위해서
+		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
 		
 		log.info("---------------------------상세 페이지-----------------------");
 		log.info("게시판 : "+vo.getLi_b_type());
@@ -316,6 +333,9 @@ public class LI_controller {
 			
 		model.addAttribute("page", service.detail_page(vo.getLi_index()));
 		
+		model.addAttribute("member1", member);
+		
+		log.info(member);
 		
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
@@ -324,14 +344,17 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
-		log.info("세션 m_index : "+session.getAttribute("m_index"));
 		
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
-		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index",  session.getAttribute("m_index"));
 		
-		if(member.getM_index() != null) {
+
+		hashmap.put("board_index", vo.getLi_index());
+		hashmap.put("m_index", member.getM_index());
+			log.info("@@@@@@@@@@@@@@@로그인되지 않은 상태@@@@@@@@@@@@@@");
+		
+
+		
 			
 			int row_check = service.good_count(hashmap);
 			
@@ -342,7 +365,6 @@ public class LI_controller {
 			}else {
 				log.info("로우가 이미 생성되어있음");
 			}
-		}
 	}
 	
 	
@@ -355,9 +377,9 @@ public class LI_controller {
 	@ResponseBody
 	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
 	public String like(LI_VO vo, GOOD_VO good_vo, HttpServletRequest request, HttpServletResponse response) {
-		
+		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		HttpSession session = request.getSession();
-		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		log.info("컨트롤러 like~~~~");
 		
@@ -379,7 +401,7 @@ public class LI_controller {
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
 		//m_index 테스트설정
-		hashmap.put("m_index", "admin3");
+		hashmap.put("m_index", member.getM_index());
 		//m_index 세션값으로 변경해야함 
 		//hashmap.put("m_index", session.getAttribute("m_index"));
 		
@@ -434,7 +456,7 @@ public class LI_controller {
 		return obj.toString();
 	}
 	
-	
+	//들어올떄 좋아요 체크
 	@ResponseBody
 	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
 	public String like_check(LI_VO vo ,HttpServletRequest request, HttpServletResponse response) {
@@ -442,9 +464,9 @@ public class LI_controller {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		HttpSession session = request.getSession();
 		
-		LO_001_VO lo_vo = (LO_001_VO) session.getAttribute("sessionVO");
-		//예비 member index
-		String m_index = lo_vo.getM_index();
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		String m_index = member.getM_index();
 		
 		int good_check = 0;
 		
@@ -469,6 +491,8 @@ public class LI_controller {
 		obj.addProperty("good_check", good_check);
 		
 		return obj.toString();
+	
+		
 	}
 	
 	

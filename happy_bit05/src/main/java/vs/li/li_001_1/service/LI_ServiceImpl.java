@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.log4j.Log4j;
 import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_1.dto.Page_DTO;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Log4j
 @Service
@@ -21,13 +22,12 @@ public class LI_ServiceImpl implements LI_Service {
 
 	@Autowired
 	private SqlSession sqlsession;
-
+	private LO_001_VO member;
 	
 	
 	@Override
 	public void li_regist(LI_VO vo) {
 		try {
-		vo.setM_index("husker");
 		sqlsession.insert("li.insert", vo);
 		} catch (Exception e) {
 			log.info("서비스 인서트 에러 : "+ e);
@@ -121,8 +121,6 @@ public class LI_ServiceImpl implements LI_Service {
 	@Override
 	public void increse_see(LI_VO vo,HttpSession session) {
 		try {
-			//HttpSession session = request.getSession();
-			
 			long update_time = 0; //null을 방지하기 위해 초기값을 null로 설정함
 	        if(session.getAttribute("update_time_"+vo.getLi_index())!=null) {
 	            //최근에 조회수를 올린 시간이 null이 아니면
@@ -150,10 +148,11 @@ public class LI_ServiceImpl implements LI_Service {
 	            log.info("찍힌현재시간 : "+session.getAttribute("update_time_"+vo.getLi_index()));
 	        }else
 	        	log.info("조회수 유지");
-	
-		} catch (Exception e) {
+		
+			} catch (Exception e) {
 			log.info("조회수 증가 함수 에러 메세지 : "+e);
 		}
+		
         
 	}
 	
