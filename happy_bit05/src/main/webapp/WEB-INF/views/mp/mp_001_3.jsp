@@ -292,7 +292,7 @@
 				td += '<td>' + lc_date + '</td>';
 				$("#tdText").html(td);
 					
-			$.ajax({  
+			$.ajax({ 
 			    type : "POST",  
 			    url : "/mp/myCourse/detail",  
 			    data : { "lc_index" :lc_index, "m_index" :m_index}, 

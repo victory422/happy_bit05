@@ -23,5 +23,7 @@ public interface LO_001_Controller {
 
 	ModelAndView Logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
+	ModelAndView p_LO_001_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 
 }
