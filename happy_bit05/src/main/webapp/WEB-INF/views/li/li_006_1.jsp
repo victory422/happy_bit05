@@ -197,6 +197,7 @@
 			      var msg = '';
 			      var like_img = '';
 			      msg += data.msg;
+			      if(msg != 'no'){
 			      alert(msg);
 			      
 			      if(data.good_check == 0){
@@ -208,6 +209,9 @@
 			      $('#like_img').attr('src', like_img);
 			      $('.good_cnt').text(data.good_cnt);
 			      /* $('#like_check').html(data.like_check); */
+			      }else{
+			    	  alert("로그인이 필요합니다.")
+			      }
 			    },
 			    error: function(request, status, error){
 			      	alert("로그인이 필요합니다.");
