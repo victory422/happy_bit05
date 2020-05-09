@@ -38,6 +38,9 @@
 						<when test="search_filter == '작성자'.toString()">
 							m_index like '%'||#{input_text}||'%'
 						</when>
+						<when test="search_filter == '제목'.toString()">
+							li_title like '%'||#{input_text}||'%'
+						</when>
 						<otherwise>
 							li_title like '%'||#{input_text}||'%'
 						</otherwise>
