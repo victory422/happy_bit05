@@ -315,7 +315,6 @@ public class LI_controller {
 		HttpSession session = request.getSession();
 		
 		//HttpSession session = request.getSession();
-		log.info(session.getAttribute("m_index"));
 		
 		//이전페이지로 넘어갈 페이지 경로
 		
@@ -332,7 +331,7 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행 ");
 			
 		model.addAttribute("page", service.detail_page(vo.getLi_index()));
-		
+		log.info("디테일페이지 : "+service.detail_page(vo.getLi_index()));
 		model.addAttribute("member1", member);
 		
 		log.info(member);
@@ -351,7 +350,6 @@ public class LI_controller {
 
 		hashmap.put("board_index", vo.getLi_index());
 		hashmap.put("m_index", member.getM_index());
-			log.info("@@@@@@@@@@@@@@@로그인되지 않은 상태@@@@@@@@@@@@@@");
 		
 
 		
@@ -440,7 +438,7 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
-		obj.addProperty("m_index", "admin3");
+		obj.addProperty("m_index", member.getM_index());
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
