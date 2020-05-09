@@ -184,9 +184,19 @@
 			</div>
 			
 				<div id="row">
-					<div class="col-md-6">
-						<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성</button></a>
-					</div>
+				<c:choose>
+						<c:when test="${member ne null}">
+							<div class="col-md-6">
+								<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-md-6">
+								<button type="button" onclick="need_login()" class="btn btn-success">글작성11 ${member.M_index}</button>
+							</div>
+						</c:otherwise>
+					</c:choose>
+
 				<!-- 페이징  -->
 					<div class="col-md-10">
 						<ul class="pagination d-flex justify-content-center">
@@ -242,6 +252,10 @@
 		function page_put()
 		{
 			('input[name=page]').val(1)
+		}
+		
+		function need_login() {
+			alert('로그인이 필요합니다.')
 		}
 	</script>
 
