@@ -73,8 +73,8 @@
 
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
-	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index)
-	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index})
+	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index,co_r_good,co_r_see,m_nickname)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index},0,0,#{m_nickname})
 
 </insert>
 <!-- 게시물 총합 출력 쿼리 -->
@@ -88,7 +88,9 @@
 <!-- 대회 후기 상세페이지 -->
 <select id="cr_detail" resultType="vs.cr.cr_001_1.vo.CrVO" parameterType="String">
 
-	select * from competition_review where co_r_index = #{co_r_index}
+	select * 
+	from competition_review c 
+	where co_r_index = #{co_r_index}
 	
 
 </select>
@@ -111,5 +113,38 @@
 	</set>
 	where co_r_index = #{co_r_index}
 </update>
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE competition_review  SET co_r_see = NVL(co_r_see,0)+1 where co_r_index = TRIM(#{index})
+    	]]>
+    </update>
+
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select co_r_good from competition_review where co_r_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	 <!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE competition_review
+		    SET co_r_good = co_r_good + 1 
+		    WHERE co_r_index=#{board_index}
+		]]>
+	</update>
+	
+	<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE competition_review
+		    SET co_r_good =  co_r_good - 1
+		    WHERE co_r_index=#{board_index}
+    	]]>
+  	</update>
 
 </mapper>

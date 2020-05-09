@@ -34,7 +34,7 @@ public class Cm_Controller {
 	@ResponseBody
 	private List<CommentVO> mCommentServiceList(Model model,@RequestParam String data) throws Exception {
 		
-		System.out.println(data);
+		System.out.println("왜그러냐 대체" + data);
 		
 		return cm_service.commentList(data);
 		

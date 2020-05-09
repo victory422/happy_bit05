@@ -115,7 +115,9 @@
 								<c:if test="${data.de_dispose eq '경고'}">
 								<td><button type="button" class="btn btn-secondary disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
 								</c:if>
-								
+								<c:if test="${data.de_dispose  eq '삭제처리'}">
+								<td><button type="button" class="btn btn-danger disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
+								</c:if>
 							</tr>
 					</c:forEach> 
 						</table>
@@ -205,8 +207,32 @@ $('.disposechange').on("click", function() {
 				$('#statechange'+de_index).text("경고");			
 				$('#statechange'+de_index).removeClass("btn btn-primary");
 				$('#statechange'+de_index).addClass("btn btn-secondary");
-
+			
+			}else if(de_dispose == '경고'){
+				
+				$('#statechange'+de_index).text("삭제처리");			
+				$('#statechange'+de_index).removeClass("btn btn-secondary");
+				$('#statechange'+de_index).addClass("btn btn-danger");
+				
+			
 			}else{
+				
+				$('#statechange'+de_index).text("처리대기");			
+				$('#statechange'+de_index).removeClass("btn btn-danger");
+				$('#statechange'+de_index).addClass("btn btn-primary");
+
+				
+			}
+			
+			
+			
+			/*
+			if(de_dispose == '처리대기'){
+				
+				$('#statechange'+de_index).text("경고");			
+				$('#statechange'+de_index).removeClass("btn btn-primary");
+				$('#statechange'+de_index).addClass("btn btn-secondary");
+			}else{_
 				
 				$('#statechange'+de_index).text("처리대기");			
 				$('#statechange'+de_index).removeClass("btn btn-secondary");
@@ -214,7 +240,7 @@ $('.disposechange').on("click", function() {
 
 				
 			}
-
+			*/
 		},
 		error : function(xhr, status, error){
 			console.log(xhr);
