@@ -54,7 +54,7 @@
 					     
 				},
 				 error: function(request, status, error){
-					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					colsole.log("비회원");
 				 }
 				 })
 			})();
@@ -115,7 +115,7 @@
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
 					<c:choose>
-						<c:when test="${member1 ne null}">
+						<c:when test="${board.m_index ne null}">
 							<a href='javascript: like_func();'><img
 								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
 						</c:when>
@@ -128,8 +128,8 @@
 				<div class="push padding_1">
 						<button class="btn btn-info" onclick="modify()">수정하기</button>
 						<button  class="btn btn-info" onclick="fn_golist()">
-						목록으로 돌아가기  <%-- ${back_url} --%>
-					</button>
+						목록으로 돌아가기 
+					</button>ㄷ
 				</div>
 			</div>
 				</form>
@@ -200,7 +200,7 @@
 			      /* $('#like_check').html(data.like_check); */
 			    },
 			    error: function(request, status, error){
-			      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			      	alert("로그인이 필요합니다.");
 			    }
 			  });
 			}
@@ -211,6 +211,7 @@
 		
 		function fn_golist(){
 			var a = '${back_url}?page=${page_num}'
+			alert(a)
 			$('form').attr('action',a).submit()
 		}
 
