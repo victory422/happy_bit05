@@ -39,7 +39,7 @@
 <script>
 
 //스크립트세션 주입
-sessionStorage.setItem("sessionScript", '${sessionVO}');
+sessionStorage.setItem("sessionScript", '${sessionVO.m_index}');
 console.log("홈 session : "+sessionStorage.getItem("sessionScript"));
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
