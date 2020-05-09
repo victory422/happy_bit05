@@ -23,6 +23,7 @@ import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_01.vo.PageUtil;
 import vs.li.li_001_1.dto.Page_DTO;
 import vs.li.li_001_1.service.LI_Service;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @Log4j
@@ -31,7 +32,8 @@ public class LI_controller {
 
 	@Autowired
 	private LI_Service service;
-
+	@Autowired
+	private LO_001_VO member;
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
 	public void li_review(Model model, Page_DTO dto, HttpSession session) {
@@ -246,7 +248,7 @@ public class LI_controller {
 	
 
 	@RequestMapping(value = "/li_005_1", method = RequestMethod.POST)
-	public String regist(LI_VO vo,Model model) {
+	public String regist(LI_VO vo,Model model,HttpSession session) {
 		log.info("저장");
 		
 		log.info("텍스트------"+vo.getLi_text());
@@ -255,7 +257,12 @@ public class LI_controller {
 		log.info("제목-----"+vo.getLi_title());
 		log.info("게시판유형@@@@@"+vo.getLi_b_type());
 		
+		LO_001_VO lo_vo = (LO_001_VO)session.getAttribute("sessionVO");
 		
+		
+		if(lo_vo.getM_index() != null) {
+		vo.setM_index(lo_vo.getM_index());
+		}
 		
 		service.li_regist(vo);
 
@@ -293,23 +300,20 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpServletRequest request, HttpServletResponse response,Page_DTO dto) {
+	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
 		
-		HttpSession session = request.getSession();
-		
-		session.setAttribute("m_index", "admin3");
+		//HttpSession session = request.getSession();
+		log.info(session.getAttribute("m_index"));
 		
 		//이전페이지로 넘어갈 페이지 경로
 		
 		log.info("---------------------------상세 페이지-----------------------");
 		log.info("게시판 : "+vo.getLi_b_type());
 		log.info("increse_service 실행");
-		service.increse_see(vo, request, response);
+		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
-		
-		vo = service.detail_page(vo.getLi_index());
-		
+			
 		model.addAttribute("page", service.detail_page(vo.getLi_index()));
 		
 		
@@ -327,16 +331,18 @@ public class LI_controller {
 		hashmap.put("board_index", vo.getLi_index());
 		hashmap.put("m_index",  session.getAttribute("m_index"));
 		
-		int row_check = service.good_count(hashmap);
-		
-		if(row_check == 0) {
-			log.info("로우 생성중");
-			service.good_insert(hashmap);
-			log.info("로우 생성완료");
-		}else {
-			log.info("로우가 이미 생성되어있음");
+		if(member.getM_index() != null) {
+			
+			int row_check = service.good_count(hashmap);
+			
+			if(row_check == 0) {
+				log.info("로우 생성중");
+				service.good_insert(hashmap);
+				log.info("로우 생성완료");
+			}else {
+				log.info("로우가 이미 생성되어있음");
+			}
 		}
-		
 	}
 	
 	
@@ -436,8 +442,9 @@ public class LI_controller {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		HttpSession session = request.getSession();
 		
+		LO_001_VO lo_vo = (LO_001_VO) session.getAttribute("sessionVO");
 		//예비 member index
-		String m_index = "admin3";
+		String m_index = lo_vo.getM_index();
 		
 		int good_check = 0;
 		
