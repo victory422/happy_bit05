@@ -115,7 +115,7 @@
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
 					<c:choose>
-						<c:when test="${member ne null}">
+						<c:when test="${member1 ne null}">
 							<a href='javascript: like_func();'><img
 								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
 						</c:when>
