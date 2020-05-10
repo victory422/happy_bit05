@@ -46,4 +46,6 @@ public interface LI_Service {
 	public void good_insert(HashMap<String, Object> hashmap);
 	
 	public void modify(LI_VO vo);
+	
+	public void delecte(LI_VO vo);
 }

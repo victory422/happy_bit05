@@ -38,6 +38,9 @@
 						<when test="search_filter == '작성자'.toString()">
 							m_index like '%'||#{input_text}||'%'
 						</when>
+						<when test="search_filter == '제목'.toString()">
+							li_title like '%'||#{input_text}||'%'
+						</when>
 						<otherwise>
 							li_title like '%'||#{input_text}||'%'
 						</otherwise>
@@ -167,5 +170,12 @@ where rn > ((#{page}-1) * #{amount})
 				WHERE li_index=#{li_index}
 			]]>
 		</update>
+	<!-- 게시물 삭제 쿼리 -->
+		<delete id="board_delete" parameterType="LI_VO">
+		<![CDATA[
+			DELETE FROM item
+			WHERE li_index=#{li_index}
+		]]>
+		</delete>
 
 </mapper>

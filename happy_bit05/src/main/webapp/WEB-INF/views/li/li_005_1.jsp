@@ -36,12 +36,25 @@
   		return true
   	}
   	
+  	//수정하는 폼
+	function modify(){
+  		$('input[name=status]').val(2)
+  		alert('수정')
+  		$('form').attr('action','modify')
+  		//$('form').submit()
+  	}
+  	
+  	
 
   </script>
 <%@ include file="../includes/middle.jsp"%>
 	<div class="container">
 	
 		 <form id="form" method="post" onsubmit="return check_fn()" >
+			<c:forEach var="board" items="${page }">
+				<input type="hidden" name="li_index" value="${board.li_index }"/>
+				<input type="hidden" name="li_b_type" value="${board.li_b_type }"/>
+			</c:forEach>
 			 <!--	<c:forEach var="board" items="${page }">
 					<c:choose>
 						<c:when test="${board.li_index ne null}">
@@ -166,7 +179,15 @@
 					<button type="submit" class="btn btn-danger" 
 						style="width: 10%; font-weight: bold; margin-bottom: 30px">취소</button>
 					<button type="submit" id="btnsave" class="btn btn-outline-secondary"
-						style="width: 10%; font-weight: bold; margin-bottom: 30px; margin-left: 10px">등록</button>
+						style="width: 10%; font-weight: bold; margin-bottom: 30px; margin-left: 10px"
+													<c:forEach var="board" items="${page }">
+										<c:choose>
+											<c:when test="${board.li_index ne null}">
+												onclick="modify()"
+											</c:when>
+										</c:choose>
+									</c:forEach>
+						>등록</button>
 				</div>
 			
 			</form>

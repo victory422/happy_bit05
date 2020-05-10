@@ -252,7 +252,9 @@
 	//var board_index = "${param.co_b_index}";
 
 	$('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
+		
 		var loginCheck = document.getElementById('myCourse_m_index').value
+		
 		if(loginCheck){
 		   var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
 		   commentInsert(insertData); //Insert 함수호출(아래)
