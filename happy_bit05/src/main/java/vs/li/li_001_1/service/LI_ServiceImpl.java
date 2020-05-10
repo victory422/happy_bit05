@@ -229,5 +229,10 @@ public class LI_ServiceImpl implements LI_Service {
 		log.info("-----------------------수정--------------------------------");
 		
 	}
+	
+	@Override
+	public void delecte(LI_VO vo) {
+		sqlsession.delete("li.board_delete",vo);
+	}
 }
 

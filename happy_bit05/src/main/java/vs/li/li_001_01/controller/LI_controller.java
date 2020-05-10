@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -301,6 +302,16 @@ public class LI_controller {
 		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
 	
+	//삭제
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(LI_VO vo,Model model) {
+		
+		log.info("삭제 컨트롤러 ");
+		
+		service.delecte(vo);
+		
+		return "redirect:"+url_mapping(vo.getLi_b_type());
+	}
 	
 	
 	
@@ -317,9 +328,12 @@ public class LI_controller {
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
-			
-		model.addAttribute("page", service.detail_page(vo.getLi_index()));
+		List<LI_VO> list_vo= service.detail_page(vo.getLi_index());
+		model.addAttribute("page", list_vo);
 		
+		if(member != null) {
+			model.addAttribute("member", member);
+		}
 		
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
