@@ -16,6 +16,10 @@ import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.service.Co_Service;
 import vs.co.co_001_1.vo.PageUtil;
 import vs.cr.cr_001_1.service.Cr_Service;
+import vs.lc.lc_003_1.service.LC_003_1_Service;
+import vs.li.li_001_1.service.LI_Service;
+import vs.pr.pr_003_1.service.Pr_003_1_Service;
+import vs.re.re_001_1.service.Re_001_1_Service;
 
 @Controller
 @RequestMapping("/al/*")
@@ -26,6 +30,8 @@ public class AL_Controller {
 	
 	@Autowired
 	private AL_Service al_service;
+
+	
 	
 	//모든 게시글 조회
 	@GetMapping(value="/al_001_1")
@@ -61,7 +67,8 @@ public class AL_Controller {
 		
 		return al_service.disposechange(de_index);
 	}
-
+	
+	
 	
 }
 

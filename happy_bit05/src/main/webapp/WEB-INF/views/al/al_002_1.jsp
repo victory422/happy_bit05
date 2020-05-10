@@ -105,7 +105,7 @@
 							<tr>
 								<td>${data.board_index }</td>
 								<td>${data.m_index}</td>
-								<td>${data.de_target}</td>
+								<td><a style="color: blue" onclick="index_detail('${data.board_index }')" id="test${data.board_index }" value="${data.board_index }">${data.de_target}</a></td>
 								<td>${data.de_type}</td>
 								<td>${data.m_index2}</td>
 								<td>${data.de_date }</td>
@@ -189,6 +189,48 @@ $(document).ready(function(){
 	
 });
 
+function index_detail(index){
+	
+	console.log(index);
+	var sub_index = index.substr(0,2);
+	var a = '';
+	var b = '';
+	 console.log(sub_index);
+	 
+	 if(sub_index == 'co'){
+		 a='co_004_1';
+		 b="co_b_index";
+	 }
+	 if(sub_index == 'cr'){
+		 a='cr_003_1';
+		 b='co_r_index';
+		 console.log(a);
+		 console.log(b);
+		 
+	 }
+	 /*
+	 if(sub_index == 'co') a='co';
+	 if(sub_index == 'co') a='co';
+	 if(sub_index == 'co') a='co';
+	 */
+	 //location.href="/co/co_004_1?co_b_index="+index;
+	 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 /*
+	 $.ajax({ 
+			url : '/al/detail',
+			type : 'get',
+			data : {'index' : index, 'sub_index' : sub_index},
+			success : function(data) {
+				
+				
+				
+			}
+	 });
+	*/
+	
+}
+
+
 $('.disposechange').on("click", function() {
 	
 	
@@ -249,6 +291,9 @@ $('.disposechange').on("click", function() {
 		}
 	});
 });
+
+
+
 
 </script>
 

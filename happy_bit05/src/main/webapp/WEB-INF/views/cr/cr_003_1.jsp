@@ -119,6 +119,8 @@ var popupHeight = 450;
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
 	//좋아요
+	console.log("여기오는거지?",board_index);
+	
 	(function(){
 		$.ajax({
 			url: "../cr/like_check",
@@ -149,6 +151,7 @@ $(document).ready(function() {
 
 function like_func(){
 
+	
 	  $.ajax({
 		    url: "/cr/like",
 		    type: "GET",

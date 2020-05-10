@@ -91,30 +91,30 @@
 					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
-								<th>제목</th>
-								<th>일정</th>
-								<th>참가비</th>
-								<th>참가자 인원</th>
-								<th>조회수</th>
-								<th>접수 상황</th>
-								<th>참가자 리스트</th>
+								<th>회원 번호</th>
+								<th>회원 아이디</th>
+								<th>회원 이름</th>
+								<th>회원 닉네임</th>
+								<th>회원 전화번호</th>
+								<th>생일</th>
+								<th>성별</th>			
+								<th>이메일</th>				
+								
 							</tr>
 						</thead>
 						<c:forEach items="${data}" var="data">
 							<tr>
-								<td>${data.co_b_title}</td>
-								<td>${data.co_b_day}</td>
-								<td>${data.co_b_price}</td>
-								<td>${data.co_b_count}</td>
-								<td>${data.co_b_see }</td>
-								<c:if test="${data.co_b_state eq '접수가능'}">
-								<td><button type="button" class="btn btn-primary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
-								</c:if>
-								<c:if test="${data.co_b_state eq '접수종료'}">
-								<td><button type="button" class="btn btn-secondary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
-								</c:if>
+							<c:if test="${data.m_index ne '1' }">								
+								<td>${data.m_index}</td>
+								<td>${data.m_id}</td>
+								<td>${data.m_name}</td>
+								<td>${data.m_nickName}</td>
+								<td>${data.m_tel}</td>	
+								<td>${data.m_birth }</td>
+								<td>${data.m_gender }</td>
+								<td>${data.m_email }</td>						
+							</c:if>
 								
-								<td><button type="button" class="btn btn-primary" onclick="location.href='ac_003_1?co_b_index=${data.co_b_index}'">상세보기</button></td>
 							</tr>
 					</c:forEach> 
 						</table>
@@ -126,103 +126,12 @@
 						</div>
 					</div>
 				</div>
-				<!-- 페이징  -->
-					<div class="col-md-10">
-						<ul class="pagination d-flex justify-content-center">
-							<c:if test="${pageUtil.prev }">
-								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.start-1}">Previous</a></li>
-							</c:if>
-							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
-								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/ac/ac_002_1?page=${pNum }">${pNum }</a></li>
-							</c:forEach>
-							<c:if test="${pageUtil.next }">
-								<li class="page-item"><a class="page-link" href="/ac/ac_002_1?page=${pageUtil.end+1 }">Next</a>
-								</li>
-							</c:if>
-						</ul>
-					</div>
-				<!-- /.table-responsive -->
-				<form role="form" action="ac_001_1" method="get">
-					<button type="submit" class="btn btn-primary float-right">글작성</button>
-				</form>
 			</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
 	</div>
+
 </body>
-<script>
-
-$(document).ready(function(){
-	
-	$('a.page_now').on('click',function(){
-		//alert($('input[name=page]').val($(this).text()))
-		//alert($('select[name=type]').val())
-		
-		var a =$('select[name=type]').length;
-		//배열생성
-		var aArr = new Array(a);
-		
-		//필터값들 스트링으로 변환
-		for(var i=0; i<a; i++){
-			aArr[i] = $('select[name=type]').eq(i).val();
-			//alert(aArr[i]);
-		}
-		
-		//선택한 종목값
-		//aArr[1]
-		//선택한 장비값
-		//aArr[2]
-		//현재 선택된 a태그안  
-		$(this).attr('href',"/co/co_003_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
-		})
-	
-	//alert(${param.test1});
-		function page_put(){
-		console.log($('input[name=page]').val(1))
-	}
-	
-})
-
-
-	$('.statechange').on("click", function() {
-		
-		
-		
-		var co_b_state = $(this).text();
-		console.log("state",co_b_state);
-		var co_b_index = $(this).val();
-		console.log("index",co_b_index);
-		$.ajax({
-			url : '/ac/statechange',
-			type : 'post',
-			data : {
-				'co_b_index' : co_b_index
-			},
-			success : function(data) {
-				if(co_b_state == '접수가능'){
-					
-					$('#statechange'+co_b_index).text("접수종료");			
-					$('#statechange'+co_b_index).removeClass("btn btn-primary");
-					$('#statechange'+co_b_index).addClass("btn btn-secondary");
-
-				}else{
-					
-					$('#statechange'+co_b_index).text("접수가능");			
-					$('#statechange'+co_b_index).removeClass("btn btn-secondary");
-					$('#statechange'+co_b_index).addClass("btn btn-primary");
-
-					
-				}
-
-			},
-			error : function(xhr, status, error){
-				console.log(xhr);
-				console.log(status);
-				console.log(error);
-			}
-		});
-	});
-</script>
 </html>

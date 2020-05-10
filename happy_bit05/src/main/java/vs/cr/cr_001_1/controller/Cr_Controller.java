@@ -68,22 +68,22 @@ public class Cr_Controller {
 	
 	//대회 후기 상세보기
 	@GetMapping("/cr_003_1")
-	public void cr_detail(CrVO vo,Model model,@RequestParam("co_r_index") String co_r_index) {
+	public String cr_detail(CrVO crvo,Model model,@RequestParam("co_r_index") String co_r_index,HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		if(member == null) {
+			model.addAttribute("data",cr_service.cr_detail(co_r_index));
+			return "/cr/cr_003_1";
+		}
 
-		System.out.println("cr_r_index : 이거타는거야? " + co_r_index);
-		System.out.println(cr_service.cr_detail(co_r_index));
-		model.addAttribute("data",cr_service.cr_detail(vo.getCo_r_index()));
-		System.out.println("이거 나왔으면 좋겠다");
-		/*
-		System.out.println("뭘까?" + member.getM_index());
-		if(member.getM_index() != null) {
-					
-			System.out.println("여기 타는거야?");
-			model.addAttribute("data", cr_service.cr_detail(co_r_index));
+		model.addAttribute("data",cr_service.cr_detail(co_r_index));
+		System.out.println("회원정보" + member);
+			
 			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	      cr_service.increse_see(vo, session);
+	      cr_service.increse_see(crvo, session);
 	      System.out.println("increse_service 실행완료------------------------------");
-	      
+	      System.out.println(member.getM_index());
 	      HashMap<String,Object> hashmap = new HashMap<String,Object>();
 	      
 	      hashmap.put("board_index", co_r_index);
@@ -91,10 +91,10 @@ public class Cr_Controller {
 	      
 	      System.out.println("난 빡빡이다. : "+hashmap.get("board_index"));
 	      System.out.println("나는 쀅붺이다."+hashmap.get("m_index"));
-	      System.out.println("지랄: " + vo.getCo_r_index());
+	      System.out.println("지랄: " + crvo.getCo_r_index());
 	      
-	      //로그인 했을 경우에만 좋아요 체크. 없으면 에러남.
 	      if(member.getM_index() != null) {
+	      //로그인 했을 경우에만 좋아요 체크. 없으면 에러남.
 	         int row_check = cr_service.good_count(hashmap);
 	         
 	         if(row_check == 0) {
@@ -108,9 +108,11 @@ public class Cr_Controller {
 	    	  System.out.println("ㅇㅇㅇㅇㅇㅇㅇ");
 	      }
 	      //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	      
+	      return "/cr/cr_003_1";
 		}
-		*/
-	}
+		
+	
 	
 		
 		
