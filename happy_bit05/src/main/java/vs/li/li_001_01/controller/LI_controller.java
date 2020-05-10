@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_01.vo.PageUtil;
 import vs.li.li_001_1.dto.Page_DTO;
 import vs.li.li_001_1.service.LI_Service;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @Log4j
@@ -31,11 +33,13 @@ public class LI_controller {
 
 	@Autowired
 	private LI_Service service;
-
+	@Autowired
+	private LO_001_VO member;
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
 	public void li_review(Model model, Page_DTO dto, HttpSession session) {
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		log.info("----------------------후기 게시판view-------------------");
 		log.info("gdgd"+dto.getPage());
@@ -65,6 +69,11 @@ public class LI_controller {
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		model.addAttribute("page", dto.getPage());
 		log.info("검색 type : "+dto.getType());
+		
+		if(member != null) {
+		//////////////////////////////////로그인 세션
+		model.addAttribute("member", member);
+		}
 		
 		for(int i= 0; i<dto.getTypeArr().length; i++) {
 		model.addAttribute("type"+i,dto.getTypeArr()[i]);
@@ -246,7 +255,7 @@ public class LI_controller {
 	
 
 	@RequestMapping(value = "/li_005_1", method = RequestMethod.POST)
-	public String regist(LI_VO vo,Model model) {
+	public String regist(LI_VO vo,Model model,HttpSession session) {
 		log.info("저장");
 		
 		log.info("텍스트------"+vo.getLi_text());
@@ -255,7 +264,12 @@ public class LI_controller {
 		log.info("제목-----"+vo.getLi_title());
 		log.info("게시판유형@@@@@"+vo.getLi_b_type());
 		
+		LO_001_VO lo_vo = (LO_001_VO)session.getAttribute("sessionVO");
 		
+		
+		if(lo_vo.getM_index() != null) {
+		vo.setM_index(lo_vo.getM_index());
+		}
 		
 		service.li_regist(vo);
 
@@ -288,16 +302,23 @@ public class LI_controller {
 		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
 	
+	//삭제
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(LI_VO vo,Model model) {
+		
+		log.info("삭제 컨트롤러 ");
+		
+		service.delecte(vo);
+		
+		return "redirect:"+url_mapping(vo.getLi_b_type());
+	}
 	
 	
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
 	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
-		
-		//HttpSession session = request.getSession();
-		
-		session.setAttribute("m_index", "admin3");
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//이전페이지로 넘어갈 페이지 경로
 		
@@ -307,9 +328,12 @@ public class LI_controller {
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
-			
-		model.addAttribute("page", service.detail_page(vo.getLi_index()));
+		List<LI_VO> list_vo= service.detail_page(vo.getLi_index());
+		model.addAttribute("page", list_vo);
 		
+		if(member != null) {
+			model.addAttribute("member", member);
+		}
 		
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
@@ -318,23 +342,29 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
-		log.info("세션 m_index : "+session.getAttribute("m_index"));
+		if(member != null) {
+		log.info("세션 m_index : "+member.getM_index());
+		}else
+			log.info("세선m_index없음 안들어옴(상세페이지 컨트롤러)");
 		
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index",  session.getAttribute("m_index"));
-		
-		int row_check = service.good_count(hashmap);
-		
-		if(row_check == 0) {
-			log.info("로우 생성중");
-			service.good_insert(hashmap);
-			log.info("로우 생성완료");
-		}else {
-			log.info("로우가 이미 생성되어있음");
+		if(member != null) {
+		hashmap.put("m_index", member.getM_index());
 		}
-		
+		if(member!= null) {
+			
+			int row_check = service.good_count(hashmap);
+			
+			if(row_check == 0) {
+				log.info("로우 생성중");
+				service.good_insert(hashmap);
+				log.info("로우 생성완료");
+			}else {
+				log.info("로우가 이미 생성되어있음");
+			}
+		}
 	}
 	
 	
@@ -350,14 +380,17 @@ public class LI_controller {
 		
 		HttpSession session = request.getSession();
 		
-		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		log.info("컨트롤러 like~~~~");
 		
+		JsonObject obj = new JsonObject();
+		
+		if(member != null) {
 		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
 		int good_check = 0;
 		int good_cnt = 0;	
 		
-		JsonObject obj = new JsonObject();
+		
 		log.info("----------------------좋아요 -----------------------");
 		
 		String msgs;
@@ -371,7 +404,9 @@ public class LI_controller {
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
 		//m_index 테스트설정
-		hashmap.put("m_index", "admin3");
+		
+		hashmap.put("m_index", member.getM_index());
+		
 		//m_index 세션값으로 변경해야함 
 		//hashmap.put("m_index", session.getAttribute("m_index"));
 		
@@ -410,7 +445,11 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
-		obj.addProperty("m_index", "admin3");
+		if(member != null) {
+		obj.addProperty("m_index", member.getM_index());
+		}else {
+			obj.addProperty("m_index", "visitor");
+		}
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
@@ -424,6 +463,11 @@ public class LI_controller {
 		 */
 	
 		return obj.toString();
+		}else {
+			obj.addProperty("msg", "no");
+			return obj.toString();
+		}
+		
 	}
 	
 	
@@ -434,8 +478,12 @@ public class LI_controller {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		HttpSession session = request.getSession();
 		
+		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		//예비 member index
-		String m_index = "admin3";
+		
+		if(member != null) {
+		String m_index = member.getM_index();
 		
 		int good_check = 0;
 		
@@ -460,6 +508,10 @@ public class LI_controller {
 		obj.addProperty("good_check", good_check);
 		
 		return obj.toString();
+		}else {
+			
+		return null;
+		}
 	}
 	
 	

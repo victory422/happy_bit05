@@ -89,6 +89,7 @@ public class LC_002_1_Controller {
 			if(session.getAttribute("sessionVO") != null) {
 				LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
 				model.addAttribute("m_index", vo.getM_index());
+				model.addAttribute("sessionVO", session.getAttribute("sessionVO"));
 			}
 			
 			model.addAttribute("lc_list", listVO);

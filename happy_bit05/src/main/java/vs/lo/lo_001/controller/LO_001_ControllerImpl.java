@@ -24,16 +24,31 @@ public class LO_001_ControllerImpl implements LO_001_Controller {
 	@RequestMapping(value="/lo")
 	public  ModelAndView LO_001_1 (HttpServletRequest request, HttpServletResponse response 
 			) throws Exception {
-		System.out.println("login page");
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("lo/lo_001_1");
+			System.out.println("login page -non popup");
+			mav.setViewName("lo/lo_001_1");
+			return mav;
+		
+	}
+	
+	@Override
+	@RequestMapping(value="/lo2")
+	public  ModelAndView p_LO_001_1 (HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		System.out.println("login page-popup");
+		mav.addObject("sessionVO", session.getAttribute("sessionVO"));
+		mav.setViewName("lo/p_lo_001");
 		return mav;
+		
 	}
 	
 	@Override
 	@RequestMapping(value="/lo/login")
 	public  ModelAndView LO_001_2 (LO_001_VO vo, HttpServletRequest request, HttpServletResponse response 
 			) throws Exception {
+		System.out.println("로그인 처리");
 		List<LO_001_VO> list = service.login(vo);
 		vo = list.get(0);
 		ModelAndView mav = new ModelAndView();
