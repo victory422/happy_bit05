@@ -1,21 +1,27 @@
 package vs.mp.mp_001.controller;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ibleaders.utility.ib_json.JSONArray;
 import com.ibleaders.utility.ib_json.JSONObject;
+
 import lombok.extern.log4j.Log4j;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.vo.LO_001_VO;
@@ -23,6 +29,7 @@ import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
 import vs.mp.mp_001.vo.PageUtil;
+import vs.ms.ms_001.vo.MS_001_VO;
 
 @Controller
 @Log4j
@@ -119,6 +126,56 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			log.info("MP_001_3 mav완료");
 
 			return jsonStr;
+	}
+	
+	
+	@Override
+	@RequestMapping(value="/mp/memberUpdate")
+	public  ModelAndView memberUpdate (MS_001_VO vo,
+			HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		//sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		//세션처리 다시해야함!
+		log.info("memberUpdate 중");
+		vo.setM_index(sessionVO.getM_index());
+		vo.setM_id(sessionVO.getM_id());
+		vo.setM_birth(sessionVO.getM_birth());
+		vo.setM_gender(sessionVO.getM_gender());
+		vo.setM_email_1(sessionVO.getM_email_1());
+		//vo.setLoginMsg(sessionVO.getLoginMsg());
+		log.info(vo);
+		
+		//썸네일 업데이트 체크
+		if(sessionVO.getM_picture().equals("")) {
+			log.info("이미지없음");
+			vo.setRequest_thumbnail(sessionVO.getRequest_thumbnail());
+		}else {
+			Map<String, Object> hmap = new HashMap<String, Object>();
+			hmap.put("m_picture", vo.getM_picture().getBytes());
+			hmap.put("m_index", vo.getM_index());
+			service.updateThumbnail(hmap);
+		}
+		
+		if(sessionVO.getRequest_thumbnail() != null) {
+			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
+			String thumbnail = new String(imageContent);
+			sessionVO.setM_picture(thumbnail);
+		}else {
+			sessionVO.setM_picture("");
+			System.out.println("썸네일 없음.");
+			}
+		
+		int check = service.memberUpdate(vo);
+		session.setAttribute("sessionVO", vo);
+		log.info(check);
+		
+		
+		mav.addObject("sessionVO", sessionVO);
+		mav.setViewName("mp/mp_001_1");
+		
+		return mav;
 	}
 
 	
