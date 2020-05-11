@@ -24,6 +24,38 @@
 	]]>	
 	</select>
 
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE competition SET co_b_see = NVL(co_b_see,0)+1 where co_b_index = TRIM(#{index})
+    	]]>
+    </update>
+
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select co_b_good from competition where co_b_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	 <!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE competition
+		    SET co_b_good = co_b_good + 1 
+		    WHERE co_b_index=#{board_index}
+		]]>
+	</update>
+	
+	<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE competition
+		    SET co_b_good =  co_b_good - 1
+		    WHERE co_b_index=#{board_index}
+    	]]>
+  	</update>
 	
 	
 	

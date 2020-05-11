@@ -126,11 +126,16 @@ function report(){
 		type : 'post',
 		data : {'title' : title, 'm_index' : m_index, 'radio' : radio,'board_index' : board_index},
 		success : function(data) {
+			if(data == 0){
+				alert("회원만 사용가능합니다.");
+				window.close();
+			}
 			if (data == 1) {
 				window.close();
 				alert("신고완료");
-				
+						
 			}
+			
 		}		
 	});
 	

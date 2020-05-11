@@ -9,6 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.cm.cm_001_1.mapper.CrMapper;
 import vs.co.co_001_1.dto.Page_DTO;
 import vs.cr.cr_001_1.vo.CrVO;
@@ -191,6 +192,14 @@ public class Cr_ServiceImpl implements Cr_Service {
 		
 		System.out.println("로우 인서트 ");
 		
+	}
+
+	
+	//대회 리스트 출력
+	@Override
+	public List<AcVO> co_list() {
+		
+		return crmapper.co_list();
 	}
 
 
