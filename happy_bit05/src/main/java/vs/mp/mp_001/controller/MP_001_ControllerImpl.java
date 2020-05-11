@@ -43,6 +43,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	private LO_001_VO sessionVO;
 	MemberLoginInterceptor login = new MemberLoginInterceptor();
 	private LO_001_Service LOservice;
+	private Page_DTO dto;
 	
 	@Override
 	@RequestMapping(value="/mp")
@@ -79,25 +80,24 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	
 	@Override
 	@RequestMapping(value="/mp/myCourse")
-	public  ModelAndView MP_001_3 (@ModelAttribute Page_DTO dto,
-			HttpServletRequest request, HttpServletResponse response 
-			) throws Exception {
+	public  ModelAndView MP_001_3 (HttpServletRequest request,
+			HttpServletResponse response ) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		login.preHandle(request, response, session);
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
-		log.info("mp myCourse mapping +mp_index is :" +dto.getLc_index()+" "+dto.getM_index());
 		
 		if(session.getAttribute("sessionVO")==null) {
 			log.info("session null! : "+session.getAttribute("sessionVO"));
 		}else {
 			dto.setM_index(sessionVO.getM_index());
-			List<MP_001_3_VO> listVO = service.getList(dto);
+			List<MP_001_3_VO> listVO = service.getMCList(dto);
 			mav.addObject("listVO", listVO);
-			log.info("listVO1 : "+listVO);
+			log.info("getMCList : "+listVO);
 			
 			pageutil = service.paging(dto);
 			mav.addObject("pageUtil", pageutil);
+			log.info("pageutil : "+pageutil);
 			log.info("MP_001_3 mav완료");
 		}
 		

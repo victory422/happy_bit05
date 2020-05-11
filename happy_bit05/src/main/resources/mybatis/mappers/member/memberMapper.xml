@@ -167,13 +167,16 @@
 
 	<select id="mc_paging_total" resultType="int">
 		<![CDATA[
-		select count(*) 
-		from course a, member b
-		where a.m_index = #{m_index}
+			        select 
+						count(*)		
+					from mycourse, course, map
+                        where mycourse.lc_index = course.lc_index
+                        and mycourse.lc_index = map.lc_index
+                        and mycourse.m_index = #{m_index}
 		]]>
 	</select>
 	
-	
+	<!-- 
 	<select id="getMyCourse" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
 		<![CDATA[
 		select mp_index, lc_index, m_index
@@ -182,7 +185,8 @@
 		and lc_index = #{lc_index}
 		]]>
 	</select>
-	
+	 -->
+	 
 		<select id="getMyCourseDetail" resultType="java.util.Map">
 		<![CDATA[
 			select
