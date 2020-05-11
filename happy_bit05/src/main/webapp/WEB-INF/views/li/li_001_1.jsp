@@ -85,11 +85,13 @@
 			<div class="col-md-10">
 				<h1>장비게시판<small> (장비 평가)</small></h1>
 			</div>
-			<div class="col-md-2">				
-				<select name="amount" id="list_mount">
+			<div class="col-md-2">		
+			<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+			<!-- 페이지수 변경 (미완성) -->		
+				<!-- <select name="amount" id="list_mount">
 					<option value="15">15개씩 보기</option>
 					<option value="30">30개씩 보기</option>
-				</select>	
+				</select>	 -->
 			</div>
 			<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
@@ -136,7 +138,7 @@
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
-						<option value=null selected>제목</option>
+						<option value="제목" selected>제목</option>
 						<option value="내용">내용</option>
 						<option value="all">제목+내용</option>
 						<option value="작성자">작성자</option>
@@ -173,7 +175,7 @@
 								</td>
 								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}&page=${page}'"><button type="button" onclick="location.href='/li/li_006_1?page=${page }&li_index=${board.li_index }&li_b_type=${board.li_b_type}'" class="btn btn-link">${board.li_title }</button></td>
 								<td>${board.li_category }</td>
-								<td>${board.m_index }</td>
+								<td>${board.m_nickname }</td>
 								<td>${board.li_date }</td>
 								<td>${board.li_see }</td>
 								<td>${board.li_good }</td>

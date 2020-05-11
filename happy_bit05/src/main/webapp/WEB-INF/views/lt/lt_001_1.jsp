@@ -136,7 +136,7 @@
 							<td>${board.lt_tier }</td>
 							<td>${board.lt_type }</td>
 							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'">${board.lt_title }</td>
-							<td>${board.m_index }</td>
+							<td>${board.nickname }</td>
 							<td>${board.lt_date }</td>
 							<td>${board.lt_see }</td>
 							<td>${board.lt_good }</td>
