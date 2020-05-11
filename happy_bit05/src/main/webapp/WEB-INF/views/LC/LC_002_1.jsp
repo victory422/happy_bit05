@@ -104,6 +104,7 @@
 		<div class="row">
 			<c:forEach var="lc1" varStatus="status" items="${lc_good}">
 			<div class="col-md-3">
+			<div data-text-content="true" style="font-weight: bold; font-size: 24px; color: rgb(41, 128, 185); margin-top: 30px;" class="row">Best</div>
 				<div class="card mb-3 shadow-sm">
 				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
 				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc1.lc_request}" height="200"/>

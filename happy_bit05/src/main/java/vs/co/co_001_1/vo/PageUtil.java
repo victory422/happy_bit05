@@ -24,7 +24,7 @@ public class PageUtil {
 		this.prev = this.start != 1;
 
 		// 풀占쏙옙
-		int realEnd = (int) (total / 5.0);
+		int realEnd = (int) (total / 10.0);
 
 		this.next = realEnd > tempEnd;
 

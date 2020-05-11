@@ -21,7 +21,7 @@
 				</tr>
 				<tr>
 					<td>작성자 : 관리자</td>
-					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> 10</span> 조회수:60</h6> </td>
+					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> ${data.co_b_good } &emsp;</span>조회수 :  ${data.co_b_see }</h6> </td>
 				</tr>
 				<tr>
 					<td></td>
@@ -47,13 +47,15 @@
 						<tr>
 							<td style="width:60%">
 								<c:choose>
-									<c:when test="${board.m_index ne null}">
+									<c:when test="${data.m_index ne null}">
 										<a href='javascript: like_func();'><img
-											src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+											src="/resources/img/dislike.png" id='like_img'></a>추천수<span
+											class="good_cnt"> ${data.co_b_good }</span>
 									</c:when>
 									<c:otherwise>
 										<a href='javascript: login_need();'><img
-											src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.li_good }</span>
+											src="/resources/img/like.png"></a>추천수<span class="good_cnt">
+											${data.co_b_good }</span>
 									</c:otherwise>
 								</c:choose>
 							</td>
@@ -123,9 +125,68 @@ function report(){
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
 
+	(function(){
+		$.ajax({
+			url: "../co/like_check",
+			type: "GET",
+			cache: false,
+			dataType: "json",
+			data: 'co_b_index=' +board_index,
+			success: function(data) {
+				 if(data.good_check == 0){
+				        like_img = "/resources/img/dislike.png";
+				      } else {
+				        like_img = "/resources/img/like.png";
+				      }
+				      $('#like_img').attr('src', like_img);
+				     
+			},
+			 error: function(request, status, error){
+				 console.log("비회원")
+			 }
+			 })
+		})();
+	
+	
 	commentList();
 });
 
+
+function like_func(){
+
+	
+	  $.ajax({
+		    url: "/co/like",
+		    type: "GET",
+		    cache: false,
+		    dataType: "json",
+		    data: 'co_b_index=' +board_index,
+		    success: function(data) {
+		      var msg = '';
+		      var like_img = '';
+		      msg += data.msg;
+		      alert(msg);
+		      if(msg != 'no'){
+			      	      
+		      if(data.good_check == 0){
+		        like_img = "/resources/img/dislike.png";
+		      } else {
+		        like_img = "/resources/img/like.png";
+		      }      
+		      $('')
+		      $('#like_img').attr('src', like_img);
+		      $('.good_cnt').text(data.good_cnt);
+		      
+		      }else{
+		    	  alert("로그인이 필요합니다.")
+		      }
+		      /* $('#like_check').html(data.like_check); */
+		    },
+		    error: function(request, status, error){
+		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		  });
+		}
 
 
  
@@ -148,8 +209,8 @@ function commentList() {
 			//console.log(value.com_index1);
 			var a = '';
 			$.each(data,function(key, value) {
-					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-					//a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
+					a += '<div class="commentArea" style="margin-bottom: 15px;">';
+					a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
 					a +=	'&emsp; <a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
 					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
 					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
@@ -221,7 +282,11 @@ function commentInsert(insertData) {
 		type : 'post',
 		data : insertData,
 		success : function(data) {
+			if(data == 0){
+				alert("로그인이 필요합니다.");
+			}
 			if (data == 1) {
+				
 				commentList(); //댓글 작성 후 댓글 목록 reload
 				alert("댓글 작성");
 				 $('[name=com_text]').val('');

@@ -1,5 +1,8 @@
 package vs.re.re_001_1.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +17,7 @@ import vs.co.co_001_1.service.Co_Service;
 import vs.cr.cr_001_1.service.Cr_Service;
 import vs.lc.lc_003_1.service.LC_003_1_Service;
 import vs.li.li_001_1.service.LI_Service;
+import vs.lo.lo_001.vo.LO_001_VO;
 import vs.pr.pr_003_1.service.Pr_003_1_Service;
 import vs.re.re_001_1.service.Re_001_1_Service;
 import vs.re.re_001_1.vo.ReVO;
@@ -66,22 +70,33 @@ public class Re_001_1_Controller {
 	@PostMapping("/re_insert")
 	@ResponseBody
 	public int re_insert(Model model,ReVO revo,@RequestParam("radio") String radio,@RequestParam("title") String title,
-						@RequestParam("m_index") String m_index,@RequestParam("board_index") String board_index) throws Exception{
+						@RequestParam("m_index") String m_index,@RequestParam("board_index") String board_index,HttpServletRequest request) throws Exception{
+		
+		
+		HttpSession session = request.getSession();
+		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+			
+		if(member == null) {
+			
+			return 0;
+		}
+		
 		
 		System.out.println("radio?" + radio);
 		System.out.println("title?" + title);
 		System.out.println("m_index?" + m_index);
 		System.out.println("board_index?" + board_index);
-		
+		System.out.println("로그인한 아이디" + member.getM_index());
 		
 		revo.setDe_target(title);
 		revo.setM_index(m_index);
 		revo.setDe_type(radio);
 		revo.setBoard_index(board_index);
+		revo.setM_index2(member.getM_index());
 		
-		System.out.println("제목"+revo.getDe_target());
-		System.out.println("작성자"+revo.getM_index());
-		System.out.println("사유"+revo.getDe_type());
+		System.out.println("제목 :       "+revo.getDe_target());
+		System.out.println("작성자 :        "+revo.getM_index());
+		System.out.println("사유 :     "+revo.getDe_type());
 		
 		return re_service.re_insert(revo);
 	}

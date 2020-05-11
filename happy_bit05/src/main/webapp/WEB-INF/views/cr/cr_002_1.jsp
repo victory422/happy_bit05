@@ -1,6 +1,8 @@
 <%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%
     // 인코딩
     request.setCharacterEncoding("UTF-8");
@@ -25,17 +27,16 @@
 					<input type="text" class="form-control" name="co_r_title">
 				</div>
 			</div>
-			
-			<div class="col-sm-3">
-				<div class="input-group mb-3">
+			<div class="col-sm-3">				
+			<div class="input-group mb-3">
 					<select class="custom-select" id="inputGroupSelect03" name="co_r_type">
-						<option selected>분류</option>
-						<option value="육상">육상</option>
-						<option value="자전거">자전거</option>
+						<option selected>대회명</option>
+					<c:forEach items="${data}" var="data">
+						<option value="${data.co_b_title }">${data.co_b_title }</option>
+					</c:forEach>
 					</select>
 				</div>
-			</div>
-			
+			</div>		
 		</div>		
 		<hr>
 
