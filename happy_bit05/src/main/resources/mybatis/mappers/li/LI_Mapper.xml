@@ -65,18 +65,19 @@
 	<select id="get_list" resultType="LI_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-	 select li_index, li_b_type, m_index, li_category, li_date, li_text, li_type, li_title, li_see, li_good
+	 select li_index, li_b_type, m_index, li_category, li_date, li_text, li_type, li_title, li_see, li_good, m_nickname
 	 from(
 		select rownum rn, a.*
 		from
 		        (
-			        select li_index, li_b_type, m_index, li_category, li_date, li_text, li_type, li_title, li_see, li_good
-			        from item
+			        select i.li_index, i.li_b_type, i.m_index, i.li_category, i.li_date, i.li_text, i.li_type, i.li_title, i.li_see, i.li_good, m.m_nickname
+			        from item i, member m
 			        where 
 			        ]]>
 			        	<include refid="Page_DTO"/>
 			        <![CDATA[ 
 			        li_index > '0'
+			        and i.m_index = m.m_index
 			        and li_b_type = TRIM(#{board})
 			        order by to_number(substr(li_index, 4)) desc
 		        )a
@@ -123,9 +124,10 @@ where rn > ((#{page}-1) * #{amount})
 	<!-- 상세페이지 데이터 뽑는 쿼리문 -->
 	<select id="detail_page" resultType="LI_VO" parameterType="String"> 
 	<![CDATA[ 
-	select li_index, li_b_type, m_index, li_category, li_text, li_type, li_date, li_title, li_see, li_good
-	from item 
+	select i.li_index, i.li_b_type, i.m_index, i.li_category, i.li_text, i.li_type, i.li_date, i.li_title, i.li_see, i.li_good,m.m_nickname
+	from item i,member m
 	where li_index = TRIM(#{index})
+	and i.m_index = m.m_index
 	]]>
 	</select>
 	

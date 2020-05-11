@@ -60,7 +60,18 @@ function login() {
 	var id = document.getElementById('m_id').value;
 	var pw = document.getElementById('m_pw').value;
 	var returnPw = sessionStorage.getItem("password");
-	if(pw==returnPw) {
+	var passwordUpdate = sessionStorage.getItem("passwordUpdate");
+	console.log(passwordUpdate);
+	if(passwordUpdate=='0' && pw==returnPw) {
+		console.log("수정 중인 비밀번호 확인");
+		alert("비밀번호가 확인되었습니다.");
+		sessionStorage.removeItem("password");
+		sessionStorage.removeItem("passwordUpdate");
+		opener.document.getElementById("passwordConfirm2").value = 'updateTrue';
+		opener.document.getElementById("btn").removeChild;
+		window.close();
+	}else if(pw==returnPw && passwordUpdate==null) {
+		console.log("DB에서 비밀번호 확인");
 		alert("비밀번호가 확인되었습니다.");
 		sessionStorage.removeItem("password");
 		opener.document.getElementById("passwordConfirm2").value = 'true';

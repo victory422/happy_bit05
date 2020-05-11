@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.vo.MP_001_3_VO;
 import vs.mp.mp_001.vo.PageUtil;
+import vs.ms.ms_001.vo.MS_001_VO;
 
 @Component
 @Log4j
@@ -61,29 +63,15 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	
 
 	@Override
-	public int modifyMC(MP_001_3_VO vo) {
+	public int memberUpdate(MS_001_VO vo) {
 		// TODO Auto-generated method stub
-		
-		System.out.println(vo.getLc_index());
-		return session.update("lc_003_02", vo);
+		return session.update("member.memberUpdate", vo);
 	}
 
 	@Override
-	public int modifyMC_thumbnail(Map<String, Object> hmap) {
+	public void updateThumbnail(Map<String, Object> hmap) {
 		// TODO Auto-generated method stub
-		return session.update("lc_003_02_thumbnail", hmap);
-	}
-
-	@Override
-	public int deleteMC(String lc_index) {
-		// TODO Auto-generated method stub
-		return session.delete("lc_003_03", lc_index);
-	}
-
-	@Override
-	public int deleteMC_map(String lc_index) {
-		// TODO Auto-generated method stub
-		return session.delete("lc_003_03_map", lc_index);
+		session.update("member.update_member_thumbnail", hmap);
 	}
 
 
