@@ -20,7 +20,7 @@
 
 	<baseDir>\var\lib\tomcat8\webapps\ckEditor</baseDir>
 
-	<baseURL>/resources/ckstorage</baseURL>
+	<baseURL>../ckEditor/</baseURL>
 	<licenseKey></licenseKey>
 	<licenseName></licenseName>
 	<!--
