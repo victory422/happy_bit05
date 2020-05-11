@@ -18,7 +18,7 @@
 	http://docs.cksource.com/CKFinder_2.x/Developers_Guide/Java/Configuration/baseURL_and_baseDir
 	-->
 
-	<baseDir>C:\workspace2\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\happy_bit05\resources\ckstorage</baseDir>
+	<baseDir>\var\lib\tomcat8\webapps\ckEditor</baseDir>
 
 	<baseURL>/resources/ckstorage</baseURL>
 	<licenseKey></licenseKey>
