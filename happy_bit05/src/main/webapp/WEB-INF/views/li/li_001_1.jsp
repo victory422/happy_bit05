@@ -83,7 +83,7 @@
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
 			<div class="col-md-10">
-				<h1>장비게시판<small> (후기게시판)</small></h1>
+				<h1>장비게시판<small> (장비 평가)</small></h1>
 			</div>
 			<div class="col-md-2">				
 				<select name="amount" id="list_mount">

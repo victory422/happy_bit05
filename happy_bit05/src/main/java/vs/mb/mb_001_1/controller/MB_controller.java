@@ -81,6 +81,8 @@ public class MB_controller {
 		
 		
 		lc_index = "lc_0000000121";
+		
+		
 		System.out.println("컨트롤러 단에서 번호는 : " + lc_index);
 		
 		LC_003_1_VO vo = service.getLC(lc_index);
@@ -207,6 +209,23 @@ public class MB_controller {
 		
 		return jsonStr;
 	}
+	
+	
+	//모바일 로그아웃
+	@RequestMapping(value="/logout")
+	public  ModelAndView Logout (HttpSession session, 
+			HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		log.info("로그아웃 컨트롤러");
+			System.out.println("logout page");
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("mb/mb_001_1");
+			session.removeAttribute("sessionVO");
+			System.out.println("session : "+session.getAttribute("sessionVO"));
+		
+		return mav;
+	}
+
 	
 	
 }

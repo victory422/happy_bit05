@@ -76,7 +76,7 @@
 <input type="hidden" name="lt_b_type" value="질문게시판">
 	<div class="container">
 	<div style="margin-top: 30px;">
-		<h1>트레이닝 게시판<small> 질문 게시판</small></h1>
+		<h1>트레이닝</h1>
 		</div>
 		
 		<!-- 체크박스 부분 -->
