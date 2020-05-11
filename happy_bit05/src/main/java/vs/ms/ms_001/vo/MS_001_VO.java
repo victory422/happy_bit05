@@ -9,7 +9,7 @@ import lombok.Data;
 public class MS_001_VO {
 
 	private String m_id, m_nickName, m_pw1, m_pw2, m_name, m_gender, 
-	m_birth, m_email_1, m_tel, m_address;
+	m_birth, m_email_1, m_tel, m_address, m_index;
 	
 	private byte[] request_thumbnail;
 	

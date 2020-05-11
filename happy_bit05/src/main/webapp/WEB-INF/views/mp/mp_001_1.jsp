@@ -85,9 +85,10 @@
         <div class="card h-100">
           <div class="card-body">
 			
+			<form action="/mp/memberUpdate" method="post" name="userinput" enctype="multipart/form-data">
 			<table style="margin:auto;" id="memberTable">
 	          	<tr id="tr">
-	          		<td rowspan="5" class="td">
+	          		<td rowspan="5" class="td" id="m_picture">
 	          			<img alt="" src="data:image/jsp;base64, ${sessionVO.m_picture}" height="200"/>
 	          		</td>
 	          		<td class="tr" >nickName</td>
@@ -112,15 +113,16 @@
 	            	<td class="tr">birth</td>
 	                <td class="td" id="m_birth">${sessionVO.m_birth}</td>
 	            	<td class="tr">password</td>
-	                <td class="td" id="password">********</td>
+	                <td class="td" id="m_pw">********</td>
 	            </tr>
 	          	<tr>
 	          		<td colspan="4" class="td" id="confirmBtn">
-	          			<a id="btn" onclick="pwChk()" style="cursor: pointer;">비밀번호 확인 </a>
-	          			<input type="hidden" id="passwordConfirm2">
+	          			<a id="btn" onclick="pwChk(1)" style="cursor: pointer;">비밀번호 확인 </a>
 	          		</td>
+	          			<input type="hidden" id="passwordConfirm2">
 	          	</tr>
 	          </table>
+	          	</form>
 			
           </div>
         </div>
@@ -155,17 +157,27 @@
 
 
     <!-- /.row -->
-
+	</div>
   </div>
 </body>
 
 <script type="text/javascript">
 
-function pwChk() {
+function pwChk(check) {
 	var url = "/lo2";
 	var name = "비밀번호 확인";
 	var option = "width = 400, height = 260, top = 100, left = 200, location = no";
-	sessionStorage.setItem("password",'${sessionVO.m_pw}');
+	console.log("check is : "+check);
+	if(check=='1'){
+		sessionStorage.setItem("password",'${sessionVO.m_pw}');
+		sessionStorage.removeItem("passwordUpdate");
+		console.log(sessionStorage.getItem("passwordUpdate"));
+	}else if(check=='2') {
+		var newPassword = document.getElementById('secondPw').value;
+		console.log("두번째 비밀번호 : "+newPassword);
+		sessionStorage.setItem("password",newPassword);
+		sessionStorage.setItem("passwordUpdate","0");
+	}
 	window.open(url, name, option);
 	console.log(document.getElementById('btn').firstChild.nodeValue);
 }
@@ -174,23 +186,120 @@ function pClose() {
 	var passwordCheck = document.getElementById("passwordConfirm2").value;
 	console.log(passwordCheck);
 	if(passwordCheck == 'true') {
-    	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정";
+    	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정하기";
     	document.getElementById('btn').setAttribute("onclick","memberUpdate()");
+	}else if(passwordCheck == 'updateTrue') {
+		document.getElementById('btn').firstChild.nodeValue = "비밀번호 확인";
+		document.getElementById('btn').setAttribute("onclick","pwChk(1)");
+	
+		//update 쿼리문 필요.
+		//  /mp/memberUpdate로 서브밋	
+		var form = document.userinput;
+	    form.submit();
+		
+		
 	}
+	
 }
 
 function memberUpdate() {
-	alert("수정");
-	var tr = document.getElementById('tr');
+	alert("회원정보 수정하기");
+	//클릭 시 수정하는 페이지로 바꿔주는 함수
+	
+	//m_nick 
 	var m_nick = document.getElementById('m_nick');
-	var val = m_nick.firstChild.nodeValue;
-	console.log(val);
-	m_nick.firstChild.nodeValue = "";
+	var m_nick_input = document.createElement("input");
+	if(m_nick.hasChildNodes()) {
+		m_nick.firstChild.nodeValue = "";
+	}
+	m_nick_input.setAttribute("value", "${sessionVO.m_nickName}"); 
+	m_nick_input.setAttribute("name", "m_nickName");
+	m_nick_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_nick.appendChild(m_nick_input);
+	 
+	//m_email
+	var m_email = document.getElementById('m_email');
+	var m_email_input = document.createElement("input");
+	if(m_email.hasChildNodes()) {
+		m_email.firstChild.nodeValue = "";
+	}
+	m_email_input.setAttribute("value", "${sessionVO.m_email_1}"); 
+	m_email_input.setAttribute("name", "m_email_1");
+	m_email_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_email.appendChild(m_email_input);
+	 
+	//m_name
+	var m_name = document.getElementById('m_name');
+	var m_name_input = document.createElement("input");
+	if(m_name.hasChildNodes()) {
+		m_name.firstChild.nodeValue = "";
+	}
+	m_name_input.setAttribute("value", "${sessionVO.m_name}"); 
+	m_name_input.setAttribute("name", "m_name");
+	m_name_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_name.appendChild(m_name_input);
+	
+	 
+	//m_tel
+	var m_tel = document.getElementById('m_tel');
+	var m_tel_input = document.createElement("input");
+	if(m_tel.hasChildNodes()) {
+		m_tel.firstChild.nodeValue = "";
+	}
+	m_tel_input.setAttribute("value", "${sessionVO.m_tel}"); 
+	m_tel_input.setAttribute("name", "m_tel");
+	m_tel_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_tel.appendChild(m_tel_input);
 	
 	
+	//m_address
+	var m_address = document.getElementById('m_address');
+	var m_address_input = document.createElement("input");
+	if(m_address.hasChildNodes()) {
+		m_address.firstChild.nodeValue = "";
+	}
+	m_address_input.setAttribute("value", "${sessionVO.m_address}");
+	m_address_input.setAttribute("name", "m_address");
+	m_address_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_address.appendChild(m_address_input);
 	
+	//m_pw
+	var m_pw = document.getElementById('m_pw');
+	var m_pw_input = document.createElement("input");
+	if(m_pw.hasChildNodes()) {
+		m_pw.firstChild.nodeValue = "";
+	}
+	m_pw_input.setAttribute("name", "m_pw1"); 
+	m_pw_input.setAttribute("type", "password"); 
+	m_pw_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_pw_input.setAttribute("id", "secondPw"); 
+	m_pw.appendChild(m_pw_input);
+	
+	//m_picture
+	var m_picture = document.getElementById('m_picture');
+	var m_picture_input = document.createElement("input");
+	if(m_picture.hasChildNodes()) {
+		m_picture.firstChild.nodeValue = "";
+	}
+	m_picture_input.setAttribute("value", "${sessionVO.m_picture}"); 
+	m_picture_input.setAttribute("name", "m_picture");
+	m_picture_input.setAttribute("type", "file"); 
+	m_picture_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_picture.appendChild(m_picture_input);
+	
+	//버튼 바꾸기
+	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정완료 (비밀번호 확인)";
+	document.getElementById('btn').setAttribute("onclick","pwChk(2)");
 }
 
+
+function btnChange() {
+	document.getElementById('confirmBtn').removeChild(document.getElementById('btn'));
+	var submit = document.createElement("input");
+	submit.setAttribute("type", "submit");
+	submit.setAttribute("value", "회원정보 수정완료 (비밀번호 확인)");
+	document.getElementById('confirmBtn').appendChild(submit);
+}
 
 </script>
 
