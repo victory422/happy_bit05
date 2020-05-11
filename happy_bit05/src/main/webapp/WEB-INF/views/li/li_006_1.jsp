@@ -125,15 +125,15 @@
 					</c:choose>
 				</div>
 				<div class="push padding_1">
-					<button type="button"class="btn btn-info" onclick="report()">신고하기</button> 
-					<c:if test="${member.m_index eq board.m_index }">
-						<button class="btn btn-info" onclick="modify()">수정하기</button>
-					</c:if>
+					<button type="button"class="btn btn-primary" onclick="report()">신고하기</button> 
 					<c:if test="${member.m_index eq board.m_index }">
 						<button class="btn btn-danger" onclick="btn_delete()">삭제하기</button>
 					</c:if>
+					<c:if test="${member.m_index eq board.m_index }">
+						<button class="btn btn-success" onclick="modify()">수정하기</button>
+					</c:if>
 					<button  class="btn btn-info" onclick="fn_golist()">
-						목록으로 돌아가기 ㅁㅁㅁ
+						목록으로 돌아가기 
 					</button>
 				</div>
 			</div>

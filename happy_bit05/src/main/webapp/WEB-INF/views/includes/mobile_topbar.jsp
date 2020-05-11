@@ -12,8 +12,16 @@
 				</button>
 				<div class="collapse navbar-collapse" id="navbarResponsive">
 					<ul class="navbar-nav">
-						<li class="nav-item"><a class="nav-link" href="#">나의 코스</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">코스 게시판</a></li>
+						<li class="nav-item dropdown"><a
+						class="nav-link dropdown-toggle" href="#"
+						id="navbarDropdownPortfolio" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false"> 나의코스 </a>
+						<div class="dropdown-menu dropdown-menu-right"
+							aria-labelledby="navbarDropdownPortfolio">
+							<a class="nav-link" href="/mb/lc_002_1?lc_type=육상">육상</a> <a
+								class="nav-link" href="/mb/lc_002_1?lc_type=자전거">자전거</a>
+						</div></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/lc_002_1">코스 게시판</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/mb_006_1">나의기록</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/mb_004_1">기록측정</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/logout" onclick="logout()">로그아웃</a></li>
