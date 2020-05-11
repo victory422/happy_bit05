@@ -3,7 +3,7 @@
 <%@page import="java.nio.file.Path"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<title>장비 게시판</title>
+<title>트레이닝게시판</title>
 <script type="text/javascript"
 	src="../../../resources/CKEditorSample/ckeditor/ckeditor.js"></script>
 	 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -17,7 +17,7 @@
 			<div class="content" style="width: 75%; margin-top: 30px;">
 				<div>
 					<div class="col-sm-12">
-						<h1>트레이닝 게시판 <small> ${b_type }  글작성 </small> </h1> <!-- 현재 임시방편 게시판 유형 결정되면 변수로 변경 -->
+						<h1>트레이닝 게시판 <small> 글작성 </small> </h1> <!-- 현재 임시방편 게시판 유형 결정되면 변수로 변경 -->
 						<br>
 						<div class="input-group mb-1">
 							<div class="input-group-prepend">

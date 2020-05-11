@@ -13,11 +13,13 @@ public class LI_VO {
 	private String li_index;
 	private String li_b_type;
 	private String li_type;
+	private String search_filter;
 	private byte[] li_thumbnail;
 	private byte[] li_picture;
 	private String li_date;
 	private String li_title;
 	private int li_see,li_good;
 	
+	private String m_nickname;
 	
 }

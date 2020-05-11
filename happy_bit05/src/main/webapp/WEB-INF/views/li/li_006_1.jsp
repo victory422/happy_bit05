@@ -86,7 +86,7 @@
  
 			<div class="row board_style">
 				<div class="col-md-8">
-					<h1>제목 : ${board.li_title }</h1>
+					<h1>제목 : ${board.li_title }</h1><small>${board.m_nickname}</small>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
 					<h6>추천수:<span class="good_cnt"> ${board.li_good }</span> 조회수:${board.li_see } </h6>
@@ -125,6 +125,7 @@
 					</c:choose>
 				</div>
 				<div class="push padding_1">
+					<button type="button"class="btn btn-info" onclick="report()">신고하기</button> 
 					<c:if test="${member.m_index eq board.m_index }">
 						<button class="btn btn-info" onclick="modify()">수정하기</button>
 					</c:if>
@@ -132,7 +133,7 @@
 						<button class="btn btn-danger" onclick="btn_delete()">삭제하기</button>
 					</c:if>
 					<button  class="btn btn-info" onclick="fn_golist()">
-						목록으로 돌아가기 
+						목록으로 돌아가기 ㅁㅁㅁ
 					</button>
 				</div>
 			</div>
@@ -182,6 +183,8 @@
 <!-- 좋아요 함수 -->
 	<script type="text/javascript">
 	
+
+	var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
 	
 	function like_func(){
 		  var li_index = $('#li_index').val();
@@ -251,14 +254,7 @@ document.addEventListener('keydown', function(event) {
 }, true);
 
 
-//페이지 로딩시 댓글 목록
-$(document).ready(function() {
- 
- commentList();
-});
-
 var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
-
 console.log("인덱스 : ",board_index);
 
 var popupWidth = 600;
@@ -272,10 +268,28 @@ var popupY= (window.screen.height / 2) - (popupHeight / 2);
 
 //신고하기 창띄우기
 function report(){
- //re_type 게시판 마다 맞게 바꿔주기
-  window.open("/re/report?li_type=li&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
- 
+//re_type 게시판 마다 맞게 바꿔주기
+ window.open("/re/report?re_type=li&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
+
 }
+
+//페이지 로딩시 댓글 목록
+$(document).ready(function() {
+ 
+ commentList();
+});
+
+
+console.log("인덱스 : ",board_index);
+
+var popupWidth = 600;
+var popupHeight = 450;
+
+var popupX = (window.screen.width / 2) - (popupWidth / 2); 
+//만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+
+var popupY= (window.screen.height / 2) - (popupHeight / 2);
+//만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
 
 
 

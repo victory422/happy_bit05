@@ -13,9 +13,16 @@ public class ReVO {
 	private String de_dispose;
 	private String board_index;
 	private String de_date;
+	//맴버 조인
+	private String m_count;
 	
 	
-	
+	public String getM_count() {
+		return m_count;
+	}
+	public void setM_count(String m_count) {
+		this.m_count = m_count;
+	}
 	public String getDe_date() {
 		return de_date;
 	}

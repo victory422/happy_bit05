@@ -1,23 +1,41 @@
-<%@include file="../includes/topbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-
-
-<%@include file="../includes/middle.jsp" %>
+<%@ include file="../includes/sidebar.jsp" %>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+	integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+	crossorigin="anonymous"></script>
 <script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+	integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+	crossorigin="anonymous"></script>
+	<script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<div class="container">
-	<div class="row col-12" >
+  
+  
+  
+<div class="container"> 
+	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
+				<div class="panel-heading">admin 대회 목록</div>
+				<!-- /.panel-heading -->
 				<div class="panel-body">
-<form method="get">
+				
+				<form method="get">
 				
 					<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
@@ -56,6 +74,7 @@
 									</option> 
 								</c:forEach>--%>
 				</select> -->
+				
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
@@ -68,95 +87,55 @@
 			</label>
 			
 			</div>
-			</form>				
-					<table class="table table-striped table-bordered table-hover" style="margin-top:30px;">
+			</form>
+					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
-								<th>제목</th>
-								<th>대회명</th>							
-								<th>작성자</th>
-								<th>등록일</th>
-								<th>종목</th>
-								<th>조회수</th>
-								<th>추천수</th>
+								<th>회원 번호</th>
+								<th>회원 아이디</th>
+								<th>회원 이름</th>
+								<th>회원 닉네임</th>
+								<th>회원 전화번호</th>
+								<th>신고당한 횟수</th>
+								<th>상태</th>
+								
 							</tr>
 						</thead>
-						
-						<tbody>
-						<c:forEach items="${data}" var="data">				
-							<tr onClick = "location.href='cr_003_1?co_r_index=${data.co_r_index}'">
-								<td>${data.co_r_title}</td>
-								<td>${data.co_r_title }</td>
-								<td>${data.m_nickname }</td>
-								<td>${data.co_r_day}</td>								
-								<td>${data.co_r_type }</td>
-								<td>${data.co_r_see }</td>
-								<td>${data.co_r_good }</td>
+						<c:forEach items="${data}" var="data">
+							<tr>
+								<td>${data.m_index}</td>
+								<td>${data.m_id}</td>
+								<td>${data.m_name}</td>
+								<td>${data.m_nickName}</td>
+								<td>${data.m_tel}</td>
+								<td>${data.m_count}</td>
+								<c:if test="${data.m_state eq '1' }">
+								<td><button type="button" class="btn btn-primary disposechange">주의</button></td>
+								</c:if>
+								<c:if test="${data.m_state eq '2' }">
+								<td><button type="button" class="btn btn-secondary disposechange">블랙리스트</button></td>
+								</c:if>
+								<c:if test="${data.m_state eq '3' }">
+								<td><button type="button" class="btn btn-danger disposechange">회원삭제</button></td>
+								</c:if>
+								
 							</tr>
-						</c:forEach>
-						</tbody>
-						
-					</table>
-					<form role="form" action="cr_002_1" method="get">
-					<button type="submit" class="btn btn-primary float-right">글작성</button>
-				</form>								
-				</div>
-				<!-- 페이징  -->
-					<div class="col-md-10">
-						<ul class="pagination d-flex justify-content-center">
-							<c:if test="${pageUtil.prev }">
-								<li class="page-item"><a class="page-link" href="/cr/cr_001_1?page=${pageUtil.start-1}">Previous</a></li>
-							</c:if>
-							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
-								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link page_now btn btn-link" >${pNum }</a></li>
-							</c:forEach>
-							<c:if test="${pageUtil.next }">
-								<li class="page-item"><a class="page-link" href="/cr/cr_001_1?page=${pageUtil.end+1 }">Next</a>
-								</li>
-							</c:if>
-						</ul>
+					</c:forEach> 
+						</table>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content"></div>
+
+						</div>
 					</div>
+				</div>
 			</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
-</div>
-	
-<script>
+	</div>
 
-$(document).ready(function(){
-	
-	
-	$('a.page_now').on('click',function(){
-		//alert($('input[name=page]').val($(this).text()))
-		//alert($('select[name=type]').val())
-		
-		var a =$('select[name=type]').length;
-		//배열생성
-		var aArr = new Array(a);
-		
-		//필터값들 스트링으로 변환
-		for(var i=0; i<a; i++){
-			aArr[i] = $('select[name=type]').eq(i).val();
-			//alert(aArr[i]);
-		}
-		
-		//선택한 종목값
-		//aArr[1]
-		//선택한 장비값
-		//aArr[2]
-		//현재 선택된 a태그안  
-		$(this).attr('href',"/cr/cr_001_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
-		})
-	
-	//alert(${param.test1});
-		function page_put(){
-		console.log($('input[name=page]').val(1))
-	}
-	
-})
-
-</script>
-<%@include file="../includes/footer.jsp"%>		
-	
+</body>
+</html>

@@ -105,7 +105,7 @@
 							<tr>
 								<td>${data.board_index }</td>
 								<td>${data.m_index}</td>
-								<td>${data.de_target}</td>
+								<td><a style="color: blue" onclick="index_detail('${data.board_index }')" id="test${data.board_index }" value="${data.board_index }">${data.de_target}</a></td>
 								<td>${data.de_type}</td>
 								<td>${data.m_index2}</td>
 								<td>${data.de_date }</td>
@@ -115,7 +115,9 @@
 								<c:if test="${data.de_dispose eq '경고'}">
 								<td><button type="button" class="btn btn-secondary disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
 								</c:if>
-								
+								<c:if test="${data.de_dispose  eq '삭제처리'}">
+								<td><button type="button" class="btn btn-danger disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
+								</c:if>
 							</tr>
 					</c:forEach> 
 						</table>
@@ -187,6 +189,48 @@ $(document).ready(function(){
 	
 });
 
+function index_detail(index){
+	
+	console.log(index);
+	var sub_index = index.substr(0,2);
+	var a = '';
+	var b = '';
+	 console.log(sub_index);
+	 
+	 if(sub_index == 'co'){
+		 a='co_004_1';
+		 b="co_b_index";
+	 }
+	 if(sub_index == 'cr'){
+		 a='cr_003_1';
+		 b='co_r_index';
+		 console.log(a);
+		 console.log(b);
+		 
+	 }
+	 /*
+	 if(sub_index == 'co') a='co';
+	 if(sub_index == 'co') a='co';
+	 if(sub_index == 'co') a='co';
+	 */
+	 //location.href="/co/co_004_1?co_b_index="+index;
+	 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 /*
+	 $.ajax({ 
+			url : '/al/detail',
+			type : 'get',
+			data : {'index' : index, 'sub_index' : sub_index},
+			success : function(data) {
+				
+				
+				
+			}
+	 });
+	*/
+	
+}
+
+
 $('.disposechange').on("click", function() {
 	
 	
@@ -205,8 +249,32 @@ $('.disposechange').on("click", function() {
 				$('#statechange'+de_index).text("경고");			
 				$('#statechange'+de_index).removeClass("btn btn-primary");
 				$('#statechange'+de_index).addClass("btn btn-secondary");
-
+			
+			}else if(de_dispose == '경고'){
+				
+				$('#statechange'+de_index).text("삭제처리");			
+				$('#statechange'+de_index).removeClass("btn btn-secondary");
+				$('#statechange'+de_index).addClass("btn btn-danger");
+				
+			
 			}else{
+				
+				$('#statechange'+de_index).text("처리대기");			
+				$('#statechange'+de_index).removeClass("btn btn-danger");
+				$('#statechange'+de_index).addClass("btn btn-primary");
+
+				
+			}
+			
+			
+			
+			/*
+			if(de_dispose == '처리대기'){
+				
+				$('#statechange'+de_index).text("경고");			
+				$('#statechange'+de_index).removeClass("btn btn-primary");
+				$('#statechange'+de_index).addClass("btn btn-secondary");
+			}else{_
 				
 				$('#statechange'+de_index).text("처리대기");			
 				$('#statechange'+de_index).removeClass("btn btn-secondary");
@@ -214,7 +282,7 @@ $('.disposechange').on("click", function() {
 
 				
 			}
-
+			*/
 		},
 		error : function(xhr, status, error){
 			console.log(xhr);
@@ -223,6 +291,9 @@ $('.disposechange').on("click", function() {
 		}
 	});
 });
+
+
+
 
 </script>
 

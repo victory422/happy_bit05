@@ -77,6 +77,8 @@ public class Co_Controller {
 	@GetMapping("/co_004_1")
 	public void co_detail(Model model, @RequestParam("co_b_index") String co_b_index) {
 
+		System.out.println("대회 상세페이지  index" + co_b_index);
+		
 		model.addAttribute("data", co_service.co_detail(co_b_index));
 	}
 	

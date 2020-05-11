@@ -47,8 +47,8 @@
 	<insert id="insert" parameterType="LT_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 		<![CDATA[ 
-		insert into trainning (lt_index, lt_b_type, m_index, lt_text, lt_type, lt_date, lt_title, lt_tier) 
-		values ('lt_'||seq_test2.nextval, #{lt_b_type}, #{m_index}, #{lt_text}, #{lt_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{lt_title}, #{lt_tier})
+		insert into trainning (lt_index, lt_b_type, m_index,m_nickname,lt_text, lt_type, lt_date, lt_title, lt_tier, lt_see, lt_good) 
+		values ('lt_'||seq_lt.nextval, #{lt_b_type}, #{m_index},#{nickname},  #{lt_text}, #{lt_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{lt_title}, #{lt_tier},0,0)
 		]]>
 	</insert>
 
@@ -57,7 +57,7 @@
 	<select id="get_list" resultType="LT_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good
+select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good,m_index,m_nickname as nickname
 from
         (        
         select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good, substr(lt_index, 4) as sort

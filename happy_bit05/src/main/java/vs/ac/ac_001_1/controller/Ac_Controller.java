@@ -2,6 +2,11 @@ package vs.ac.ac_001_1.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +24,7 @@ import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.service.Co_Service;
 import vs.co.co_001_1.vo.CoVO;
 import vs.co.co_001_1.vo.PageUtil;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @RequestMapping("/ac/*")
@@ -34,10 +40,14 @@ public class Ac_Controller {
 		 model.addAttribute("data", ac_service.ac_List(dto));
 		 model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
 		 
+		 
 	}
-	
+	//대회 글작성
 	@RequestMapping(value = "ac_001_1.do", method = RequestMethod.POST)
-	public String ac_register(AcVO acvo, RedirectAttributes rttr) {
+	public String ac_register(AcVO acvo, RedirectAttributes rttr,HttpServletRequest request, HttpServletResponse response) {
+		
+		HttpSession session = request.getSession();
+		LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		System.out.println(acvo.getCo_b_thumbnail());
 		
@@ -46,7 +56,7 @@ public class Ac_Controller {
 	         hmap.put("co_b_thumbnail", acvo.getCo_b_thumbnail().getBytes());
 	         
 	         acvo.setCo_b_index("guest");
-	         
+	         acvo.setM_index(vo.getM_index());
 	         ac_service.ac_insert(acvo);
 	         ac_service.insertTu(hmap);
 	      } catch (Exception e) {

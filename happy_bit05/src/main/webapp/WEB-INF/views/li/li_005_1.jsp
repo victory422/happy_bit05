@@ -53,7 +53,7 @@
 		 <form id="form" method="post" onsubmit="return check_fn()" >
 			<c:forEach var="board" items="${page }">
 				<input type="hidden" name="li_index" value="${board.li_index }"/>
-				<input type="hidden" name="li_b_type" value="${board.li_b_type }"/>
+				<input type="text" name="li_b_type" value="${board.li_b_type }aa"/>
 			</c:forEach>
 			 <!--	<c:forEach var="board" items="${page }">
 					<c:choose>
@@ -67,7 +67,10 @@
 				</c:forEach>  -->	
 			
 					<div class="col-sm-12">
-						<h1>장비 게시판 <small> ${b_type }  글작성 </small> </h1> <!-- 현재 임시방편 게시판 유형 결정되면 변수로 변경 -->
+					
+						<h1>커뮤니티 <small> 
+								<%-- <c:when test="${b_type eq '후기게시판'}">장비평가</c:when> --%>
+						글작성 </small></h1>
 						<br>
 							<div class="input-group mb-1" style="width: 75%;">
 								<div class="input-group-prepend align-center">
