@@ -106,7 +106,7 @@
 								<td>${data.co_b_day}</td>
 								<td>${data.co_b_price}</td>
 								<td>${data.co_b_count}</td>
-								<td>0</td>
+								<td>${data.co_b_see }</td>
 								<c:if test="${data.co_b_state eq '접수가능'}">
 								<td><button type="button" class="btn btn-primary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
 								</c:if>

@@ -39,7 +39,7 @@
 		<result property="m_name" column="m_name" />
 		<result property="m_gender" column="m_gender" />
 		<result property="m_birth" column="m_birth" />
-		<result property="m_email_1" column="m_email_1" />
+		<result property="m_email_1" column="m_email" />
 		<result property="m_tel" column="m_tel" />
 		<result property="m_address" column="m_address" />
 		<result property="request_thumbnail" column="m_picture" />
@@ -228,6 +228,33 @@
 			</trim>
 		</trim>
 	</sql>
+	
+	<update id="memberUpdate"
+		parameterType="vs.ms.ms_001.vo.MS_001_VO">
+		<![CDATA[
+			update member
+			set
+			m_pw_1 = #{m_pw1},
+			m_name = #{m_name},
+			m_email = #{m_email_1},
+			m_tel = #{m_tel},
+			m_address = #{m_address},
+			m_nickname = #{m_nickName}
+			
+			where m_index = #{m_index}
+			
+		]]>
+	</update>
+	
+		<!-- 썸네일 업데이트 -->
+	<update id="update_member_thumbnail" parameterType="java.util.Map">
+		  
+		<![CDATA[ 
+			update member
+			set m_picture = #{m_picture}
+			where m_index = #{m_index}
+		]]>	
+	</update>
 
 
 </mapper>

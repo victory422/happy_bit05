@@ -90,25 +90,84 @@ if (navigator.geolocation) {
 	          		success : function(data){
 	          
 	          			var muteCourse = document.getElementById('muteCourse');
-	          			
-	          			var content;
-	          			
+	          			var positions = []; //마커가 표시될 위치들.
+	          			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	          		    var imageSize = new kakao.maps.Size(24, 35); 
+	          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
+	          			var markers = [];
+	          		    
+	          		    //마커 생성
 	          			for(var i = 0; i < data.length; i++){
 	          				
-	        			content += '<div class="col-md-12">';
-	    				content += '<div class="card mb-3 shadow-sm">';
-	    				content += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
-	    				content += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="200"/>';
-	    				content += '</svg>';
-	    				content += '<div class="card-body">';
-	    				content += '<a class="move" href="' + data[i].lc_index + '">';
-	    				content += '<p class="card-text">' + data[i].lc_title + '</p>';
-	    				content += '</a>';
-	    				content += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
-	    				content += '</div></div></div>';
+	          				var content; //HTML 내용.
+	          				var course; //리스트 내용.
+	          				
+	          				var split1 = data[i].lc_xy_arr.split(',');
+	    					split1[0] = split1[0].substring(1 , split1[0].length);
+	    					split1[1] = split1[1].substring(1, split1[1].length-1);
+	    					
+	    					var position = new kakao.maps.LatLng(split1[0], split1[1]);
+	    					
+	    					//마커 눌렀을때 나올 내용.
+		        			content += '<div class="col-md-12">';
+		    				content += '<div class="card mb-3 shadow-sm">';
+		    				content += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
+		    				content += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="200"/>';
+		    				content += '</svg>';
+		    				content += '<div class="card-body">';
+		    				content += '<p class="card-text">' + data[i].lc_title + '</p>';
+		    				content += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
+		    				content += '</div></div></div>';
+	    					
+		    				//마커 생성.
+	    					markers[i] = new kakao.maps.Marker({
+	    						map : map,
+	    						position : position,
+	    						image : markerImage,
+	    						clickable : true,
+	    						content : content
+	    					});
+	    					
+	    					//마커 표시.
+	    					markers[i].setMap(map);
+	    					
+	    					// 마커에 표시할 인포윈도우를 생성합니다 
+	    				    var infowindow = new kakao.maps.InfoWindow({
+	    				        content: content // 인포윈도우에 표시할 내용
+	    				    });
+		    				
+		    				//리스트에 나올 내용.
+		    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "">';														
+							course += '<tr>';
+							course += '	<td rowspan="2" style="width:120px; height: 100px; padding: 0;">';
+							course += '	<img id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request +'" style="width:120px; height: 100px; padding: 0;">';
+							course += '	</td>';
+							course += '	<td>' + data[i].lc_title + '</td>';
+							course += '</tr><tr>';
+							course += ' <td>추천수 : '+ data[i].lc_good +'</td>';	
+							course += '</tr>';					
+							course += '</table>';
+		    				
+							//마커에 이벤트 등록.
+	    					kakao.maps.event.addListener(markers[i], 'mouseover', makeOverListener(map, markers[i], infowindow));
+	    					kakao.maps.event.addListener(markers[i], 'mouseout', makeOutListener(infowindow));
+		    				
+	    					//리스트에 이벤트 등록. (강사님께 여쭤봐야됨.)
+	    					/* (function(i){
+		    					var listOne = document.getElementById('mainList' + i);
+		    					
+		    					console.log(listOne);
+	
+		    					listOne.addEventListener('mouseover',makeOverListener(map, markers[i], infowindow));
+		    					
+		    					listOne.addEventListener('mouseout',makeOutListener(infowindow));
+	    					
+	    					})(i); */
 	          			}
 	          			
-	    				muteCourse.innerHTML = content;
+	    				muteCourse.innerHTML = course;
+
+	    					
 	          		},
 	          		error: function(request, status, error){
 	    				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -157,6 +216,19 @@ function searchDetailAddrFromCoords(coords, callback) {
     geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
 }
 
+//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+    return function() {
+        infowindow.open(map, marker);
+    };
+}
+
+// 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+    return function() {
+        infowindow.close();
+    };
+}
 </script>
 
 

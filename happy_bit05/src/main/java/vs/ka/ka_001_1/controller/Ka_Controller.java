@@ -54,11 +54,11 @@ public class Ka_Controller {
 	
 	
 	@GetMapping("/kakaoPaySuccess")
-	public RedirectView kakaoPaySuccess(@RequestParam("pg_token") String pg_token,@RequestParam("co_b_index") String co_b_index) {
+	public RedirectView kakaoPaySuccess(@RequestParam("pg_token") String pg_token,@RequestParam("co_b_index") String co_b_index,HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("성공시 controller");
 		
-		kakaopay.kakaoPayInfo(pg_token, this.amount1);
+		kakaopay.kakaoPayInfo(pg_token, this.amount1, request, response);
 		
 		System.out.println(pg_token + "보여줘");
 		System.out.println(co_b_index + " : 어렵다");
