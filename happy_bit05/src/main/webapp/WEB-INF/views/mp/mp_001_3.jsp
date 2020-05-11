@@ -300,15 +300,17 @@
 			    success : function(data){  
                     
                     for(var i in data) {
-				    	console.log("console : "+data[i]['lc_index']);
-				    	console.log("console : "+data[i]['mp_index']);
-				    	console.log("console : "+data[i]['m_index']);
+                    	console.log(data[i]);
+				    	console.log("console : ");
+				    	console.log("console : "+data[i]['RN']);
+				    	console.log("console : "+data[i]['PR_RECORDDATE']);
+				    	console.log("console : "+data[i]['PR_RECORD']);
 				    	
 				    	var td = "";
-						td += '<td>' + data[i]['lc_index'] + '</td>';
-						td += '<td>' + +data[i]["mp_index"] + '</td>';
-						td += '<td>' + data[i]["m_index"] + '</td>';
-						td += '<td>' + data[i]["m_index"] + '</td>';
+						td += '<td>' + data[i]['RN'] + '</td>';
+						td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+						td += '<td>' + data[i]["PR_RECORD"] + '</td>';
+						td += '<td>' + lc_record + '</td>';
 						td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
 								+data[i]["m_index"] + '</button></td>';
 						$("#detail").html(td);

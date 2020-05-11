@@ -31,7 +31,7 @@ public class LO_001_DAOImpl implements LO_001_DAO{
 		log.info("logincheck : "+vo);
 		
 		if(loginCheck==1) {
-			list = sqlSession.selectList("member.getList", vo);
+			list = sqlSession.selectList("member.getMemberList", vo);
 			list.get(0).setLoginCheck(loginCheck);
 		}else {
 			vo.setLoginCheck(loginCheck);

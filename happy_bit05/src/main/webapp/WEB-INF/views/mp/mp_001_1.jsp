@@ -177,6 +177,8 @@ function pwChk(check) {
 		console.log("두번째 비밀번호 : "+newPassword);
 		sessionStorage.setItem("password",newPassword);
 		sessionStorage.setItem("passwordUpdate","0");
+	}else if(check=='-1'){
+		location = '/mp';
 	}
 	window.open(url, name, option);
 	console.log(document.getElementById('btn').firstChild.nodeValue);
@@ -188,18 +190,19 @@ function pClose() {
 	if(passwordCheck == 'true') {
     	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정하기";
     	document.getElementById('btn').setAttribute("onclick","memberUpdate()");
+    	passwordCheck = null;
+    	
 	}else if(passwordCheck == 'updateTrue') {
 		document.getElementById('btn').firstChild.nodeValue = "비밀번호 확인";
 		document.getElementById('btn').setAttribute("onclick","pwChk(1)");
-	
-		//update 쿼리문 필요.
+		passwordCheck = null;
 		//  /mp/memberUpdate로 서브밋	
 		var form = document.userinput;
 	    form.submit();
-		
-		
+	}else{
+		alert("회원정보 수정 취소");
+		window.location.replace("/mp");
 	}
-	
 }
 
 function memberUpdate() {
@@ -292,14 +295,6 @@ function memberUpdate() {
 	document.getElementById('btn').setAttribute("onclick","pwChk(2)");
 }
 
-
-function btnChange() {
-	document.getElementById('confirmBtn').removeChild(document.getElementById('btn'));
-	var submit = document.createElement("input");
-	submit.setAttribute("type", "submit");
-	submit.setAttribute("value", "회원정보 수정완료 (비밀번호 확인)");
-	document.getElementById('confirmBtn').appendChild(submit);
-}
 
 </script>
 
