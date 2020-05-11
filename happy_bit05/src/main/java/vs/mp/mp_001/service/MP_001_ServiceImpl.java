@@ -64,6 +64,20 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 		dao.updateThumbnail(hmap);
 		
 	}
+
+	@Override
+	public LO_001_VO getMemberList(LO_001_VO list) {
+		// TODO Auto-generated method stub
+		dao.getMemberList(list);
+		return list;
+	}
+
+	@Override
+	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("my코스  detail.......!");
+		return  dao.getMyCourseDetail(dto);
+	}
 	
 
 	

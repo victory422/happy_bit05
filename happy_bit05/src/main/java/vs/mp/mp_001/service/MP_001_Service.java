@@ -23,4 +23,8 @@ public interface MP_001_Service {
 	int memberUpdate(MS_001_VO vo);
 
 	public void updateThumbnail(Map<String, Object> hmap);
+	
+	public LO_001_VO getMemberList(LO_001_VO list);
+
+	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto);
 }

@@ -1,5 +1,6 @@
 package vs.mp.mp_001.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
@@ -43,6 +44,16 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	}
 	
 	@Override
+	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("my코스  상세조회.....DAO");
+		log.info("getMyCourse : "+dto);
+		List<Map<String, String>> list = session.selectList("member.getMyCourseDetail", dto);
+		log.info(list);
+		return list;
+	}
+	
+	@Override
 	public PageUtil GetTotal(Page_DTO dto) {
 		log.info("GetTotal DAO.....");
 		System.out.println("dao getTotal : " +dto);
@@ -72,6 +83,16 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	public void updateThumbnail(Map<String, Object> hmap) {
 		// TODO Auto-generated method stub
 		session.update("member.update_member_thumbnail", hmap);
+		
+	}
+
+	@Override
+	public LO_001_VO getMemberList(LO_001_VO list) {
+		List<LO_001_VO> vo = new ArrayList<LO_001_VO>();
+		
+		vo = session.selectList("member.getMemberList", list);
+		
+		return vo.get(0);
 	}
 
 

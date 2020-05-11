@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import vs.lo.lo_001.vo.LO_001_VO;
 import vs.ms.ms_001.vo.MS_001_VO;
 import vs.sa.sa_002.dto.Page_DTO;
 import vs.sa.sa_002.vo.PageUtil;
@@ -24,5 +25,5 @@ public interface MS_001_DAO {
 	int idCheck(String m_id);
 
 	int nickCheck(String data);
-	
+
 }

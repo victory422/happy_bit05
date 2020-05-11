@@ -24,6 +24,7 @@ import com.ibleaders.utility.ib_json.JSONObject;
 
 import lombok.extern.log4j.Log4j;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
+import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
@@ -41,6 +42,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	private PageUtil pageutil;
 	private LO_001_VO sessionVO;
 	MemberLoginInterceptor login = new MemberLoginInterceptor();
+	private LO_001_Service LOservice;
 	
 	@Override
 	@RequestMapping(value="/mp")
@@ -53,6 +55,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//썸네일 주입
+		try {
 		if(sessionVO.getRequest_thumbnail() != null) {
 			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
 			String thumbnail = new String(imageContent);
@@ -61,7 +64,10 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			sessionVO.setM_picture("");
 			System.out.println("썸네일 없음.");
 			}
-		
+		}catch (Exception e) {
+			// TODO: handle exception
+			log.info(e);
+		}
 		mav.addObject("sessionVO", sessionVO);
 		mav.setViewName("mp/mp_001_1");
 		System.out.println("session : "+ sessionVO);
@@ -105,7 +111,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	@RequestMapping(value="/mp/myCourse/detail")
 	@ResponseBody
 	public  String myCourse (Page_DTO dto) throws JsonProcessingException  {
-			List<MP_001_3_VO> listVO2 = service.getMyCourse(dto);
+			List<Map<String, String>> listVO2 = service.getMyCourseDetail(dto);
 			log.info("listVO2 : "+listVO2);
 			
 			JSONArray jsonArray = new JSONArray();
@@ -114,10 +120,11 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			String jsonStr = new ObjectMapper().writeValueAsString(listVO2);
 			for(int i=0; i<listVO2.size();i++){
 			  json = new JSONObject();
-			  MP_001_3_VO vo = listVO2.get(i);
-			  json.put("lc_index", vo.getLc_index());
-			  json.put("m_index", vo.getM_index());
-			  json.put("mp_index", vo.getMp_index());
+			  Map<String, String> vo = listVO2.get(i);
+			  json.put("RN", vo.get("RN"));
+			  json.put("PR_RECORDDATE", vo.get("PR_RECORDDATE"));
+			  json.put("PR_RECORD", vo.get("PR_RECORD"));
+			  //json.put("m_index", vo.get("m_index"));
 			  jsonArray.add(json);
 			  log.info("json : "+json);
 			  
@@ -136,40 +143,53 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
-		//sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
-		//세션처리 다시해야함!
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		log.info("memberUpdate 중");
+		
+		//vo에 부족한 값 sessionVO 에서 주입
 		vo.setM_index(sessionVO.getM_index());
 		vo.setM_id(sessionVO.getM_id());
-		vo.setM_birth(sessionVO.getM_birth());
-		vo.setM_gender(sessionVO.getM_gender());
-		vo.setM_email_1(sessionVO.getM_email_1());
-		//vo.setLoginMsg(sessionVO.getLoginMsg());
-		log.info(vo);
-		
-		//썸네일 업데이트 체크
-		if(sessionVO.getM_picture().equals("")) {
-			log.info("이미지없음");
-			vo.setRequest_thumbnail(sessionVO.getRequest_thumbnail());
+		log.info("vo.m_index : "+vo.getM_index());
+		//썸네일 업데이트 체크 및 실행
+		if(vo.getM_picture()==null || vo.getM_picture().equals("")) {
+			log.info("업로드된 이미지 없음");
 		}else {
 			Map<String, Object> hmap = new HashMap<String, Object>();
 			hmap.put("m_picture", vo.getM_picture().getBytes());
 			hmap.put("m_index", vo.getM_index());
 			service.updateThumbnail(hmap);
+			sessionVO.setRequest_thumbnail(vo.getM_picture().getBytes());
 		}
 		
+		//멤버 업데이트 실행
+		int check = service.memberUpdate(vo);
+		log.info(check); //1일 경우 성공
+		
+		//바뀐 내용으로 세션처리!
+		
+		//바뀐 내용 세션 주입
+		sessionVO.setM_nickName(vo.getM_nickName());
+		sessionVO.setM_email_1(vo.getM_email_1());
+		sessionVO.setM_pw(vo.getM_pw1());
+		sessionVO.setM_tel(vo.getM_tel());
+		sessionVO.setM_address(vo.getM_address());
+		sessionVO.setM_name(vo.getM_name());
+		
+		//sessionVO에 새로운 정보 받아오기
+		sessionVO = service.getMemberList(sessionVO);
+		//썸네일 불러오기
 		if(sessionVO.getRequest_thumbnail() != null) {
 			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
 			String thumbnail = new String(imageContent);
+			log.info(thumbnail);
 			sessionVO.setM_picture(thumbnail);
 		}else {
 			sessionVO.setM_picture("");
 			System.out.println("썸네일 없음.");
 			}
-		
-		int check = service.memberUpdate(vo);
-		session.setAttribute("sessionVO", vo);
-		log.info(check);
+
+		//session에 sessionVO주입
+		session.setAttribute("sessionVO", sessionVO);
 		
 		
 		mav.addObject("sessionVO", sessionVO);
