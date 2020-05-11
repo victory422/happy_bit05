@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.vo.CoVO;
 import vs.cr.cr_001_1.vo.CrVO;
 import vs.li.li_001_01.vo.LI_VO;
 
@@ -25,6 +27,8 @@ public interface Cr_Service {
 	public int cr_delete(String co_r_index);
 	//대회 후기 수정
 	public int cr_update(CrVO crvo);
+	//대회 리스트 출력
+	public List<AcVO> co_list();
 	
 	//좋아요 추천수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	//조회수

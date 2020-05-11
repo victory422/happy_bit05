@@ -2,6 +2,7 @@ package vs.cm.cm_001_1.mapper;
 
 import java.util.List;
 
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.co.co_001_1.dto.Page_DTO;
 import vs.cr.cr_001_1.vo.CrVO;
 
@@ -25,4 +26,7 @@ public interface CrMapper {
 	
 	//대회 후기 수정
 	public int cr_update(CrVO crvo);
+	//대회 리스트 출력
+	public List<AcVO> co_list();
+	
 }

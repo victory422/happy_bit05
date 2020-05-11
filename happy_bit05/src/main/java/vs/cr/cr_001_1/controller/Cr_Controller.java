@@ -19,6 +19,7 @@ import com.google.gson.JsonObject;
 
 import vs.board.good.vo.GOOD_VO;
 import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.service.Co_Service;
 import vs.co.co_001_1.vo.PageUtil;
 import vs.cr.cr_001_1.service.Cr_Service;
 import vs.cr.cr_001_1.vo.CrVO;
@@ -31,12 +32,15 @@ public class Cr_Controller {
 
 	@Autowired
 	private Cr_Service cr_service;
-	
+	@Autowired
+	private Co_Service co_service;
 
 	
 	//대회 후기 리스트
 	@GetMapping("cr_001_1")
 	public void cr_List(Model model, Page_DTO dto) throws Exception {
+		
+		dto.setAmount(10);
 		
 		model.addAttribute("data", cr_service.Cr_List(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));
@@ -47,8 +51,9 @@ public class Cr_Controller {
 	}
 	//대회 후기 작성폼이동
 	@GetMapping("cr_002_1")
-	public void cr_register() {
-			
+	public void cr_register(Model model) {
+		//대회 리스트 출력
+		model.addAttribute("data",cr_service.co_list());
 		
 	}
 	
@@ -167,6 +172,10 @@ public class Cr_Controller {
 			String msgs;
 			HashMap<String,Object> hashmap = new HashMap<String,Object>();
 			
+			if(member == null) {
+				obj.addProperty("msg", "no");
+				return obj.toString();
+			}else {
 			
 			
 			System.out.println("like : cr_index : "+vo.getCo_r_index());
@@ -209,7 +218,7 @@ public class Cr_Controller {
 			System.out.println("메세지 : "+msgs);
 			
 			obj.addProperty("good_cnt", good_cnt);
-			obj.addProperty("m_index", "admin");
+			obj.addProperty("m_index", member.getM_index());
 			obj.addProperty("board", vo.getCo_r_index());
 			obj.addProperty("good_check", good_check);
 			obj.addProperty("msg",msgs);
@@ -223,6 +232,7 @@ public class Cr_Controller {
 			 */
 		
 			return obj.toString();
+			}
 		}
 		
 		
@@ -233,6 +243,9 @@ public class Cr_Controller {
 			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
 			int good_check = 0;
+			
+			if(member != null) {
+				
 			
 			JsonObject obj = new JsonObject();
 			HashMap<String,Object> hashMap = new HashMap<String,Object>();
@@ -249,6 +262,11 @@ public class Cr_Controller {
 			obj.addProperty("good_check", good_check);
 			
 			return obj.toString();
+			
+			}else {
+				return null;
+			}
+			
 		}
 		
 	

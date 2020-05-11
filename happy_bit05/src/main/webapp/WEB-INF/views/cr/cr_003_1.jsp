@@ -15,7 +15,7 @@
 			<c:forEach items="${data}" var="data">
 			<table style="width:100%;">
 				<tr>
-					<td style="width:70%"><span style="font-size:1.5rem;">${data.co_r_title }&emsp; </span> 종목: ${data.co_r_type }</td>
+					<td style="width:70%"><span style="font-size:1.5rem;">${data.co_r_title }&emsp; </span> 대회명 : ${data.co_r_type }</td>
 					<td style="width:30%; text-align: right;">${data.co_r_day }</td>
 				</tr>
 				<tr>
@@ -41,11 +41,11 @@
 					<c:choose>
 						<c:when test="${data.m_index ne null}">
 							<a href='javascript: like_func();'><img
-								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.co_r_good }</span>
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${data.co_r_good }</span>
 						</c:when>
 						<c:otherwise>
 							<a href='javascript: login_need();'><img
-								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.co_r_good }</span>
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${data.co_r_good }</span>
 						</c:otherwise>
 					</c:choose>
 					</td>
@@ -114,6 +114,18 @@ console.log("인덱스 : ",board_index);
 var popupWidth = 600;
 var popupHeight = 450;
 
+var popupX = (window.screen.width / 2) - (popupWidth / 2); 
+// 만들 팝업창 width 크기의 1/2 만큼 보정값으로 빼주었음
+ 
+var popupY= (window.screen.height / 2) - (popupHeight / 2);
+// 만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
+ 
+//신고하기 창띄우기
+function report(){
+	//re_type 게시판 마다 맞게 바꿔주기
+	 window.open("/re/report?re_type=cr&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
+	
+}
 
 
 //페이지 로딩시 댓글 목록
@@ -138,7 +150,7 @@ $(document).ready(function() {
 				     
 			},
 			 error: function(request, status, error){
-				 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				 console.log("비회원")
 			 }
 			 })
 		})();
@@ -163,7 +175,8 @@ function like_func(){
 		      var like_img = '';
 		      msg += data.msg;
 		      alert(msg);
-		      
+		      if(msg != 'no'){
+			      	      
 		      if(data.good_check == 0){
 		        like_img = "/resources/img/dislike.png";
 		      } else {
@@ -172,6 +185,10 @@ function like_func(){
 		      $('')
 		      $('#like_img').attr('src', like_img);
 		      $('.good_cnt').text(data.good_cnt);
+		      
+		      }else{
+		    	  alert("로그인이 필요합니다.")
+		      }
 		      /* $('#like_check').html(data.like_check); */
 		    },
 		    error: function(request, status, error){
@@ -221,7 +238,7 @@ function commentList() {
 			$.each(data,function(key, value) {
 					a += '<div class="commentArea" style="margin-bottom: 15px;">';
 					a += 	'<div class="commentInfo'+value.com_index+'"> 작성자 : '+value.m_nickname+'';		
-					a +=	'<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
+					a +=	'&emsp;<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
 					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
 					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
 	                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
@@ -292,6 +309,9 @@ function commentInsert(insertData) {
 		type : 'post',
 		data : insertData,
 		success : function(data) {
+			if(data == 0){
+				alert("로그인이 필요합니다.");
+			}
 			if (data == 1) {
 				commentList(); //댓글 작성 후 댓글 목록 reload
 				alert("댓글 작성");

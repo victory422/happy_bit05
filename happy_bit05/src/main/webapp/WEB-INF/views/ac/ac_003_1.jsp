@@ -11,17 +11,17 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <div class="container" style="margin-top: 50px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px; margin-top:30px; ">
-			<table class="table table-striped col-12" style="margin-top: 50px">
-			<tr>
-				<td><h1>대회명 : ${data.get(0).co_b_title }</h1></td>
-			</tr>
-			<tr>
-				<td><h3>대회 장소 : ${data.get(0).co_b_area }</h3></td>
-			</tr>
-			<tr>
-				<td><h3>대회 일시: ${data.get(0).co_b_day }</h3></td>
-			</tr>
-			</table>
+			<div class="row col-12">
+			<div class="col-8">대회명 : ${data.get(0).co_b_title }</div>
+			<div class="col-4" style="text-align: right;"> 대회 일시: ${data.get(0).co_b_day }</div>
+			</div>
+			<div class="row col-12">
+			<div class="col-8">대회 장소 : ${data.get(0).co_b_area }</div>			
+			<div class="col-4" style="text-align: right;">접수기간 : ${data.get(0).co_b_start } ~ ${data.get(0).co_b_end }</div>
+			</div>
+			<br>
+			
+			<div style="text-align: center;"><h3>참가자 리스트</h3></div><br>
 			<table class="table table-striped col-12">
 			<thead>
 			<tr>
@@ -46,9 +46,8 @@
 				</tr>					 
 			</c:forEach>
 			</table>
-			
-		</div>
-		
+	
 	</div>
+</div>
 </body>
 </html>

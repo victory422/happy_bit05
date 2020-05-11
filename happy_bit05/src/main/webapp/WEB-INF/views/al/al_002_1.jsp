@@ -203,10 +203,19 @@ function index_detail(index){
 	 }
 	 if(sub_index == 'cr'){
 		 a='cr_003_1';
-		 b='co_r_index';
-		 console.log(a);
-		 console.log(b);
-		 
+		 b='co_r_index';		 
+	 }
+	 if(sub_index == 'li'){
+		 a='li_006_1';
+		 b='li_index';
+	 }
+	 if(sub_index == 'lc'){
+		 a='003/lc_get';
+		 b='lc_index';
+	 }
+	 if(sub_index == 'pr'){
+		 a='pr_003_1';
+		 b='pr_index';
 	 }
 	 /*
 	 if(sub_index == 'co') a='co';
