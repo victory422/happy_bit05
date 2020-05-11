@@ -298,6 +298,7 @@ public class LI_controller {
 	public String modify(LI_VO vo,Model model) {
 		
 		service.modify(vo);
+		log.info(" 수정 게시판유ㅇ형"+vo.getLi_b_type());
 		
 		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
