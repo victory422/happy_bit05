@@ -63,12 +63,12 @@
 
 </head>
 <%@ include file="../includes/mobile_topbar.jsp"%>
-<div class="container col-md-10 bg-light" style="padding:30px;">
+<div class="container col-md-10 bg-light" style="padding:0px;">
 	
 		HOME > 코스 > ${lc_get.lc_type }
 			<hr/>
 
-		<div class="row justify-content-center col-11" style="margin:auto;">
+		<div class="row justify-content-center col-12" style="margin: 0px; padding: 0px;">
 			<div class="w-100"></div>
 			<div class = "col-12" style="margin-bottom:30px;">
 				${lc_get.lc_type }
