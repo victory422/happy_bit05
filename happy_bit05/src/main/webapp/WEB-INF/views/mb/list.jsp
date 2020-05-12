@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<title>myrecord</title>
+<title>modal</title>
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -124,7 +124,43 @@ nav ul li {
 </style>
 
 <script>
+	
 
+function course_url(j){
+	alert('course_change'+j);
+	$('#course_change'+j).submit();
+}
+
+
+
+(function (){
+	$.ajax({
+		type : "get",
+		url : '../mb/list',
+		success : function(data){
+			console.log(data);
+			htm = "<tr class='info'><td>변경할 코스를 선택해주세요.</td></tr>"
+
+			
+			htm += '<tr><td></td></tr>'
+				for(var j in data) {
+				
+				htm += '<tr class="success" >';
+				htm += '<td><a href="/mb/mb_004_1?lc_index='+data[j].lc_index+'">코스명 : '+data[j].lc_title+'</a></td>';
+				htm += '</tr>';
+				
+				console.log(htm);
+				}
+			
+			$('#vals').append(htm);
+			
+		},
+		error : function(data) {
+			alert("error : "+ (JSON.stringify(data)));
+			console.log("error : "+ (JSON.stringify(data)));
+		}
+	});
+}());
 
 
 </script>
@@ -134,48 +170,10 @@ nav ul li {
 
 
 
-	<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
 
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
-			<table class="table table-hover" style="margin-top: 30px;">
-				<tr class="active"
-					style="font-weight: bold; background-color: #e9ecef;">
-					<td width="25%">제목</td>
-					<td width="10%">코스유형</td>
-					<td width="10%">거리<small>(km)</small></td>
-					<td width="65%">지역</td>
-
-
-				</tr>
-				<c:if test="${empty listVO }">
-							${"등록된 관심코스가 없습니다."}
-							
-				</c:if>
-				<tbody id="paging">
-
-					<c:forEach var="val" items="${listVO }" varStatus="status">
-
-
-						<tr id="corseDetail" class="success" 
-							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
-
-							<td width="25%">${val.lc_title}</td>
-							<td width="10%">${val.lc_type}</td>
-							<td width="10%">${val.lc_distance}</td>
-							<td width="65%">${val.lc_address}</td>
-							<%-- <td>
-								<button
-									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
-									보기
-								</button>
-							</td> --%>
-						</tr>
-
-					</c:forEach>
-
-				</tbody>
+			<table id="vals" class="table table-hover" style="margin-top: 0px;">
 			</table>
 
 </div>
@@ -183,6 +181,7 @@ nav ul li {
 
 <script type="text/javascript">
 
+	
 	function sort(type) {
 		console.log(type);	
 		
@@ -221,8 +220,6 @@ nav ul li {
 		});
 		
 	}
-		
-	
 
 
 	

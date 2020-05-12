@@ -83,7 +83,7 @@
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
 			<div class="col-md-10">
-				<h1>장비게시판<small> (장비 평가)</small></h1>
+				<h1>장비 Tip</h1>
 			</div>
 			<div class="col-md-2">		
 			<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
@@ -157,19 +157,17 @@
 					<td style="text-align: right;"><input type="checkbox"></td>
 					</tr> -->
 					<tr class="active" style="text-align: center;">
-						<td width="8%">게시물 번호</td>
-						<td width="8%">종목</td>
-						<td width="32%">게시글 제목</td>
+						<td width="10%">종목</td>
+						<td width="34%">게시글 제목</td>
 						<td width="10%">장비 종류</td>
-						<td width="10%">작성자</td>
-						<td width="16%">작성날자</td>
-						<td width="8%">조회수</td>
-						<td width="8%">좋아요</td>
+						<td width="12%">작성자</td>
+						<td width="18%">작성날자</td>
+						<td width="9%">조회수</td>
+						<td width="9%">좋아요</td>
 					</tr>
 					<tbody id="table_list">
 						<c:forEach var="board" items="${list }">
 							<tr class="success" style="text-align: center;">
-								<td>${board.li_index }</td>
 								<td>
 									<c:out value="${board.li_type eq 'all'?'전체': board.li_type}"/>
 								</td>

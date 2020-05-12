@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<style>
+.max-small {
+    width: auto; height: auto;
+    max-width: 1900px;
+    max-height: 1080px;
+}
+</style>
 	<header>
 		<div id="carouselExampleIndicators" class="carousel slide"
 			data-ride="carousel">
@@ -11,24 +18,17 @@
 			</ol>
 			<div class="carousel-inner" role="listbox">
 				<!-- Slide One - Set the background image for this slide in the line below -->
-				<div class="carousel-item active"
-					style="background-image: url('http://placehold.it/1900x1080')">
-					<div class="carousel-caption d-none d-md-block">
-						<h3>First Slide</h3>
-						<p>This is a description for the first slide.</p>
-					</div>
+				<div class="carousel-item active max-small" style="background-image: url('/resources/img/midle1.jpg')">
 				</div>
 				<!-- Slide Two - Set the background image for this slide in the line below -->
-				<div class="carousel-item"
-					style="background-image: url('http://placehold.it/1900x1080')">
+				<div class="carousel-item max-small"
+					style="background-image: url('/resources/img/midle2.png')">
 					<div class="carousel-caption d-none d-md-block">
-						<h3>Second Slide</h3>
-						<p>This is a description for the second slide.</p>
 					</div>
 				</div>
 				<!-- Slide Three - Set the background image for this slide in the line below -->
-				<div class="carousel-item"
-					style="background-image: url('http://placehold.it/1900x1080')">
+				<div class="carousel-item max-small"
+					style="background-image: url('/resources/img/midle3.png')">
 					<div class="carousel-caption d-none d-md-block">
 						<h3>Third Slide</h3>
 						<p>This is a description for the third slide.</p>
