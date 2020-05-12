@@ -165,11 +165,7 @@
 		</div>
 		
 		<form id='actionForm' action="/lc/002/list" method='get'>
-			<c:choose>
-				<c:when test="${pageUtil.cri.lc_type } != null">
-					<input type="hidden" name="lc_type" value='${pageUtil.cri.lc_type }'/>
-				</c:when>
-			</c:choose>
+			<input type="hidden" name="lc_type" value='${pageUtil.cri.lc_type }'/>
 			<input type="hidden" name="pageNum" value='${pageUtil.cri.pageNum }'/>
 			<input type="hidden" name="amount" value='${pageUtil.cri.amount }'/>
 			<input type="hidden" name="type" value='<c:out value="${pageUtil.cri.type }"/>'/>
