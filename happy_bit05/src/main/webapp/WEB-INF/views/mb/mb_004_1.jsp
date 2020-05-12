@@ -871,6 +871,31 @@ function aa2() {
 
 }
 
+// 완주했을때 자동 저장.
+function regist(){
+	
+	//완주시간.
+	var time = document.getElementById("time").value;
+	console.log(time);
+	
+	$.ajax({
+		url: "../mb/#",
+		type: "GET",
+		cache: false,
+		//dataType: "json",
+		data: "hi",
+		success: function(data) {
+			 alert('success'+data);
+			 $('#showmap').html(data.lc_xy_arr);
+			 $('#xy_arr').val(data.lc_xy_arr);
+		},
+		 error: function(request, status, error){
+			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			 console.log('error:'+error);
+		 }
+		 });
+}
+
 </script>
 
 </body>
