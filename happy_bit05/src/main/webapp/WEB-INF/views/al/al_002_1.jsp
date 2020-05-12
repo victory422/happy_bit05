@@ -28,10 +28,11 @@
   
   
 <div class="container"> 
+<h1 style="text-align: center; margin-top: 30px;">신고 게시글 관리</h1>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">admin 대회 목록</div>
+
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 				
@@ -102,7 +103,7 @@
 							</tr>
 						</thead>
 						<c:forEach items="${re_list}" var="data">
-							<tr>
+							<tr>							
 								<td>${data.board_index }</td>
 								<td>${data.m_index}</td>
 								<td><a style="color: blue" onclick="index_detail('${data.board_index }')" id="test${data.board_index }" value="${data.board_index }">${data.de_target}</a></td>
@@ -133,13 +134,13 @@
 					<div class="col-md-10">
 						<ul class="pagination d-flex justify-content-center">
 							<c:if test="${pageUtil.prev }">
-								<li class="page-item"><a class="page-link" href="/al/al_001_1?page=${pageUtil.start-1}">Previous</a></li>
+								<li class="page-item"><a class="page-link" href="/al/al_002_1?page=${pageUtil.start-1}">Previous</a></li>
 							</c:if>
 							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
-								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/al/al_001_1?page=${pNum }">${pNum }</a></li>
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/al/al_002_1?page=${pNum }">${pNum }</a></li>
 							</c:forEach>
 							<c:if test="${pageUtil.next }">
-								<li class="page-item"><a class="page-link" href="/al/al_001_1?page=${pageUtil.end+1 }">Next</a>
+								<li class="page-item"><a class="page-link" href="/al/al_002_1?page=${pageUtil.end+1 }">Next</a>
 								</li>
 							</c:if>
 						</ul>
@@ -157,7 +158,8 @@
 var co_b_end = $('[name=co_b_end]').val();
 
 $(document).ready(function(){
-	
+
+	console.log(li_b_type)
 	console.log(co_b_end);
 	
 	$('a.page_now').on('click',function(){
@@ -200,42 +202,28 @@ function index_detail(index){
 	 if(sub_index == 'co'){
 		 a='co_004_1';
 		 b="co_b_index";
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
 	 }
 	 if(sub_index == 'cr'){
 		 a='cr_003_1';
-		 b='co_r_index';		 
+		 b='co_r_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
 	 }
 	 if(sub_index == 'li'){
 		 a='li_006_1';
 		 b='li_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index+"&li_b_type=";
 	 }
 	 if(sub_index == 'lc'){
 		 a='003/lc_get';
 		 b='lc_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
 	 }
 	 if(sub_index == 'pr'){
 		 a='pr_003_1';
 		 b='pr_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
 	 }
-	 /*
-	 if(sub_index == 'co') a='co';
-	 if(sub_index == 'co') a='co';
-	 if(sub_index == 'co') a='co';
-	 */
-	 //location.href="/co/co_004_1?co_b_index="+index;
-	 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
-	 /*
-	 $.ajax({ 
-			url : '/al/detail',
-			type : 'get',
-			data : {'index' : index, 'sub_index' : sub_index},
-			success : function(data) {
-				
-				
-				
-			}
-	 });
-	*/
 	
 }
 

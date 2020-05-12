@@ -40,21 +40,19 @@ public class AL_Controller {
 		List al_list = al_service.al_list(dto);
 		
 		 model.addAttribute("al_list", al_list);
-		 model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
 		 model.addAttribute("type",dto.getTypeArr());
-		 model.addAttribute("page", dto.getPage());
-		System.out.println("page : " + dto.getPage());
-		System.out.println("Amount : " + dto.getAmount());
-		 
 		 
 	}
 	//신고 게시글 조회
 	@GetMapping("/al_002_1")
-	public void re_list(Model model) throws Exception{
+	public void re_list(Model model,Page_DTO dto) throws Exception{
 		
-		System.out.println("신고게시글 ㅇㅇ");
+		dto.setAmount(10);
 		
-		model.addAttribute("re_list", al_service.re_list());
+		model.addAttribute("re_list", al_service.re_list(dto));
+		model.addAttribute("pageUtil",new PageUtil(dto,al_service.get_total(dto)));
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
 		
 	}
 	

@@ -23,8 +23,7 @@
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
 			
 			<label class="input-group-text col-sm-12">
-			
-				<select
+			<select
 				
 					id="type" name="type" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
@@ -42,27 +41,13 @@
 					>자전거</option>
 					
 				</select> 
-	
-				<!-- <select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
-					style="margin-left: 10px; width: 15%">
-					<option value=null>장비선택</option>
-					<option value="운동복">운동복</option>
-					<option value="안전장비">안전장비</option>
-					<option value="신발">신발</option>
-					<option value="기타">기타</option>
-									<%-- <c:forEach items=”${사용할변수}” var=”넘어온데이터”>
-									<option value=”${사용할변수.값}”
-										${아이템.변수}
-									</option> 
-								</c:forEach>--%>
-				</select> -->
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
-						<option value=null selected>제목</option>
-						<option value="내용">내용</option>
-						<option value="all">제목+내용</option>
-						<option value="장소">장소</option>
+						<option value=null selected>선택</option>
+						<option value=제목>제목</option>
+						<option value="대회명">대회명</option>
+						<option value="작성자">작성자</option>
 				</select>
 					<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="검색어 입력" onsubmit="page_put()"/>
 			</label>
@@ -145,7 +130,7 @@ $(document).ready(function(){
 		//선택한 장비값
 		//aArr[2]
 		//현재 선택된 a태그안  
-		$(this).attr('href',"/cr/cr_001_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
+		$(this).attr('href',"/cr/cr_001_1?page="+$(this).text()+"&type="+aArr[0])
 		})
 	
 	//alert(${param.test1});

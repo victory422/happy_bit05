@@ -28,10 +28,11 @@
   
   
 <div class="container"> 
+<h1 style="text-align: center; margin-top: 30px;">회원 관리</h1>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">admin 대회 목록</div>
+				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 				

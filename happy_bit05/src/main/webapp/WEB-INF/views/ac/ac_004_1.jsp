@@ -10,6 +10,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
  <div class="container" style="margin-top: 50px; margin-botton: 20px;">
+ <h1 style="text-align: center; margin-top: 30px;">대회 참가자 관리</h1>
 		<div class="content" style="width: 1000px; margin-top:30px; ">	
 		<form method="get">
 				

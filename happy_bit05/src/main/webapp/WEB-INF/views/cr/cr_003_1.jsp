@@ -15,16 +15,16 @@
 			<c:forEach items="${data}" var="data">
 			<table style="width:100%;">
 				<tr>
-					<td style="width:70%"><span style="font-size:1.5rem;">${data.co_r_title }&emsp; </span> 대회명 : ${data.co_r_type }</td>
+					<td style="width:70%"><span style="font-size:1.5rem;">${data.co_r_title }&emsp; </span> </td>
 					<td style="width:30%; text-align: right;">${data.co_r_day }</td>
 				</tr>
 				<tr>
-					 <td>작성자 : ${data.m_nickname }</td>
+					<td>대회명 : ${data.co_r_type }</td>
 					<td style="text-align: right"><h6>추천수:<span class="good_cnt">${data.co_r_good }</span> 조회수:${data.co_r_see }</h6> </td>
 				</tr>
 				<tr>
-					<td></td>
-					<td style="text-align: right"><a onclick="report()" class="text-muted">신고하기</a></td>
+					 <td>작성자 : ${data.m_nickname }</td>
+					 <td style="text-align: right"><a onclick="report()">신고하기</a></td>
 				</tr>
 			</table>
 			<br>
@@ -51,10 +51,18 @@
 					</td>
 					<td style="width:40%; text-align: right;">
 					<div>
-					<c:if test="${data.m_index ne null}">
+					<c:if test="${member.m_index eq data.m_index}">
 					<input class="btn btn-info" type="button" value="수정" onclick="location.href='/cr/cr_004_1?co_r_index=${data.co_r_index}'">	
 					</c:if>				
-					<input class="btn btn-info" type="button" value="삭제" onclick="cr_del()">							
+					<c:if test="${member.m_index eq 1}">
+					<input class="btn btn-info" type="button" value="수정" onclick="location.href='/cr/cr_004_1?co_r_index=${data.co_r_index}'">	
+					</c:if>
+					<c:if test="${member.m_index eq data.m_index }">
+					<input class="btn btn-info" type="button" value="삭제" onclick="cr_del()">
+					</c:if>
+					<c:if test="${member.m_index eq 1}">
+					<input class="btn btn-info" type="button" value="삭제" onclick="cr_del()">
+					</c:if>														
 					<button  class="btn btn-info" onclick="location.href='/cr/cr_001_1'">
 					목록으로 돌아가기 
 					</button>
