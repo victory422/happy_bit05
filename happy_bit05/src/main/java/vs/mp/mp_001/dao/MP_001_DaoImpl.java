@@ -92,5 +92,16 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		return vo.get(0);
 	}
 
+	@Override
+	public PageUtil pagingDownPage(Page_DTO dto) {
+		log.info("GetTotal DAO.....(downpage)");
+		System.out.println("dao getTotal : " +dto);
+		int total = session.selectOne("member.pagingDownPage", dto);
+		log.info("pagingDownPage total : "+total);
+		pageutil = new PageUtil(dto, total);
+		
+		return pageutil;
+	}
+
 
 }

@@ -27,4 +27,6 @@ public interface MP_001_Service {
 	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto);
 
 	List<MP_001_3_VO> getMCList(Page_DTO dto);
+
+	public PageUtil pagingDownPage(Page_DTO dto);
 }
