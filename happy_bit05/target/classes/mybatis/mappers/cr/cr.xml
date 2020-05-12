@@ -14,30 +14,15 @@
 						<when test="type == '자전거'.toString()">
 							co_r_type like '%'||'자전거'||'%'
 						</when>
-						<!-- 
-						<when test="type == '운동복'.toString()">
-							li_category like '%'||'운동복'||'%'
+						<when test="search_filter == '제목'.toString()">
+							co_r_title like '%'||#{input_text}||'%') or (co_r_title like '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '안전장비'.toString()">
-							li_category like '%'||'안전장비'||'%'
+						<when test="search_filter == '대회명'.toString()">
+							co_r_type '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '신발'.toString()">
-							li_category like '%'||'신발'||'%'
+						<when test="search_filter == '작성자'.toString()">
+							m_nickname like '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '기타'.toString()">
-							li_category like '%'||'기타'||'%'
-						</when>
-						 -->
-						<when test="search_filter == 'all'.toString()">
-								co_r_title like '%'||#{input_text}||'%') or (co_r_text like '%'||#{input_text}||'%'
-						</when>
-						<when test="search_filter == '내용'.toString()">
-							co_r_text like '%'||#{input_text}||'%'
-						</when>
-						<!-- 
-						<when test="search_filter == '장소'.toString()">
-							co_r_area like '%'||#{input_text}||'%'
-						</when> -->
 						<otherwise>
 							co_r_title like '%'||#{input_text}||'%'
 						</otherwise>
@@ -73,8 +58,8 @@
 
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
-	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index,co_r_good,co_r_see,m_nickname)
-	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index},0,0,#{m_nickname})
+	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index,co_r_good,co_r_see)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index},0,0)
 
 </insert>
 <!-- 게시물 총합 출력 쿼리 -->

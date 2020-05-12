@@ -5,7 +5,7 @@
 
 <select id="am_list" resultType="vs.ms.ms_001.vo.MS_001_VO">
 
-	select m_index,m_nickname,m_name,m_id,m_tel,m_count,m_state from member where m_count >= 1
+	select m_index,m_nickname,m_name,m_id,m_tel,m_count,m_state from member where m_count >= 1 order by m_count desc
 
 
 </select>

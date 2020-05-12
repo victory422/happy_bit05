@@ -51,7 +51,7 @@
 	
 	 <!-- 타입별 검색하기 -->
 	 <sql id="type_match" >
-		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+		<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
 					<trim prefix="OR">
 						<choose>
 							<when test = "lc_type == '육상'">
@@ -69,8 +69,7 @@
 	<!-- 리스트 뽑아오기 -->
 	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
 		<![CDATA[
-			select lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record, m_nickname
+			select *
 			from
 				(
 					select /*+INDEX_DESC(course lc_index) */
@@ -79,8 +78,22 @@
 					from
 						course c join member m
 					on
+		]]>	
+					<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
+					<trim prefix="OR">
+						<choose>
+							<when test = "lc_type == '육상'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+							<when test = "lc_type == '자전거'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+						</choose>
+					</trim>
+			</trim>
+		<![CDATA[
 						m.m_index = c.m_index
-					where
+					and
 		]]>	
 		
 			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -104,18 +117,6 @@
 				)
 				where rn > (#{pageNum} -1) * #{amount}
 		]]>
-				<trim prefix="AND (" suffix=")" prefixOverrides="OR">
-					<trim prefix="OR">
-						<choose>
-							<when test = "lc_type == '육상'">
-								lc_type like '%'||#{lc_type}||'%'
-							</when>
-							<when test = "lc_type == '자전거'">
-								lc_type like '%'||#{lc_type}||'%'
-							</when>
-						</choose>
-					</trim>
-			</trim>
 	</select>
 	
 	<!-- 게시글 갯수 세기 -->
@@ -123,8 +124,8 @@
 		select count(lc_index) from
 			( select * from course where 
 			<include refid="criteria"></include>
-			lc_index like 'lc_%'
 			<include refid="type_match"></include>
+			lc_index like 'lc_%'
 			)
 	</select>
 	
@@ -139,6 +140,9 @@
 					from
 						course c join member m
 					on
+		]]>
+						<include refid="type_match"></include>
+		<![CDATA[
 						m.m_index = c.m_index)
 				where
 		]]>
@@ -149,7 +153,6 @@
 			)	
 			where rownum <= 4
 		]]>
-			<include refid="type_match"></include>
 	</select>
 
 	<!-- 게시글 업로드 -->

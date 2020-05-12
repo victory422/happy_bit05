@@ -56,15 +56,30 @@ public class Re_001_1_Controller {
 			model.addAttribute("data",cr_service.cr_detail(board_index));
 		}else if(re_type.equals("pr")) {			
 			model.addAttribute("data",pr_service.pr_detail(board_index));
-		}else if(re_type.equals("lc")) {
+		}
+		/*
+		else if(re_type.equals("lc")) {
+			System.out.println("랑권씨 디테일");
 			model.addAttribute("data",lc_service.getLC(board_index));
-		}else if(re_type.equals("li")) {
+		}
+		*/
+		else if(re_type.equals("li")) {
 			model.addAttribute("data", li_service.detail_page(board_index));
 		}
 			
 		
 	}
+	//팀.장.님 신고하기 창
+	@GetMapping("/report1")
+	public void report_1(Model model,@RequestParam("re_type") String re_type,@RequestParam("board_index") String board_index) {
 		
+		if(re_type.equals("lc")) {
+			System.out.println("랑권씨 디테일");
+			model.addAttribute("data",lc_service.getLC(board_index));
+		}
+		
+	}
+
 	
 	//신고 작성
 	@PostMapping("/re_insert")

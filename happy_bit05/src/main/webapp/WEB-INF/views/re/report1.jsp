@@ -29,40 +29,20 @@
 	<div class="bs-callout" style="padding:10px; background-color: #dee2e6; margin-top:15px; font-weight: bold;">
 		신고하기
 	</div>
-	<c:forEach items="${data}" var="data">
 	<input type="hidden" name="m_index" id="m_index" value="${data.m_index}">
 	<table style="width:100%; margin-top:15px; ;" class="table-table">
 		<tr>
 			<td style="width:15%; font-weight: bold;">제&nbsp;&nbsp;&nbsp;&nbsp;목: </td>
-			<c:if test="${param.re_type == 'co'}">
-			<input type="hidden" name="title" id="title" value="${data.co_b_title }">
-			<input type="hidden" name="board_index" id="board_index" value="${data.co_b_index }">
-			<td style="width:85%"><c:out value="${data.co_b_title }"></c:out>  </td>
-			</c:if>   
-			<c:if test="${param.re_type == 'cr'}">
-			<input type="hidden" name="title" id="title" value="${data.co_r_title }">
-			<input type="hidden" name="board_index" id="board_index" value="${data.co_r_index }">
-			<td style="width:85%"><c:out value="${data.co_r_title }"></c:out>  </td>
-			</c:if>   
-			<c:if test="${param.re_type == 'pr'}">
-			<input type="hidden" name="title" id="title" value="${data.pr_title }">
-			<input type="hidden" name="board_index" id="board_index" value="${data.pr_index }">
-			<td style="width:85%"><c:out value="${data.pr_title }"></c:out>  </td>
-			</c:if>		
-			<c:if test="${param.re_type == 'li'}">
-			<input type="hidden" name="title" id="title" value="${data.li_title }">
-			<input type="hidden" name="board_index" id="board_index" value="${data.li_index }">
-			<td style="width:85%"><c:out value="${data.li_title }"></c:out>  </td>
+			<c:if test="${param.re_type == 'lc'}">
+			<input type="hidden" name="title" id="title" value="${data.lc_title }">
+			<input type="hidden" name="board_index" id="board_index" value="${data.lc_index }">
 			</c:if>
-			   
-			
 		</tr>
 		<tr>
 			<td style="font-weight: bold">작성자: </td>
 			<td><c:out value="${data.m_nickname }"></c:out></td>
 		</tr>
 	</table>	
-	</c:forEach>
 	<hr>
 	<table style="width:100%" class="table-talbe">	
 		<tr>

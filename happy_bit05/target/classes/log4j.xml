@@ -12,10 +12,10 @@
 	
 	<!-- Application Loggers -->
 	<logger name="org.ma.ma_001">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	<logger name="vs">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
@@ -37,7 +37,7 @@
 
 	<!-- Root Logger -->
 	<root>
-		<priority value="warn" />
+		<priority value="debug" />
 		<appender-ref ref="console" />
 	</root>
 	
