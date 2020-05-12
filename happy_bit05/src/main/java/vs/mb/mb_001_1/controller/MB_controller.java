@@ -103,7 +103,7 @@ public class MB_controller {
 		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		dto.setM_index(member.getM_index());
-		List<MP_001_3_VO> listVO = mp_001_service.getList(dto);
+		List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
 		return listVO;
 	}
 	
@@ -507,7 +507,7 @@ public class MB_controller {
 			log.info("session null! : "+session.getAttribute("sessionVO"));
 		}else {
 			dto.setM_index(member.getM_index());
-			List<MP_001_3_VO> listVO = mp_001_service.getList(dto);
+			List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
 			mav.addObject("listVO", listVO);
 			log.info("listVO1 : "+listVO);
 			

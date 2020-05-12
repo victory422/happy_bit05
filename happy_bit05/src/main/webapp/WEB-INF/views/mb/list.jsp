@@ -124,6 +124,14 @@ nav ul li {
 </style>
 
 <script>
+	
+
+function course_url(j){
+	alert('course_change'+j);
+	$('#course_change'+j).submit();
+}
+
+
 
 (function (){
 	$.ajax({
@@ -136,11 +144,11 @@ nav ul li {
 			
 			htm += '<tr><td></td></tr>'
 				for(var j in data) {
-				htm += '<form id="course_change'+j+'" action="/mb/mb_004_1?lc_index='+data[j].lc_index+'" method=get>'
+				
 				htm += '<tr class="success" >';
-				htm += '<td onclick="course_url('+j+')">코스명 : '+data[j].lc_title+'</td>';
+				htm += '<td><a href="/mb/mb_004_1?lc_index='+data[j].lc_index+'">코스명 : '+data[j].lc_title+'</a></td>';
 				htm += '</tr>';
-				htm += '</form>'
+				
 				console.log(htm);
 				}
 			
@@ -166,9 +174,6 @@ nav ul li {
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
 			<table id="vals" class="table table-hover" style="margin-top: 0px;">
-			<tr class="success" >
-				<td onclick="location.href=/mb/mb_004_1?lc_index='+data[j].lc_index+'">코스명 : '+data[j].lc_title+'</td>
-				</tr>
 			</table>
 
 </div>
@@ -214,10 +219,6 @@ nav ul li {
 			}
 		});
 		
-	}
-		
-	function course_url(j){
-		$("#course_change"+j).submit();
 	}
 
 
