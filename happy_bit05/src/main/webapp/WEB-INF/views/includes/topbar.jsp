@@ -34,7 +34,7 @@
 	<nav
 		class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/../">자전거육상</a>
+			<a class="navbar-brand" href="/../">BnR</a>
 			<button class="navbar-toggler navbar-toggler-right" type="button"
 				data-toggle="collapse" data-target="#navbarResponsive"
 				aria-controls="navbarResponsive" aria-expanded="false"
@@ -75,8 +75,8 @@
 							커뮤니티 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownBlog">
-							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">장비 평가</a>
-								<a class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">장비 관리 TIP</a> 
+							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">장비 TIP</a>
+							<!-- <a class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">장비 관리 TIP</a> -->
 								<a class="dropdown-item" href="/lt/lt_001_1?lt_b_type=트레이닝게시판">운동 TIP</a>
 						</div></li>
 					<li class="nav-item dropdown">
