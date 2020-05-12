@@ -2,7 +2,9 @@ package vs.mp.mp_001.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,10 +27,10 @@ public interface MP_001_Controller {
 
 	ModelAndView MP_001_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	String myCourse(Page_DTO dto) throws JsonProcessingException;
-
 	ModelAndView memberUpdate(MS_001_VO vo, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	ModelAndView MP_001_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	String myCourse(Page_DTO dto, ServletRequest request) throws JsonProcessingException;
 
 }

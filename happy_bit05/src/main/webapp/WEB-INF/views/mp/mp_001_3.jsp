@@ -177,20 +177,29 @@
 				<div class="col-md-6">
 					<ul class="pagination justify-content-end">
 						<c:if test="${pageUtil.prev }">
-							<li class="page-item"><a class="page-link"
-								href="/mp/myCourse/page=${pageUtil.start-1}">Previous</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/mp/myCourse?page=${pageUtil.start-1}">
+									Previous
+								</a>
+							</li>
 						</c:if>
 						<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }"
 							var="pNum">
 							<div class="mb-4" id="accordion" role="tablist"
 								aria-multiselectable="true"></div>
-							<li class="page-item ${pNum==pageUtil.dto.page?'active':''}"><a
-								class="page-link" href="/mp/myCourse/page=${pNum }">${pNum }</a>
+							<li class="page-item ${pNum==pageUtil.dto.page?'active':''}">
+								<a class="page-link" href="/mp/myCourse?page=${pNum}">
+									${pNum}
+								</a>
 							</li>
+							
 						</c:forEach>
 						<c:if test="${pageUtil.next }">
-							<li class="page-item"><a class="page-link"
-								href="/mp/myCourse/page=${pageUtil.end+1 }">Next</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/mp/myCourse?page=${pageUtil.end+1 }">
+									Next
+								</a>
+							</li>
 						</c:if>
 					</ul>
 				</div>
@@ -235,9 +244,8 @@
 										<td>게시여부</td>
 
 									</tr>
-									<tbody>
-										<tr id="detail" class="success">
-										</tr>
+									<tbody id="detail">
+										<!-- ajax 데이터 -->
 									</tbody>
 
 								</table>
@@ -245,24 +253,8 @@
 								<div id="row">
 
 									<!-- 페이징  -->
-									<div class="col-md-6">
-										<ul class="pagination justify-content-end">
-											<c:if test="${pageUtil.prev }">
-												<li class="page-item"><a class="page-link"
-													href="/mp/myCourse/page=${pageUtil.start-1}">Previous</a></li>
-											</c:if>
-											<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }"
-												var="pNum">
-												<li
-													class="page-item ${pNum==pageUtil.dto.page?'active':''}"><a
-													class="page-link" href="/mp/myCourse/page=${pNum }">${pNum }</a>
-												</li>
-											</c:forEach>
-											<c:if test="${pageUtil.next }">
-												<li class="page-item"><a class="page-link"
-													href="/mp/myCourse/page=${pageUtil.end+1 }">Next</a></li>
-											</c:if>
-										</ul>
+									<div class="col-md-6" id="ajaxPaging">
+										
 									</div>
 								</div>
 							</div>
@@ -291,32 +283,75 @@
 				td += '<td>' + lc_record + '</td>';
 				td += '<td>' + lc_date + '</td>';
 				$("#tdText").html(td);
-					
+			
+			var page = 1;
+			console.log("m_index : "+m_index);
 			$.ajax({ 
-			    type : "POST",  
-			    url : "/mp/myCourse/detail",  
-			    data : { "lc_index" :lc_index, "m_index" :m_index}, 
+			    type : "get",  
+			    url : "/mp/myCourse/detail/*",  
+			    data : { "lc_index" :lc_index, 
+			    		 "m_index" : sessionStorage.getItem("sessionScript"),
+			    		 "page" : page},
 			    dataType : "json",
-			    success : function(data){  
+			    success : function(data){
                     
-                    for(var i in data) {
-                    	console.log(data[i]);
-				    	console.log("console : ");
-				    	console.log("console : "+data[i]['RN']);
-				    	console.log("console : "+data[i]['PR_RECORDDATE']);
-				    	console.log("console : "+data[i]['PR_RECORD']);
-				    	
-				    	var td = "";
-						td += '<td>' + data[i]['RN'] + '</td>';
-						td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
-						td += '<td>' + data[i]["PR_RECORD"] + '</td>';
-						td += '<td>' + lc_record + '</td>';
-						td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
-								+data[i]["m_index"] + '</button></td>';
-						$("#detail").html(td);
+			    	var td = "";
+			    	
+                    for(i=0; i<data.length-1; i++) {
+					    	console.log("console : "+data[i]['RN']);
+					    	console.log("console : "+data[i]['PR_RECORDDATE']);
+					    	console.log("console : "+data[i]['PR_RECORD']);
+					    	
+					    	td += '<tr class="success">';
+							td += '<td>' + data[i]['RN'] + '</td>';
+							td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+							td += '<td>' + data[i]["PR_RECORD"] + '</td>';
+							td += '<td>' + lc_record + '</td>';
+							td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
+									+data[i]["m_index"] + '</button></td>';
+							td += '</tr>';
                     }
-                
+
+                    $("#detail").html(td);
+                	
+			    	var j = data.length-1; // 마지막 length는 페이지정보
+			    	console.log("j : "+j);
+                    var prev = data[j]['prev'];
+                    var next = data[j]['next'];
+                    var start = data[j]['start']*1;
+                    var end = data[j]['end']*1;
+                    var page = data[j]['page']*1;
+                    var paging = '';
+                    console.log(prev, next, start, end);
+                    console.log(page+1);
+                    paging += '<ul class="pagination justify-content-end">';
                     
+                    if(prev == 'true') {
+	                    paging += '<li class="page-item">';
+	                    paging += '<a class="page-link" href="/mp/myCourse?page='+ (-1+start) +'">Previous</a>';
+	                    paging += '</li>';
+                    }
+                    for(var pNum = start; pNum <= end; pNum++) {
+                    	paging += '<div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true"></div>';
+                    	if(pNum==page) {
+	                    	paging += '<li class="page-item active">';
+                    	}else paging += '<li class="page-item ">';
+                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ pNum +'">';
+                    	paging += pNum;
+                    	paging += '</a>';
+                    	paging += '</li>';
+                    }
+                    
+                    if(next == 'true') {
+                    	paging += '<li class="page-item">';
+                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ (1+end) +'">';
+                    	paging += 'Next';
+                    	paging += '</a>';
+                    	paging += '</li>';
+                    }
+                    paging += '</ul>';
+                    console.log(paging);
+                    $("#ajaxPaging").html(paging);
                 },  
 
 			    error:function(xhr,status,error,data){ //ajax 오류인경우  

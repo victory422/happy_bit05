@@ -1,21 +1,25 @@
 package vs.mp.mp_001.controller;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ibleaders.utility.ib_json.JSONArray;
-import com.ibleaders.utility.ib_json.JSONObject;
+
 import lombok.extern.log4j.Log4j;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.service.LO_001_Service;
@@ -74,18 +78,26 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	
 	@Override
 	@RequestMapping(value="/mp/myCourse")
-	public  ModelAndView MP_001_3 (HttpServletRequest request,
-			HttpServletResponse response ) throws Exception {
+	public  ModelAndView MP_001_3 ( 
+			HttpServletRequest request, HttpServletResponse response ) 
+			throws Exception {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		login.preHandle(request, response, session);
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		dto = new Page_DTO();
+		
+		//페이지주입
+		if(request.getParameter("page")!=null) {
+			int page = Integer.parseInt((request.getParameter("page")));
+			dto.setPage(page);
+		}
 		
 		try {
 			if(session.getAttribute("sessionVO")==null) {
 				log.info("session null! : "+session.getAttribute("sessionVO"));
 			}else {
-				dto.setM_index(sessionVO.getM_index());
+				dto.setM_index(sessionVO.getM_index()); //터짐
 				List<MP_001_3_VO> listVO = service.getMCList(dto);
 				mav.addObject("listVO", listVO);
 				log.info("getMCList : "+listVO);
@@ -96,11 +108,8 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				log.info("MP_001_3 mav완료");
 			}
 		}catch (Exception e) {
-			// TODO: handle exception
 			log.info(e);
-			log.info(dto);
-			log.info(sessionVO.getM_index());
-			dto.setM_index(sessionVO.getM_index());
+			// TODO: handle exception
 		}
 		
 		mav.setViewName("mp/mp_001_3");
@@ -110,28 +119,38 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	
 	
 	@Override
-	@RequestMapping(value="/mp/myCourse/detail")
+	@RequestMapping(value="/mp/myCourse/detail/*")
 	@ResponseBody
-	public  String myCourse (Page_DTO dto) throws JsonProcessingException  {
-			List<Map<String, String>> listVO2 = service.getMyCourseDetail(dto);
-			log.info("listVO2 : "+listVO2);
+	public  String myCourse (Page_DTO dto, 
+			ServletRequest request) throws JsonProcessingException  {
+
+			//리턴객체 생성
+			List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 			
-			JSONArray jsonArray = new JSONArray();
-			JSONObject json = null;
+			//session 설정
+			//페이지주입
+			pageutil = service.pagingDownPage(dto);
+			log.info("pageutil : "+pageutil);
 			
-			String jsonStr = new ObjectMapper().writeValueAsString(listVO2);
-			for(int i=0; i<listVO2.size();i++){
-			  json = new JSONObject();
-			  Map<String, String> vo = listVO2.get(i);
-			  json.put("RN", vo.get("RN"));
-			  json.put("PR_RECORDDATE", vo.get("PR_RECORDDATE"));
-			  json.put("PR_RECORD", vo.get("PR_RECORD"));
-			  //json.put("m_index", vo.get("m_index"));
-			  jsonArray.add(json);
-			  log.info("json : "+json);
-			  
-			}
-			pageutil = service.paging(dto);
+			//개인기록 주입
+			list = service.getMyCourseDetail(dto);
+			
+			//1번에 페이지정보
+			int count = list.size(); //개인기록 리스트 카운트 == rn
+			log.info(count);
+			Map<String, String> pageutilMap = new HashMap<String, String>();
+			pageutilMap.put("end", Integer.toString(pageutil.getEnd()));
+			pageutilMap.put("start", Integer.toString(pageutil.getStart()));
+			pageutilMap.put("page", Integer.toString(dto.getPage()));
+			pageutilMap.put("next", String.valueOf(pageutil.isNext()));
+			pageutilMap.put("prev", String.valueOf(pageutil.isPrev()));
+			list.add(count, pageutilMap);
+			
+			log.info("listVO2 : "+list);
+			
+			String jsonStr = new ObjectMapper().writeValueAsString(list);
+
+			log.info("jsonStr : "+ jsonStr);
 			log.info("MP_001_3 mav완료");
 
 			return jsonStr;
