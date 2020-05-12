@@ -58,15 +58,15 @@ public class LC_001_1_Controller {
 			
 			service.courseInsert(vo, vo2);
 			service.thumbnailInsert(hmap);
+			
+			System.out.println("값이 잘 가니? : " + vo.getLc_type());
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		
 		
-		
-		
-		return "redirect:/lc/002/list";
+		return "../../lc/002/list?lc_type=" + vo.getLc_type();
 	}
 	
 	@RequestMapping(value = "uploadCourse2", method = RequestMethod.POST)
