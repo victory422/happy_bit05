@@ -150,7 +150,7 @@ nav ul li {
 
 				</tr>
 				<c:if test="${empty listVO }">
-							${"등록된 관심코스가 없습니다."}
+							${"저장된 기록이 없습니다."}
 							
 				</c:if>
 				<tbody id="paging">
