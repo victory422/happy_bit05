@@ -25,10 +25,10 @@ public interface MP_001_Controller {
 
 	ModelAndView MP_001_1(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
-	ModelAndView MP_001_3(Page_DTO dto, HttpServletRequest request, HttpServletResponse response) throws Exception;
-
 	String myCourse(Page_DTO dto) throws JsonProcessingException;
 
 	ModelAndView memberUpdate(MS_001_VO vo, HttpServletRequest request, HttpServletResponse response) throws Exception;
+
+	ModelAndView MP_001_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }

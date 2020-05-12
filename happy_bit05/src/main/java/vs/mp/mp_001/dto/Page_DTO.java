@@ -24,7 +24,7 @@ public class Page_DTO {
 	}
 	public Page_DTO() {
 		page = 1;
-		amount = 100;
+		amount = 5;
 		lc_type = "";
 		m_index = "";
 		lc_index = "";

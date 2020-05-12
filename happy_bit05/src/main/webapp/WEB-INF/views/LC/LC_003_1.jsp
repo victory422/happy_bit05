@@ -31,13 +31,16 @@
 		<div class="row justify-content-center col-11" style="margin:auto;">
 			<div class="w-100"></div>
 			<div class = "col-12" style="margin-bottom:30px;">
-				${lc_get.lc_type }
+				<c:choose>
+					<c:when test="${lc_get.lc_type eq '육상'}"><img src="../../resources/img/lc/running.png" width="60px"/></c:when>
+					<c:when test="${lc_get.lc_type eq '자전거'}"><img src="../../resources/img/lc/cycle.png" width="60px"/></c:when>
+				</c:choose>
 				<br/>
-				<div><h5>${lc_get.lc_title }</h5></div>
+				<div><h4>${lc_get.lc_title }</h4></div>
 				<br/>
 				<div style="margin-bottom:50px;">
 					<div style="float:left;">
-						${lc_get.m_nickname } | ${lc_get.lc_date }
+						작성자 : ${lc_get.m_nickname } 	| 	  게시일 : ${lc_get.lc_date }
 					</div>
 					
 					<div style="float:right;">
@@ -92,20 +95,20 @@
 		<div class = "col-12" style="margin-bottom:30px;">
 			<div style="margin-bottom:50px;">
 				<div style="float:left;">
-					${lc_get.m_nickname } | ${lc_get.lc_date }
+					작성자 : ${lc_get.m_nickname } 	| 	  게시일 : ${lc_get.lc_date }
 				</div>
 				
 				<div style="float:right;">
-					댓글 0 개     |    
-					<a href="#">신고</a>
+					댓글 0 개 
 				</div>
 			</div>
 			
-			<div class="w-100">
+			<div class="w-100"></div>
+			<div class = "col-12" style="margin-bottom:30px;">
 				<div style="float:left;">
 					<c:if test="${member.m_index eq lc_get.m_index }">
-					<form action="lc_modify?">
-						<button type="submit" class="btn btn-secondary">수정하기</button>
+					<form id="modifyForm" action="lc_modify">
+						<button type="button" class="btn btn-secondary" onclick="modify()">수정하기</button>
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
 					</form>
 					<form>
@@ -242,7 +245,7 @@
 	//신고하기 창띄우기
 	function report(){
 	   //re_type 게시판 마다 맞게 바꿔주기
-	    window.open("/re/report?re_type=lc&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
+	    window.open("/re/report1?re_type=lc&board_index="+board_index+"", '새창', 'status=no, height=' + popupHeight  + ', width=' + popupWidth  + ', left='+ popupX + ', top='+ popupY); 
 	   
 	}
 
@@ -600,7 +603,7 @@
 			    type: "GET",
 			    cache: false,
 			    dataType: "json",
-			    data: 'lc_index=' +lc_index,
+			    data: {'lc_index' : lc_index},
 			    success: function(data) {
 			      var msg = '';
 			      var like_img = '';
