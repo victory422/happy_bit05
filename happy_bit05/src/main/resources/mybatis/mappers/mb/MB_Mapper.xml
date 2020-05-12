@@ -58,4 +58,19 @@
 		]]>
 	</select>
 	
+	<insert id="regist" parameterType="vs.mb.mb_001_1.vo.PR_VO">
+		<selectKey resultType="string" keyProperty="mp_index" order="BEFORE">
+			<![CDATA[
+				select mp_index from mycourse
+				where lc_index = #{lc_index}
+				and m_index = #{m_index}
+			]]>
+		</selectKey>
+		<![CDATA[
+		insert into myrecord values(
+			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, #{pr_text}, 0, 0, #{pr_resistdate}, sysdate, #{pr_record}, #{pr_thumbnail}, #{pr_type}, #{pr_public}
+		)
+		]]>
+	</insert>
+	
 </mapper>

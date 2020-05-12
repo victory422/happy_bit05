@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
+import vs.mb.mb_001_1.vo.PR_VO;
 
 @Component
 @AllArgsConstructor
@@ -67,6 +68,12 @@ public class MB_daoImpl implements MB_dao{
 	@Override
 	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
 		return session.selectList("lc.getMyRecordListSort", map);
+	}
+
+	@Override
+	public void regist(PR_VO pr_vo) {
+		// TODO Auto-generated method stub
+		session.insert("mb.regist", pr_vo);
 	}
 	
 	

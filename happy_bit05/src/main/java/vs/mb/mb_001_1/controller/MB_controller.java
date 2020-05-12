@@ -37,6 +37,7 @@ import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.service.MB_service;
+import vs.mb.mb_001_1.vo.PR_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
@@ -519,6 +520,21 @@ public class MB_controller {
 		mav.setViewName("/mb/mb_006_1");
 		
 		return mav;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/regist")
+	public void regist(@RequestParam("lc_index")String lc_index, @RequestParam("m_index")String m_index, 
+			@RequestParam("time") String time, @RequestParam("lc_title")String lc_title, PR_VO pr_vo) {
+		
+		pr_vo.setM_index(m_index);
+		pr_vo.setLc_index(lc_index);
+		pr_vo.setPr_record(time);
+		pr_vo.setLc_title(lc_title);
+		pr_vo.setPr_public("0");
+		
+		service.regist(pr_vo);
+		
 	}
 	
 }

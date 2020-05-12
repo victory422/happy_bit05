@@ -144,7 +144,10 @@
     </div>
 
 
-
+	<input type="hidden" name="lc_index" value="${vo.lc_index }"/>
+	<input type="hidden" name="m_index" value="${vo.m_index }"/>
+	<input type="hidden" name="lc_type" value="${vo.lc_type }"/>
+	<input type="hidden" name="lc_title" value="${vo.lc_title }"/>
 </div>
 
 <script>
@@ -380,6 +383,8 @@ function buttonEvt(){
 	    			      var $button = $('<button class="btn btn-primary">upload업로드</button>');
 
 	    			      $('#upload').html($button);
+	    			      
+	    			      regist(); //완주하면 자동 저장 함수 실행.
 	    			}
 	    			
 			}
@@ -850,20 +855,27 @@ function regist(){
 	var time = document.getElementById("time").value;
 	console.log(time);
 	
+	var lc_index = document.getElementById("lc_index").value;
+	var m_index = document.getElementById("m_index").value;
+	
 	$.ajax({
-		url: "../mb/#",
-		type: "GET",
+		url: "../mb/regist",
+		type: "POST",
 		cache: false,
-		//dataType: "json",
-		data: "hi",
+		dataType: "json",
+		async : "true",
+		data: {
+			"lc_index" : lc_index,
+			"m_index" : m_index,
+			"time" : time,
+			"lc_type" : lc_type,
+			"lc_title" : lc_title
+		},
 		success: function(data) {
-			 alert('success'+data);
-			 $('#showmap').html(data.lc_xy_arr);
-			 $('#xy_arr').val(data.lc_xy_arr);
+			 alert("수고하셨습니다. 기록은 자동 저장됩니다.");
 		},
 		 error: function(request, status, error){
-			 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			 console.log('error:'+error);
+			 alert("저장 오류");
 		 }
 		 });
 }
