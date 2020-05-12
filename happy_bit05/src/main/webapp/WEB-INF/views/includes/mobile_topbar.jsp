@@ -15,15 +15,14 @@
 						<li class="nav-item dropdown"><a
 						class="nav-link dropdown-toggle" href="#"
 						id="navbarDropdownPortfolio" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false"> 나의코스 </a>
+						aria-haspopup="true" aria-expanded="false"> 코스보기 </a>
 						<div class="dropdown-menu dropdown-menu-right"
 							aria-labelledby="navbarDropdownPortfolio">
 							<a class="nav-link" href="/mb/lc_002_1?lc_type=육상">육상</a> <a
 								class="nav-link" href="/mb/lc_002_1?lc_type=자전거">자전거</a>
 						</div></li>
-						<li class="nav-item"><a class="nav-link" href="/mb/lc_002_1">코스 게시판</a></li>
-						<li class="nav-item"><a class="nav-link" href="/mb/mb_006_1">나의기록</a></li>
-						<li class="nav-item"><a class="nav-link" href="/mb/mb_004_1">기록측정</a></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/mb_004_1">기록재기</a></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/mb_006_1">나의기록보기</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/logout" onclick="logout()">로그아웃</a></li>
 					</ul>
 			</div>

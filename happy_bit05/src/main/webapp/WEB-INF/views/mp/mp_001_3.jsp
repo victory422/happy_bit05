@@ -113,6 +113,7 @@
 			</div>
 		</form>
 
+
 		<!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
 			<table class="table table-hover" style="margin-top: 30px;">

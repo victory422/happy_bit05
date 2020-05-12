@@ -33,10 +33,14 @@ import vs.lc.lc_002_1.vo.LC_002_1_VO;
 import vs.lc.lc_002_1.vo.PageDTO;
 import vs.lc.lc_003_1.service.LC_003_1_Service;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
+import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.service.MB_service;
+import vs.mp.mp_001.dto.Page_DTO;
+import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
+import vs.mp.mp_001.vo.PageUtil;
 
 @Log4j
 @Controller
@@ -46,7 +50,6 @@ public class MB_controller {
 
 	private MB_service service;
 	LO_001_Service LO_Service;
-	private final Boolean DEBUG = true;
 	
 	
 	private LC_002_1_Service lc_002_1_service;
@@ -54,6 +57,8 @@ public class MB_controller {
 	private LO_001_VO member;
 	private LC_003_1_VO lc_003_1_vo;
 	private LC_003_1_Service lc_003_1_service;
+	private MP_001_Service mp_001_service;
+	
 	
 	@RequestMapping(value="/mb_001_1")
 	public  ModelAndView MB_001_1 (HttpServletRequest request, HttpServletResponse response 
@@ -64,38 +69,51 @@ public class MB_controller {
 		return mav;
 	}
 	@RequestMapping("/mb_003_1")
-	public void mb_003_1() {
+	public void mb_003_1(HttpSession session,Model model) {
 		log.info("--------------------------------모바일 홈 페이지 mobile home------------------------------");
+
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
+		model.addAttribute("member",member);
+
 	}
 	
 	@RequestMapping("/mb_004_1")
-	public void mb_004_1() {
+	public void mb_004_1(HttpSession session, @RequestParam String lc_index,Model model) {
 		log.info("--------------------------------기록 측정 페이지 record page------------------------------");
+		session.setAttribute("session_lc_index", lc_index);
+		log.info("세션 lc_index : "+session.getAttribute("session_lc_index"));
+		
+		
+		LC_003_1_VO vo = service.getLC(lc_index);
+		
+		model.addAttribute("vo",vo);
 		
 	}
 	@RequestMapping("/mb_005_1")
 	public void mb_005_1() {
-		if(DEBUG) {
 		log.info("--------------------------------코스 변경 페이지 cours page------------------------------");
-		}
 	}
 	
-	@RequestMapping("/test")
-	public void test() {
-		log.info("--------------------------------test------------------------------");
+	@ResponseBody
+	@RequestMapping("/list")
+	public List<MP_001_3_VO> list(HttpSession session,@ModelAttribute Page_DTO dto) {
+		log.info("--------------------------------list------------------------------");
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		dto.setM_index(member.getM_index());
+		List<MP_001_3_VO> listVO = mp_001_service.getList(dto);
+		return listVO;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/load")
-	public LC_003_1_VO main(String[] args, String lc_index) {
+	public LC_003_1_VO main(String[] args, HttpSession session) {
 		
-		JsonObject obj = new JsonObject();
+		String lc_index = (String) session.getAttribute("session_lc_index");
 		
-		
-		lc_index = "lc_0000000121";
-		
+		log.info("코스 인덱스 : "+lc_index);
 		
 		System.out.println("컨트롤러 단에서 번호는 : " + lc_index);
 		
@@ -135,16 +153,12 @@ public class MB_controller {
 			session.setAttribute("sessionVO", LO_vo);
 			
 			msg = "ok";
-			if(DEBUG) {
 				log.info("로그인 성공");
-			}
 		}else {
 			
 			//model.addAttribute("msg", "fail");
 			msg = "fail";
-			if(DEBUG) {
 			log.info("로그인실패");
-			}
 		}
 		return msg;
 	}
@@ -474,6 +488,37 @@ public class MB_controller {
 		}else {
 			return null;
 		}
+	}
+	
+	@RequestMapping(value="/myCourse")
+	public  ModelAndView m_MP_001_3 (@ModelAttribute Page_DTO dto,
+			HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		MemberLoginInterceptor login = new MemberLoginInterceptor();
+		
+		
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		login.preHandle(request, response, session);
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		log.info("mp myCourse mapping +mp_index is :" +dto.getLc_index()+" "+dto.getM_index());
+		
+		if(session.getAttribute("sessionVO")==null) {
+			log.info("session null! : "+session.getAttribute("sessionVO"));
+		}else {
+			dto.setM_index(member.getM_index());
+			List<MP_001_3_VO> listVO = mp_001_service.getList(dto);
+			mav.addObject("listVO", listVO);
+			log.info("listVO1 : "+listVO);
+			
+//			pageutil = mp_001_service.paging(dto);
+//			mav.addObject("pageUtil", pageutil);
+			log.info("MP_001_3 mav완료");
+		}
+		
+		mav.setViewName("/mb/mb_006_1");
+		
+		return mav;
 	}
 	
 }

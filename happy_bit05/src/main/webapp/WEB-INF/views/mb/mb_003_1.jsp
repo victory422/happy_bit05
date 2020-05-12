@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <title>Home</title>
 <head>
@@ -25,6 +26,10 @@
     
     
     <style>
+     .container {
+            margin:0px 0px 0px 0px; /* 위쪽 오른쪽 아래쪽 왼쪽 마진속성 한번에 주기 */
+            padding:0px 0px 0px 0px; /* 위 오른쪽 아래쪽 왼쪽 패딩속성 한번에 주기 */
+        }
 .carousel-item {
      height: auto;
      width: 100%;
@@ -37,6 +42,20 @@
 			font:bold 12px Dotum;                     /* 폰트 설정 - 12px의 돋움체 굵은 글씨로 표시 */
             padding:0 10px;                         /* 각 메뉴 간격 */
 }
+.a{
+	display: block;
+	margin-right: 0;
+    margin-left: 0;
+    text-align: center;	
+}
+.btn_inline{
+	display: inline-block;
+	width:49%;
+}
+.btn-lg{
+padding: 20px 16px;
+}
+
 
 
 	.dot {overflow:hidden;float:left;width:12px;height:12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/mini_circle.png');}    
@@ -59,17 +78,18 @@
 
 <body>
 <div class="container">
-	<div class="row" style="text-align: center;">
-		<h2>반갑습니다</h2>
+	<div class="row a" style="text-align: center;">
+		<h2>${member.m_nickName }님 환영합니다!</h2>
 	</div>
-	<div class="container" style="width: 75%;">
+	<div class="container" style="width: 100%;">
+		<br>
+		<button type="button" class="btn btn-info btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=자전거'">자전거 코스보기</button>
+		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=육상'">육상 코스보기</button>
 		<br>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_005_1'">내 코스</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/myCourse'">기록 재기</button>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_006_1'">내 기록</button>
-		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_004_1'">기록하기</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_006_1'">측정한 기록보기</button>
 		<br>
 	</div>
 </div>

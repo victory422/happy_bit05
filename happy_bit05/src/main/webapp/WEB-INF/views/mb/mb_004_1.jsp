@@ -48,7 +48,8 @@
 	.course-text {margin-bottom:30px;}
 	.input-group-prepend {width:80px;}
 	.map {margin:0;}
-
+	
+	.custom_padding{padding-right: 0px;padding-left: 0px;}
 </style>
     <script>
         $.ajax({
@@ -58,12 +59,10 @@
 				//dataType: "json",
 				data: "hi",
 				success: function(data) {
-					 alert('success'+data);
 					 $('#showmap').html(data.lc_xy_arr);
 					 $('#xy_arr').val(data.lc_xy_arr);
 				},
 				 error: function(request, status, error){
-					 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					 console.log('error:'+error);
 				 }
 				 });
@@ -72,7 +71,6 @@
 
 </head>
 <body>
-
 <!-- 지도 관련 파라미터들 -->
 
 <!-- 코스 경로 좌표 -->
@@ -95,8 +93,8 @@
 
 
 
-        <div class="col-md-6 col-md-offset-3" style="text-align: center;">
-            <h1>코스명<small><br>기록 측정<br>
+        <div class="col-md-6 col-md-offset-3 custom_padding" style="text-align: center;">
+            <h1>${vo.lc_title }<small><br>기록 측정<br>
 
                 <!-- 기록이 들어감-->
                 <div id="check"></div>
@@ -133,14 +131,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                            <h4 class="modal-title" id="myModalLabel">경로 변경</h4>
                         </div>
                         <div  class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
+                            <%@ include file="./list.jsp"%>
                         </div>
                     </div>
                 </div>
@@ -787,7 +781,7 @@ function aa() {
 		 }
 	},
 	 error: function(request, status, error){
-		 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		 /* alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); */
 		 console.log('error:'+error);
 	 }
 	
@@ -841,7 +835,7 @@ function aa2() {
 		 }
 	},
 	 error: function(request, status, error){
-		 alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		 /* alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); */
 		 console.log('error:'+error);
 	 }
 	
