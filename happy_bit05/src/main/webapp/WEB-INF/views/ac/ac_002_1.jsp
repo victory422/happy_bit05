@@ -28,10 +28,11 @@
   
   
 <div class="container"> 
+<h1 style="text-align: center; margin-top: 30px;">대회 게시글 관리</h1>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<div class="panel-heading">admin 대회 목록</div>
+				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 				
@@ -91,7 +92,6 @@
 					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
-								<th>선택</th>
 								<th>제목</th>
 								<th>일정</th>
 								<th>참가비</th>
@@ -102,14 +102,12 @@
 							</tr>
 						</thead>
 						<c:forEach items="${data}" var="data">
-						${data.co_b_state }
 							<tr>
-								<td><label class="custom-control-label" for="jb-radio-1"></label></td>
 								<td>${data.co_b_title}</td>
 								<td>${data.co_b_day}</td>
 								<td>${data.co_b_price}</td>
 								<td>${data.co_b_count}</td>
-								<td>0</td>
+								<td>${data.co_b_see }</td>
 								<c:if test="${data.co_b_state eq '접수가능'}">
 								<td><button type="button" class="btn btn-primary statechange" id="statechange${data.co_b_index }" value="${data.co_b_index }">${data.co_b_state }</button></td>
 								</c:if>

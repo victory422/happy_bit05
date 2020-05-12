@@ -114,6 +114,9 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
 <script>
+//스크립트세션 주입
+sessionStorage.setItem("sessionScript", '${sessionVO.m_index}');
+console.log("홈 session : "+sessionStorage.getItem("sessionScript"));
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표

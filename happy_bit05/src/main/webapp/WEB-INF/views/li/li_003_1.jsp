@@ -18,7 +18,7 @@
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
 			<div class="col-md-10">
-				<h1>장비게시판<small> (관리게시판)</small></h1>
+				<h1>장비게시판<small> (관리Tip)</small></h1>
 			</div>
 			<div class="col-md-2">				
 				<select name="amount" id="list_mount">
@@ -107,7 +107,7 @@
 			
 				<div id="row">
 					<div class="col-md-6">
-						<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성</button></a>
+						<a href="/li/li_005_1?li_b_type=관리게시판"><button type="button" class="btn btn-success">글작성</button></a>
 					</div>
 			<!-- 페이징  -->
 				<div class="col-md-10">

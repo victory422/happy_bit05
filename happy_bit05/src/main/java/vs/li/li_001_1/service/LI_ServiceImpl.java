@@ -3,6 +3,8 @@ package vs.li.li_001_1.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import lombok.extern.log4j.Log4j;
 import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_1.dto.Page_DTO;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Log4j
 @Service
@@ -19,13 +22,12 @@ public class LI_ServiceImpl implements LI_Service {
 
 	@Autowired
 	private SqlSession sqlsession;
-
+	private LO_001_VO member;
 	
 	
 	@Override
 	public void li_regist(LI_VO vo) {
 		try {
-		vo.setM_index("husker");
 		sqlsession.insert("li.insert", vo);
 		} catch (Exception e) {
 			log.info("서비스 인서트 에러 : "+ e);
@@ -117,7 +119,7 @@ public class LI_ServiceImpl implements LI_Service {
 	//조회수를 증가하게하는 쿼리
     //조회수 처리를 할때 일정 시간이 지난후 다시 클릭할때만 조회수가 증가하도록 설정
 	@Override
-	public void increse_see(LI_VO vo, HttpSession session ) {
+	public void increse_see(LI_VO vo,HttpSession session) {
 		try {
 			long update_time = 0; //null을 방지하기 위해 초기값을 null로 설정함
 	        if(session.getAttribute("update_time_"+vo.getLi_index())!=null) {
@@ -142,12 +144,15 @@ public class LI_ServiceImpl implements LI_Service {
 	            
 	            //조회수를 올린 시간을 저장함
 	            session.setAttribute("update_time_"+vo.getLi_index(), current_time);
+	            log.info("커런트타임 : "+current_time);
+	            log.info("찍힌현재시간 : "+session.getAttribute("update_time_"+vo.getLi_index()));
 	        }else
 	        	log.info("조회수 유지");
-	
-		} catch (Exception e) {
+		
+			} catch (Exception e) {
 			log.info("조회수 증가 함수 에러 메세지 : "+e);
 		}
+		
         
 	}
 	
@@ -159,7 +164,7 @@ public class LI_ServiceImpl implements LI_Service {
 			log.info("좋아요 수 : "+good_cnt);
 			return sqlsession.update("good.like_check",hashmap);
 		} catch (Exception e) {
-			log.info("good_check 에러: "+e);
+			log.info("good_check_increse 에러: "+e);
 			return 0;
 		}
 	}
@@ -171,7 +176,7 @@ public class LI_ServiceImpl implements LI_Service {
 			log.info("좋아요 수 : "+good_cnt);
 			return sqlsession.update("good.like_check_cancel",hashmap);
 		} catch (Exception e) {
-			log.info("good_check 에러: "+e);
+			log.info("good_check_decrese 에러: "+e);
 			return 0;
 			// TODO: handle exception
 		}
@@ -223,6 +228,11 @@ public class LI_ServiceImpl implements LI_Service {
 		log.info("---------------------------------------------------------");
 		log.info("-----------------------수정--------------------------------");
 		
+	}
+	
+	@Override
+	public void delecte(LI_VO vo) {
+		sqlsession.delete("li.board_delete",vo);
 	}
 }
 

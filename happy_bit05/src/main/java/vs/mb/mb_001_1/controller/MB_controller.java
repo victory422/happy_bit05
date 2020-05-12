@@ -1,20 +1,46 @@
 package vs.mb.mb_001_1.controller;
 
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.google.gson.JsonArray;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
+import com.ibleaders.utility.ib_json.JSONArray;
+import com.ibleaders.utility.ib_json.JSONObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import vs.board.good.vo.GOOD_VO;
+import vs.lc.lc_002_1.service.LC_002_1_Service;
+import vs.lc.lc_002_1.vo.Criteria;
+import vs.lc.lc_002_1.vo.LC_002_1_VO;
+import vs.lc.lc_002_1.vo.PageDTO;
+import vs.lc.lc_003_1.service.LC_003_1_Service;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
+import vs.lo.lo_001.controller.MemberLoginInterceptor;
+import vs.lo.lo_001.service.LO_001_Service;
+import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.service.MB_service;
+import vs.mp.mp_001.dto.Page_DTO;
+import vs.mp.mp_001.service.MP_001_Service;
+import vs.mp.mp_001.vo.MP_001_3_VO;
+import vs.mp.mp_001.vo.PageUtil;
 
 @Log4j
 @Controller
@@ -23,27 +49,72 @@ import vs.mb.mb_001_1.service.MB_service;
 public class MB_controller {
 
 	private MB_service service;
-	private LC_003_1_VO vo;
+	LO_001_Service LO_Service;
+	
+	
+	private LC_002_1_Service lc_002_1_service;
+	
+	private LO_001_VO member;
+	private LC_003_1_VO lc_003_1_vo;
+	private LC_003_1_Service lc_003_1_service;
+	private MP_001_Service mp_001_service;
+	
+	
+	@RequestMapping(value="/mb_001_1")
+	public  ModelAndView MB_001_1 (HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		System.out.println("login page");
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("mb/mb_001_1");
+		return mav;
+	}
+	@RequestMapping("/mb_003_1")
+	public void mb_003_1(HttpSession session,Model model) {
+		log.info("--------------------------------모바일 홈 페이지 mobile home------------------------------");
+
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		model.addAttribute("member",member);
+
+	}
 	
 	@RequestMapping("/mb_004_1")
-	public void mb_004_1() {
-		log.info("--------------------------------기록 측정 페이지------------------------------");
+	public void mb_004_1(HttpSession session, @RequestParam String lc_index,Model model) {
+		log.info("--------------------------------기록 측정 페이지 record page------------------------------");
+		session.setAttribute("session_lc_index", lc_index);
+		log.info("세션 lc_index : "+session.getAttribute("session_lc_index"));
+		
+		
+		LC_003_1_VO vo = service.getLC(lc_index);
+		
+		model.addAttribute("vo",vo);
 		
 	}
-	@RequestMapping("/test")
-	public void test() {
-		log.info("--------------------------------test------------------------------");
+	@RequestMapping("/mb_005_1")
+	public void mb_005_1() {
+		log.info("--------------------------------코스 변경 페이지 cours page------------------------------");
+	}
+	
+	@ResponseBody
+	@RequestMapping("/list")
+	public List<MP_001_3_VO> list(HttpSession session,@ModelAttribute Page_DTO dto) {
+		log.info("--------------------------------list------------------------------");
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		dto.setM_index(member.getM_index());
+		List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
+		return listVO;
 	}
 	
 	@ResponseBody
 	@RequestMapping("/load")
-	public LC_003_1_VO main(String[] args, String lc_index, Model model) {
+	public LC_003_1_VO main(String[] args, HttpSession session) {
 		
-		JsonObject obj = new JsonObject();
+		String lc_index = (String) session.getAttribute("session_lc_index");
 		
-		//lc_index = "lc_0000000244";
-		lc_index = "lc_0000000243";
+		log.info("코스 인덱스 : "+lc_index);
+		
 		System.out.println("컨트롤러 단에서 번호는 : " + lc_index);
 		
 		LC_003_1_VO vo = service.getLC(lc_index);
@@ -51,5 +122,403 @@ public class MB_controller {
 		return vo;
 	}
 	
+	@ResponseBody
+	@RequestMapping("/courselist")
+	public List<LC_003_1_VO> list(String lc_index){
+
+		return service.get_CourseList();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/loginCheck", method = RequestMethod.POST)
+	public String login(LO_001_VO LO_vo, HttpServletRequest request, HttpServletResponse response,Model model){
+		
+		System.out.println("id : "+LO_vo.getM_id());
+		System.out.println("pw : "+LO_vo.getM_pw());
+		Boolean check = false;
+		String msg = "";
+		
+		check = service.login(LO_vo);
+
+		//세션 생성
+		HttpSession session = request.getSession();
+			
+
+		
+		if(check) {
+			
+			//lo 로그인 소스 긁어왔음
+			List<LO_001_VO> list = LO_Service.login(LO_vo);
+			LO_vo = list.get(0);
+			session.setAttribute("sessionVO", LO_vo);
+			
+			msg = "ok";
+				log.info("로그인 성공");
+		}else {
+			
+			//model.addAttribute("msg", "fail");
+			msg = "fail";
+			log.info("로그인실패");
+		}
+		return msg;
+	}
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/mb_006_1")
+	public  ModelAndView mb_006_1 (HttpServletRequest request, HttpServletResponse response) 
+			throws JsonProcessingException  {
+			log.info("app/myCourse/detail");
+			HttpSession session = request.getSession();
+			ModelAndView mav = new ModelAndView();
+			LO_001_VO loVo = new LO_001_VO();
+			String m_index = "";
+			
+			//세션 주입 (m_index : 멤버번호)
+			if(session.getAttribute("sessionVO")==null) {
+				log.info("session null! : "+session.getAttribute("sessionVO"));
+			}else {
+				loVo = (LO_001_VO) session.getAttribute("sessionVO");
+				m_index = loVo.getM_index();
+				log.info(m_index);
+			}
+			
+			List<Map<String,String>> list = service.getMyRecordList(m_index);
+			log.info(list);
+			
+			
+			
+			mav.addObject("list", list);
+			mav.setViewName("/mb/mb_006_1");
+			log.info("/mb/mb_006_1 view완료");
+			return mav;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="/mb_006_1/sort/*", method = RequestMethod.POST)
+	public  String mb_006_1_sort (@RequestParam("type")String type, 
+			HttpServletRequest request, HttpServletResponse response) 
+			throws JsonProcessingException  {
+		log.info("app/myCourse/detail-ajax"+type);
+		HttpSession session = request.getSession();
+		ModelAndView mav = new ModelAndView();
+		LO_001_VO loVo = new LO_001_VO();
+		String m_index = "";
+		
+		//세션 주입 (m_index : 멤버번호)
+		if(session.getAttribute("sessionVO")==null) {
+			log.info("session null! : "+session.getAttribute("sessionVO"));
+		}else {
+			loVo = (LO_001_VO) session.getAttribute("sessionVO");
+			m_index = loVo.getM_index();
+			log.info(m_index);
+		}
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("m_index", m_index);
+		map.put("type", type);
+		List<Map<String,String>> list = service.getMyRecordListSort(map);
+		log.info(list);
+		
+		JSONArray jsonArray = new JSONArray();
+		JSONObject json = null;
+		
+		String jsonStr = new ObjectMapper().writeValueAsString(list);
+		for(int i=0; i<list.size();i++){
+//		  json = new JSONObject();
+//		  json.put("lc_index", vo.getLc_index());
+//		  json.put("m_index", vo.getM_index());
+//		  json.put("mp_index", vo.getMp_index());
+//		  jsonArray.add(json);
+//		  log.info("json : "+json);
+		}
+		
+		return jsonStr;
+	}
+	
+	
+	//모바일 로그아웃
+	@RequestMapping(value="/logout")
+	public  ModelAndView Logout (HttpSession session, 
+			HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		log.info("로그아웃 컨트롤러");
+			System.out.println("logout page");
+			ModelAndView mav = new ModelAndView();
+			mav.setViewName("mb/mb_001_1");
+			session.removeAttribute("sessionVO");
+			System.out.println("session : "+session.getAttribute("sessionVO"));
+		
+		return mav;
+	}
+
+	@RequestMapping("/lc_002_1")
+	public void lc_list(Criteria cri, Model model,HttpServletRequest request) {
+		List<LC_002_1_VO> listVO = lc_002_1_service.getList(cri);
+		List<LC_002_1_VO> listGood = lc_002_1_service.getGood(cri);
+		
+		//리스트 썸네일 인코딩, 디코딩 작업.
+		for(int i = 0; i < listVO.size(); i++) {
+			
+			LC_002_1_VO vo = listVO.get(i);
+			
+			if(vo.getLc_thumbnail() != null) {
+				
+				byte[] imageContent = Base64.getEncoder().encode(vo.getLc_thumbnail());
+				
+				//System.out.println("대체 뭐야........" + imageContent);
+				String thumbnail = new String(imageContent);
+				
+				//System.out.println(thumbnail);
+			
+				vo.setLc_request(thumbnail);
+			// model.addAttribute("thumbnail"+i, thumbnail);
+			}else {
+				vo.setLc_request("");
+			}
+		}
+		
+		//추천수 썸네일 인코딩, 디코딩 작업.
+		for(int i = 0; i < listGood.size(); i++) {
+			
+			LC_002_1_VO vo = listGood.get(i);
+			
+			if(vo.getLc_thumbnail() != null) {
+				
+				byte[] imageContent = Base64.getEncoder().encode(vo.getLc_thumbnail());
+				
+				//System.out.println("대체 뭐야........" + imageContent);
+				String thumbnail = new String(imageContent);
+				
+				//System.out.println(thumbnail);
+			
+				vo.setLc_request(thumbnail);
+			// model.addAttribute("thumbnail"+i, thumbnail);
+			}else {
+				vo.setLc_request("");
+			}
+		}
+		
+		
+		if(cri.getType() == null) {
+			model.addAttribute("lc_good", listGood);
+		}else if(!(cri.getType().equals("normal"))) {
+			model.addAttribute("lc_good", listGood);
+		}
+		
+		
+		HttpSession session = request.getSession();
+		
+		if(session.getAttribute("sessionVO") != null) {
+			LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
+			model.addAttribute("m_index", vo.getM_index());
+			model.addAttribute("sessionVO", session.getAttribute("sessionVO"));
+		}
+		
+		model.addAttribute("lc_list", listVO);
+		
+	}
+	
+	@RequestMapping("/lc_get")
+	public String getLC(@RequestParam("lc_index") String lc_index, Model model,
+			@ModelAttribute("cri") Criteria cri, HttpServletRequest request, HttpServletResponse response)
+		throws Exception{
+	
+	System.out.println("번호는:????? " + lc_index);
+	System.out.println("검색어 : ??????" + cri.getKeyword());
+	
+	HttpSession session = request.getSession();
+	
+	System.out.println(session.getAttribute("sessionVO"));
+	
+	lc_003_1_vo.setLc_index(lc_index);
+	
+	//관심코스 등록되있는지 확인.
+	if(session.getAttribute("sessionVO") != null) {
+		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		lc_003_1_vo.setM_index(member.getM_index());
+		
+		System.out.println("관심코스를 위한 회원 번호 : " + lc_003_1_vo.getM_index());
+		System.out.println("관심코스를 위한 게시글 번호 : " + lc_003_1_vo.getLc_index());
+		
+		if(lc_003_1_service.myCourseSearch(lc_003_1_vo) == true) {
+			model.addAttribute("search", "not_empty");
+		}else {
+			model.addAttribute("search", "empty");
+		}
+
+		model.addAttribute("member", session.getAttribute("sessionVO"));
+	}
+	
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	lc_003_1_service.increse_see(lc_003_1_vo, session);
+	log.info("increse_service 실행완료------------------------------");
+	
+	HashMap<String,Object> hashmap = new HashMap<String,Object>();
+	
+	hashmap.put("board_index", lc_index);
+	hashmap.put("m_index",  lc_003_1_vo.getM_index());
+	
+	log.info("난 빡빡이다. : "+hashmap.get("board_index"));
+	//log.info("나는 쀅붺이다."+hashmap.get("m_index"));
+	log.info("지랄: " + lc_003_1_vo.getLc_index());
+	
+	//로그인 했을 경우에만 좋아요 체크. 없으면 에러남.
+	if(member.getM_index() != null) {
+		int row_check = lc_003_1_service.good_count(hashmap);
+		
+		if(row_check == 0) {
+			log.info("로우 생성중");
+			lc_003_1_service.good_insert(hashmap);
+			log.info("로우 생성완료");
+		}else {
+			log.info("로우가 이미 생성되어있음");
+		}
+	}
+	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	
+	model.addAttribute("lc_get",lc_003_1_service.getLC(lc_index));
+	return "mb/lc_003_1";
+
+}
+
+	//like@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	@ResponseBody
+	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
+	public String like(LC_003_1_VO vo, GOOD_VO good_vo, HttpSession session) {
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		if(member.getM_index() != null) {
+			
+			log.info("컨트롤러 like~~~~");
+			
+			//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
+			int good_check = 0;
+			int good_cnt = 0;	
+			
+			JsonObject obj = new JsonObject();
+			log.info("----------------------좋아요 -----------------------");
+			
+			member = (LO_001_VO) session.getAttribute("sessionVO");
+			vo.setM_index(member.getM_index());
+			vo.setLc_index(vo.getLc_index());
+			
+			//구글링에선 어레이리스트인데 스트링으로 해도될거같음
+			//ArrayList<String> msgs = new ArrayList<String>();
+			String msgs;
+			HashMap<String,Object> hashmap = new HashMap<String,Object>();
+			
+			
+			
+			
+			log.info("lc_index : "+vo.getLc_index());
+			//hashmap에 게시판,멤버 index 저장
+			hashmap.put("board_index", vo.getLc_index());
+			hashmap.put("m_index", vo.getM_index());
+			
+			good_check = lc_003_1_service.good_check(hashmap);
+			good_cnt = lc_003_1_service.good_cnt(hashmap);
+			
+			log.info(lc_003_1_service.good_check(hashmap));
+			
+			//service.increse_good(hashMap);
+	
+			
+			if(good_check == 0) {
+			      msgs="좋아요!";
+			      lc_003_1_service.increse_good(hashmap);
+			      good_check++;
+			      good_cnt++;
+	//		      boardProc.like_cnt_up(boardno);   //좋아요 갯수 증가
+			    } else {
+			      msgs="좋아요 취소";
+			      lc_003_1_service.decrese_good(hashmap);
+			      good_check--;
+			      good_cnt--;
+			    }
+	
+			log.info("체크 : "+good_check);
+			log.info("좋아요갯수 : "+good_cnt);
+			log.info("메세지 : "+msgs);
+			
+			obj.addProperty("good_cnt", good_cnt);
+			obj.addProperty("m_index", "admin");
+			obj.addProperty("board", vo.getLc_index());
+			obj.addProperty("good_check", good_check);
+			obj.addProperty("msg",msgs);
+		
+			return obj.toString();
+		}
+		else {
+			return null;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
+	public String like_check(LC_003_1_VO vo ,HttpSession session) {
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		if(member.getM_index() != null) {
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+			int good_check = 0;
+			
+			JsonObject obj = new JsonObject();
+			HashMap<String,Object> hashMap = new HashMap<String,Object>();
+			
+			System.out.println("m_index = " + member.getM_index());
+			
+			hashMap.put("board_index", vo.getLc_index());
+			hashMap.put("m_index",member.getM_index());
+			
+			good_check = lc_003_1_service.good_check(hashMap);
+			
+			log.info("좋아요 체크 :"+ good_check);
+			log.info("회원 : "+member.getM_index());
+			log.info("게시물 : "+vo.getLc_index());
+			
+			obj.addProperty("m_index", member.getM_index());
+			obj.addProperty("board", vo.getLc_index());
+			obj.addProperty("good_check", good_check);
+			log.info("good_췤"+good_check);
+			
+			return obj.toString();
+		}else {
+			return null;
+		}
+	}
+	
+	@RequestMapping(value="/myCourse")
+	public  ModelAndView m_MP_001_3 (@ModelAttribute Page_DTO dto,
+			HttpServletRequest request, HttpServletResponse response 
+			) throws Exception {
+		MemberLoginInterceptor login = new MemberLoginInterceptor();
+		
+		
+		ModelAndView mav = new ModelAndView();
+		HttpSession session = request.getSession();
+		login.preHandle(request, response, session);
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		log.info("mp myCourse mapping +mp_index is :" +dto.getLc_index()+" "+dto.getM_index());
+		
+		if(session.getAttribute("sessionVO")==null) {
+			log.info("session null! : "+session.getAttribute("sessionVO"));
+		}else {
+			dto.setM_index(member.getM_index());
+			List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
+			mav.addObject("listVO", listVO);
+			log.info("listVO1 : "+listVO);
+			
+//			pageutil = mp_001_service.paging(dto);
+//			mav.addObject("pageUtil", pageutil);
+			log.info("MP_001_3 mav완료");
+		}
+		
+		mav.setViewName("/mb/mb_006_1");
+		
+		return mav;
+	}
 	
 }

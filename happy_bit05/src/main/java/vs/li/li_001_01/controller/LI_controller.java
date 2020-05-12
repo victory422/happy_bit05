@@ -1,22 +1,19 @@
 package vs.li.li_001_01.controller;
 
-import java.awt.Window.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
@@ -27,6 +24,7 @@ import vs.li.li_001_01.vo.LI_VO;
 import vs.li.li_001_01.vo.PageUtil;
 import vs.li.li_001_1.dto.Page_DTO;
 import vs.li.li_001_1.service.LI_Service;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @Controller
 @Log4j
@@ -35,11 +33,13 @@ public class LI_controller {
 
 	@Autowired
 	private LI_Service service;
-
+	@Autowired
+	private LO_001_VO member;
 
 	@RequestMapping(value = "/li_001_1", method = RequestMethod.GET)
 	public void li_review(Model model, Page_DTO dto, HttpSession session) {
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		log.info("----------------------후기 게시판view-------------------");
 		log.info("gdgd"+dto.getPage());
@@ -69,6 +69,11 @@ public class LI_controller {
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		model.addAttribute("page", dto.getPage());
 		log.info("검색 type : "+dto.getType());
+		
+		if(member != null) {
+		//////////////////////////////////로그인 세션
+		model.addAttribute("member", member);
+		}
 		
 		for(int i= 0; i<dto.getTypeArr().length; i++) {
 		model.addAttribute("type"+i,dto.getTypeArr()[i]);
@@ -223,12 +228,13 @@ public class LI_controller {
 
 		log.info("-----------------------글 작성view-------------------");
 		
+		//화면에서 넘어온 정보를 vo에  List형식으로 담아준다.
 		List<LI_VO> aa = new ArrayList<LI_VO>();
-		
 		aa.add(vo);
 		
-		model.addAttribute("b_type", vo.getLi_b_type());
+		model.addAttribute("b_type", vo);
 		
+		//수정시 제어문을 타서 글 데이터를 모델에 담아서 화면에 던져준다.
 		if(vo.getLi_index  () != null) {	
 		model.addAttribute("page",service.detail_page(vo.getLi_index()));
 		}
@@ -249,7 +255,7 @@ public class LI_controller {
 	
 
 	@RequestMapping(value = "/li_005_1", method = RequestMethod.POST)
-	public String regist(LI_VO vo,Model model) {
+	public String regist(LI_VO vo,Model model,HttpSession session) {
 		log.info("저장");
 		
 		log.info("텍스트------"+vo.getLi_text());
@@ -258,7 +264,12 @@ public class LI_controller {
 		log.info("제목-----"+vo.getLi_title());
 		log.info("게시판유형@@@@@"+vo.getLi_b_type());
 		
+		LO_001_VO lo_vo = (LO_001_VO)session.getAttribute("sessionVO");
 		
+		
+		if(lo_vo.getM_index() != null) {
+		vo.setM_index(lo_vo.getM_index());
+		}
 		
 		service.li_regist(vo);
 
@@ -287,6 +298,18 @@ public class LI_controller {
 	public String modify(LI_VO vo,Model model) {
 		
 		service.modify(vo);
+		log.info(" 수정 게시판유ㅇ형"+vo.getLi_b_type());
+		
+		return "redirect:"+url_mapping(vo.getLi_b_type());
+	}
+	
+	//삭제
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String delete(LI_VO vo,Model model) {
+		
+		log.info("삭제 컨트롤러 ");
+		
+		service.delecte(vo);
 		
 		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
@@ -294,11 +317,9 @@ public class LI_controller {
 	
 	
 	
-	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
-		
-		session.setAttribute("m_index", "admin3");
+	public String board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//이전페이지로 넘어갈 페이지 경로
 		
@@ -308,9 +329,12 @@ public class LI_controller {
 		service.increse_see(vo, session);
 		log.info("increse_service 실행완료------------------------------");
 		log.info("상세페이지 불러오기 실행 ");
+		List<LI_VO> list_vo= service.detail_page(vo.getLi_index());
+		model.addAttribute("page", list_vo);
 		
-		model.addAttribute("page",service.detail_page(vo.getLi_index()));
-		
+		if(member != null) {
+			model.addAttribute("member", member);
+		}
 		
 		model.addAttribute("back_url",url_mapping(vo.getLi_b_type()));
 
@@ -319,23 +343,30 @@ public class LI_controller {
 		log.info("상세페이지 불러오기 실행완료-------------------------------------");
 		log.info(vo.getLi_text());
 		log.info(vo.getLi_index());
-		log.info("세션 m_index : "+session.getAttribute("m_index"));
+		if(member != null) {
+		log.info("세션 m_index : "+member.getM_index());
+		}else
+			log.info("세선m_index없음 안들어옴(상세페이지 컨트롤러)");
 		
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index",  session.getAttribute("m_index"));
-		
-		int row_check = service.good_count(hashmap);
-		
-		if(row_check == 0) {
-			log.info("로우 생성중");
-			service.good_insert(hashmap);
-			log.info("로우 생성완료");
-		}else {
-			log.info("로우가 이미 생성되어있음");
+		if(member != null) {
+		hashmap.put("m_index", member.getM_index());
 		}
-		
+		if(member!= null) {
+			
+			int row_check = service.good_count(hashmap);
+			
+			if(row_check == 0) {
+				log.info("로우 생성중");
+				service.good_insert(hashmap);
+				log.info("로우 생성완료");
+			}else {
+				log.info("로우가 이미 생성되어있음");
+			}
+		}
+		return "li/detail_page";
 	}
 	
 	
@@ -347,29 +378,40 @@ public class LI_controller {
 	
 	@ResponseBody
 	@RequestMapping(value="/like", produces = "application/text; charset=utf8")
-	public String like(LI_VO vo, GOOD_VO good_vo, HttpSession session) {
+	public String like(LI_VO vo, GOOD_VO good_vo, HttpServletRequest request, HttpServletResponse response) {
 		
+		HttpSession session = request.getSession();
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		log.info("컨트롤러 like~~~~");
 		
+		JsonObject obj = new JsonObject();
+		
+		if(member != null) {
 		//세션에 멤버 인덱스를 저장해야하지만  기능테스트를위해 임의로 인덱스 지정
 		int good_check = 0;
 		int good_cnt = 0;	
 		
-		JsonObject obj = new JsonObject();
+		
 		log.info("----------------------좋아요 -----------------------");
 		
-		//구글링에선 어레이리스트인데 스트링으로 해도될거같음
-		//ArrayList<String> msgs = new ArrayList<String>();
 		String msgs;
 		HashMap<String,Object> hashmap = new HashMap<String,Object>();
 		
 		
 		
+//=========================================================수정해야함 
+		
 		log.info("li_index : "+vo.getLi_index());
 		//hashmap에 게시판,멤버 index 저장
 		hashmap.put("board_index", vo.getLi_index());
-		hashmap.put("m_index", session.getAttribute("m_index"));
+		//m_index 테스트설정
+		
+		hashmap.put("m_index", member.getM_index());
+		
+		//m_index 세션값으로 변경해야함 
+		//hashmap.put("m_index", session.getAttribute("m_index"));
+		
 		
 		good_check = service.good_check(hashmap);
 		good_cnt = service.good_cnt(hashmap);
@@ -405,7 +447,11 @@ public class LI_controller {
 		log.info("메세지 : "+msgs);
 		
 		obj.addProperty("good_cnt", good_cnt);
-		obj.addProperty("m_index", "admin");
+		if(member != null) {
+		obj.addProperty("m_index", member.getM_index());
+		}else {
+			obj.addProperty("m_index", "visitor");
+		}
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		obj.addProperty("msg",msgs);
@@ -419,32 +465,55 @@ public class LI_controller {
 		 */
 	
 		return obj.toString();
+		}else {
+			obj.addProperty("msg", "no");
+			return obj.toString();
+		}
+		
 	}
 	
 	
 	@ResponseBody
 	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
-	public String like_check(LI_VO vo ,HttpSession session) {
+	public String like_check(LI_VO vo ,HttpServletRequest request, HttpServletResponse response) {
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-		String m_index = "admin";
+		HttpSession session = request.getSession();
+		
+		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
+		//예비 member index
+		
+		if(member != null) {
+		String m_index = member.getM_index();
+		
 		int good_check = 0;
 		
 		JsonObject obj = new JsonObject();
 		HashMap<String,Object> hashMap = new HashMap<String,Object>();
 		
 		hashMap.put("board_index", vo.getLi_index());
-		hashMap.put("m_index",session.getAttribute("m_index"));
+		hashMap.put("m_index",m_index);
 		
+		//세션id넣어주기
+		//hashMap.put("board_index", vo.getLi_index());
+		//hashMap.put("m_index",session.getAttribute("id"));
+		
+		//좋아요를 눌렀던 게시물인지 체크
 		good_check = service.good_check(hashMap);
 		
 		log.info("좋아요 체크 :"+ good_check);
 		
+		//session값으로 바꿔야함
 		obj.addProperty("m_index", m_index);
 		obj.addProperty("board", vo.getLi_index());
 		obj.addProperty("good_check", good_check);
 		
 		return obj.toString();
+		}else {
+			
+		return null;
+		}
 	}
 	
 	
@@ -462,7 +531,16 @@ public class LI_controller {
 	 
 	
 	
-	
+	@ResponseBody
+	@RequestMapping("/mobile")
+	public String mobile(){
+		JsonObject obj = new JsonObject();
+		String msg = "통신성공";
+		obj.addProperty("msg", msg);
+		log.info("모바일 통신중");
+		
+		return obj.toString();
+	}
 	
 	
 	

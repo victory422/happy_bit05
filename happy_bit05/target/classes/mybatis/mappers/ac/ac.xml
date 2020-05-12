@@ -5,6 +5,7 @@
 
 
 <resultMap type="AcVO" id="requestVO">
+	<result property="m_index" column="m_index"/>
 	<result property="co_b_index" column="co_b_index"/>
 	<result property="co_b_title" column="co_b_title"/>
 	<result property="co_b_text" column="co_b_text"/>
@@ -114,12 +115,14 @@
 		insert into competition(co_b_index, co_b_title, co_b_text, 
 								co_b_day, co_b_date, co_b_area,
 								co_b_start, co_b_end, co_b_type, co_b_price,
-								 co_souvenir, co_rating,co_b_state,co_b_count
+								 co_souvenir, co_rating,co_b_state,co_b_count,m_index,
+								 co_b_see,co_b_good
 								)
 		values ('co_'||co_b_index.nextval, #{co_b_title}, #{co_b_text},
 				 #{co_b_day}, (select to_char(sysdate,'yyyy.mm.dd  hh24:mi') from dual), #{co_b_area},
 				 #{co_b_start}, #{co_b_end}, #{co_b_type}, #{co_b_price},
-				  #{co_souvenir}, #{co_rating},'접수가능', '0'
+				  #{co_souvenir}, #{co_rating},'접수가능', '0',#{m_index},
+				  '0','0'
 				 )
 		]]>
 	</insert>
@@ -141,13 +144,15 @@
 	
 	</select>
 
-<update id="updateCount" parameterType="vs.co.co_001_1.vo.CoVO">
-
+<update id="updateCount" parameterType="String">
+<![CDATA[ 	
 	update competition
-	set co_b_count = (select count(*) 
-						from competition c inner join participant p
-   						 on c.co_b_index = p.co_b_index)+1	
-						
+    set co_b_count = 
+    (select co_b_count
+    from competition
+    where co_b_index = #{co_b_index})+1
+    where co_b_index = #{co_b_index}	
+    ]]>				
 </update>
 	
 	

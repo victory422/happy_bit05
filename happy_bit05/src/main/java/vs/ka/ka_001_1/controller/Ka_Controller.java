@@ -2,6 +2,10 @@ package vs.ka.ka_001_1.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import vs.co.co_001_1.service.Co_Service;
 import vs.ka.ka_001_1.service.kakaoPay;
+import vs.lo.lo_001.vo.LO_001_VO;
 
 @RestController
 @CrossOrigin("*")
@@ -30,7 +35,8 @@ public class Ka_Controller {
 	
 	
 	@PostMapping("/kakaopay")
-	private String kakaoPay(@RequestParam("amount") String amount, @RequestParam("co_b_index") String co_b_index) {
+	private String kakaoPay(@RequestParam("amount") String amount, @RequestParam("co_b_index") String co_b_index
+								,HttpServletRequest request, HttpServletResponse response) {
 		
 		amount1 = amount;
 		
@@ -40,8 +46,7 @@ public class Ka_Controller {
 		
 		map.put("amount", amount);
 
-		String kakaourl = kakaopay.kakaoPayReady(map, co_b_index);
-		
+		String kakaourl = kakaopay.kakaoPayReady(map, co_b_index, request, response);
 		System.out.println(kakaourl + "ㅇㅇ");
 		
 		return kakaourl;
@@ -49,18 +54,18 @@ public class Ka_Controller {
 	
 	
 	@GetMapping("/kakaoPaySuccess")
-	public RedirectView kakaoPaySuccess(@RequestParam("pg_token") String pg_token,@RequestParam("co_b_index") String co_b_index) {
+	public RedirectView kakaoPaySuccess(@RequestParam("pg_token") String pg_token,@RequestParam("co_b_index") String co_b_index,HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("성공시 controller");
 		
-		kakaopay.kakaoPayInfo(pg_token, this.amount1);
+		kakaopay.kakaoPayInfo(pg_token, this.amount1, request, response);
 		
 		System.out.println(pg_token + "보여줘");
 		System.out.println(co_b_index + " : 어렵다");
 		//model.addAttribute("data", co_service.ap_list(co_b_index));
 
 		
-		return new RedirectView("http://localhost:8080/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
+		return new RedirectView("https://localhost:8080/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
 	}
 	
 	

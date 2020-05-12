@@ -34,7 +34,7 @@ public class Cm_Controller {
 	@ResponseBody
 	private List<CommentVO> mCommentServiceList(Model model,@RequestParam String data) throws Exception {
 		
-		System.out.println(data);
+		System.out.println("왜그러냐 대체" + data);
 		
 		return cm_service.commentList(data);
 		
@@ -74,14 +74,19 @@ public class Cm_Controller {
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	@ResponseBody
 	private int mCommentServiceInsert(@RequestParam("board_index") String com_index, @RequestParam("com_text") String com_text,
-				HttpServletRequest request, HttpServletResponse response) throws Exception{
+				HttpServletRequest request) throws Exception{
 		HttpSession session = request.getSession();
-		LO_001_VO vo = (LO_001_VO) session.getAttribute("sessionVO");
-		System.out.println("aaaaaaaaaaaa"+vo);
+		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		if(member == null) {
+			return 0;
+		}
+		
+		System.out.println("aaaaaaaaaaaa"+member);
 		System.out.println(com_index);
 		System.out.println(com_text);
 		
-		comment.setM_index(vo.getM_index());
+		comment.setM_index(member.getM_index());
 		comment.setBoard_index(com_index);
 		comment.setCom_text(com_text);
 		

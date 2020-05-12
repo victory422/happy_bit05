@@ -14,30 +14,15 @@
 						<when test="type == '자전거'.toString()">
 							co_r_type like '%'||'자전거'||'%'
 						</when>
-						<!-- 
-						<when test="type == '운동복'.toString()">
-							li_category like '%'||'운동복'||'%'
+						<when test="search_filter == '제목'.toString()">
+							co_r_title like '%'||#{input_text}||'%') or (co_r_title like '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '안전장비'.toString()">
-							li_category like '%'||'안전장비'||'%'
+						<when test="search_filter == '대회명'.toString()">
+							co_r_type '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '신발'.toString()">
-							li_category like '%'||'신발'||'%'
+						<when test="search_filter == '작성자'.toString()">
+							m_nickname like '%'||#{input_text}||'%'
 						</when>
-						<when test="type == '기타'.toString()">
-							li_category like '%'||'기타'||'%'
-						</when>
-						 -->
-						<when test="search_filter == 'all'.toString()">
-								co_r_title like '%'||#{input_text}||'%') or (co_r_text like '%'||#{input_text}||'%'
-						</when>
-						<when test="search_filter == '내용'.toString()">
-							co_r_text like '%'||#{input_text}||'%'
-						</when>
-						<!-- 
-						<when test="search_filter == '장소'.toString()">
-							co_r_area like '%'||#{input_text}||'%'
-						</when> -->
 						<otherwise>
 							co_r_title like '%'||#{input_text}||'%'
 						</otherwise>
@@ -73,8 +58,8 @@
 
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
-	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index)
-	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index})
+	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index,co_r_good,co_r_see)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index},0,0)
 
 </insert>
 <!-- 게시물 총합 출력 쿼리 -->
@@ -88,8 +73,10 @@
 <!-- 대회 후기 상세페이지 -->
 <select id="cr_detail" resultType="vs.cr.cr_001_1.vo.CrVO" parameterType="String">
 
-	select * from competition_review where co_r_index = #{co_r_index}
-	
+	select * 
+	from competition_review c, member m
+	where c.m_index = m.m_index	
+	and co_r_index = #{co_r_index}
 
 </select>
 	
@@ -111,5 +98,47 @@
 	</set>
 	where co_r_index = #{co_r_index}
 </update>
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE competition_review  SET co_r_see = NVL(co_r_see,0)+1 where co_r_index = TRIM(#{index})
+    	]]>
+    </update>
+
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select co_r_good from competition_review where co_r_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	 <!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE competition_review
+		    SET co_r_good = co_r_good + 1 
+		    WHERE co_r_index=#{board_index}
+		]]>
+	</update>
+	
+	<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE competition_review
+		    SET co_r_good =  co_r_good - 1
+		    WHERE co_r_index=#{board_index}
+    	]]>
+  	</update>
+  	
+  	<!-- 대회 리스트 출력 -->
+  	<select id="co_list" resultType="vs.ac.ac_001_1.vo.AcVO">
+  	
+  	select co_b_title
+  	from competition
+  	
+  	</select>
+  	
 
 </mapper>

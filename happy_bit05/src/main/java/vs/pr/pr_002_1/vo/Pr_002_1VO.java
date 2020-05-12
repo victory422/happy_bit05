@@ -16,7 +16,22 @@ public class Pr_002_1VO {
 		private String pr_record;
 		private String pr_type;
 		private String pr_public;
+		//맴버 조인
+		private String m_index;
+		private String m_nickname;
 		
+		public String getM_nickname() {
+			return m_nickname;
+		}
+		public void setM_nickname(String m_nickname) {
+			this.m_nickname = m_nickname;
+		}
+		public String getM_index() {
+			return m_index;
+		}
+		public void setM_index(String m_index) {
+			this.m_index = m_index;
+		}
 		public String getPr_index() {
 			return pr_index;
 		}

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mb">
+
+
+<resultMap type="LC_003_1_VO" id="lc_getResult">
+		<result property="lc_index" column="lc_index"/>
+		<result property="m_index" column="m_index"/>
+		<result property="lc_title" column="lc_title"/>
+		<result property="lc_type" column="lc_type"/>
+		<result property="lc_distance" column="lc_distance"/>
+		<result property="lc_run" column="lc_run"/>
+		<result property="lc_cycle" column="lc_cycle"/>
+		<result property="lc_area1" column="lc_area1"/>
+		<result property="lc_area2" column="lc_area2"/>
+		<result property="lc_area3" column="lc_area3"/>
+		<result property="lc_text" column="lc_text" jdbcType="CLOB" javaType="java.lang.String"/>
+		<result property="lc_date" column="lc_date"/>
+		<result property="lc_good" column="lc_good"/>
+		<result property="lc_see" column="lc_see"/>
+		<result property="lc_record" column="lc_record"/>
+		<result property="lc_address" column="lc_address"/>
+		<result property="lc_xy_arr" column="lc_xy_arr" jdbcType="CLOB" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<!-- 코스 쿼리 -->
+		<!-- 기록측정할 코스 가져오기-->	
+	<select id="LC_003_01" resultMap="lc_getResult" parameterType="String">
+		<![CDATA[
+			select * from course a join map b 
+				on b.lc_index = a.lc_index
+				where b.lc_index = #{value}
+		]]>	
+	</select>
+	
+		<!-- 기록측정할 코스 가져오기-->	
+	<select id="getlist" resultMap="lc_getResult">
+		<![CDATA[
+			select * from course a join map b 
+				on b.lc_index = a.lc_index
+		]]>	
+	</select>
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+	<!-- 로그인 쿼리 -->
+		<select id="login" parameterType="vs.lo.lo_001.vo.LO_001_VO"
+		resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*) FROM member 
+			WHERE 
+			M_ID = #{m_id}
+			AND
+			M_PW_1 = #{m_pw}
+		]]>
+	</select>
+	
+</mapper>

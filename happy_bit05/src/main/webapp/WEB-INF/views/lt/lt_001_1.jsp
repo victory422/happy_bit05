@@ -76,7 +76,7 @@
 <input type="hidden" name="lt_b_type" value="질문게시판">
 	<div class="container">
 	<div style="margin-top: 30px;">
-		<h1>트레이닝 게시판<small> 질문 게시판</small></h1>
+		<h1>운동Tip</h1>
 		</div>
 		
 		<!-- 체크박스 부분 -->
@@ -136,7 +136,7 @@
 							<td>${board.lt_tier }</td>
 							<td>${board.lt_type }</td>
 							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'">${board.lt_title }</td>
-							<td>${board.m_index }</td>
+							<td>${board.nickname }</td>
 							<td>${board.lt_date }</td>
 							<td>${board.lt_see }</td>
 							<td>${board.lt_good }</td>

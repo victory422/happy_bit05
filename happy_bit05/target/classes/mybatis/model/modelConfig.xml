@@ -11,7 +11,7 @@
 			alias="LC_003_1_VO" />
 
 		<typeAlias type="vs.ac.ac_001_1.vo.AcVO" alias="AcVO"></typeAlias>
-
+		<typeAlias type="vs.al.al_001_1.vo.AlVO" alias="AlVO"></typeAlias>
 		<typeAlias type="vs.ma.ma_001_1.vo.MA_001_1_VO"
 			alias="MA_001_1_VO" />
 

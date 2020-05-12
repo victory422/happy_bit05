@@ -3,6 +3,8 @@ package vs.li.li_001_1.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import vs.li.li_001_01.vo.LI_VO;
@@ -24,7 +26,8 @@ public interface LI_Service {
 	public List<LI_VO> detail_page(String index);
 	
 	//조회수
-	public void increse_see(LI_VO vo, HttpSession session);
+	//public void increse_see(LI_VO vo,HttpServletRequest request, HttpServletResponse response);
+	public void increse_see(LI_VO vo,HttpSession session);
 	
 	//추천수 증가
 	public int increse_good(HashMap<String, Object> hashMap);
@@ -43,4 +46,6 @@ public interface LI_Service {
 	public void good_insert(HashMap<String, Object> hashmap);
 	
 	public void modify(LI_VO vo);
+	
+	public void delecte(LI_VO vo);
 }

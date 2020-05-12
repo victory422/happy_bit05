@@ -83,13 +83,15 @@
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
 			<div class="col-md-10">
-				<h1>장비게시판<small> (후기게시판)</small></h1>
+				<h1>장비 Tip</h1>
 			</div>
-			<div class="col-md-2">				
-				<select name="amount" id="list_mount">
+			<div class="col-md-2">		
+			<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+			<!-- 페이지수 변경 (미완성) -->		
+				<!-- <select name="amount" id="list_mount">
 					<option value="15">15개씩 보기</option>
 					<option value="30">30개씩 보기</option>
-				</select>	
+				</select>	 -->
 			</div>
 			<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
@@ -136,7 +138,7 @@
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
-						<option value=null selected>제목</option>
+						<option value="제목" selected>제목</option>
 						<option value="내용">내용</option>
 						<option value="all">제목+내용</option>
 						<option value="작성자">작성자</option>
@@ -155,25 +157,23 @@
 					<td style="text-align: right;"><input type="checkbox"></td>
 					</tr> -->
 					<tr class="active" style="text-align: center;">
-						<td width="8%">게시물 번호</td>
-						<td width="8%">종목</td>
-						<td width="32%">게시글 제목</td>
+						<td width="10%">종목</td>
+						<td width="34%">게시글 제목</td>
 						<td width="10%">장비 종류</td>
-						<td width="10%">작성자</td>
-						<td width="16%">작성날자</td>
-						<td width="8%">조회수</td>
-						<td width="8%">좋아요</td>
+						<td width="12%">작성자</td>
+						<td width="18%">작성날자</td>
+						<td width="9%">조회수</td>
+						<td width="9%">좋아요</td>
 					</tr>
 					<tbody id="table_list">
 						<c:forEach var="board" items="${list }">
 							<tr class="success" style="text-align: center;">
-								<td>${board.li_index }</td>
 								<td>
 									<c:out value="${board.li_type eq 'all'?'전체': board.li_type}"/>
 								</td>
 								<td onclick="location.href='/li/li_006_1?li_index=${board.li_index }&li_b_type=${board.li_b_type}&page=${page}'"><button type="button" onclick="location.href='/li/li_006_1?page=${page }&li_index=${board.li_index }&li_b_type=${board.li_b_type}'" class="btn btn-link">${board.li_title }</button></td>
 								<td>${board.li_category }</td>
-								<td>${board.m_index }</td>
+								<td>${board.m_nickname }</td>
 								<td>${board.li_date }</td>
 								<td>${board.li_see }</td>
 								<td>${board.li_good }</td>
@@ -185,7 +185,18 @@
 			
 				<div id="row">
 					<div class="col-md-6">
-						<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성</button></a>
+						<c:choose>
+						<c:when test="${member ne null}">
+							<div class="col-md-6">
+								<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="col-md-6">
+								<button type="button" onclick="need_login()" class="btn btn-success">글작성</button>
+							</div>
+						</c:otherwise>
+					</c:choose>
 					</div>
 				<!-- 페이징  -->
 					<div class="col-md-10">
@@ -242,6 +253,10 @@
 		function page_put()
 		{
 			('input[name=page]').val(1)
+		}
+		
+		function need_login() {
+			alert('로그인이 필요합니다.')
 		}
 	</script>
 

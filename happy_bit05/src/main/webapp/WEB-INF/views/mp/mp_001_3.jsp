@@ -95,9 +95,10 @@
 		<!-- 체크박스 부분 -->
 
 		<form method="get" action="/mp/myCourse/">
+		
 			<div class="input-group mb-12" style="margin-top: 30px;">
-
-				<label class="input-group-text col-sm-12"> <select
+				<label class="input-group-text col-sm-12"> 
+				<select
 					id="cate_id" name="cate_id"
 					class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 25%">
@@ -112,8 +113,9 @@
 			</div>
 		</form>
 
+
 		<!-- 게시글 리스트 출력 테이블 -->
-		<div class="table-responsive">
+		<div class="table-responsive" id="myCourse">
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
@@ -176,27 +178,34 @@
 				<div class="col-md-6">
 					<ul class="pagination justify-content-end">
 						<c:if test="${pageUtil.prev }">
-							<li class="page-item"><a class="page-link"
-								href="/mp/myCourse/page=${pageUtil.start-1}">Previous</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/mp/myCourse?page=${pageUtil.start-1}">
+									Previous
+								</a>
+							</li>
 						</c:if>
 						<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }"
 							var="pNum">
 							<div class="mb-4" id="accordion" role="tablist"
 								aria-multiselectable="true"></div>
-							<li class="page-item ${pNum==pageUtil.dto.page?'active':''}"><a
-								class="page-link" href="/mp/myCourse/page=${pNum }">${pNum }</a>
+							<li class="page-item ${pNum==pageUtil.dto.page?'active':''}">
+								<a class="page-link" href="/mp/myCourse?page=${pNum}">
+									${pNum}
+								</a>
 							</li>
+							
 						</c:forEach>
 						<c:if test="${pageUtil.next }">
-							<li class="page-item"><a class="page-link"
-								href="/mp/myCourse/page=${pageUtil.end+1 }">Next</a></li>
+							<li class="page-item">
+								<a class="page-link" href="/mp/myCourse?page=${pageUtil.end+1 }">
+									Next
+								</a>
+							</li>
 						</c:if>
 					</ul>
 				</div>
-
-
-
 			</div>
+			
 			<div id="detailBody" class="card-body" style="display:none">
 				<div class="row" style="margin-top: 50px; margin-bottom: 50px;">
 				<!--  Map loading -->
@@ -236,9 +245,8 @@
 										<td>게시여부</td>
 
 									</tr>
-									<tbody>
-										<tr id="detail" class="success">
-										</tr>
+									<tbody id="detail">
+										<!-- ajax 데이터 -->
 									</tbody>
 
 								</table>
@@ -246,24 +254,8 @@
 								<div id="row">
 
 									<!-- 페이징  -->
-									<div class="col-md-6">
-										<ul class="pagination justify-content-end">
-											<c:if test="${pageUtil.prev }">
-												<li class="page-item"><a class="page-link"
-													href="/mp/myCourse/page=${pageUtil.start-1}">Previous</a></li>
-											</c:if>
-											<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }"
-												var="pNum">
-												<li
-													class="page-item ${pNum==pageUtil.dto.page?'active':''}"><a
-													class="page-link" href="/mp/myCourse/page=${pNum }">${pNum }</a>
-												</li>
-											</c:forEach>
-											<c:if test="${pageUtil.next }">
-												<li class="page-item"><a class="page-link"
-													href="/mp/myCourse/page=${pageUtil.end+1 }">Next</a></li>
-											</c:if>
-										</ul>
+									<div class="col-md-6" id="ajaxPaging">
+										
 									</div>
 								</div>
 							</div>
@@ -277,6 +269,7 @@
 	</div>
 
 	<script>
+
 	var lc_map = "";
 	function downPage(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
 			lc_index,lc_xy_arr) {
@@ -291,30 +284,75 @@
 				td += '<td>' + lc_record + '</td>';
 				td += '<td>' + lc_date + '</td>';
 				$("#tdText").html(td);
-					
-			$.ajax({  
+			
+			var page = 1;
+			console.log("m_index : "+m_index);
+			$.ajax({ 
 			    type : "get",  
-			    url : "/mp/myCourse/detail",  
-			    data : { "lc_index" :lc_index, "m_index" :m_index}, 
+			    url : "/mp/myCourse/detail/*",  
+			    data : { "lc_index" :lc_index, 
+			    		 "m_index" : sessionStorage.getItem("sessionScript"),
+			    		 "page" : page},
 			    dataType : "json",
-			    success : function(data){  
+			    success : function(data){
                     
-                    for(var i in data) {
-				    	console.log("console : "+data[i]['lc_index']);
-				    	console.log("console : "+data[i]['mp_index']);
-				    	console.log("console : "+data[i]['m_index']);
-				    	
-				    	var td = "";
-						td += '<td>' + data[i]['lc_index'] + '</td>';
-						td += '<td>' + +data[i]["mp_index"] + '</td>';
-						td += '<td>' + data[i]["m_index"] + '</td>';
-						td += '<td>' + data[i]["m_index"] + '</td>';
-						td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
-								+data[i]["m_index"] + '</button></td>';
-						$("#detail").html(td);
+			    	var td = "";
+			    	
+                    for(i=0; i<data.length-1; i++) {
+					    	console.log("console : "+data[i]['RN']);
+					    	console.log("console : "+data[i]['PR_RECORDDATE']);
+					    	console.log("console : "+data[i]['PR_RECORD']);
+					    	
+					    	td += '<tr class="success">';
+							td += '<td>' + data[i]['RN'] + '</td>';
+							td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+							td += '<td>' + data[i]["PR_RECORD"] + '</td>';
+							td += '<td>' + lc_record + '</td>';
+							td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
+									+data[i]["m_index"] + '</button></td>';
+							td += '</tr>';
                     }
-                
+
+                    $("#detail").html(td);
+                	
+			    	var j = data.length-1; // 마지막 length는 페이지정보
+			    	console.log("j : "+j);
+                    var prev = data[j]['prev'];
+                    var next = data[j]['next'];
+                    var start = data[j]['start']*1;
+                    var end = data[j]['end']*1;
+                    var page = data[j]['page']*1;
+                    var paging = '';
+                    console.log(prev, next, start, end);
+                    console.log(page+1);
+                    paging += '<ul class="pagination justify-content-end">';
                     
+                    if(prev == 'true') {
+	                    paging += '<li class="page-item">';
+	                    paging += '<a class="page-link" href="/mp/myCourse?page='+ (-1+start) +'">Previous</a>';
+	                    paging += '</li>';
+                    }
+                    for(var pNum = start; pNum <= end; pNum++) {
+                    	paging += '<div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true"></div>';
+                    	if(pNum==page) {
+	                    	paging += '<li class="page-item active">';
+                    	}else paging += '<li class="page-item ">';
+                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ pNum +'">';
+                    	paging += pNum;
+                    	paging += '</a>';
+                    	paging += '</li>';
+                    }
+                    
+                    if(next == 'true') {
+                    	paging += '<li class="page-item">';
+                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ (1+end) +'">';
+                    	paging += 'Next';
+                    	paging += '</a>';
+                    	paging += '</li>';
+                    }
+                    paging += '</ul>';
+                    console.log(paging);
+                    $("#ajaxPaging").html(paging);
                 },  
 
 			    error:function(xhr,status,error,data){ //ajax 오류인경우  
