@@ -65,11 +65,9 @@
 	<div class="container" style="width: 75%;">
 		<br>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block">내 코스</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_005_1'">내 코스</button>
 		<br>
 		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_006_1'">내 기록</button>
-		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block">코스 고르기</button>
 		<br>
 		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_004_1'">기록하기</button>
 		<br>

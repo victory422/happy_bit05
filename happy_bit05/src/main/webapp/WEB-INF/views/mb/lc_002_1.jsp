@@ -125,7 +125,7 @@
 								<td>
 									<c:out value="${board.lc_type eq 'all'?'전체': board.lc_type}"/>
 								</td>
-								<td onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'"><button type="button" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'" class="btn btn-lcnk">${board.lc_title }</button></td>
+								<td onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'">${board.lc_title }</td>
 								<td>${board.m_nickname }</td>
 								<td>${board.lc_date }</td>
 								<td>${board.lc_see }</td>

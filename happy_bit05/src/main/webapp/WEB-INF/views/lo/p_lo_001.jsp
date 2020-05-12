@@ -15,7 +15,7 @@
 	crossorigin="anonymous">
 
 </head>
-<body onunload="opener.pClose()"> 
+<body onunload="opener.pClose()" > 
 	<div class="container">
 		<div class="d-flex justify-content-center h-100">
 			<div class="card">
@@ -36,7 +36,7 @@
 								<span class="input-group-text"><i class="fas fa-key"></i></span>
 							</div>
 							<input type="password" class="form-control" name="m_pw" id="m_pw"
-								placeholder="password">
+								placeholder="password" autofocus>
 						</div>
 						<div class="form-group">
 							<input type="submit" value="confirm"  onclick="login()"
@@ -56,33 +56,45 @@
 
 <script type="text/javascript">
 
-function login() {
-	var id = document.getElementById('m_id').value;
-	var pw = document.getElementById('m_pw').value;
-	var returnPw = sessionStorage.getItem("password");
-	var passwordUpdate = sessionStorage.getItem("passwordUpdate");
-	console.log(passwordUpdate);
-	if(passwordUpdate=='0' && pw==returnPw) {
-		console.log("수정 중인 비밀번호 확인");
-		alert("비밀번호가 확인되었습니다.");
-		sessionStorage.removeItem("password");
-		sessionStorage.removeItem("passwordUpdate");
-		opener.document.getElementById("passwordConfirm2").value = 'updateTrue';
-		opener.document.getElementById("btn").removeChild;
-		window.close();
-	}else if(pw==returnPw && passwordUpdate==null) {
-		console.log("DB에서 비밀번호 확인");
-		alert("비밀번호가 확인되었습니다.");
-		sessionStorage.removeItem("password");
-		opener.document.getElementById("passwordConfirm2").value = 'true';
-		opener.document.getElementById("btn").removeChild;
-		window.close();
-		//window.opener.location.reload();
-	}else alert("비밀번호를 다시 확인해주세요.");
+	opener.document.getElementById("passwordConfirm2").value = 'cancel';
 	
-}
-	
+	function login() {
+		var id = document.getElementById('m_id').value;
+		var pw = document.getElementById('m_pw').value;
+		var returnPw = sessionStorage.getItem("password");
+		var passwordUpdate = sessionStorage.getItem("passwordUpdate");
+		console.log(passwordUpdate);
+		if(passwordUpdate=='0' && pw==returnPw &&pw!=null) {
+			console.log("수정 중인 비밀번호 확인");
+			alert("비밀번호가 확인되었습니다.");
+			sessionStorage.removeItem("password");
+			sessionStorage.removeItem("passwordUpdate");
+			opener.document.getElementById("passwordConfirm2").value = 'updateTrue';
+			console.log('updateTrue');
+			opener.document.getElementById("btn").removeChild;
+			window.close();
+		}else if(pw==returnPw && passwordUpdate==null && pw != null && pw != "") {
+			console.log("pw  : " +pw);
+			console.log("DB에서 비밀번호 확인");
+			alert("비밀번호가 확인되었습니다.");
+			sessionStorage.removeItem("password");
+			opener.document.getElementById("passwordConfirm2").value = 'true';
+			opener.document.getElementById("btn").removeChild;
+			window.close();
+			
+		}else if(pw!=returnPw){
+			alert("비밀번호를 다시 확인해주세요.");
+		}
+	}
+
+
+
 </script>
+
+
+
+
+	
 
 
 	<script src="../../resources/vendor/jquery/jquery.min.js"></script>

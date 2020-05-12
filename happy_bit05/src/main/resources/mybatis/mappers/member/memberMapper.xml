@@ -54,48 +54,20 @@
 
 	<select id="getMCList" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
 		<![CDATA[
-			select a.lc_index, a.m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, 
-						 lc_good, lc_see, lc_record, rownum rn, lc_address, lc_xy_arr
-			from
-				(
-					select 
-						mycourse.lc_index, mycourse.m_index, lc_title, lc_type, lc_distance, 
-						lc_run, lc_cycle, lc_area1, lc_area2, lc_area3, lc_thumbnail, 
-						lc_text, lc_date, lc_good, lc_see, lc_record, lc_address, lc_xy_arr
-					from
-						course, map, mycourse
-					where
-						mycourse.lc_index = course.lc_index 
-					and
-						mycourse.lc_index = map.lc_index 
-					and
-		]]>
-
-		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item="type" collection="typeArr">
-				<trim prefix="OR">
-					<choose>
-						<when test="type == 'normal'.toString()">
-							lc_title like '%'||#{keyword}||'%') or (m_index
-							like '%'||#{keyword}||'%'
-						</when>
-						<when test="type == 'area'.toString()">
-							lc_area1 like '%'||#{keyword}||'%') or (lc_area2
-							like
-							'%'||#{keyword}||'%') or
-							(lc_area3 like '%'||#{keyword}||'%'
-						</when>
-					</choose>
-				</trim>
-			</foreach>
-		</trim>
-			
-		<![CDATA[
-					rownum <= #{page} * #{amount}
-				) a, member b
-				where rownum > (#{page} -1) * #{amount}
-				and a.m_index = b.m_index
+			         select 
+			         rownum rn,
+                     mycourse.mp_index,mycourse.lc_index, mycourse.m_index,  course.lc_title, course.lc_type, course.lc_distance, 
+						course.lc_run, course.lc_cycle, course.lc_area1, course.lc_area2, course.lc_area3, course.lc_thumbnail, 
+						course.lc_text, course.lc_date, 
+                        course.lc_good, 
+                        course.lc_see, 
+                        course.lc_record,
+                        map.lc_address,
+                        map.lc_xy_arr
+                        from mycourse, course, map
+                        where mycourse.lc_index = course.lc_index
+                        and mycourse.lc_index = map.lc_index
+                        and mycourse.m_index = #{m_index}
 				
 		]]>
 		<include refid="type_match"></include>
@@ -134,7 +106,7 @@
 	</insert>
 	
 	<!-- 썸네일 업로드 -->
-	<update id="get_member_thumbnail" parameterType="java.util.Map">
+	<update id="set_member_thumbnail" parameterType="java.util.Map">
 		  
 		<selectKey keyProperty="m_index" order="BEFORE" resultType="String">
 			<![CDATA[ 
@@ -181,7 +153,7 @@
 	</select>
 	
 
-	<select id="getList" resultMap="request_thumbnail">
+	<select id="getMemberList" resultMap="request_thumbnail">
 		<![CDATA[
 			SELECT 
 			*
@@ -195,19 +167,47 @@
 
 	<select id="mc_paging_total" resultType="int">
 		<![CDATA[
-		select count(*) 
-		from course a, member b
-		where a.m_index = #{m_index}
+			        select 
+						count(*)		
+					from mycourse, course, map
+                        where mycourse.lc_index = course.lc_index
+                        and mycourse.lc_index = map.lc_index
+                        and mycourse.m_index = #{m_index}
 		]]>
 	</select>
 	
-	
+	<!-- 
 	<select id="getMyCourse" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
 		<![CDATA[
 		select mp_index, lc_index, m_index
 		from mycourse
 		where m_index = #{m_index}
 		and lc_index = #{lc_index}
+		]]>
+	</select>
+	 -->
+	 
+		<select id="getMyCourseDetail" resultType="java.util.Map">
+		<![CDATA[
+			select
+				rownum rn,
+				pr_index,
+				mycourse.mp_index,
+				pr_title,
+				pr_text,
+				pr_see,
+				pr_good,
+				pr_resistDate,
+				pr_recordDate,
+				pr_record,
+				pr_thumbnail,
+				pr_type,
+				pr_public
+			from
+				mycourse, myrecord
+				where mycourse.mp_index = myrecord.mp_index
+				and mycourse.m_index = #{m_index}
+				and mycourse.lc_index = #{lc_index}
 		]]>
 	</select>
 	
@@ -255,7 +255,7 @@
 			where m_index = #{m_index}
 		]]>	
 	</update>
-
+	
 
 </mapper>
 

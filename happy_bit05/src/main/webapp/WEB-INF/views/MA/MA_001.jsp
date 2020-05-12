@@ -259,6 +259,7 @@ var geocoder = new kakao.maps.services.Geocoder();
 		    							});
 		    						listOne.addEventListener("mouseout", function(){ 
 		    								infowindow[i].close();
+		    								map.setCenter(locPosition);
 		    							});
 		    					})(i);
 		    					

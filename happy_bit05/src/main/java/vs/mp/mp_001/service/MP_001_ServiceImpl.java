@@ -24,27 +24,22 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 
 	@Override
 	public MP_001_3_VO getMC(String lc_index) {
-		System.out.println("서비스 단에서 번호는 : " + lc_index);
 		return dao.getMC(lc_index);
 	}
 	
 	@Override
-	public List<MP_001_3_VO> getList(Page_DTO dto) {
+	public List<MP_001_3_VO> getMCList(Page_DTO dto) {
 		// TODO Auto-generated method stub
-		log.info("my코스 리스트 조회.......!");
-		log.info(dto);
-		List<MP_001_3_VO> list = dao.getList(dto);
+		log.info("my코스 리스트 조회.......! " +dto);
+		List<MP_001_3_VO> list = dao.getMCList(dto);
 		return list;
 	}
 	
-	@Override
-	public List<MP_001_3_VO> getMyCourse(Page_DTO dto) {
-		// TODO Auto-generated method stub
-		log.info("my코스  상세조회.......!");
-		log.info(dto);
-		List<MP_001_3_VO> list = dao.getMyCourse(dto);
-		return list;
-	}
+	/*
+	 * @Override public List<MP_001_3_VO> getMyCourse(Page_DTO dto) { // TODO
+	 * Auto-generated method stub log.info("my코스  상세조회.......!"); log.info(dto);
+	 * List<MP_001_3_VO> list = dao.getMyCourse(dto); return list; }
+	 */
 
 	@Override
 	public PageUtil paging(Page_DTO dto) {
@@ -63,6 +58,20 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 		// TODO Auto-generated method stub
 		dao.updateThumbnail(hmap);
 		
+	}
+
+	@Override
+	public LO_001_VO getMemberList(LO_001_VO list) {
+		// TODO Auto-generated method stub
+		dao.getMemberList(list);
+		return list;
+	}
+
+	@Override
+	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("my코스  detail.......!");
+		return  dao.getMyCourseDetail(dto);
 	}
 	
 
