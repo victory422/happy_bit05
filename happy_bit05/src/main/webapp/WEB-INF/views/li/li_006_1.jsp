@@ -86,11 +86,11 @@
  
 			<div class="row board_style">
 				<div class="col-md-8">
-					<h1>제목 : ${board.li_title }</h1><small>${board.m_nickname}</small>
+					<h1>${board.li_title }</h1>
 				</div>
 				<div class="col-md-4" style="text-align: right;">
 					<h6>추천수:<span class="good_cnt"> ${board.li_good }</span> 조회수:${board.li_see } </h6>
-					작성일자:${board.li_date }
+					작성일자:${board.li_date } <br>작성자 : ${board.m_nickname}
 				</div>
 			</div>
 
@@ -99,15 +99,14 @@
 			<div class="row board_style">
 				<div class="col-sm-12">
 					<h4>
-						장비게시판<small> (후기게시판) </small>
+						장비 Tip<small>  </small>
 					</h4>
-					<h6>종목: ${board.li_type } 종류 : ${board.li_category }</h6>
+					<h6>종목 :<c:out value="${board.li_type eq 'all'?'전체' : board.li_type}"/> /종류 :${board.li_category }</h6>
 				</div>
 			</div>
 
 			<br>
 			<div>
-				<h2>내용:</h2>
 				<div class="text_container text_padding">${board.li_text }</div>
 			</div>
 			<div class="box">
