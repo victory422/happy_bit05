@@ -232,7 +232,7 @@ public class LI_controller {
 		List<LI_VO> aa = new ArrayList<LI_VO>();
 		aa.add(vo);
 		
-		model.addAttribute("b_type", vo.getLi_b_type());
+		model.addAttribute("b_type", vo);
 		
 		//수정시 제어문을 타서 글 데이터를 모델에 담아서 화면에 던져준다.
 		if(vo.getLi_index  () != null) {	
@@ -298,6 +298,7 @@ public class LI_controller {
 	public String modify(LI_VO vo,Model model) {
 		
 		service.modify(vo);
+		log.info(" 수정 게시판유ㅇ형"+vo.getLi_b_type());
 		
 		return "redirect:"+url_mapping(vo.getLi_b_type());
 	}
