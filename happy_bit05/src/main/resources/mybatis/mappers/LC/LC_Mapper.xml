@@ -69,8 +69,7 @@
 	<!-- 리스트 뽑아오기 -->
 	<select id="LC_002_01" resultType="vs.lc.lc_002_1.vo.LC_002_1_VO">
 		<![CDATA[
-			select lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle,
-						 lc_area1, lc_area2, lc_area3, lc_thumbnail, lc_text, lc_date, lc_good, lc_see, lc_record, m_nickname
+			select *
 			from
 				(
 					select /*+INDEX_DESC(course lc_index) */
