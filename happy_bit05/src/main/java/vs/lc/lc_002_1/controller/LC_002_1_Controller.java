@@ -77,11 +77,11 @@ public class LC_002_1_Controller {
 			}
 			
 			
-			if(cri.getType() == null) {
-				model.addAttribute("lc_good", listGood);
-			}else if(!(cri.getType().equals("normal"))) {
-				model.addAttribute("lc_good", listGood);
-			}
+		/*
+		 * if(cri.getType() == null) { model.addAttribute("lc_good", listGood); }else
+		 * if(!(cri.getType().equals("normal"))) { model.addAttribute("lc_good",
+		 * listGood); }
+		 */
 			
 			
 			HttpSession session = request.getSession();
@@ -94,6 +94,7 @@ public class LC_002_1_Controller {
 			
 			model.addAttribute("lc_list", listVO);
 			model.addAttribute("pageUtil", new PageDTO(cri, total));
+			model.addAttribute("lc_good", listGood);
 			
 			return "LC/LC_002_1";
 	}
