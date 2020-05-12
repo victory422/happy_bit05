@@ -15,7 +15,7 @@
 		<level value="debug" />
 	</logger>
 	<logger name="vs">
-		<level value="info" />
+		<level value="debug" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
