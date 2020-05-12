@@ -16,15 +16,14 @@
 <div class="container" style="margin-top: 20px; margin-botton: 50px;">
 	<div class="content" style="width: 1000px">
 		<c:forEach items="${data}" var="data">		
-		${data.m_index }
 			<table style="width:100%;">
 				<tr>
 					<td style="width:70%"><span style="font-size:1.5rem;">${data.pr_title }&emsp; </span> 종목: ${data.pr_type }</td>
 					<td style="width:30%; text-align: right;">${data.pr_resistDate }</td>
 				</tr>
 				<tr>
-					<td>작성자 : 임시</td>
-					<td style="text-align: right"><h6>추천수:<span class="good_cnt"> 10</span> 조회수:60</h6> </td>
+					<td>작성자 : ${data.m_nickname}</td>
+					<td style="text-align: right"><h6>추천수:<span class="good_cnt">${data.pr_good }</span> 조회수:${data.pr_see }</h6> </td>
 				</tr>
 				<tr>
 					<td></td>
@@ -44,15 +43,13 @@
 						<tr>
 							<td style="width:60%">
 					<c:choose>
-						<c:when test="${board.m_index ne null}">
+						<c:when test="${data.m_index ne null}">
 							<a href='javascript: like_func();'><img
-								src="/resources/img/dislike.png" id='like_img'></a>추천수<span
-								class="good_cnt"> ${board.li_good }</span>
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${data.pr_good }</span>
 						</c:when>
 						<c:otherwise>
 							<a href='javascript: login_need();'><img
-								src="/resources/img/like.png"></a>추천수<span class="good_cnt">
-								${board.li_good }</span>
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${data.pr_good }</span>
 						</c:otherwise>
 					</c:choose>
 					</td>
@@ -127,8 +124,70 @@ function report(){
 //페이지 로딩시 댓글 목록
 $(document).ready(function() {
 	
+	//좋아요
+	console.log("여기오는거지?",board_index);
+	
+	(function(){
+		$.ajax({
+			url: "../pr/like_check",
+			type: "GET",
+			cache: false,
+			dataType: "json",
+			data: 'pr_index=' +board_index,
+			success: function(data) {
+				 if(data.good_check == 0){
+				        like_img = "/resources/img/dislike.png";
+				      } else {
+				        like_img = "/resources/img/like.png";
+				      }
+				      $('#like_img').attr('src', like_img);
+				     
+			},
+			 error: function(request, status, error){
+				 console.log("비회원")
+			 }
+			 })
+		})();
+	
 	commentList();
 });
+ 
+
+function like_func(){
+
+	
+	  $.ajax({
+		    url: "/pr/like",
+		    type: "GET",
+		    cache: false,
+		    dataType: "json",
+		    data: 'pr_index=' +board_index,
+		    success: function(data) {
+		      var msg = '';
+		      var like_img = '';
+		      msg += data.msg;
+		      alert(msg);
+		      if(msg != 'no'){
+			      	      
+		      if(data.good_check == 0){
+		        like_img = "/resources/img/dislike.png";
+		      } else {
+		        like_img = "/resources/img/like.png";
+		      }      
+		      $('')
+		      $('#like_img').attr('src', like_img);
+		      $('.good_cnt').text(data.good_cnt);
+		      
+		      }else{
+		    	  alert("로그인이 필요합니다.")
+		      }
+		      /* $('#like_check').html(data.like_check); */
+		    },
+		    error: function(request, status, error){
+		      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		  });
+		} 
  
 //var board_index = "${param.co_b_index}";
 
@@ -149,14 +208,14 @@ function commentList() {
 			//console.log(value.com_index1);
 			var a = '';
 			$.each(data,function(key, value) {
-					a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-					a += 	'<div class="commentInfo'+value.com_index+'">'+ '댓글번호 : '+ value.com_index ;		
-					a +=	'<a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
-					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
-					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
-	                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
-	                a +=	'</div>';             
-					a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
+				a += '<div class="commentArea" style="margin-bottom: 15px;">';
+				a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
+				a +=	'&emsp; <a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
+				a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
+				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
+                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
+                a +=	'</div>';             
+				a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
 				/*
 					if(value.com_dedetflag == 1){					
 						a += '<div class="commentArea1'+value.com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px; margin-left: 50px;">';
@@ -190,7 +249,7 @@ function dedetlist(com_index){
 		success : function(data){
 			$.each(data,function(key, value){
 				a += '<div class="commentArea1'+com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '상위 댓글 번호 : '+ value.com_index1 ;
+				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '작성자 : '+ value.m_nickname ;
 				a += 		"<img src='../resources/img/reply.png' class='float-left'>";
 				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
                 a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	

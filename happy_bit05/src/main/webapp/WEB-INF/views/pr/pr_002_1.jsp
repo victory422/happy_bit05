@@ -62,30 +62,34 @@
 
 		</div>
 	</form>
-<c:forEach items="${data}" var="data">	
-	
-	<input type="hidden" name="pr_index${data.pr_index }" value="${data.pr_index}">
-	<table class="table table-bordered table-hover" style="margin-top: 30px;" onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">		
-		<tr>
-			<td><h2>제목 : ${data.pr_title }</h2> ${data.pr_index }</td>
-	
-			  <td id='container' rowspan="5"
-				style="width: 500px; height: 200px; padding: 0;"></td>
+	<table class="table table-striped table-bordered table-hover"
+		style="margin-top: 30px;">
+		<thead>
+			<tr>
+				<th>제목</th>
+				<th>일자</th>
+				<th>장소</th>
+				<th>기록</th>
+				<th>추천수</th>
+				<th>조회수</th>
+			</tr>
+		</thead>
 
-		</tr>
-		<tr>
-			<td>일자 : ${data.pr_recordDate } &emsp; 작성자 : 이찬영 &emsp; 장소 : 불광천</td>
-		</tr>
-		<tr>
-			<td>조회수 : ${data.pr_see } &emsp; 추천수 : ${data.pr_good }</td>
-		</tr>
-		<tr>
-			<td>기록 : ${data.pr_record }</td>
-		</tr>
+		<tbody>
+			<c:forEach items="${data}" var="data">	
+				<tr onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">			
+					<td>${data.pr_title }</td>
+					<td>${data.pr_recordDate }</td>
+					<td>${data.m_nickname }</td>
+					<td>${data.pr_record }</td>
+					<td>${data.pr_good }</td>
+					<td>${data.pr_see }</td>
+				</tr>
+			</c:forEach>
+		</tbody>
 
 	</table>
-</c:forEach>
-<!-- 페이징  -->
+	<!-- 페이징  -->
 	<div class="col-md-10">
 		<ul class="pagination d-flex justify-content-center">
 			<c:if test="${pageUtil.prev }">
@@ -142,6 +146,58 @@ $(document).ready(function(){
 	}
 	
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

@@ -10,6 +10,7 @@ import vs.co.co_001_1.dto.Page_DTO;
 import vs.co.co_001_1.vo.CoVO;
 import vs.cr.cr_001_1.vo.CrVO;
 import vs.li.li_001_01.vo.LI_VO;
+import vs.pr.pr_002_1.vo.Pr_002_1VO;
 
 public interface Cr_Service {
 
@@ -32,7 +33,7 @@ public interface Cr_Service {
 	
 	//좋아요 추천수@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 	//조회수
-		public void increse_see(CrVO vo, HttpSession session);
+		public void increse_see(CrVO crvo, HttpSession session);
 		
 		//추천수 증가
 		public int increse_good(HashMap<String, Object> hashMap);

@@ -124,11 +124,13 @@
 					</c:choose>
 				</div>
 				<div class="push padding_1">
-					<button type="button"class="btn btn-primary" onclick="report()">신고하기</button> 
-					<c:if test="${member.m_index eq board.m_index }">
+					<c:if test="${member.m_index ne null}">
+						<button type="button"class="btn btn-primary" onclick="report()">신고하기</button> 
+					</c:if>
+					<c:if test="${member.m_index eq board.m_index or member.m_index eq 1}">
 						<button class="btn btn-danger" onclick="btn_delete()">삭제하기</button>
 					</c:if>
-					<c:if test="${member.m_index eq board.m_index }">
+					<c:if test="${member.m_index eq board.m_index}">
 						<button class="btn btn-success" onclick="modify()">수정하기</button>
 					</c:if>
 					<button  class="btn btn-info" onclick="fn_golist()">

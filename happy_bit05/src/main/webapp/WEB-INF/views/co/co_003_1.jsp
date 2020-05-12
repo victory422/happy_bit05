@@ -4,7 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 	<!-- Custom styles for this template -->
-<%@include file="../includes/middle.jsp" %>
 <script
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -45,26 +44,13 @@
 					>자전거</option>
 					
 				</select> 
-	
-				<!-- <select id="category" name="type" class="custom-select custom-select-sm-1 .col-md-3 col-md-offset-3"
-					style="margin-left: 10px; width: 15%">
-					<option value=null>장비선택</option>
-					<option value="운동복">운동복</option>
-					<option value="안전장비">안전장비</option>
-					<option value="신발">신발</option>
-					<option value="기타">기타</option>
-									<%-- <c:forEach items=”${사용할변수}” var=”넘어온데이터”>
-									<option value=”${사용할변수.값}”
-										${아이템.변수}
-									</option> 
-								</c:forEach>--%>
-				</select> -->
+		
 				<select
 					id="type" name="search_filter" class="custom-select custom-select-sm-1"
 					style="margin-left: 10px; width: 15%">
-						<option value=null selected>제목</option>
+						<option value=null selected>선택</option>
+						<option value="제목">제목</option>
 						<option value="내용">내용</option>
-						<option value="all">제목+내용</option>
 						<option value="장소">장소</option>
 				</select>
 					<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="검색어 입력" onsubmit="page_put()"/>
@@ -125,9 +111,19 @@
 
 var co_b_end = $('[name=co_b_end]').val();
 
+
+
 $(document).ready(function(){
 	
+var param = $(location).attr('search').slice($(location).attr('search').indexOf('=') + 1);
+
 	console.log(co_b_end);
+	console.log(param);
+	
+	if(param == '1'){
+		alert("대회신청 완료")
+	}	
+	
 	
 	$('a.page_now').on('click',function(){
 		//alert($('input[name=page]').val($(this).text()))

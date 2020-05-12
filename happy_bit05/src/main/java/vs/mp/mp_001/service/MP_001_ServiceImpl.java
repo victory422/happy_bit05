@@ -73,6 +73,12 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 		log.info("my코스  detail.......!");
 		return  dao.getMyCourseDetail(dto);
 	}
+
+	@Override
+	public PageUtil pagingDownPage(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return dao.pagingDownPage(dto);
+	}
 	
 
 	

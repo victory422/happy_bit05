@@ -109,9 +109,26 @@ case when r.m_index is not null then r.m_index
     
     
 <select id="re_list" resultType="vs.re.re_001_1.vo.ReVO">
-
-select * from declaration order by de_index desc
-
+<![CDATA[ 
+	select de_index, m_index, m_index2, de_target, de_type,
+			de_dispose, de_date, board_index
+	from (
+		select rownum rn,a.*
+		from
+			(select d.de_index, d.m_index, d.m_index2, d.de_target, 
+					d.de_type,d.de_dispose, d.de_date,d.board_index
+			 from declaration d
+			where
+			]]>
+			    <include refid="Page_DTO"/>
+			<![CDATA[ 
+			de_index > '0'
+			order by to_number(substr(de_index, 4)) desc
+			)a
+		where rownum <= (#{page} * ${amount})
+		)
+	where rn > ((#{page}-1) * ${amount})
+]]>
 
 </select>
 
@@ -124,8 +141,17 @@ select * from declaration order by de_index desc
 		else de_dispose end
 		where de_index = #{de_index}
 </update>    
-    
-    
+ <!-- 게시물 총합 출력 쿼리 -->
+	<select id="get_total" resultType="int">
+		select count(de_index)
+		 from declaration
+	
+
+	</select>   
+
+
+
+
 </mapper>
     
     

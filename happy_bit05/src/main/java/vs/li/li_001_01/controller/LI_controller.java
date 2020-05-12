@@ -318,7 +318,7 @@ public class LI_controller {
 	
 	
 	@RequestMapping(value = "/li_006_1", method = RequestMethod.GET)
-	public void board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
+	public String board_page(LI_VO vo,Model model,HttpSession session,Page_DTO dto) {
 		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//이전페이지로 넘어갈 페이지 경로
@@ -366,6 +366,7 @@ public class LI_controller {
 				log.info("로우가 이미 생성되어있음");
 			}
 		}
+		return "li/detail_page";
 	}
 	
 	

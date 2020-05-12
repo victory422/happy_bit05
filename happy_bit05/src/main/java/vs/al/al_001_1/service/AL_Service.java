@@ -10,9 +10,12 @@ public interface AL_Service {
 	//모든 게시글 조회
 	public List<AlVO> al_list(Page_DTO dto);
 	//신고 게시글 조회
-	public List<ReVO> re_list();
+	public List<ReVO> re_list(Page_DTO dto);
 	//처리 상태 변경
 	public int disposechange(String de_index);
+	//게시글 갯수
+	public int get_total(Page_DTO dto);
 
+	public int get_total1(Page_DTO dto);
 
 }
