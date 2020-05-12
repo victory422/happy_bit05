@@ -136,7 +136,7 @@ nav ul li {
 			
 			htm += '<tr><td></td></tr>'
 				for(var j in data) {
-				htm += '<form id="course_change'+j+'" action="/mb/mb_004_1?lc_index'+data[j].lc_index+'" method=get>'
+				htm += '<form id="course_change'+j+'" action="/mb/mb_004_1?lc_index='+data[j].lc_index+'" method=get>'
 				htm += '<tr class="success" >';
 				htm += '<td onclick="course_url('+j+')">코스명 : '+data[j].lc_title+'</td>';
 				htm += '</tr>';
