@@ -51,7 +51,7 @@
 	
 	 <!-- 타입별 검색하기 -->
 	 <sql id="type_match" >
-		<trim prefix="AND (" suffix=")" prefixOverrides="OR">
+		<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
 					<trim prefix="OR">
 						<choose>
 							<when test = "lc_type == '육상'">
@@ -78,8 +78,22 @@
 					from
 						course c join member m
 					on
+		]]>	
+					<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
+					<trim prefix="OR">
+						<choose>
+							<when test = "lc_type == '육상'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+							<when test = "lc_type == '자전거'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+						</choose>
+					</trim>
+			</trim>
+		<![CDATA[
 						m.m_index = c.m_index
-					where
+					and
 		]]>	
 		
 			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -103,18 +117,6 @@
 				)
 				where rn > (#{pageNum} -1) * #{amount}
 		]]>
-				<trim prefix="AND (" suffix=")" prefixOverrides="OR">
-					<trim prefix="OR">
-						<choose>
-							<when test = "lc_type == '육상'">
-								lc_type like '%'||#{lc_type}||'%'
-							</when>
-							<when test = "lc_type == '자전거'">
-								lc_type like '%'||#{lc_type}||'%'
-							</when>
-						</choose>
-					</trim>
-			</trim>
 	</select>
 	
 	<!-- 게시글 갯수 세기 -->
@@ -122,8 +124,8 @@
 		select count(lc_index) from
 			( select * from course where 
 			<include refid="criteria"></include>
-			lc_index like 'lc_%'
 			<include refid="type_match"></include>
+			lc_index like 'lc_%'
 			)
 	</select>
 	
@@ -138,6 +140,9 @@
 					from
 						course c join member m
 					on
+		]]>
+						<include refid="type_match"></include>
+		<![CDATA[
 						m.m_index = c.m_index)
 				where
 		]]>
@@ -148,7 +153,6 @@
 			)	
 			where rownum <= 4
 		]]>
-			<include refid="type_match"></include>
 	</select>
 
 	<!-- 게시글 업로드 -->
