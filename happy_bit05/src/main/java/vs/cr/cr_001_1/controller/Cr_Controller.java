@@ -77,12 +77,14 @@ public class Cr_Controller {
 		
 		HttpSession session = request.getSession();
 		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		
 		if(member == null) {
 			model.addAttribute("data",cr_service.cr_detail(co_r_index));
 			return "/cr/cr_003_1";
 		}
 
 		model.addAttribute("data",cr_service.cr_detail(co_r_index));
+		model.addAttribute("member",member);
 		System.out.println("회원정보" + member);
 			
 			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -112,8 +114,7 @@ public class Cr_Controller {
 	      }else {
 	    	  System.out.println("ㅇㅇㅇㅇㅇㅇㅇ");
 	      }
-	      //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	      
+	      System.out.println("닉네임 : " +crvo.getM_nickname());  
 	      return "/cr/cr_003_1";
 		}
 		

@@ -117,13 +117,51 @@
 
 	select *
 	 from myrecord r, member m 
-	 where pr_index = #{pr_index}
-	and r.m_index = m.m_index
-
+	 where r.m_index = m.m_index
+	and pr_index = #{pr_index}
 
 </select>
 
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
+	<!-- 조회수  증가 쿼리 -->
+	<update id="board_see">
+		<![CDATA[
+        	UPDATE myrecord  SET pr_see = NVL(pr_see,0)+1 where pr_index = TRIM(#{index})
+    	]]>
+    </update>
+
+	<select id="good_cnt" resultType="int" parameterType="HashMap">
+		<![CDATA[
+			select pr_good from myrecord where pr_index = TRIM(#{board_index})
+    	]]>
+	</select>
+	
+	 <!-- 추천수 증가 쿼리 -->
+ 	<update id="good_increse" parameterType="HashMap">
+	 	<![CDATA[
+		    UPDATE myrecord
+		    SET pr_good = pr_good + 1 
+		    WHERE pr_index=#{board_index}
+		]]>
+	</update>
+	
+	<!-- 추천수 감소 쿼리 -->
+	  <update id="good_decrese" parameterType="HashMap">
+	  <![CDATA[
+		    UPDATE myrecord
+		    SET pr_good =  pr_good - 1
+		    WHERE pr_index=#{board_index}
+    	]]>
+  	</update>
+  	
+  	<!-- 대회 리스트 출력 -->
+  	<select id="co_list" resultType="vs.ac.ac_001_1.vo.AcVO">
+  	
+  	select co_b_title
+  	from competition
+  	
+  	</select>
 
 
 

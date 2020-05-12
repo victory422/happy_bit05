@@ -75,6 +75,7 @@ public class Cr_ServiceImpl implements Cr_Service {
 	@Override
 	public List<CrVO> cr_detail(String co_r_index) {
 		
+		
 		return crmapper.cr_detail(co_r_index);
 		
 	}

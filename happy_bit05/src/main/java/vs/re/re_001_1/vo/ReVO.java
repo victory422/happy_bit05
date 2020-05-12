@@ -15,8 +15,16 @@ public class ReVO {
 	private String de_date;
 	//맴버 조인
 	private String m_count;
+	//아이템 테이블 조인
+	private String li_b_type;
 	
 	
+	public String getLi_b_type() {
+		return li_b_type;
+	}
+	public void setLi_b_type(String li_b_type) {
+		this.li_b_type = li_b_type;
+	}
 	public String getM_count() {
 		return m_count;
 	}
