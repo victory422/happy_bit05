@@ -77,7 +77,7 @@
 							aria-labelledby="navbarDropdownBlog">
 							<a class="dropdown-item" href="/li/li_001_1?li_b_type=후기게시판">장비 평가</a>
 								<a class="dropdown-item" href="/li/li_003_1?li_b_type=관리게시판">장비 관리Tip</a> 
-								<a class="dropdown-item" href="/lt/lt_001_1?lt_b_type=트레이닝게시판">트레이닝</a>
+								<a class="dropdown-item" href="/lt/lt_001_1?lt_b_type=트레이닝게시판">운동Tip</a>
 						</div></li>
 					<li class="nav-item dropdown">
 						<a class="nav-link dropdown-toggle" id="myInfo" href=""
