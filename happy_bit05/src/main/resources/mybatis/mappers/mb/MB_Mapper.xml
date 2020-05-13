@@ -67,8 +67,8 @@
 			]]>
 		</selectKey>
 		<![CDATA[
-		insert into myrecord values(
-			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, #{pr_text}, 0, 0, #{pr_resistdate}, sysdate, #{pr_record}, #{pr_thumbnail}, #{pr_type}, #{pr_public}
+		insert into myrecord(pr_index, mp_index, m_index, pr_title, pr_see, pr_good, pr_recorddate, pr_record, pr_type, pr_public) values(
+			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, 0, 0, sysdate, #{pr_record}, #{pr_type}, #{pr_public}
 		)
 		]]>
 	</insert>

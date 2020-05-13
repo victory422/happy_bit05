@@ -85,8 +85,13 @@ public class MB_controller {
 		session.setAttribute("session_lc_index", lc_index);
 		log.info("세션 lc_index : "+session.getAttribute("session_lc_index"));
 		
+		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		LC_003_1_VO vo = service.getLC(lc_index);
+		vo.setLc_index(lc_index);
+		vo.setM_index(member.getM_index());
+		
+		System.out.println("vo : " + vo);
 		
 		model.addAttribute("vo",vo);
 		
@@ -525,13 +530,14 @@ public class MB_controller {
 	@ResponseBody
 	@RequestMapping(value="/regist")
 	public void regist(@RequestParam("lc_index")String lc_index, @RequestParam("m_index")String m_index, 
-			@RequestParam("time") String time, @RequestParam("lc_title")String lc_title, PR_VO pr_vo) {
+			@RequestParam("time") String time, @RequestParam("lc_title")String lc_title, @RequestParam("lc_type")String lc_type, PR_VO pr_vo) {
 		
 		pr_vo.setM_index(m_index);
 		pr_vo.setLc_index(lc_index);
 		pr_vo.setPr_record(time);
 		pr_vo.setLc_title(lc_title);
 		pr_vo.setPr_public("0");
+		pr_vo.setPr_type(lc_type);
 		
 		service.regist(pr_vo);
 		

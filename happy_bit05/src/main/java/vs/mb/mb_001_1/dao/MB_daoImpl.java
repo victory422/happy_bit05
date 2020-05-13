@@ -73,6 +73,7 @@ public class MB_daoImpl implements MB_dao{
 	@Override
 	public void regist(PR_VO pr_vo) {
 		// TODO Auto-generated method stub
+		System.out.println("dao 단에서 pr_vo" + pr_vo);
 		session.insert("mb.regist", pr_vo);
 	}
 	
