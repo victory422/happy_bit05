@@ -27,7 +27,7 @@
   
   
   
-<div class="container"> 
+<div style="padding-left: 280px;padding-right: 100px; ">
 <h1 style="text-align: center; margin-top: 30px;">신고 회원 목록</h1>
 	<div class="row">
 		<div class="col-lg-12">

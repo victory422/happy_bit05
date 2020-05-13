@@ -25,4 +25,6 @@ public interface Ac_Service {
 	//대회 참가자 리스트
 	public List<CoVO> ac_memberlist(CoVO covo) throws Exception;
 	
+	public int m_statechange(Map<String, Object> hmap);
+	
 }

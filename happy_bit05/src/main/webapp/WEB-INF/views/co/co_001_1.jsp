@@ -271,15 +271,11 @@
 						<tr>
 						
 							<td>생년월일 </td>
-							<td><input type="text" value="94/01/14"></td>
+							<td>${member.m_birth }</td>
 						</tr>
 						<tr>
 							<td>휴대전화</td>
-							<td><input type="text" value="-빼고 입력해주세요."></td>
-						</tr>
-						<tr>
-							<td>일반전화</td>
-							<td><input type="text" value="-빼고 입력해주세요."></td>
+							<td>${member.m_tel }</td>
 						</tr>
 						<tr>
 							<td>참가비</td>
@@ -306,7 +302,9 @@
 	 	</c:forEach>
 		<div class="form-group">
 			<div class="col-lg-offset-2 col-lg-10">
-				<button type="submit" class="btn btn-primary">Sign in</button>
+			<c:if test="${param.kakaotest == '1'}">
+				<button type="submit" class="btn btn-primary">대회 신청</button>
+			</c:if>
 			</div>
 		</div>
 	</form>

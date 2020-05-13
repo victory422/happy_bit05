@@ -32,9 +32,10 @@
 			<div class="col-sm-3">
 				<div class="input-group mb-3">
 					<select class="custom-select" id="inputGroupSelect03" name="co_r_type">
-						<option selected>분류</option>
-						<option value="육상">육상</option>
-						<option value="자전거">자전거</option>
+						<option selected>대회명</option>
+						<c:forEach items="${list}" var="list">
+						<option value="${list.co_b_title }">${list.co_b_title }</option>
+						</c:forEach>
 					</select>
 				</div>
 			</div>

@@ -79,8 +79,11 @@
 						</tbody>
 						
 					</table>
+					
 					<form role="form" action="cr_002_1" method="get">
+					<c:if test="${member.m_id ne null }">
 					<button type="submit" class="btn btn-primary float-right">글작성</button>
+					</c:if>
 				</form>								
 				</div>
 				<!-- 페이징  -->

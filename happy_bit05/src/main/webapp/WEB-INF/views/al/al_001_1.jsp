@@ -24,8 +24,8 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  
-<div class="container"> 
+ 
+<div style="padding-left: 280px;padding-right: 100px; ">
 <h1 style="text-align: center; margin-top: 30px;">전체 게시글 관리</h1>
 	<div class="row">
 		<div class="col-lg-12">

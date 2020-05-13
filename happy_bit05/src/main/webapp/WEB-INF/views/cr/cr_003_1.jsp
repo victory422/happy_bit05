@@ -12,7 +12,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<div class="container" style="margin-top: 20px; margin-botton: 20px;">
 		<div class="content" style="width: 1000px">
+			<input type="hidden" id="m_index" value="${member.m_index }">
 			<c:forEach items="${data}" var="data">
+			<form id="cr_update" action="/cr/cr_update" method="post">
+		    	<input type="hidden" name="co_r_index" value="${data.co_r_index }">
+		    	<input type="hidden" name="co_r_index" value="${data.co_r_title }">
+		    	<input type="hidden" name="co_r_index" value="${data.co_r_type }">
+			<input type="hidden" id="g_index" value="${data.m_index }">
 			<table style="width:100%;">
 				<tr>
 					<td style="width:70%"><span style="font-size:1.5rem;">${data.co_r_title }&emsp; </span> </td>
@@ -30,8 +36,11 @@
 			<br>
 			<hr>
 			<div style="margin-bottom: 50px">
-				<div class="text_container text_padding">${data.co_r_text }</div>
+				<div class="text_container text_padding">
+				<input type="hidden" name="co_r_index" value="${data.co_r_text }">${data.co_r_text }
+				</div>
 			</div>
+		    </form>
 			<div class="box">
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
@@ -72,18 +81,6 @@
 					</table>
 				</div>			 
 			</div>
-			<form id="cr_deleteForm" action="/cr/cr_delete" method="get">
-		    	<p>
-			        <input type="hidden" name="co_r_index" value="${data.co_r_index}"/>			 
-		    	</p>
-		    </form>
-		    <form id="cr_update" action="/cr/cr_update" method="post">
-		    
-		    	<input type="hidden" name="co_r_index" value="${data.co_r_index }">
-		    	<input type="hidden" name="co_r_index" value="${data.co_r_title }">
-		    	<input type="hidden" name="co_r_index" value="${data.co_r_text }">
-		    	<input type="hidden" name="co_r_index" value="${data.co_r_type }">
-		    </form>
 			
 				<!--  댓글  -->
 				<div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:30px; padding: 5px;" >
@@ -109,15 +106,21 @@
 					</div>
 				</div>
 				<!-- 댓글 마무리 -->
+			<form id="cr_deleteForm" action="/cr/cr_delete" method="get">
+			        <input type="hidden" name="co_r_index" value="${data.co_r_index}"/>			 		
+		    </form>
+		    
 		</c:forEach>
 		</div>
 
 	</div>
 <script>
 
-var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+var m_index = $('#m_index').val(); // 글작성자 인덱스
 
-console.log("인덱스 : ",board_index);
+var g_index = $('#g_index').val();  //로그인한 회원 인덱스
+
+var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
 
 var popupWidth = 600;
 var popupHeight = 450;

@@ -95,6 +95,19 @@ public class Ac_Controller {
 		
 		return ac_service.statechange(co_b_index);
 	}
+	//참가자대회 접수상태 변경 
+	@PostMapping("/m_statechange")
+	@ResponseBody
+	public int m_statechange(@RequestParam("m_index") String m_index,@RequestParam("co_b_index") String co_b_index) {
+			
+		System.out.println(m_index);
+		System.out.println(co_b_index);
+		Map<String, Object> hmap = new HashMap<String, Object>();
+		hmap.put("co_b_index", co_b_index);
+		hmap.put("m_index", m_index);
+		
+		return ac_service.m_statechange(hmap);
+	}
 	//대회 참가자 리스트
 	@GetMapping("/ac_004_1")
 	public void memberlist(Model model,CoVO covo) throws Exception{
