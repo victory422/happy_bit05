@@ -144,7 +144,10 @@
     </div>
 
 
-
+	<input type="hidden" id="lc_index" name="lc_index" value="${vo.lc_index }"/>
+	<input type="hidden" id="m_index" name="m_index" value="${vo.m_index }"/>
+	<input type="hidden" id="lc_type" name="lc_type" value="${vo.lc_type }"/>
+	<input type="hidden" id="lc_title" name="lc_title" value="${vo.lc_title }"/>
 </div>
 
 <script>
@@ -283,8 +286,8 @@ function buttonEvt(){
   	 	 /* ---------------------------------------------------------------- */
   	 	 //Lat 오차 범위 확인
   	 	 var targetLat = Math.floor(parseFloat($('#mylat').val())*100000)/100000;
-		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*100000 + 8)/100000;
-		 var lineLat2 = Math.floor(parseFloat(record_arr[0])*100000 - 8)/100000;
+		 var lineLat1 = Math.floor(parseFloat(record_arr[0])*100000 + 10)/100000;
+		 var lineLat2 = Math.floor(parseFloat(record_arr[0])*100000 - 10)/100000;
 		 
 		 console.log(targetLat);
 		 console.log(lineLat1);
@@ -295,8 +298,8 @@ function buttonEvt(){
   	 		
   			//Lat이 맞다면 Lon오차범위를 확인하기위해서 변수
 			var targetLon = Math.floor($('#mylon').val()*100000)/100000;
-			var lineLon1 = Math.floor(record_arr[1]*100000 + 8)/100000;
-			var lineLon2 = Math.floor(record_arr[1]*100000 - 8)/100000;
+			var lineLon1 = Math.floor(record_arr[1]*100000 + 10)/100000;
+			var lineLon2 = Math.floor(record_arr[1]*100000 - 10)/100000;
 		 
 			if((targetLon >= lineLon2) && (targetLon <= lineLon1)){
 				
@@ -373,13 +376,15 @@ function buttonEvt(){
 	    			// 지도에 선을 표시합니다 
 	    			polyline.setMap(map);
 	    			
-	    			if(xy_arr.length == 2){
+	    			if(xy_arr.length <= 2){
 	    				clearInterval(timer);
 	    			      starFlag = true;
 
 	    			      var $button = $('<button class="btn btn-primary">upload업로드</button>');
 
 	    			      $('#upload').html($button);
+	    			      
+	    			      regist(); //완주하면 자동 저장 함수 실행.
 	    			}
 	    			
 			}
@@ -841,6 +846,47 @@ function aa2() {
 	
 	 });
 
+}
+
+// 완주했을때 자동 저장.
+function regist(){
+	
+	//완주시간.
+	var time = document.getElementById("time").innerHTML;
+	console.log(time);
+	
+	var lc_index = document.getElementById("lc_index").value;
+	var m_index = document.getElementById("m_index").value;
+	var lc_type = document.getElementById("lc_type").value;
+	var lc_title = document.getElementById("lc_title").value;
+	
+	var obj = new Object();
+	obj.lc_index = lc_index;
+	obj.m_index = m_index;
+	obj.time = time;
+	obj.lc_type = lc_type;
+	obj.lc_title = lc_title;
+	
+	$.ajax({
+		url: "../mb/regist",
+		type: "GET",
+		cache: false,
+		//dataType: "json",
+		async : "true",
+		data: {
+			"lc_index" : lc_index,
+			"m_index" : m_index,
+			"time" : time,
+			"lc_type" : lc_type,
+			"lc_title" : lc_title
+		},
+		success: function(data) {
+			 alert("수고하셨습니다. 기록은 자동 저장됩니다.");
+		},
+		 error: function(request, status, error){
+			 alert("저장 오류");
+		 }
+		 });
 }
 
 </script>

@@ -203,16 +203,29 @@
 	<script type="text/javascript">
 	//페이지 로딩시 댓글 목록
 	$(document).ready(function() {
+		
+		if(m_index != null){
+			
+			if(document.getElementById("empty_search").value == "empty"){
+				myCourse.innerText = "관심코스";
+				console.log("Dddd");
+							
+			}else if(document.getElementById("empty_search").value == "not_empty"){
+				myCourse.innerText = "관심코스 해제";		
+				console.log("fffff");
+			}
+				
+		}
 	   
 		(function(){
-			var lc_index = $('#myCourse_m_index').val();
+			var lc_index = $('#myCourse_lc_index').val();
 			$.ajax({
 				url: "../003/like_check",
 				type: "GET",
 				cache: false,
 				data: 'lc_index=' +lc_index,
 				success: function(data) {
-					 if(data.good_check == 0){
+					 if(JSON.parse(data).good_check == 0){
 					        like_img = "/resources/img/dislike.png";
 					      } else {
 					        like_img = "/resources/img/like.png";
@@ -626,27 +639,19 @@
 			  });
 			}
 
+	function login_need(){
+		alert("로그인이 필요한 서비스입니다.");
+	}
 	</script>
 	<script>
-	$(document).ready(function(){
+/* 	$(document).ready(function(){
 		
 		
 		//관심코스 등록되어 있는지 검색.
-		if(m_index != null){
-			
-			if(document.getElementById("empty_search").value == "empty"){
-				myCourse.innerText = "관심코스";
-				console.log("Dddd");
-							
-			}else if(document.getElementById("empty_search").value == "not_empty"){
-				myCourse.innerText = "관심코스 해제";		
-				console.log("fffff");
-			}
-				
-		}
+		
 		
 	});
-	
+	 */
 	</script>
 
 <%@ include file="../includes/footer.jsp"%>

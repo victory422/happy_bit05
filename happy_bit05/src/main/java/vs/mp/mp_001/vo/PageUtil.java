@@ -22,14 +22,14 @@ public class PageUtil {
 		this.total = total;
 
 		int pageNum = dto.getPage();
-		int tempEnd = (int) (Math.ceil(pageNum / 10.0) * 10);
+		int tempEnd = (int) (Math.ceil(pageNum / 5.0) * 5);
 		System.out.println("tempEnd: "+tempEnd);
 		
 		this.start = tempEnd - 9 < 0 ? 1 : tempEnd - 9;
 		this.prev = this.start != 1;
 
 		// Ǯ��
-		int realEnd = (int) (Math.ceil(total / 10.0));
+		int realEnd = (int) (Math.ceil(total / 5.0));
 		System.out.println("realEnd : "+realEnd);
 		
 		this.next = realEnd > tempEnd;

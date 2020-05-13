@@ -11,6 +11,7 @@ import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.dao.MB_dao;
+import vs.mb.mb_001_1.vo.PR_VO;
 
 @Log4j
 @Component
@@ -45,7 +46,14 @@ public class MB_servieceImpl implements MB_service{
 	
 	@Override
 	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
+		log.info("sort ing");
 		return dao.getMyRecordListSort(map);
+	}
+
+	@Override
+	public void regist(PR_VO pr_vo) {
+		// TODO Auto-generated method stub
+		dao.regist(pr_vo);
 	}
 	
 }

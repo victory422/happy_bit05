@@ -118,6 +118,7 @@ html, body { width: 100%; height: 100%; }
 						if(data == 'ok'){
 							alert('로그인 성공')
 							window.location.href = "/mb/mb_003_1";
+							
 						}else{
 							alert('로그인 실패')
 							$('#check').html("로그인에 실패 하셨습니다.<br>");

@@ -27,4 +27,8 @@ public interface MP_001_Dao {
 
 	List<MP_001_3_VO> getMCList(Page_DTO dto);
 
+	public PageUtil pagingDownPage(Page_DTO dto);
+
+	List<MP_001_3_VO> getMCListApp(Page_DTO dto);
+
 }

@@ -264,7 +264,8 @@ public class LC_003_1_Controller {
 	@ResponseBody
 	@RequestMapping(value="/like_check" , produces = "application/text; charset=utf8") //produces는 json을 보낼떄 한글이 꺠져서 encoding 맞춰주기위해서 사용
 	public String like_check(LC_003_1_VO vo ,HttpSession session) {
-		if(member.getM_index() != null) {
+		
+		if(session.getAttribute("sessionVO") != null) {
 			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@좋아요 눌렀는지 확인하는 메소드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 			int good_check = 0;
@@ -287,7 +288,11 @@ public class LC_003_1_Controller {
 			
 			return obj.toString();
 		}else {
-			return null;
+			int good_check = 0;
+			JsonObject obj = new JsonObject();
+			
+			obj.addProperty("good_check", good_check);
+			return obj.toString();
 		}
 	}
 	
