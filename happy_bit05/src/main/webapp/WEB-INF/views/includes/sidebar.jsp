@@ -112,7 +112,24 @@
                 </a>
               </li>
             </ul>
-          </li>      
+          </li> 
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                	광고 관리
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/ma/002/ad_get" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>메인 광고 관리</p>
+                </a>
+              </li>
+            </ul>
+          </li>           
         </ul>
  
       <!-- /.sidebar-menu -->
@@ -150,6 +167,5 @@
 <!-- AdminLTE App -->
 <script src="../../resources/dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../../resources/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../resources/dist/js/demo.js"></script>
