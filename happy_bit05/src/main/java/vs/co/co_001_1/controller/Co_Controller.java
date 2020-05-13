@@ -92,6 +92,8 @@ public class Co_Controller {
 		}
 
 		model.addAttribute("data",co_service.co_detail(co_b_index));
+		model.addAttribute("member",member);
+		
 		System.out.println("회원정보" + member);
 			 
 			//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -128,12 +130,18 @@ public class Co_Controller {
 	
 	//대회 접수 페이지
 	@GetMapping("/co_001_1")
-	public void co_001_1_view(Model model, @RequestParam("co_b_index") String co_b_index) throws Exception {
+	public void co_001_1_view(Model model, @RequestParam("co_b_index") String co_b_index,HttpServletRequest request) throws Exception {
 		System.out.println("대회 신청서 페이지");
 		System.out.println(co_b_index);
-	 
+
+		HttpSession session = request.getSession();
+		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		if(member == null) {
 		model.addAttribute("data", co_service.ap_list(co_b_index));
-		
+		}
+		System.out.println("로그인 정보 : " + member);
+		model.addAttribute("data", co_service.ap_list(co_b_index));
+		model.addAttribute("member",member);
 	} 
 	
 	

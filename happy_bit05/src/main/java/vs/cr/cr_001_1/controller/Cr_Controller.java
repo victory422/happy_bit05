@@ -38,15 +38,25 @@ public class Cr_Controller {
 	
 	//대회 후기 리스트
 	@GetMapping("cr_001_1")
-	public void cr_List(Model model, Page_DTO dto) throws Exception {
-		
+	public void cr_List(Model model, Page_DTO dto,HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession();
+		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		if(member == null) {
 		dto.setAmount(10);
 		
 		model.addAttribute("data", cr_service.Cr_List(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));
 		model.addAttribute("type",dto.getTypeArr());
 		model.addAttribute("page", dto.getPage());
+		}
 		
+		dto.setAmount(10);
+		System.out.println("로그인정보" + member);
+		model.addAttribute("member",member);
+		model.addAttribute("data", cr_service.Cr_List(dto));
+		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
 		
 	}
 	//대회 후기 작성폼이동
@@ -127,6 +137,8 @@ public class Cr_Controller {
 	@GetMapping("/cr_004_1")
 	public void cr_update(CrVO crvo,Model model,@RequestParam("co_r_index") String co_r_index) throws Exception	{
 		
+		//대회 리스트 출력
+		model.addAttribute("list",cr_service.co_list());			
 		model.addAttribute("data", cr_service.cr_detail(co_r_index));
 		
 	}

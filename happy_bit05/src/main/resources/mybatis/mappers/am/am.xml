@@ -11,12 +11,46 @@
 </select>
 
 <select id="mm_list" resultType="vs.ms.ms_001.vo.MS_001_VO">
-
-	select * from member order by m_index desc
+<![CDATA[ 
+	select m_index,m_id,m_name,m_nickName,m_tel,
+			m_birth,m_gender,m_email
+	from(
+		select rownum rn, a.*
+		from(select m_index,m_id,m_name,m_nickName,m_tel,
+			m_birth,m_gender,m_email
+			from member
+			where
+			m_index > '0'
+			order by m_index desc
+		) a
+		where rownum <= (#{page} * #{amount})
+	)
+	where rn > ((#{page}-1) * #{amount})
+	]]>
 
 </select>
 
 
+<!-- 게시물 총합 출력 쿼리 -->
+	<select id="get_total" resultType="int">
+		select count(m_index) from
+		member
+	
+
+	</select>
+
+<select id="am_detail" parameterType="String" resultType="vs.ms.ms_001.vo.MS_001_VO">
+select * 
+from member
+where m_index = #{m_idnex}
+
+</select>
+
+<delete id="am_del" parameterType="String">
+
+	delete from member where m_index = #{m_index}
+
+</delete>
 
 
 </mapper>
