@@ -25,9 +25,10 @@ public class MA_001_1_Controller {
 	
 	 @ResponseBody
 	 @RequestMapping(value="main", method = RequestMethod.POST)
-	 public List<MA_001_1_VO> mainList(@RequestParam("lc_area2") String lc_area2, @RequestParam("lc_area3") String lc_area3, Model model) {
+	 public List<MA_001_1_VO> mainList(@RequestParam("lc_area2") String lc_area2, @RequestParam("lc_area3") String lc_area3,
+			 		@RequestParam("lc_type") String lc_type, Model model) {
 		 
-		 List<MA_001_1_VO> listVO = service.mainList(lc_area2, lc_area3); 
+		 List<MA_001_1_VO> listVO = service.mainList(lc_area2, lc_area3, lc_type); 
 		 
 		//리스트 썸네일 인코딩, 디코딩 작업.
 			for(int i = 0; i < listVO.size(); i++) {

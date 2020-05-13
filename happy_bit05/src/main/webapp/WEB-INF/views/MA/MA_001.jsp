@@ -53,6 +53,10 @@
 		   <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div> 
 		</div>
 		<div class="col-4">
+			 <select id="lc_type" class="selectpicker" onchange="mainView()">
+				  <option value="육상" selected="selected">육상</option>
+				  <option value="자전거">자전거</option>
+				</select>
 			<div id="muteCourse" class="overflow-auto" style="height:600px; background-color: white;"></div>
 		</div>
 	</div>
@@ -114,9 +118,13 @@
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
 <script>
+
+
 //스크립트세션 주입
 sessionStorage.setItem("sessionScript", '${sessionVO.m_index}');
 console.log("홈 session : "+sessionStorage.getItem("sessionScript"));
+
+
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
     mapOption = { 
         center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -127,7 +135,9 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 //주소-좌표 변환 객체를 생성합니다
 var geocoder = new kakao.maps.services.Geocoder();
 
-(function mainView(){
+var markers = [];
+
+function mainView(){
 	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
 	if (navigator.geolocation) {
 	    
@@ -160,9 +170,15 @@ var geocoder = new kakao.maps.services.Geocoder();
 		            
 		            var lc_area2 = document.getElementById('lc_area2').value;
 	      	      	var lc_area3 = document.getElementById('lc_area3').value;
+	      	      	var lc_type = document.getElementById('lc_type').value;
 	      	        console.log(lc_area2);
 	            	console.log(lc_area3);
+	            	console.log(lc_type);
 	            	
+	            	for(var i=0; i < markers.length; i++){
+	            		// 마커에 클릭이벤트를 등록합니다
+	            		markers[i].setMap(null);
+	            	}
 		            
 		            $.ajax({
 		          		type: "POST",
@@ -171,7 +187,8 @@ var geocoder = new kakao.maps.services.Geocoder();
 		          		url: "../ma/001/main",
 		          		data : {
 		          			"lc_area2" : lc_area2,
-		          			"lc_area3" : lc_area3
+		          			"lc_area3" : lc_area3,
+		          			"lc_type" : lc_type
 		          		},
 		          		dataType : "json",
 		          		success : function(data){
@@ -179,12 +196,12 @@ var geocoder = new kakao.maps.services.Geocoder();
 		          			var muteCourse = document.getElementById('muteCourse');
 		          			var positions = []; //마커가 표시될 위치들.
 		          			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-		          		    var imageSize = new kakao.maps.Size(24, 35); 
+		          		    var imageSize = new kakao.maps.Size(24, 35);
 		          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
 	          				var course; //리스트 내용.
-	          				var markers = [];
 	              			var content = []; //HTML 내용.
 	              			var infowindow = [];
+	              			markers = [];
 		          		    
 		          		    //마커 생성
 		          			for(var i = 0; i < data.length; i++){
@@ -196,6 +213,7 @@ var geocoder = new kakao.maps.services.Geocoder();
 		    					positions[i] = new kakao.maps.LatLng(split1[0], split1[1]);
 		    					
 		    					//마커 눌렀을때 나올 내용.
+		    					content[i] += '<form id="mainGet'+i+'" action="../../lc/003/lc_get" method="post">';
 			        			content[i] += '<div class="col-md-12">';
 			    				content[i] += '<div class="card mb-3 shadow-sm">';
 			    				content[i] += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
@@ -204,7 +222,9 @@ var geocoder = new kakao.maps.services.Geocoder();
 			    				content[i] += '<div class="card-body">';
 			    				content[i] += '<p class="card-text">' + data[i].lc_title + '</p>';
 			    				content[i] += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
+			    				content[i] += '<input name="lc_index" type="hidden" value="'+ data[i].lc_index +'"/>';
 			    				content[i] += '</div></div></div>';
+			    				content[i] += '</form>';
 		    					
 			    				//마커 생성.
 		    					markers[i] = new kakao.maps.Marker({
@@ -224,7 +244,6 @@ var geocoder = new kakao.maps.services.Geocoder();
 		    				    });
 			    				
 			    				//리스트에 나올 내용.
-			    				course += '<form id="mainGet'+i+'" action="../../lc/003/lc_get" method="post">';
 			    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "lcGet('+i+')">';														
 								course += '<tr>';
 								course += '	<td rowspan="2" style="width:120px; height: 100px; padding: 0;">';
@@ -236,12 +255,12 @@ var geocoder = new kakao.maps.services.Geocoder();
 								course += '</tr>';
 								course += '<input name="lc_index" type="hidden" value="'+ data[i].lc_index +'"/>'
 								course += '</table>';
-								course += '</form>';
 			    				
 								//마커에 이벤트 등록.
 		    					addMouseOver(map, markers[i], infowindow[i]);
 								addMouseOut(markers[i], infowindow[i]);
 			    				
+								
 		          			}
 		          			
 		    				muteCourse.innerHTML = course;
@@ -261,6 +280,7 @@ var geocoder = new kakao.maps.services.Geocoder();
 		    								infowindow[i].close();
 		    								map.setCenter(locPosition);
 		    							});
+		    						
 		    					})(i);
 		    					
 		    				}
@@ -288,7 +308,13 @@ var geocoder = new kakao.maps.services.Geocoder();
 	    displayMarker(locPosition, message);
 	}
 
-})();
+};
+
+
+mainView();
+
+/* ---------------------------------------------------------------------------------------------------------- */
+
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다
 function displayMarker(locPosition, message) {
 
@@ -352,6 +378,7 @@ function zoomIn() {
 function zoomOut() {
     map.setLevel(map.getLevel() + 1);
 }
+
 </script>
 
 

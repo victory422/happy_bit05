@@ -311,6 +311,20 @@
 				from course a, map b
 				where b.lc_index = a.lc_index
 				and a.lc_area2 = #{lc_area2}
+		]]>
+			<trim prefix="AND(" suffix=")" prefixOverrides="OR">
+					<trim prefix="OR">
+						<choose>
+							<when test = "lc_type == '육상'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+							<when test = "lc_type == '자전거'">
+								lc_type like '%'||#{lc_type}||'%'
+							</when>
+						</choose>
+					</trim>
+			</trim>
+		<![CDATA[		
 			order by lc_good desc
 		]]>
 	</select>
