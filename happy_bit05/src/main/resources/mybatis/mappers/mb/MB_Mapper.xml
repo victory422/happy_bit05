@@ -68,7 +68,7 @@
 		</selectKey>
 		<![CDATA[
 		insert into myrecord values(
-			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, #{pr_text}, 0, 0, #{pr_resistdate}, sysdate, #{pr_record}, #{pr_thumbnail}, #{pr_type}, #{pr_public}
+			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, #{pr_text}, 0, 0, #{pr_resistdate}, sysdate, #{pr_record}, null, #{pr_type}, #{pr_public}
 		)
 		]]>
 	</insert>
@@ -119,25 +119,27 @@
 			where mycourse.mp_index = myrecord.mp_index
 				and mycourse.lc_index = course.lc_index
 				and mycourse.m_index = #{m_index}
+			order by rn desc
 		]]>	
 	</select>
 	
 	
-		<select id="getMyRecordListSort" parameterType="java.util.Map" resultType="java.util.Map">
-		<![CDATA[
-			select
-				rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
-				pr_see, pr_good, pr_resistDate, pr_recordDate, pr_record,
-				pr_thumbnail, pr_type, pr_public, lc_title,
-				(trunc(lc_distance,1)||'km')as lc_distance,
-				(lc_area1||' '||lc_area2||' '||lc_area3)as address, mycourse.m_index
-			from
-				mycourse, myrecord, course
-			where mycourse.mp_index = myrecord.mp_index
-				and mycourse.lc_index = course.lc_index
-				and mycourse.m_index = #{m_index}
-			order by #{searchType} DESC
+	<select id="getMyRecordListSort" parameterType="java.util.Map" resultType="java.util.Map">
+	<![CDATA[
+		select
+			rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
+			pr_see, pr_good, pr_resistDate, pr_recordDate, PR_RECORD,
+			PR_TYPE, pr_public, LC_TITLE,
+			(trunc(lc_distance,1)||'km')as LC_DISTANCE,
+			(lc_area1||' '||lc_area2||' '||lc_area3)as ADDRESS, mycourse.m_index
+		from
+			mycourse, myrecord, course
+		where mycourse.mp_index = myrecord.mp_index
+			and mycourse.lc_index = course.lc_index
+			and mycourse.m_index = #{m_index}
+		order by ${searchType} ${sort}
+   		    
 		]]>	
 	</select>
-	
+		
 </mapper>

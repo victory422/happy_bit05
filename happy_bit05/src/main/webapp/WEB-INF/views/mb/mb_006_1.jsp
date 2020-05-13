@@ -187,13 +187,25 @@ nav ul li {
 
 <script type="text/javascript">
 
+
+var sortType = 'DESC';
+var count = 0;
+
 	function sort(searchType) {
 		var m_index = ${list.get(0).M_INDEX};
 		console.log("searchType : "+searchType);	
 		console.log("m_index : "+m_index);
+		console.log(sortType);
 		
-		//오름차순, 내림차순 정리
-		var sort = 'DESC';
+		
+		//sort type 주입 (오름차순 내림차순)
+		if(count==0) {
+			sortType = 'DESC';
+			count = 1;
+		}else {
+			sortType = 'ASC';
+			count = 0;
+		}
 		
 		$.ajax({
 			type : "post",
@@ -201,24 +213,25 @@ nav ul li {
 			url : 'mb_006_1/sort',
 			data : {"searchType" : searchType,
 					"m_index" : m_index,
-					"sort" : sort},
+					"sort" : sortType},
 			dataType : "json",
 			success : function(data){
 				
 				var htm = '';
 				document.getElementById('vals').firstChild.remove();
-				htm += '<tr class="success">';
-				for(var i in data) {
-						htm += '<td>'+data[i]['LC_TITLE']+'</td>';
-						htm += '<td>'+data[i]['PR_TYPE']+'</td>';
-						htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
-						htm += '<td>'+data[i]['ADDRESS']+'</td>';
-						htm += '<td>'+data[i]['PR_RECORD']+'</td>';
-						htm += '</tr>';
+				for(var i=0; i<data.length; i++) {
+					console.log(data[i]);
+					htm += '<tr class="success">';
+					htm += '<td>'+data[i]['LC_TITLE']+'</td>';
+					htm += '<td>'+data[i]['PR_TYPE']+'</td>';
+					htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
+					htm += '<td>'+data[i]['ADDRESS']+'</td>';
+					htm += '<td>'+data[i]['PR_RECORD']+'</td>';
+					htm += '</tr>';
 				}
 				
 				document.getElementById('vals').innerHTML = htm;
-				if(sort=='DESC') sort = 'ASC';
+
 			},
 			error : function(request,status,error) {
 				console.log("error : "+ (JSON.stringify(request)));
