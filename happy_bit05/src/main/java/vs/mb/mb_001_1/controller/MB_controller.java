@@ -86,7 +86,6 @@ public class MB_controller {
 		
 		
 		LC_003_1_VO vo = service.getLC(lc_index);
-		
 		model.addAttribute("vo",vo);
 		
 	}
@@ -105,6 +104,7 @@ public class MB_controller {
 		dto.setM_index(member.getM_index());
 		List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
 		return listVO;
+		
 	}
 	
 	@ResponseBody
@@ -237,6 +237,12 @@ public class MB_controller {
 		
 		return jsonStr;
 	}
+	
+	 @RequestMapping(value="mobile_info")
+	 public String mobile() {
+		 
+		 return "/mb/aaa";
+	 }
 	
 	
 	//모바일 로그아웃
