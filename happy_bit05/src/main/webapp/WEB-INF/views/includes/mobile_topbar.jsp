@@ -38,9 +38,7 @@
 			myInfo.setAttribute('href','/lo');
 			myInfo.setAttribute('data-toggle','');
 		}else {
-			var login = document.getElementById('login');
-			login.parentNode.removeChild(login);
-			console.log("로그인중");
+			
 		}
 		
 		function logout() {

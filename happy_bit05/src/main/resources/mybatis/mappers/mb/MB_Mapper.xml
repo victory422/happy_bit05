@@ -58,4 +58,73 @@
 		]]>
 	</select>
 	
+	
+	<!-- 앱에서 관심코스 불러오기 -->
+	<select id="getMCListApp" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
+		<![CDATA[
+			select 
+				rownum rn,
+	               mp_index, lc_index, m_index,  lc_title, lc_type, lc_distance, 
+				lc_run, lc_cycle, lc_area1, lc_area2, lc_area3, lc_thumbnail, 
+				lc_text, lc_date, lc_good, lc_see, lc_record,
+				lc_address, lc_xy_arr
+	                   from (
+	                   select rownum rn, mycourse.mp_index,mycourse.lc_index, 
+	                   	mycourse.m_index,  course.lc_title, course.lc_type, 
+	                   	course.lc_distance, 
+						course.lc_run, course.lc_cycle, course.lc_area1, 
+						course.lc_area2, course.lc_area3, 
+						course.lc_thumbnail, 
+						course.lc_text, course.lc_date, 
+	                       course.lc_good, 
+	                       course.lc_see, 
+	                       course.lc_record,
+	                       map.lc_address,
+	                       map.lc_xy_arr
+	                   from mycourse, course, map
+	                       where mycourse.lc_index = course.lc_index
+	                       and mycourse.lc_index = map.lc_index
+	                       and mycourse.m_index = #{m_index}
+	                      )
+					
+			]]>
+	</select>
+	
+		
+	<!--  나의 기록 리스트-->
+	<select id="getMyRecordList" parameterType="java.lang.String" resultType="java.util.Map">
+		<![CDATA[
+			select
+				rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
+				pr_see, pr_good, pr_resistDate, pr_recordDate, pr_record,
+				pr_thumbnail, pr_type, pr_public, lc_title,
+				(trunc(lc_distance,1)||'km')as lc_distance,
+				(lc_area1||' '||lc_area2||' '||lc_area3)as address, mycourse.m_index	
+			from
+				mycourse, myrecord, course
+			where mycourse.mp_index = myrecord.mp_index
+				and mycourse.lc_index = course.lc_index
+				and mycourse.m_index = #{m_index}
+		]]>	
+	</select>
+	
+	
+		<select id="getMyRecordListSort" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+			select
+				rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
+				pr_see, pr_good, pr_resistDate, pr_recordDate, pr_record,
+				pr_thumbnail, pr_type, pr_public, lc_title,
+				(trunc(lc_distance,1)||'km')as lc_distance,
+				(lc_area1||' '||lc_area2||' '||lc_area3)as address, mycourse.m_index
+			from
+				mycourse, myrecord, course
+			where mycourse.mp_index = myrecord.mp_index
+				and mycourse.lc_index = course.lc_index
+				and mycourse.m_index = #{m_index}
+			order by #{searchType} DESC
+		]]>	
+	</select>
+	
+	
 </mapper>

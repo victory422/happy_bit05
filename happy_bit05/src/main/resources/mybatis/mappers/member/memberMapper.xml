@@ -83,8 +83,7 @@
 		]]>
 		<include refid="type_match"></include>
 	</select>
-
-
+	
 	<insert id="get_member"
 		parameterType="vs.ms.ms_001.vo.MS_001_VO">
 		<![CDATA[

@@ -45,6 +45,7 @@ public class MB_servieceImpl implements MB_service{
 	
 	@Override
 	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
+		log.info("sort ing");
 		return dao.getMyRecordListSort(map);
 	}
 	

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% request.setCharacterEncoding("utf-8"); %>
+<% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <title>myrecord</title>
@@ -142,29 +144,31 @@ nav ul li {
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
-					<td width="25%">제목</td>
-					<td width="10%">코스유형</td>
-					<td width="10%">거리<small>(km)</small></td>
-					<td width="65%">지역</td>
+					<td width="30%" onclick="sort('LC_TITLE')">제목</td>
+					<td width="8%" onclick="sort('PR_TYPE')">코스유형</td>
+					<td width="8%"onclick="sort('LC_DISTANCE')">거리<small>(km)</small></td>
+					<td width="40%"onclick="sort('ADDRESS')">지역</td>
+					<td width="14%"onclick="sort('PR_RECORD')">기록</td>
 
 
 				</tr>
-				<c:if test="${empty listVO }">
+				<c:if test="${empty list }">
 							${"저장된 기록이 없습니다."}
 							
 				</c:if>
-				<tbody id="paging">
+				<tbody id="vals">
 
-					<c:forEach var="val" items="${listVO }" varStatus="status">
+					<c:forEach var="val" items="${list}" varStatus="status">
 
 
 						<tr id="corseDetail" class="success" 
 							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
 
-							<td width="25%">${val.lc_title}</td>
-							<td width="10%">${val.lc_type}</td>
-							<td width="10%">${val.lc_distance}</td>
-							<td width="65%">${val.lc_address}</td>
+							<td width="30%">${val.LC_TITLE}</td>
+							<td width="8%">${val.PR_TYPE}</td>
+							<td width="8%">${val.LC_DISTANCE}</td>
+							<td width="40%">${val.ADDRESS}</td>
+							<td width="14%">${val.PR_RECORD}</td>
 							<%-- <td>
 								<button
 									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
@@ -183,40 +187,43 @@ nav ul li {
 
 <script type="text/javascript">
 
-	function sort(type) {
-		console.log(type);	
+	function sort(searchType) {
+		var m_index = ${list.get(0).M_INDEX};
+		console.log("searchType : "+searchType);	
+		console.log("m_index : "+m_index);
+		
+		//오름차순, 내림차순 정리
+		var sort = 'DESC';
 		
 		$.ajax({
-			type : "get",
-			url : '/mb_006_1/sort/',
-			data : {"type" : type},
+			type : "post",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			url : 'mb_006_1/sort',
+			data : {"searchType" : searchType,
+					"m_index" : m_index,
+					"sort" : sort},
 			dataType : "json",
 			success : function(data){
-				console.log(data);
+				
 				var htm = '';
-				
-				htm = '<tr class="success">';
+				document.getElementById('vals').firstChild.remove();
+				htm += '<tr class="success">';
 				for(var i in data) {
-					for( var j in data[i]) {
-					htm = '<td>'+data[i][j]+'</td>';
-					htm = '<td>'+data[i][j]+'</td>';
-					htm = '<td>'+data[i][j]+'</td>';
-					htm = '<td>'+data[i][j]+'</td>';
-					htm = '<td>'+data[i][j]+'</td>';
-					}
+						htm += '<td>'+data[i]['LC_TITLE']+'</td>';
+						htm += '<td>'+data[i]['PR_TYPE']+'</td>';
+						htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
+						htm += '<td>'+data[i]['ADDRESS']+'</td>';
+						htm += '<td>'+data[i]['PR_RECORD']+'</td>';
+						htm += '</tr>';
 				}
-				htm = '</tr>';
 				
-				document.getElementById('vals').html(htm);
-				
-				
-				
-
-				
-				
+				document.getElementById('vals').innerHTML = htm;
+				if(sort=='DESC') sort = 'ASC';
 			},
-			error : function(data) {
-				console.log("error : "+ (JSON.stringify(data)));
+			error : function(request,status,error) {
+				console.log("error : "+ (JSON.stringify(request)));
+				console.log("error : "+ (JSON.stringify(status)));
+				console.log("error : "+ (JSON.stringify(error)));
 			}
 		});
 		
