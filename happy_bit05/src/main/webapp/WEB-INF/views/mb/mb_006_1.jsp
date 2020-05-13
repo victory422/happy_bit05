@@ -152,15 +152,15 @@ nav ul li {
 
 
 				</tr>
-				<c:if test="${empty list }">
-							${"저장된 기록이 없습니다."}
-							
-				</c:if>
+				
 				<tbody id="vals">
-
+					<c:if test="${empty list }">
+						${"저장된 기록이 없습니다."}
+									
+					</c:if>
 					<c:forEach var="val" items="${list}" varStatus="status">
 
-
+						
 						<tr id="corseDetail" class="success" 
 							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
 
