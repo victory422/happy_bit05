@@ -33,12 +33,17 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		return list;
 	}
 	
-	/*
-	 * @Override public List<MP_001_3_VO> getMyCourse(Page_DTO dto) { // TODO
-	 * Auto-generated method stub log.info("my코스  상세조회.....DAO");
-	 * log.info("getMyCourse : "+dto); List<MP_001_3_VO> list =
-	 * session.selectList("member.getMyCourse", dto); log.info(list); return list; }
-	 */
+	
+	@Override
+	public List<MP_001_3_VO> getMCListApp(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("getList : "+dto);
+		log.info("My코스 리스트 DAO.....");
+		log.info("----------------");
+		List<MP_001_3_VO> list = session.selectList("mb.getMCListApp", dto);
+		log.info("getList : "+list);
+		return list;
+	}
 	
 	@Override
 	public List<Map<String, String>> getMyCourseDetail(Page_DTO dto) {

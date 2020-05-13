@@ -1,5 +1,7 @@
 package vs.mb.mb_001_1.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
-import com.ibleaders.utility.ib_json.JSONArray;
-import com.ibleaders.utility.ib_json.JSONObject;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -30,7 +30,6 @@ import vs.board.good.vo.GOOD_VO;
 import vs.lc.lc_002_1.service.LC_002_1_Service;
 import vs.lc.lc_002_1.vo.Criteria;
 import vs.lc.lc_002_1.vo.LC_002_1_VO;
-import vs.lc.lc_002_1.vo.PageDTO;
 import vs.lc.lc_003_1.service.LC_003_1_Service;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
@@ -41,7 +40,6 @@ import vs.mb.mb_001_1.vo.PR_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
-import vs.mp.mp_001.vo.PageUtil;
 
 @Log4j
 @Controller
@@ -165,7 +163,7 @@ public class MB_controller {
 	}
 	
 	
-	
+	//앱에서 개인기록 보여주는 페이지 (기록 불러오기)
 	@ResponseBody
 	@RequestMapping(value="/mb_006_1")
 	public  ModelAndView mb_006_1 (HttpServletRequest request, HttpServletResponse response) 
@@ -188,8 +186,6 @@ public class MB_controller {
 			List<Map<String,String>> list = service.getMyRecordList(m_index);
 			log.info(list);
 			
-			
-			
 			mav.addObject("list", list);
 			mav.setViewName("/mb/mb_006_1");
 			log.info("/mb/mb_006_1 view완료");
@@ -197,45 +193,30 @@ public class MB_controller {
 	}
 	
 	
+	@RequestMapping(value="/mb_006_1/sort", method = RequestMethod.POST, produces = "application/text;charset=utf8")
 	@ResponseBody
-	@RequestMapping(value="/mb_006_1/sort/*", method = RequestMethod.POST)
-	public  String mb_006_1_sort (@RequestParam("type")String type, 
+	public  String mb_006_1_sort (@RequestParam("searchType")String searchType, 
+			@RequestParam("m_index")String m_index, @RequestParam("sort")String sort,
 			HttpServletRequest request, HttpServletResponse response) 
 			throws JsonProcessingException  {
-		log.info("app/myCourse/detail-ajax"+type);
-		HttpSession session = request.getSession();
-		ModelAndView mav = new ModelAndView();
-		LO_001_VO loVo = new LO_001_VO();
-		String m_index = "";
-		
-		//세션 주입 (m_index : 멤버번호)
-		if(session.getAttribute("sessionVO")==null) {
-			log.info("session null! : "+session.getAttribute("sessionVO"));
-		}else {
-			loVo = (LO_001_VO) session.getAttribute("sessionVO");
-			m_index = loVo.getM_index();
-			log.info(m_index);
-		}
+		log.info("app/myCourse/detail-ajax "+searchType);
+		log.info("app/myCourse/detail-ajax "+sort);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("m_index", m_index);
-		map.put("type", type);
+		map.put("searchType", searchType);
+		map.put("sort", sort);
 		List<Map<String,String>> list = service.getMyRecordListSort(map);
+		
 		log.info(list);
-		
-		JSONArray jsonArray = new JSONArray();
-		JSONObject json = null;
-		
 		String jsonStr = new ObjectMapper().writeValueAsString(list);
-		for(int i=0; i<list.size();i++){
-//		  json = new JSONObject();
-//		  json.put("lc_index", vo.getLc_index());
-//		  json.put("m_index", vo.getM_index());
-//		  json.put("mp_index", vo.getMp_index());
-//		  jsonArray.add(json);
-//		  log.info("json : "+json);
+		//글자 인코딩 설정 (JSON 파싱) //이거보단 위의 produce로 해결된 듯 혹은 둘 다 일 수도.
+		try {
+			jsonStr = URLDecoder.decode(jsonStr, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			log.info("json parsing error");
 		}
-		
 		return jsonStr;
 	}
 	
@@ -508,7 +489,7 @@ public class MB_controller {
 			log.info("session null! : "+session.getAttribute("sessionVO"));
 		}else {
 			dto.setM_index(member.getM_index());
-			List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
+			List<MP_001_3_VO> listVO = mp_001_service.getMCListApp(dto);
 			mav.addObject("listVO", listVO);
 			log.info("listVO1 : "+listVO);
 			
