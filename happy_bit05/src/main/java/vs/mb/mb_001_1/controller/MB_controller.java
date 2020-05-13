@@ -524,4 +524,10 @@ public class MB_controller {
 		
 	}
 	
+	@RequestMapping("/mobile_info")
+	public String mobile(){
+		log.info("개인정보처리방침 페이지");
+		return "/mb/aaa";
+	}
+	
 }
