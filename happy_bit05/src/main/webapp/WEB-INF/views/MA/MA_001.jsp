@@ -136,6 +136,7 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 var geocoder = new kakao.maps.services.Geocoder();
 
 var markers = [];
+var infowindow = [];
 
 function mainView(){
 	// HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
@@ -178,6 +179,7 @@ function mainView(){
 	            	for(var i=0; i < markers.length; i++){
 	            		// 마커에 클릭이벤트를 등록합니다
 	            		markers[i].setMap(null);
+	            		infowindow[i].close();
 	            	}
 		            
 		            $.ajax({
@@ -200,7 +202,7 @@ function mainView(){
 		          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
 	          				var course; //리스트 내용.
 	              			var content = []; //HTML 내용.
-	              			var infowindow = [];
+	              			infowindow = [];
 	              			markers = [];
 		          		    
 		          		    //마커 생성

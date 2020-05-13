@@ -30,6 +30,10 @@
 		<result property="lc_thumbnail" column="lc_thumbnail" javaType="[B" jdbcType="BLOB"  />
 	</resultMap>
 	
+	<resultMap id="mainMap" type="java.util.HashMap">
+		<result property="ad_image" column="ad_image" javaType="[B" jdbcType="BLOB"  />
+	</resultMap>
+	
 	<!-- 카테고리별 검색하기 -->
 	<sql id="criteria" >
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
@@ -358,6 +362,32 @@
 			</trim>
 		<![CDATA[		
 			order by lc_good desc
+		]]>
+	</select>
+	
+	<insert id="ma_002_1">
+		<![CDATA[
+			insert into advertising(ad_index, ad_date)
+				values(#{ad_index}, sysdate)
+		]]>
+	</insert>
+	
+	<update id="ma_002_1_thumbnail" parameterType="java.util.Map">
+		<selectKey keyProperty="ad_index" order="BEFORE" resultType="String">
+			<![CDATA[ 
+				select max(ad_index) from advertising
+			]]>	
+		</selectKey>
+		<![CDATA[ 
+			update advertising
+			set ad_image = #{ad_image}
+			where ad_index = #{ad_index}
+		]]>	
+	</update>
+	
+	<select id="ma_002_2" resultType="vs.ma.ma_001_1.vo.MA_002_2_VO">
+		<![CDATA[
+			select * from advertising
 		]]>
 	</select>
 </mapper>
