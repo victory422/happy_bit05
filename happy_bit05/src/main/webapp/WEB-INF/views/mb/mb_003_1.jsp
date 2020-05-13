@@ -89,7 +89,7 @@ padding: 20px 16px;
 		<br>
 		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/myCourse'">기록 재기</button>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_006_1'">측정한 기록보기</button>
+		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_007_1'">측정한 기록보기</button>
 		<br>
 	</div>
 </div>

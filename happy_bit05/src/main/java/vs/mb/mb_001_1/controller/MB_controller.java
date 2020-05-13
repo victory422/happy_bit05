@@ -170,7 +170,7 @@ public class MB_controller {
 	
 	//앱에서 개인기록 보여주는 페이지 (기록 불러오기)
 	@ResponseBody
-	@RequestMapping(value="/mb_006_1")
+	@RequestMapping(value="/mb_007_1")
 	public  ModelAndView mb_006_1 (HttpServletRequest request, HttpServletResponse response) 
 			throws JsonProcessingException  {
 			log.info("app/myCourse/detail");
@@ -192,13 +192,13 @@ public class MB_controller {
 			log.info(list);
 			
 			mav.addObject("list", list);
-			mav.setViewName("/mb/mb_006_1");
-			log.info("/mb/mb_006_1 view완료");
+			mav.setViewName("/mb/mb_007_1");
+			log.info("/mb/mb_007_1 view완료");
 			return mav;
 	}
 	
 	
-	@RequestMapping(value="/mb_006_1/sort", method = RequestMethod.POST, produces = "application/text;charset=utf8")
+	@RequestMapping(value="/mb_007_1/sort", method = RequestMethod.POST, produces = "application/text;charset=utf8")
 	@ResponseBody
 	public  String mb_006_1_sort (@RequestParam("searchType")String searchType, 
 			@RequestParam("m_index")String m_index, @RequestParam("sort")String sort,
@@ -495,12 +495,10 @@ public class MB_controller {
 		}else {
 			dto.setM_index(member.getM_index());
 			List<MP_001_3_VO> list = mp_001_service.getMCListApp(dto);
-			mav.addObject("listVO", list);
-			log.info("listVO1 : "+list);
+			mav.addObject("list", list);
+			log.info("list : "+list);
 			
-//			pageutil = mp_001_service.paging(dto);
-//			mav.addObject("pageUtil", pageutil);
-			log.info("MP_001_3 mav완료");
+			log.info("mb_006_1 mav완료");
 		}
 		
 		mav.setViewName("/mb/mb_006_1");

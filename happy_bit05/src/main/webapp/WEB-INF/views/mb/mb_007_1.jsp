@@ -4,7 +4,7 @@
 <% response.setContentType("text/html; charset=utf-8"); %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
-<title>myCourse</title>
+<title>myrecord</title>
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -144,9 +144,11 @@ nav ul li {
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
-					<td width="24%">제목</td>
-					<td width="8%">코스유형</td>
-					<td width="8%">거리<small>(km)</small></td>
+					<td width="30%" onclick="sort('LC_TITLE')">제목</td>
+					<td width="8%" onclick="sort('PR_TYPE')">코스유형</td>
+					<td width="8%"onclick="sort('LC_DISTANCE')">거리<small>(km)</small></td>
+					<td width="40%"onclick="sort('ADDRESS')">지역</td>
+					<td width="14%"onclick="sort('PR_RECORD')">기록</td>
 
 
 				</tr>
@@ -161,10 +163,12 @@ nav ul li {
 
 						<tr id="corseDetail" class="success" 
 							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
-							
-							<td width="30%">${val.lc_title}</td>
-							<td width="8%">${val.lc_type}</td>
-							<td width="8%">${val.lc_distance}</td>
+							<!-- lc_index값 없음  글 업로드 페이지로 가야함  혁희-->
+							<td width="30%">${val.LC_TITLE}</td>
+							<td width="8%">${val.PR_TYPE}</td>
+							<td width="8%">${val.LC_DISTANCE}</td>
+							<td width="40%">${val.ADDRESS}</td>
+							<td width="14%">${val.PR_RECORD}</td>
 							<%-- <td>
 								<button
 									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
@@ -184,6 +188,59 @@ nav ul li {
 <script type="text/javascript">
 
 
+var sortType = 'DESC';
+var count = 0;
+
+	function sort(searchType) {
+		var m_index = ${list.get(0).M_INDEX};
+		console.log("searchType : "+searchType);	
+		console.log("m_index : "+m_index);
+		console.log(sortType);
+		
+		
+		//sort type 주입 (오름차순 내림차순)
+		if(count==0) {
+			sortType = 'DESC';
+			count = 1;
+		}else {
+			sortType = 'ASC';
+			count = 0;
+		}
+		
+		$.ajax({
+			type : "post",
+			contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+			url : 'mb_007_1/sort',
+			data : {"searchType" : searchType,
+					"m_index" : m_index,
+					"sort" : sortType},
+			dataType : "json",
+			success : function(data){
+				
+				var htm = '';
+				document.getElementById('vals').firstChild.remove();
+				for(var i=0; i<data.length; i++) {
+					console.log(data[i]);
+					htm += '<tr class="success">';
+					htm += '<td>'+data[i]['LC_TITLE']+'</td>';
+					htm += '<td>'+data[i]['PR_TYPE']+'</td>';
+					htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
+					htm += '<td>'+data[i]['ADDRESS']+'</td>';
+					htm += '<td>'+data[i]['PR_RECORD']+'</td>';
+					htm += '</tr>';
+				}
+				
+				document.getElementById('vals').innerHTML = htm;
+
+			},
+			error : function(request,status,error) {
+				console.log("error : "+ (JSON.stringify(request)));
+				console.log("error : "+ (JSON.stringify(status)));
+				console.log("error : "+ (JSON.stringify(error)));
+			}
+		});
+		
+	}
 		
 	
 
