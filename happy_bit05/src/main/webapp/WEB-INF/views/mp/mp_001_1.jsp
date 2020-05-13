@@ -152,22 +152,93 @@
           	<a href="/mp/myCourse">나의 관심코스 보기</a>
           </div>
           <div class="card-body" id="importMyCourse">
-          	
-          	
-            <h6 class="card-title" style="margin-bottom: -10px; float: right;">
+          <!-- 관심코스 리스트 -->
+          	<div class="table-responsive" id="myCourse">
+			<table class="table table-hover" style="margin-top: 30px;">
+				<tr class="active"
+					style="font-weight: bold; background-color: #e9ecef;">
+					<td>No</td>
+					<td>제목</td>
+					<td>종목</td>
+					<td>거리</td>
+					<td>도보</td>
+					<td>자전거</td>
+					<td>지역</td>
+					<td>추천</td>
+					<td>등록일</td>
+					<td>원글</td>
+
+
+				</tr>
+				<c:if test="${empty listVO }">
+							${"등록된 관심코스가 없습니다."}
+							
+				</c:if>
+				<tbody id="">
+
+					<c:forEach var="val" items="${listVO }" varStatus="status">
+
+
+						<tr id="corseDetail" class="success" 
+							onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
+							'${val.m_index}','${val.lc_distance}','${val.lc_record}',
+							'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
+
+							<td>${val.rn}</td>
+							<td>${val.lc_title}</td>
+							<td>${val.lc_type}</td>
+							<td>${val.lc_distance}</td>
+							<td>${val.lc_run}</td>
+							<td>${val.lc_cycle}</td>
+							<td>${val.lc_address}</td>
+							<td>${val.lc_good}</td>
+							<td>${val.lc_date}</td>
+							<td>
+								<button
+									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
+									보기
+								</button>
+							</td>
+						</tr>
+
+					</c:forEach>
+
+				</tbody>
+			</table>
+
+			<div id="row">
+				<!-- 페이징 없음 -->
+			</div>
+          	</div>
+          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
+            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
+            float : right;  position: relative; left: -50%;">
               <a href="/mp/myCourse">상세보기</a>
             </h6>
           </div>
         </div>
       </div>
-      <div class="col-lg-6 portfolio-item">
+
+	<!-- 나의 대회 -->
+      <div class="col-lg-12 portfolio-item">
         <div class="card h-100">
-          <a href="#"><img class="card-img-top" src="http://placehold.it/700x400" alt=""></a>
-          <div class="card-body">
-            <h4 class="card-title">
-              <a href="#">Project Two</a>
-            </h4>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit aliquam aperiam nulla perferendis dolor nobis numquam, rem expedita, aliquid optio, alias illum eaque. Non magni, voluptates quae, necessitatibus unde temporibus.</p>
+          <div class="card-body" id="importMyCourse" style="background-color: #e9ecef;">
+          	<a href="#">나의 대회 보기</a>
+          </div>
+          <div class="card-body" id="importMyCourse">
+          <!-- 대회참여 리스트 -->
+
+
+			<div id="row">
+				<!-- 페이징  없음-->
+			</div>
+          	</div>
+          	
+          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
+            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
+            float : right;  position: relative; left: -50%;">
+              <a href="#">상세보기</a>
+            </h6>
           </div>
         </div>
       </div>

@@ -68,7 +68,12 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			// TODO: handle exception
 			log.info(e);
 		}
+		
+		//나의 관심코스 리스트
+		List<MP_001_3_VO> listVO = service.getMCList(dto);
+		
 		mav.addObject("sessionVO", sessionVO);
+		mav.addObject("listVO", listVO);
 		mav.setViewName("mp/mp_001_1");
 		System.out.println("session : "+ sessionVO);
 		System.out.println(mav + "mav완료");
