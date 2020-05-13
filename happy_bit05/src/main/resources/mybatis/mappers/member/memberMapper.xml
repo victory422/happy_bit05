@@ -56,7 +56,15 @@
 		<![CDATA[
 			select 
 				rownum rn,
-                mp_index, lc_index, m_index,  lc_title, lc_type, lc_distance, 
+                mp_index, lc_index, m_index,  lc_title, lc_type, 
+                case 
+                  when trunc(lc_distance,1)=0
+                  then round(lc_distance,3)*1000||'m'
+                  when trunc(lc_distance,0)>0
+                  then round(lc_distance,1)||'km'
+                  when trunc(lc_distance,0)=0
+                  then '0'||round(lc_distance,1)||'km'
+                  end as lc_distance,
 				lc_run, lc_cycle, lc_area1, lc_area2, lc_area3, lc_thumbnail, 
 				lc_text, lc_date, lc_good, lc_see, lc_record,
 				lc_address, lc_xy_arr

@@ -494,9 +494,9 @@ public class MB_controller {
 			log.info("session null! : "+session.getAttribute("sessionVO"));
 		}else {
 			dto.setM_index(member.getM_index());
-			List<MP_001_3_VO> listVO = mp_001_service.getMCListApp(dto);
-			mav.addObject("listVO", listVO);
-			log.info("listVO1 : "+listVO);
+			List<MP_001_3_VO> list = mp_001_service.getMCListApp(dto);
+			mav.addObject("listVO", list);
+			log.info("listVO1 : "+list);
 			
 //			pageutil = mp_001_service.paging(dto);
 //			mav.addObject("pageUtil", pageutil);
