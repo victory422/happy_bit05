@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="../includes/middle.jsp"%>
+<%-- <%@ include file="../includes/middle.jsp"%> --%>
 
 <script src="//code.jquery.com/jquery-3.5.0.min.js"></script>
 <script type="text/javascript">
@@ -52,6 +52,19 @@
 	<div class="album py-5">
 		<div class="container">
 		
+		<div class="w-100"></div>
+		
+		<div class="row">
+			<div class="col-6"><h3>${pageUtil.cri.lc_type } 코스</h3></div>
+			<div class="col-6" style="text-align:right;">
+				<c:if test="${m_index ne null}">
+				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write?m_index=${m_index}'">글쓰기</button>
+				</c:if>
+			</div>
+		</div>
+		
+		<br>
+		
 		<form id="searchForm" name="searchForm" action="/lc/002/list?lc_type=${pageUtil.cri.lc_type }" method="get" >
 		<div class="row">
 			<div class="input-group mb-12 d-flex bd-highlight" style="margin-bottom : 30px;">
@@ -90,14 +103,6 @@
 			
 		</form>
 		
-		<div class="row">
-			<div class="col-6"><h3>${pageUtil.cri.lc_type } 코스</h3></div>
-			<div class="col-6" style="text-align:right;">
-				<c:if test="${m_index ne null}">
-				<button type="button" class="btn btn-secondary" onclick="location.href='../../lc/001/write?m_index=${m_index}'">글쓰기</button>
-				</c:if>
-			</div>
-		</div>
 		
 		<br>
 		
