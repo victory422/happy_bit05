@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -119,7 +120,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	
 	
 	@Override
-	@RequestMapping(value="/mp/myCourse/detail/*")
+	@RequestMapping(value="/mp/myCourse/detail" , method=RequestMethod.POST)
 	@ResponseBody
 	public  String myCourse (Page_DTO dto, 
 			ServletRequest request) throws JsonProcessingException  {
@@ -165,7 +166,8 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
-		log.info("memberUpdate 중");
+		Map<String, Object> hmap = new HashMap<String, Object>();
+		log.info("memberUpdate 중 : "+vo);
 		
 		//vo에 부족한 값 sessionVO 에서 주입
 		vo.setM_index(sessionVO.getM_index());
@@ -175,7 +177,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		if(vo.getM_picture()==null || vo.getM_picture().equals("")) {
 			log.info("업로드된 이미지 없음");
 		}else {
-			Map<String, Object> hmap = new HashMap<String, Object>();
 			hmap.put("m_picture", vo.getM_picture().getBytes());
 			hmap.put("m_index", vo.getM_index());
 			service.updateThumbnail(hmap);

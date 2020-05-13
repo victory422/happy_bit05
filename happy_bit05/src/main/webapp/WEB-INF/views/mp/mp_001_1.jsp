@@ -47,6 +47,7 @@
   width : 80px;
   padding-left: 10px;
   padding-right: 10px;
+  width: 8%;
 }
 
 .td {
@@ -57,6 +58,19 @@
   text-align: center;
   padding-left: 10px;
   padding-right: 10px;
+  width: : 20%;
+}
+
+.td2 {
+  display: table-cell;
+  box-shadow: 0 0 2px #E50F0F;
+  vertical-align: middle;
+  height:50px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: : 48%;
+  
 }
 
 </style>
@@ -88,36 +102,39 @@
 			<form action="/mp/memberUpdate" method="post" name="userinput" enctype="multipart/form-data">
 			<table style="margin:auto;" id="memberTable">
 	          	<tr id="tr">
-	          		<td rowspan="5" class="td" id="m_picture">
+	          		<td rowspan="6" class="td" id="m_picture" style="width: 40%;">
 	          			<img alt="" src="data:image/jsp;base64, ${sessionVO.m_picture}" height="200"/>
 	          		</td>
 	          		<td class="tr" >nickName</td>
 	          		<td class="td" id="m_nick">${sessionVO.m_nickName}</td>
-	          		<td class="tr" >E-mail</td>
-	          		<td class="td" id="m_email">${sessionVO.m_email_1}</td>
+	          		<td class="tr">name</td>
+	                <td class="td" id="m_name">${sessionVO.m_name}</td>
+	          		
 	          	</tr>
 	            <tr>
-	            	<td class="tr">name</td>
-	                <td class="td" id="m_name">${sessionVO.m_name}</td>
 	            	<td class="tr">Phone</td>
 	                <td class="td" id="m_tel"> ${sessionVO.m_tel}</td>
-	                
-	            </tr>
+	                <td class="tr">password</td>
+	                <td class="td" id="m_pw">********</td>
+				</tr>
 	            <tr>
 	            	<td class="tr">gender</td>
 	                <td class="td" id="m_gender">${sessionVO.m_gender}</td>
-	            	<td class="tr">address</td>
-	                <td class="td" id="m_address"> ${sessionVO.m_address}</td>
+	                <td class="tr">birth</td>
+	                <td class="td" id="m_birth">${sessionVO.m_birth}</td>
+
 	            </tr>
 	            <tr>
-	            	<td class="tr">birth</td>
-	                <td class="td" id="m_birth">${sessionVO.m_birth}</td>
-	            	<td class="tr">password</td>
-	                <td class="td" id="m_pw">********</td>
+					<td class="tr" >E-mail</td>
+	          		<td colspan="3" class="td2" id="m_email">${sessionVO.m_email_1}</td>
+	            </tr>
+	            <tr>
+	            	<td class="tr">address</td>
+	                <td colspan="3" class="td2" id="m_address"> ${sessionVO.m_address}</td>
 	            </tr>
 	          	<tr>
 	          		<td colspan="4" class="td" id="confirmBtn">
-	          			<a id="btn" onclick="pwChk(1)" style="cursor: pointer;">비밀번호 확인 </a>
+	          			<a id="btn" onclick="pwChk(1)" style="cursor: pointer;">회원정보 수정 </a>
 	          		</td>
 	          			<input type="hidden" id="passwordConfirm2">
 	          	</tr>
@@ -172,11 +189,21 @@ function pwChk(check) {
 		sessionStorage.setItem("password",'${sessionVO.m_pw}');
 		sessionStorage.removeItem("passwordUpdate");
 		console.log(sessionStorage.getItem("passwordUpdate"));
+	
 	}else if(check=='2') {
+		//썸네일 업로드 확인 (없을 시 기존 썸네일로 대체하기 위함)
+		var thumbnail = document.getElementById('file'); //input file Element
+		
+		if(thumbnail.value == ""){ //썸네일 없을 시 input file 삭제
+			var m_picture = document.getElementById('m_picture');
+			m_picture.removeChild(thumbnail);
+		}//썸네일 있을 시 기존대로 진행
+		
 		var newPassword = document.getElementById('secondPw').value;
 		console.log("두번째 비밀번호 : "+newPassword);
 		sessionStorage.setItem("password",newPassword);
 		sessionStorage.setItem("passwordUpdate","0");
+	
 	}else if(check=='-1'){
 		location = '/mp';
 	}
@@ -188,17 +215,21 @@ function pClose() {
 	var passwordCheck = document.getElementById("passwordConfirm2").value;
 	console.log(passwordCheck);
 	if(passwordCheck == 'true') {
-    	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정하기";
-    	document.getElementById('btn').setAttribute("onclick","memberUpdate()");
+    	memberUpdate();
+		
+		//document.getElementById('btn').firstChild.nodeValue = "회원정보 수정하기";
+    	//document.getElementById('btn').setAttribute("onclick","memberUpdate()");
     	passwordCheck = null;
     	
 	}else if(passwordCheck == 'updateTrue') {
 		document.getElementById('btn').firstChild.nodeValue = "비밀번호 확인";
 		document.getElementById('btn').setAttribute("onclick","pwChk(1)");
 		passwordCheck = null;
+		
 		//  /mp/memberUpdate로 서브밋	
 		var form = document.userinput;
 	    form.submit();
+	    
 	}else{
 		alert("회원정보 수정 취소");
 		window.location.replace("/mp");
@@ -206,9 +237,9 @@ function pClose() {
 }
 
 function memberUpdate() {
-	alert("회원정보 수정하기");
-	//클릭 시 수정하는 페이지로 바꿔주는 함수
+
 	
+	//클릭 시 수정하는 페이지로 바꿔주는 함수
 	//m_nick 
 	var m_nick = document.getElementById('m_nick');
 	var m_nick_input = document.createElement("input");
@@ -217,7 +248,7 @@ function memberUpdate() {
 	}
 	m_nick_input.setAttribute("value", "${sessionVO.m_nickName}"); 
 	m_nick_input.setAttribute("name", "m_nickName");
-	m_nick_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_nick_input.setAttribute("style", "text-align:center; width:80%;"); 
 	m_nick.appendChild(m_nick_input);
 	 
 	//m_email
@@ -228,7 +259,7 @@ function memberUpdate() {
 	}
 	m_email_input.setAttribute("value", "${sessionVO.m_email_1}"); 
 	m_email_input.setAttribute("name", "m_email_1");
-	m_email_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_email_input.setAttribute("style", "text-align:center; width:100%;"); 
 	m_email.appendChild(m_email_input);
 	 
 	//m_name
@@ -239,7 +270,7 @@ function memberUpdate() {
 	}
 	m_name_input.setAttribute("value", "${sessionVO.m_name}"); 
 	m_name_input.setAttribute("name", "m_name");
-	m_name_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_name_input.setAttribute("style", "text-align:center; width:80%;"); 
 	m_name.appendChild(m_name_input);
 	
 	 
@@ -251,7 +282,7 @@ function memberUpdate() {
 	}
 	m_tel_input.setAttribute("value", "${sessionVO.m_tel}"); 
 	m_tel_input.setAttribute("name", "m_tel");
-	m_tel_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_tel_input.setAttribute("style", "text-align:center; width:80%;"); 
 	m_tel.appendChild(m_tel_input);
 	
 	
@@ -263,7 +294,7 @@ function memberUpdate() {
 	}
 	m_address_input.setAttribute("value", "${sessionVO.m_address}");
 	m_address_input.setAttribute("name", "m_address");
-	m_address_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_address_input.setAttribute("style", "text-align:center; width:100%;"); 
 	m_address.appendChild(m_address_input);
 	
 	//m_pw
@@ -272,9 +303,10 @@ function memberUpdate() {
 	if(m_pw.hasChildNodes()) {
 		m_pw.firstChild.nodeValue = "";
 	}
+	m_pw_input.setAttribute("value", "${sessionVO.m_pw}"); 
 	m_pw_input.setAttribute("name", "m_pw1"); 
 	m_pw_input.setAttribute("type", "password"); 
-	m_pw_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_pw_input.setAttribute("style", "text-align:center; width:80%;"); 
 	m_pw_input.setAttribute("id", "secondPw"); 
 	m_pw.appendChild(m_pw_input);
 	
@@ -284,10 +316,11 @@ function memberUpdate() {
 	if(m_picture.hasChildNodes()) {
 		m_picture.firstChild.nodeValue = "";
 	}
-	m_picture_input.setAttribute("value", "${sessionVO.m_picture}"); 
+	m_picture.firstChild.nextSibling.setAttribute("src", ""); 
 	m_picture_input.setAttribute("name", "m_picture");
+	m_picture_input.setAttribute("id", "file");
 	m_picture_input.setAttribute("type", "file"); 
-	m_picture_input.setAttribute("style", "text-align:center; width:120px;"); 
+	m_picture_input.setAttribute("style", "text-align:center; width:100%;"); 
 	m_picture.appendChild(m_picture_input);
 	
 	//버튼 바꾸기

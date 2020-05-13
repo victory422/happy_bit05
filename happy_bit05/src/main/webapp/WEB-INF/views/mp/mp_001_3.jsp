@@ -98,17 +98,17 @@
 		
 			<div class="input-group mb-12" style="margin-top: 30px;">
 				<label class="input-group-text col-sm-12"> 
-				<select
-					id="cate_id" name="cate_id"
-					class="custom-select custom-select-sm-1"
-					style="margin-left: 10px; width: 25%">
-						<option value=null selected>카테고리</option>
-						<option value="null">육상</option>
-						<option value="null">자전거</option>
-				</select> <input type="text" style="margin-left: 10px; width: 50%" id=""
-					name="" class="search-box form-control"
-					placeholder="Enter search product ID" /> <input type="submit"
-					value="search" />
+					<select id="cate_id" name="cate_id"
+						class="custom-select custom-select-sm-1"
+						style="margin-left: 10px; width: 25%">
+							<option selected>카테고리</option>
+							<option value="null">육상</option>
+							<option value="null">자전거</option>
+					</select> 
+					<input type="text" style="margin-left: 10px; width: 50%" id=""
+						name="" class="search-box form-control"
+						placeholder="Enter search word" /> 
+					<input type="submit" value="search" />
 				</label>
 			</div>
 		</form>
@@ -120,17 +120,15 @@
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
 					<td>No</td>
-					<td>썸네일</td>
 					<td>제목</td>
-					<td>코스유형</td>
-					<td>거리<small>(km)</small></td>
-					<td>도보시간</td>
-					<td>자전거시간</td>
+					<td>종목</td>
+					<td>거리</td>
+					<td>도보</td>
+					<td>자전거</td>
 					<td>지역</td>
-					<td>추천수</td>
-					<td>평균기록</td>
+					<td>추천</td>
 					<td>등록일</td>
-					<td>원글보기</td>
+					<td>원글</td>
 
 
 				</tr>
@@ -149,7 +147,6 @@
 							'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
 
 							<td>${val.rn}</td>
-							<td>${val.lc_thumbnail}</td>
 							<td>${val.lc_title}</td>
 							<td>${val.lc_type}</td>
 							<td>${val.lc_distance}</td>
@@ -157,7 +154,6 @@
 							<td>${val.lc_cycle}</td>
 							<td>${val.lc_address}</td>
 							<td>${val.lc_good}</td>
-							<td>${val.lc_record}</td>
 							<td>${val.lc_date}</td>
 							<td>
 								<button
@@ -268,7 +264,7 @@
 		</div>
 	</div>
 
-	<script>
+<script>
 
 	var lc_map = "";
 	function downPage(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
@@ -285,80 +281,7 @@
 				td += '<td>' + lc_date + '</td>';
 				$("#tdText").html(td);
 			
-			var page = 1;
-			console.log("m_index : "+m_index);
-			$.ajax({ 
-			    type : "get",  
-			    url : "/mp/myCourse/detail/*",  
-			    data : { "lc_index" :lc_index, 
-			    		 "m_index" : sessionStorage.getItem("sessionScript"),
-			    		 "page" : page},
-			    dataType : "json",
-			    success : function(data){
-                    
-			    	var td = "";
-			    	
-                    for(i=0; i<data.length-1; i++) {
-					    	console.log("console : "+data[i]['RN']);
-					    	console.log("console : "+data[i]['PR_RECORDDATE']);
-					    	console.log("console : "+data[i]['PR_RECORD']);
-					    	
-					    	td += '<tr class="success">';
-							td += '<td>' + data[i]['RN'] + '</td>';
-							td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
-							td += '<td>' + data[i]["PR_RECORD"] + '</td>';
-							td += '<td>' + lc_record + '</td>';
-							td += '<td><button \"location.href=\'/lc/003/lc_get?lc_index=${val.lc_index}\'\">' +
-									+data[i]["m_index"] + '</button></td>';
-							td += '</tr>';
-                    }
 
-                    $("#detail").html(td);
-                	
-			    	var j = data.length-1; // 마지막 length는 페이지정보
-			    	console.log("j : "+j);
-                    var prev = data[j]['prev'];
-                    var next = data[j]['next'];
-                    var start = data[j]['start']*1;
-                    var end = data[j]['end']*1;
-                    var page = data[j]['page']*1;
-                    var paging = '';
-                    console.log(prev, next, start, end);
-                    console.log(page+1);
-                    paging += '<ul class="pagination justify-content-end">';
-                    
-                    if(prev == 'true') {
-	                    paging += '<li class="page-item">';
-	                    paging += '<a class="page-link" href="/mp/myCourse?page='+ (-1+start) +'">Previous</a>';
-	                    paging += '</li>';
-                    }
-                    for(var pNum = start; pNum <= end; pNum++) {
-                    	paging += '<div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true"></div>';
-                    	if(pNum==page) {
-	                    	paging += '<li class="page-item active">';
-                    	}else paging += '<li class="page-item ">';
-                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ pNum +'">';
-                    	paging += pNum;
-                    	paging += '</a>';
-                    	paging += '</li>';
-                    }
-                    
-                    if(next == 'true') {
-                    	paging += '<li class="page-item">';
-                    	paging += '<a class="page-link" href="/mp/myCourse/detail/page='+ (1+end) +'">';
-                    	paging += 'Next';
-                    	paging += '</a>';
-                    	paging += '</li>';
-                    }
-                    paging += '</ul>';
-                    console.log(paging);
-                    $("#ajaxPaging").html(paging);
-                },  
-
-			    error:function(xhr,status,error,data){ //ajax 오류인경우  
-			            alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error+ ", data : " + data); 
-			    }  
-			});  
 		
 	
 //맵 사용하기
@@ -489,7 +412,95 @@
 	    }
 	}
 //맵 끝
+ajaxPage(lc_index, m_index, 1);
 	} //downPage 끝
+	
+
+	function ajaxPage(a, b, c) {
+		var lc_index = a;
+		var m_index = b;
+		var page = c;
+		lc_index = lc_index;
+		m_index = m_index;
+		page = 1;
+	console.log("page : "+page);
+	console.log("m_index : "+m_index);
+	$.ajax({ 
+	    type : "POST",  
+	    url : "/mp/myCourse/detail",  
+	    data : { "lc_index" :lc_index, 
+	    		 "m_index" : sessionStorage.getItem("sessionScript"),
+	    		 "page" : page},
+	    dataType : "json",
+	    success : function(data){
+	    	
+	    	var td = "";
+	    	
+	        for(i=0; i<data.length-1; i++) {
+			    	console.log("console : "+data[i]['RN']);
+			    	console.log("console : "+data[i]['PR_RECORDDATE']);
+			    	console.log("console : "+data[i]['PR_RECORD']);
+			    	
+			    	td += '<tr class="success">';
+					td += '<td>' + data[i]['RN'] + '</td>';
+					td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+					td += '<td>' + data[i]["PR_RECORD"] + '</td>';
+					td += '<td>' + 0 + '</td>';
+					td += '<td>';
+					td += '<button onclick="location.href=\'/lc/003/lc_get?lc_index='+lc_index+'\'">view';
+					td +=  '</button></td>';
+					td += '</tr>';
+	        }
+	
+	        $("#detail").html(td);
+	    	
+	    	var j = data.length-1; // 마지막 length는 페이지정보
+	    	console.log("j : "+j);
+	        var prev = data[j]['prev'];
+	        var next = data[j]['next'];
+	        var start = data[j]['start']*1;
+	        var end = data[j]['end']*1;
+	        page = data[j]['page']*1;
+	        var paging = '';
+	        console.log(prev, next, start, end);
+	        console.log(page+1);
+	        paging += '<ul class="pagination justify-content-end">';
+	        
+	        if(prev == 'true') {
+	            paging += '<li class="page-item">';
+	            paging += '<a class="page-link" href="/mp/myCourse'+ (-1+start) +'">Previous</a>';
+	            paging += '</li>';
+	        }
+	        for(var pNum = start; pNum <= end; pNum++) {
+	        	paging += '<div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true"></div>';
+	        	if(pNum==page) {
+	            	paging += '<li class="page-item active">';
+	        	}else paging += '<li class="page-item ">';
+	        	paging += '<a class="page-link" href="#" onclick=\"ajaxPage('+lc_index,m_index,page+')\">';
+	        	paging += pNum;
+	        	page = pNum;
+	        	paging += '</a>';
+	        	paging += '</li>';
+	        }
+	        
+	        if(next == 'true') {
+	        	paging += '<li class="page-item">';
+	        	paging += '<a class="page-link" href="/mp/myCourse/detail'+ (1+end) +'">';
+	        	paging += 'Next';
+	        	paging += '</a>';
+	        	paging += '</li>';
+	        }
+	        paging += '</ul>';
+	        console.log(paging);
+	        $("#ajaxPaging").html(paging);
+	    },  
+	
+	    error:function(xhr,status,error,data){ //ajax 오류인경우  
+	            alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error+ ", data : " + data); 
+	    }  
+	});
+}
+	
 </script>
 
 
