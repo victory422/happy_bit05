@@ -112,7 +112,14 @@
 				rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
 				pr_see, pr_good, pr_resistDate, pr_recordDate, pr_record,
 				pr_thumbnail, pr_type, pr_public, lc_title,
-				(trunc(lc_distance,1)||'km')as lc_distance,
+				case 
+                  when trunc(lc_distance,1)=0
+                  then round(lc_distance,3)*1000||'m'
+                  when trunc(lc_distance,0)>0
+                  then round(lc_distance,1)||'km'
+                  when trunc(lc_distance,0)=0
+                  then '0'||round(lc_distance,1)||'km'
+                  end as lc_distance,
 				(lc_area1||' '||lc_area2||' '||lc_area3)as address, mycourse.m_index	
 			from
 				mycourse, myrecord, course
@@ -130,7 +137,7 @@
 			rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
 			pr_see, pr_good, pr_resistDate, pr_recordDate, PR_RECORD,
 			PR_TYPE, pr_public, LC_TITLE,
-			(trunc(lc_distance,1)||'km')as LC_DISTANCE,
+			(round(lc_distance,1)||'km')as LC_DISTANCE,
 			(lc_area1||' '||lc_area2||' '||lc_area3)as ADDRESS, mycourse.m_index
 		from
 			mycourse, myrecord, course
