@@ -58,7 +58,6 @@
 		]]>
 	</select>
 	
-<<<<<<< HEAD
 	<insert id="regist" parameterType="vs.mb.mb_001_1.vo.PR_VO">
 		<selectKey resultType="string" keyProperty="mp_index" order="BEFORE">
 			<![CDATA[
@@ -73,7 +72,6 @@
 		)
 		]]>
 	</insert>
-=======
 	
 	<!-- 앱에서 관심코스 불러오기 -->
 	<select id="getMCListApp" resultType="vs.mp.mp_001.vo.MP_001_3_VO">
@@ -141,7 +139,5 @@
 			order by #{searchType} DESC
 		]]>	
 	</select>
-	
->>>>>>> OJG
 	
 </mapper>
