@@ -22,7 +22,7 @@
 								class="nav-link" href="/mb/lc_002_1?lc_type=자전거">자전거</a>
 						</div></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/myCourse">기록재기</a></li>
-						<li class="nav-item"><a class="nav-link" href="/mb/mb_006_1">나의기록보기</a></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/mb_007_1">나의기록보기</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/logout" onclick="logout()">로그아웃</a></li>
 					</ul>
 			</div>
