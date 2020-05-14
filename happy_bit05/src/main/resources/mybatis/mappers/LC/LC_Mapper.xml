@@ -368,7 +368,7 @@
 	<insert id="ma_002_1">
 		<![CDATA[
 			insert into advertising(ad_index, ad_date)
-				values(#{ad_index}, sysdate)
+				values('ad_'||lpad(ad_seq.nextval, 10, '0'), sysdate)
 		]]>
 	</insert>
 	

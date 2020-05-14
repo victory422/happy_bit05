@@ -200,7 +200,7 @@ function mainView(){
 		          			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 		          		    var imageSize = new kakao.maps.Size(24, 35);
 		          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
-	          				var course; //리스트 내용.
+	          				var course = ''; //리스트 내용.
 	              			var content = []; //HTML 내용.
 	              			infowindow = [];
 	              			markers = [];
@@ -215,6 +215,7 @@ function mainView(){
 		    					positions[i] = new kakao.maps.LatLng(split1[0], split1[1]);
 		    					
 		    					//마커 눌렀을때 나올 내용.
+		    					content[i] = '';
 		    					content[i] += '<form id="mainGet'+i+'" action="../../lc/003/lc_get" method="post">';
 			        			content[i] += '<div class="col-md-12">';
 			    				content[i] += '<div class="card mb-3 shadow-sm">';
