@@ -223,7 +223,7 @@
       <div class="col-lg-12 portfolio-item">
         <div class="card h-100">
           <div class="card-body" id="" style="background-color: #e9ecef;">
-          	<a href="#">나의 대회 보기</a>
+          	<a href="/mp/myCompetition">나의 대회 보기</a>
           </div>
           <div class="card-body" id="" >
 				<div class="table-responsive" id="myCourse">
@@ -278,7 +278,7 @@
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
 	            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
 	            	float : right;  position: relative; left: -50%;">
-	              <a href="#">상세보기</a>
+	              <a href="/mp/myCompetition">상세보기</a>
 	            </h6>
             </div>
           </div>

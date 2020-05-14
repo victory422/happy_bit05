@@ -48,6 +48,26 @@
 		<result property="m_count" column="m_count" />
 		<result property="m_point" column="m_point" />
 	</resultMap>
+	
+	<resultMap type="vs.ac.ac_001_1.vo.AcVO" id="requestVO">
+	<result property="m_index" column="m_index"/>
+	<result property="co_b_index" column="co_b_index"/>
+	<result property="co_b_title" column="co_b_title"/>
+	<result property="co_b_text" column="co_b_text"/>
+	<result property="co_b_day" column="co_b_day"/>
+	<result property="co_b_see" column="co_b_see"/>
+	<result property="co_b_good" column="co_b_good"/>
+	<result property="co_b_date" column="co_b_date"/>
+	<result property="co_b_area" column="co_b_area"/>
+	<result property="co_b_start" column="co_b_start"/>
+	<result property="co_b_state" column="co_b_state"/>
+	<result property="co_b_type" column="co_b_type"/>
+	<result property="co_b_price" column="co_b_price"/>
+	<result property="co_souvenir" column="co_souvenir"/>
+	<result property="co_rating" column="co_rating"/>
+	<result property="co_thumbnail" column="co_b_thumbnail"/>
+	<result property="co_b_end" column="co_b_end"/>
+</resultMap>
 
 
 
@@ -294,6 +314,40 @@
 			where m_index = #{m_index}
 		]]>	
 	</update>
+	
+	<select id="compeptition_myList" resultMap="requestVO" parameterType="vs.ac.ac_001_1.vo.AcVO">		
+		<![CDATA[ 
+		select rownum rn, co_b_index as co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
+				co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
+	 		from(
+		        select competition.co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
+						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
+		        from competition,  participant
+		        where 
+			    	competition.co_b_index = participant.co_b_index
+			    and rownum <= (#{page} * #{amount})
+				and participant.m_index = #{m_index}
+			    order by to_number(substr(co_b_index, 4)) desc
+				)
+		where rownum > ((#{page}-1) * #{amount})
+	]]>
+	</select>
+	
+		<select id="competition_paging" resultType="int">		
+		<![CDATA[ 
+		select count(*)
+	 		from
+		        (select competition.co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
+						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
+		        from competition,  participant
+		        where 
+			    	competition.co_b_index = participant.co_b_index
+				and participant.m_index = #{m_index})
+	]]>
+	</select>
+	
+	
+	
 	
 
 </mapper>
