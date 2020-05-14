@@ -26,16 +26,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   
   
-  
-<div class="container"> 
-<h1 style="text-align: center; margin-top: 30px;">신고 게시글 관리</h1>
-	<div class="row">
-		<div class="col-lg-12">
+<div style="padding-left: 280px;padding-right: 100px; ">
 			<div class="panel panel-default">
 
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-				
+				<h3 style="margin-top: 30px;">신고 게시글 관리</h3>
+	<hr>
 				<form method="get">
 				
 					<!-- 체크박스 부분 -->
@@ -106,18 +103,28 @@
 							<tr>							
 								<td>${data.board_index }</td>
 								<td>${data.m_index}</td>
-								<td><a style="color: blue" onclick="index_detail('${data.board_index }')" id="test${data.board_index }" value="${data.board_index }">${data.de_target}</a></td>
+								<td>
+									<c:if test="${data.de_dispose eq '처리대기' }">
+										<a style="color: blue" onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
+									</c:if>
+									<c:if test="${data.de_dispose eq '경고' }">
+										<a style="color: blue" onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
+									</c:if>
+									<c:if test="${data.de_dispose eq '삭제처리' }">
+										${data.de_target}									
+									</c:if>
+								</td>
 								<td>${data.de_type}</td>
 								<td>${data.m_index2}</td>
 								<td>${data.de_date }</td>
 								<c:if test="${data.de_dispose eq '처리대기'}">
-								<td><button type="button" class="btn btn-primary disposechange" id="statechange${data.de_index }" value="${data.de_index}">${data.de_dispose }</button></td>
+								<td><button type="button" class="btn btn-primary disposechange" id="statechange${data.board_index }" value="${data.board_index}">${data.de_dispose }</button></td>
 								</c:if>
 								<c:if test="${data.de_dispose eq '경고'}">
-								<td><button type="button" class="btn btn-secondary disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
+								<td><button type="button" class="btn btn-secondary disposechange" id="statechange${data.board_index }" value="${data.board_index}">${data.de_dispose}</button></td>
 								</c:if>
 								<c:if test="${data.de_dispose  eq '삭제처리'}">
-								<td><button type="button" class="btn btn-danger disposechange" id="statechange${data.de_index }" value="${data.de_index }">${data.de_dispose}</button></td>
+								<td><button type="button" class="btn btn-danger disposechange" id="statechange${data.board_index }" value="${data.board_index}">${data.de_dispose}</button></td>
 								</c:if>
 							</tr>
 					</c:forEach> 
@@ -150,16 +157,12 @@
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
-	</div>
-	</div>
-
 <script>
 
 var co_b_end = $('[name=co_b_end]').val();
 
 $(document).ready(function(){
 
-	console.log(li_b_type)
 	console.log(co_b_end);
 	
 	$('a.page_now').on('click',function(){
@@ -234,31 +237,31 @@ $('.disposechange').on("click", function() {
 	
 	var de_dispose = $(this).text();
 	console.log("상태",de_dispose);
-	var de_index = $(this).val();
-	console.log("index",de_index);
+	var board_index = $(this).val();
+	console.log("board_index",board_index);
 	$.ajax({
 		url : '/al/disposechange',
 		type : 'post',
-		data : {'de_index' : de_index},
+		data : {'board_index' : board_index},
 		success : function(data) {
 			if(de_dispose == '처리대기'){
 				
-				$('#statechange'+de_index).text("경고");			
-				$('#statechange'+de_index).removeClass("btn btn-primary");
-				$('#statechange'+de_index).addClass("btn btn-secondary");
+				$('#statechange'+board_index).text("경고");			
+				$('#statechange'+board_index).removeClass("btn btn-primary");
+				$('#statechange'+board_index).addClass("btn btn-secondary");
 			
 			}else if(de_dispose == '경고'){
 				
-				$('#statechange'+de_index).text("삭제처리");			
-				$('#statechange'+de_index).removeClass("btn btn-secondary");
-				$('#statechange'+de_index).addClass("btn btn-danger");
+				$('#statechange'+board_index).text("삭제처리");			
+				$('#statechange'+board_index).removeClass("btn btn-secondary");
+				$('#statechange'+board_index).addClass("btn btn-danger");
 				
 			
 			}else{
 				
-				$('#statechange'+de_index).text("처리대기");			
-				$('#statechange'+de_index).removeClass("btn btn-danger");
-				$('#statechange'+de_index).addClass("btn btn-primary");
+				$('#statechange'+board_index).text("처리대기");			
+				$('#statechange'+board_index).removeClass("btn btn-danger");
+				$('#statechange'+board_index).addClass("btn btn-primary");
 
 				
 			}

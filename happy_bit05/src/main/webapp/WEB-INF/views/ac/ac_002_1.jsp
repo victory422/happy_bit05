@@ -27,15 +27,15 @@
   
   
   
-<div class="container"> 
-<h1 style="text-align: center; margin-top: 30px;">대회 게시글 관리</h1>
+<div style="padding-left: 280px;padding-right: 100px; "> 
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-				
+				<h3 style="margin-top: 30px;">대회 게시글 관리</h3>
+	<hr>
 				<form method="get">
 				
 					<!-- 체크박스 부분 -->
@@ -142,10 +142,10 @@
 							</c:if>
 						</ul>
 					</div>
-				<!-- /.table-responsive -->
 				<form role="form" action="ac_001_1" method="get">
 					<button type="submit" class="btn btn-primary float-right">글작성</button>
 				</form>
+				<!-- /.table-responsive -->
 			</div>
 			<!-- /.panel-body -->
 		</div>

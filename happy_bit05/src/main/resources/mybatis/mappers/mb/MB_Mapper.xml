@@ -119,7 +119,7 @@
 			select
 				rownum rn, pr_index, mycourse.mp_index, pr_title, pr_text,
 				pr_see, pr_good, pr_resistDate, pr_recordDate, pr_record,
-				pr_thumbnail, pr_type, pr_public, lc_title,
+				pr_thumbnail, pr_type, pr_public, course.lc_title,
 				case 
                   when trunc(lc_distance,1)=0
                   then round(lc_distance,3)*1000||'m'

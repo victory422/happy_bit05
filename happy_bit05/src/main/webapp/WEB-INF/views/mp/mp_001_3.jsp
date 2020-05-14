@@ -136,7 +136,7 @@
 							${"등록된 관심코스가 없습니다."}
 							
 				</c:if>
-				<tbody id="paging">
+				<tbody id="">
 
 					<c:forEach var="val" items="${listVO }" varStatus="status">
 
@@ -347,7 +347,7 @@
 			xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length);
 		}
 		
-		console.log(xy_arr[i]);
+		//console.log(xy_arr[i]);
 	}
 	
 	for(var i = 0; i < xy_arr.length; i+=2){
@@ -355,9 +355,9 @@
 		 displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
 	}
 	
-	for(var i = 0; i < linePath.length; i++){
-		console.log(linePath[i]);
-	}
+	//for(var i = 0; i < linePath.length; i++){
+	//	console.log(linePath[i]);
+	//}
 	
 	// 지도에 표시할 선을 생성합니다
 	var polyline = new kakao.maps.Polyline({
@@ -412,34 +412,38 @@
 	    }
 	}
 //맵 끝
+
 ajaxPage(lc_index, m_index, 1);
 	} //downPage 끝
 	
 
-	function ajaxPage(a, b, c) {
-		var lc_index = a;
-		var m_index = b;
-		var page = c;
-		lc_index = lc_index;
-		m_index = m_index;
-		page = 1;
-	console.log("page : "+page);
+	function ajaxPage(courseIndex, memberIndex, pageNumber) {
+		
+        //스크롤 고정
+        var offset = $("#ajaxPaging").offset();
+        $('html, body').animate({scrollTop : offset.top}, 400);
+        
+		var lc_index = courseIndex;
+		var m_index = memberIndex;
+		var pageNum = pageNumber;
+	console.log("lc_index : "+lc_index);
 	console.log("m_index : "+m_index);
+	console.log("page : "+pageNum);
 	$.ajax({ 
 	    type : "POST",  
 	    url : "/mp/myCourse/detail",  
 	    data : { "lc_index" :lc_index, 
 	    		 "m_index" : sessionStorage.getItem("sessionScript"),
-	    		 "page" : page},
+	    		 "page" : pageNum},
 	    dataType : "json",
 	    success : function(data){
 	    	
 	    	var td = "";
 	    	
 	        for(i=0; i<data.length-1; i++) {
-			    	console.log("console : "+data[i]['RN']);
-			    	console.log("console : "+data[i]['PR_RECORDDATE']);
-			    	console.log("console : "+data[i]['PR_RECORD']);
+			    	console.log("console data rn : "+data[i]['RN']);
+			    	console.log("console data pr_recorddate: "+data[i]['PR_RECORDDATE']);
+			    	console.log("console data pr_record : "+data[i]['PR_RECORD']);
 			    	
 			    	td += '<tr class="success">';
 					td += '<td>' + data[i]['RN'] + '</td>';
@@ -455,28 +459,25 @@ ajaxPage(lc_index, m_index, 1);
 	        $("#detail").html(td);
 	    	
 	    	var j = data.length-1; // 마지막 length는 페이지정보
-	    	console.log("j : "+j);
 	        var prev = data[j]['prev'];
 	        var next = data[j]['next'];
 	        var start = data[j]['start']*1;
 	        var end = data[j]['end']*1;
 	        page = data[j]['page']*1;
 	        var paging = '';
-	        console.log(prev, next, start, end);
-	        console.log(page+1);
+	        console.log("page : "+page, "prev: "+prev, "next: "+next, "start: "+start, "end :"+end);
 	        paging += '<ul class="pagination justify-content-end">';
-	        
 	        if(prev == 'true') {
 	            paging += '<li class="page-item">';
 	            paging += '<a class="page-link" href="/mp/myCourse'+ (-1+start) +'">Previous</a>';
 	            paging += '</li>';
 	        }
 	        for(var pNum = start; pNum <= end; pNum++) {
-	        	paging += '<div class="mb-4" id="accordion" role="tablist" aria-multiselectable="true"></div>';
+				console.log(pNum==page);
 	        	if(pNum==page) {
 	            	paging += '<li class="page-item active">';
 	        	}else paging += '<li class="page-item ">';
-	        	paging += '<a class="page-link" href="#" onclick=\"ajaxPage('+lc_index,m_index,page+')\">';
+	        	paging += '<a class="page-link" onclick=\"ajaxPage('+lc_index+', '+m_index+', '+page+')\">';
 	        	paging += pNum;
 	        	page = pNum;
 	        	paging += '</a>';
@@ -493,6 +494,8 @@ ajaxPage(lc_index, m_index, 1);
 	        paging += '</ul>';
 	        console.log(paging);
 	        $("#ajaxPaging").html(paging);
+	        
+
 	    },  
 	
 	    error:function(xhr,status,error,data){ //ajax 오류인경우  

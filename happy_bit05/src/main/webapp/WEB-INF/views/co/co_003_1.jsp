@@ -19,7 +19,7 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 			
-			<form method="get">
+			<form method="get" id="searchForm">
 				
 					<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
@@ -54,10 +54,14 @@
 						<option value="장소">장소</option>
 				</select>
 					<input type="text" style="width: 55%" id="input_text" name="input_text" class="search-box form-control" placeholder="검색어 입력" onsubmit="page_put()"/>
-			</label>
-			
+				<a class="text-muted" aria-label="Search" name="search_button" href="">
+          				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle><path d="M21 21l-5.2-5.2"></path></svg>
+       				 </a>
+			</label>		
 			</div>
 			</form>
+			
+			
 					<div>
 						<c:forEach items="${data}" var="data">
 						
@@ -68,18 +72,23 @@
 						<div data-text-content="true" style="font-weight: bold; font-size: 18px; color: rgb(41, 128, 185); margin-top: 30px;" class="float-right">${data.co_b_state}</div>
 					<table class="table table-bordered table-hover" style="margin-top: 30px; " onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
 						<tr>
-							<td rowspan="4" style="width:200px; height: 125px; padding: 0;">
-							<img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 180px; padding: 0;">
+							<td rowspan="5" style="width:200px; height: 125px; padding: 0;">
+							<img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:230px; height: 210px; padding: 0;">
 							</td>
-							<td ><h2>제목 : ${data.co_b_title}</h2></td>
+							<td ><h4>${data.co_b_title}</h4></td>
 							
 						</tr>
 						<tr>
-							<td >일자 : ${data.co_b_day}</td>
+							<td>접수기한 : ${data.co_b_start} ~ ${data.co_b_end }</td>
 						</tr>
 						<tr>
+							<td >일자 : ${data.co_b_day}</td>
+						</tr>				
+						<tr>
+						
 							<td>장소 : ${data.co_b_area}</td>
-						</tr>					
+						</tr>
+							
 					</table>
 													
 						</c:forEach>
@@ -153,7 +162,14 @@ var param = $(location).attr('search').slice($(location).attr('search').indexOf(
 	}
 	
 });
+//게시글 검색
+$("#searchForm a").on('click', function(e){
 
+	searchForm.find("input[name='pageNum']").val("1");
+	e.preventDefault();
+	
+	searchForm.submit();
+});
 /*
 //접수상태 자동 변화시키기
 function stateupdate(com_index){

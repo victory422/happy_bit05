@@ -25,17 +25,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   
+ 
+
   
-  
-<div class="container"> 
-<h1 style="text-align: center; margin-top: 30px;">회원 관리</h1>
+<div style="padding-left: 280px;padding-right: 100px; "> 
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-				
+<h3 style="margin-top: 30px;">회원 목록</h3>
+	<hr>
+<input type="hidden" id="del" value="${param.del }">				
 				<form method="get">
 				
 					<!-- 체크박스 부분 -->
@@ -105,11 +107,11 @@
 						</thead>
 						<c:forEach items="${data}" var="data">
 							<tr>
-							<c:if test="${data.m_index ne '1' }">								
-								<td>${data.m_index}</td>
-								<td>${data.m_id}</td>
-								<td>${data.m_name}</td>
-								<td>${data.m_nickName}</td>
+							<c:if test="${data.m_index ne '1' }">															
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_index}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_id}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_name}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_nickName}</a></td>
 								<td>${data.m_tel}</td>	
 								<td>${data.m_birth }</td>
 								<td>${data.m_gender }</td>
@@ -128,11 +130,66 @@
 					</div>
 				</div>
 			</div>
+			<!-- 페이징  -->
+					<div class="col-md-10">
+						<ul class="pagination d-flex justify-content-center">
+							<c:if test="${pageUtil.prev }">
+								<li class="page-item"><a class="page-link" href="/am/am_002_1?page=${pageUtil.start-1}">Previous</a></li>
+							</c:if>
+							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/am/am_002_1?page=${pNum }">${pNum }</a></li>
+							</c:forEach>
+							<c:if test="${pageUtil.next }">
+								<li class="page-item"><a class="page-link" href="/am/am_002_1?page=${pageUtil.end+1 }">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
 			<!-- /.panel-body -->
 		</div>
 		<!-- /.panel -->
 	</div>
 	</div>
+<script>
+	var del = $('#del').val();
+
+$(document).ready(function(){
+
+	if(del == 1){
+		alert("삭제완료");
+	}	
+	
+	$('a.page_now').on('click',function(){
+		//alert($('input[name=page]').val($(this).text()))
+		//alert($('select[name=type]').val())
+		
+		var a =$('select[name=type]').length;
+		//배열생성
+		var aArr = new Array(a);
+		
+		//필터값들 스트링으로 변환
+		for(var i=0; i<a; i++){
+			aArr[i] = $('select[name=type]').eq(i).val();
+			//alert(aArr[i]);
+		}
+		
+		//선택한 종목값
+		//aArr[1]
+		//선택한 장비값
+		//aArr[2]
+		//현재 선택된 a태그안  
+		$(this).attr('href',"/cr/cr_001_1?page="+$(this).text()+"&type="+aArr[0])
+		})
+	
+	//alert(${param.test1});
+		function page_put(){
+		console.log($('input[name=page]').val(1))
+	}
+	
+})
+
+</script>
+
 
 </body>
 </html>

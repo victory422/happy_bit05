@@ -35,7 +35,11 @@
 			</div> --%>
 			<hr>
 			<div style="text-align: right">
-				<button type="button" class="btn btn-primary" onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
+			<c:if test="${member.m_id ne null}">
+	  		  	<label class="float-right">
+					<button type="button" class="btn btn-primary" onclick="location.href='/co/co_001_1?co_b_index=${data.co_b_index}'">대회 접수</button>
+	  		  	</label>
+			</c:if>
 			</div>
 			<div style="margin-bottom: 50px">
 				<div class="text_container text_padding">${data.co_b_text }</div>

@@ -29,6 +29,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+<body>
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -41,7 +42,7 @@
       <!-- Sidebar user panel (optional) -->
 
       <!-- Sidebar Menu -->
-      <nav class="mt-2">
+
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">                
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -111,9 +112,26 @@
                 </a>
               </li>
             </ul>
-          </li>      
+          </li> 
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>
+                	광고 관리
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="/ma/002/ad_get" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>메인 광고 관리</p>
+                </a>
+              </li>
+            </ul>
+          </li>           
         </ul>
-      </nav>
+ 
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
@@ -149,6 +167,5 @@
 <!-- AdminLTE App -->
 <script src="../../resources/dist/js/adminlte.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../../resources/dist/js/pages/dashboard.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="../../resources/dist/js/demo.js"></script>

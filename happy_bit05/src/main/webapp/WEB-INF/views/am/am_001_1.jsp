@@ -24,11 +24,11 @@
   crossorigin="anonymous"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
   
   
   
-<div class="container"> 
-<h1 style="text-align: center; margin-top: 30px;">신고 회원 목록</h1>
+<div style="padding-left: 280px;padding-right: 100px; ">
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
@@ -36,8 +36,10 @@
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 				
-				<form method="get">
+	<h3 style="margin-top: 30px;">신고 회원 목록</h3>
+	<hr>
 				
+				<form method="get">
 					<!-- 체크박스 부분 -->
 		<div class="input-group mb-12 d-flex bd-highlight" style="margin-top: 30px;">
 			
@@ -104,17 +106,17 @@
 						</thead>
 						<c:forEach items="${data}" var="data">
 							<tr>
-								<td>${data.m_index}</td>
-								<td>${data.m_id}</td>
-								<td>${data.m_name}</td>
-								<td>${data.m_nickName}</td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_index}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_id}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_name}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_nickName}</a></td>
 								<td>${data.m_tel}</td>
 								<td>${data.m_count}</td>
 								<c:if test="${data.m_state eq '1' }">
-								<td><button type="button" class="btn btn-primary disposechange">주의</button></td>
+								<td><button type="button" class="btn btn-secondary disposechange">주의</button></td>
 								</c:if>
 								<c:if test="${data.m_state eq '2' }">
-								<td><button type="button" class="btn btn-secondary disposechange">블랙리스트</button></td>
+								<td><button type="button" class="btn btn-danger disposechange">블랙리스트</button></td>
 								</c:if>
 								<c:if test="${data.m_state eq '3' }">
 								<td><button type="button" class="btn btn-danger disposechange">회원삭제</button></td>

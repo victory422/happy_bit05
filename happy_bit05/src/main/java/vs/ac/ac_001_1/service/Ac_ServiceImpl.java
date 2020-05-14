@@ -78,6 +78,12 @@ public class Ac_ServiceImpl implements Ac_Service {
 			
 		return comapper.ac_memberlist(covo);
 	}
+	@Override
+	public int m_statechange(Map<String, Object> hmap) {
+		
+		
+		return comapper.m_statechange(hmap);
+	}
 	
 	
 	
