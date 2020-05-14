@@ -156,5 +156,39 @@
    		    
 		]]>	
 	</select>
+	<!-- 업로드할 코스 데이터출력 쿼리 -->
+	<select id="course_info" parameterType="String" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO">
+		<![CDATA[
+			select
+				mr.pr_index,mr.mp_index,mr.m_index,mr.pr_title,mr.pr_text,mr.pr_see,mr.pr_good,mr.pr_resistdate,mr.pr_recorddate,mr.pr_record,mr.pr_thumbnail,mr.pr_type,mr.pr_public,
+				c.lc_index,c.lc_title,c.lc_type,c.lc_distance,c.lc_run,c.lc_cycle,c.lc_area1,c.lc_area2,c.lc_area3,c.lc_text,c.lc_date,c.lc_good,c.lc_see,c.lc_record,
+				m.lc_xy_arr,m.lc_address
+			from 
+				myrecord mr,mycourse mp,course c,map m
+			where
+				mr.mp_index = mp.mp_index
+				and mp.lc_index = c.lc_index
+				and c.lc_index = m.lc_index
+                and mr.pr_index =  #{pr_index}
+				
+		]]>
+	</select>
+	
+	<update id="update1" parameterType="vs.pr.pr_002_1.vo.Upload_pr_vo">
+		<![CDATA[
+			update myrecord set
+				pr_title=#{pr_title},pr_text=#{pr_text},pr_resistdate=sysdate,pr_public='1'
+			WHERE pr_index = #{pr_index}
+		]]>
+	</update>
 		
+		
+	<update id="update2" parameterType="hashmap">
+		<![CDATA[
+			update myrecord set
+				pr_thumbnail = #{pr_thumbnail}
+			WHERE pr_index = #{pr_index}
+		]]>
+	</update>
+	
 </mapper>

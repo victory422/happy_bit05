@@ -160,9 +160,9 @@ nav ul li {
 
 					<c:forEach var="val" items="${list}" varStatus="status">
 
-
+<input type="text" value="${val.PR_INDEX }">
 						<tr id="corseDetail" class="success" 
-							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
+							onclick="upload('${val.PR_INDEX}')">
 							<!-- lc_index값 없음  글 업로드 페이지로 가야함  혁희-->
 							<td width="30%">${val.LC_TITLE}</td>
 							<td width="8%">${val.PR_TYPE}</td>
@@ -241,10 +241,18 @@ var count = 0;
 		});
 		
 	}
+	
 		
 	
 
-
+function upload(pr_index){
+	var upload = confirm('이 기록을 업로드 하시겠습니까?')
+	var pr_index = pr_index;
+	if (upload){
+		alert("페이지이동경로 넣기");
+		location.href="/mb/upload?pr_index="+pr_index
+	}
+}
 	
 </script>
 </body>
