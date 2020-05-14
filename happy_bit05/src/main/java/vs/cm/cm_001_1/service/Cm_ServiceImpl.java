@@ -1,6 +1,8 @@
 package vs.cm.cm_001_1.service;
 
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,9 @@ public class Cm_ServiceImpl implements Cm_Service{
 	
 	@Autowired 
 	private CmMapper commentmapper;
-	 
+	@Autowired
+	SqlSession session;
+
 	 
 	//댓글 리스트
 	@Override 
@@ -41,6 +45,10 @@ public class Cm_ServiceImpl implements Cm_Service{
 	}
 	//대댓글 작성
 	public int dcommentInsert(CommentVO comment) throws Exception{
+		
+		String index = comment.getCom_index1();
+		System.out.println("index : " + index);
+		session.update("vs.cm.cm_001_1.mapper.CmMapper.upcount",index);
 		
 		return commentmapper.dcommentInsert(comment);
 	}

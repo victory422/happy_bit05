@@ -280,8 +280,9 @@
 						<tr>
 							<td>참가비</td>
 							<td>
-								${data.co_b_price }							
-							<input type="hidden" value="${data.co_b_price }" id="amount">
+								${data.co_b_price }						
+								<input type="hidden" value="${data.co_b_title }" id="co_b_title">	
+								<input type="hidden" value="${data.co_b_price }" id="amount">
 								<input type="hidden" value="${data.co_b_index }" id="co_b_index">
 								<!--  <input type='button' class="float-right" onclick="kakaopay()" value="결제하기">-->
 							<c:if test="${param.kakaotest != '1'}">
@@ -315,7 +316,7 @@
 
 
 function kakaopay(){
-	
+	var co_b_title = $('#co_b_title').val();
 	var amount = $('#amount').val();
 	var co_b_index = $('#co_b_index').val();
 	
@@ -324,7 +325,7 @@ function kakaopay(){
 	$.ajax({
         url : '/kakaopay',
         type : 'post',
-        data : {amount : amount, co_b_index : co_b_index},
+        data : {amount : amount, co_b_index : co_b_index, co_b_title : co_b_title},
         success : function(data){
     	     location.href =data;
         	 		

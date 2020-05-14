@@ -35,18 +35,20 @@ public class Ka_Controller {
 	
 	
 	@PostMapping("/kakaopay")
-	private String kakaoPay(@RequestParam("amount") String amount, @RequestParam("co_b_index") String co_b_index
-								,HttpServletRequest request, HttpServletResponse response) {
+	private String kakaoPay(@RequestParam("amount") String amount, @RequestParam("co_b_index") String co_b_index,
+			@RequestParam("co_b_title") String co_b_title,HttpServletRequest request, HttpServletResponse response) {
 		
 		amount1 = amount;
 		
 		System.out.println(amount + "kakaoPay : 컨트롤러");
 		System.out.println(co_b_index + " : co_b_index");
+		System.out.println(co_b_title + " :co_b_title");
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("amount", amount);
-
-		String kakaourl = kakaopay.kakaoPayReady(map, co_b_index, request, response);
+		map.put("co_b_index", co_b_index);
+		map.put("co_b_title", co_b_title);
+		String kakaourl = kakaopay.kakaoPayReady(map, request, response);
 		System.out.println(kakaourl + "ㅇㅇ");
 		
 		return kakaourl;
@@ -65,7 +67,7 @@ public class Ka_Controller {
 		//model.addAttribute("data", co_service.ap_list(co_b_index));
 
 		
-		return new RedirectView("https://localhost:8080/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
+		return new RedirectView("http://localhost:8080/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
 	}
 	
 	

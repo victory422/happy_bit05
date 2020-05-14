@@ -59,7 +59,7 @@
 <insert id="cr_insert" parameterType="vs.cr.cr_001_1.vo.CrVO">
 	INSERT INTO
 	competition_review(co_r_index, co_r_title, co_r_text, co_r_day, co_r_type, m_index,co_r_good,co_r_see)
-	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, sysdate, #{co_r_type}, #{m_index},0,0)
+	VALUES('cr_'||co_r_index.nextval,#{co_r_title},#{co_r_text}, (select to_char(sysdate,'yyyy.mm.dd  hh24:mi') from dual), #{co_r_type}, #{m_index},0,0)
 
 </insert>
 <!-- 게시물 총합 출력 쿼리 -->
