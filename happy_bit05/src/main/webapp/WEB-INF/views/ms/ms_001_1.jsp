@@ -144,8 +144,7 @@
 	<%
 	//request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
  	%>
-// 	var serverName = '${serverName}';
- 	var serverName = 'bikeenrun.shop';
+	var serverName = '${serverName}';
 	var id = nick = "";
  	console.log(serverName +' 접속중');
 	//aws에서 접속 시 이메일 인증 없애기
