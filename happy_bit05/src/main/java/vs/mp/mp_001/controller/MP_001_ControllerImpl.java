@@ -61,26 +61,35 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		List<MP_001_3_VO> listVO = new ArrayList<MP_001_3_VO>();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		
-		//썸네일 주입
 		try {
-		if(sessionVO.getRequest_thumbnail() != null) {
-			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
-			String thumbnail = new String(imageContent);
-			sessionVO.setM_picture(thumbnail);
-			log.info("m_index : "+sessionVO.getM_index());
+			//썸네일 주입
+			if(sessionVO.getRequest_thumbnail() != null) {
+				byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
+				String thumbnail = new String(imageContent);
+				sessionVO.setM_picture(thumbnail);
+				log.info("m_index : "+sessionVO.getM_index());
+	
+				//나의 관심코스 리스트
+				dto.setM_index(sessionVO.getM_index());
+				listVO = service.getMCList(dto);
+				mav.addObject("listVO", listVO);
+				
+				//나의 대회 리스트
+				log.info("my competition list");
+				List<AcVO> acvo = service.compeptition_myList(dto);
+				log.info(acvo);
+				mav.addObject("listCompetition", acvo);
 
-			//나의 관심코스 리스트
-			dto.setM_index(sessionVO.getM_index());
-			listVO = service.getMCList(dto);
-			mav.addObject("listVO", listVO);
-		}else {
-			sessionVO.setM_picture("");
-			System.out.println("썸네일 없음.");
-			}
+			}else {
+				sessionVO.setM_picture("");
+				System.out.println("썸네일 없음.");
+				}
 		}catch (Exception e) {
 			// TODO: handle exception
 			log.info(e);
 		}
+		
+
 		
 			mav.addObject("sessionVO", sessionVO);
 			mav.setViewName("mp/mp_001_1");

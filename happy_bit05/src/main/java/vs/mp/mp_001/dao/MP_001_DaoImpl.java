@@ -110,7 +110,7 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	
 	@Override
 	public List<AcVO> compeptition_myList(Page_DTO dto) {
-		log.info(dto);
+		log.info("compeptition_myList dto : "+dto);
 		
 		return session.selectList("member.compeptition_myList", dto);
 	}

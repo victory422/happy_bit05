@@ -70,8 +70,17 @@
   padding-left: 10px;
   padding-right: 10px;
   width: : 48%;
+  }
   
-}
+ .al-center {
+	margin-bottom : -10px; 
+	margin: auto;
+	float : right;  
+	position: relative; 
+	left: -50%;"
+ }
+  
+
 
 </style>
 
@@ -156,7 +165,7 @@
           	<div class="table-responsive" id="myCourse">
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
-					style="font-weight: bold; background-color: #e9ecef;">
+					style="font-weight: bold; background-color: #e9ecef; text-align: center;">
 					<td>No</td>
 					<td>제목</td>
 					<td>종목</td>
@@ -179,13 +188,13 @@
 					<c:forEach var="val" items="${listVO }" varStatus="status">
 
 
-						<tr id="corseDetail" class="success" 
+						<tr id="corseDetail" class="success" style="text-align: center;"
 							onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
 							'${val.m_index}','${val.lc_distance}','${val.lc_record}',
 							'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
 
 							<td>${val.rn}</td>
-							<td>${val.lc_title}</td>
+							<td style="text-align: left;">${val.lc_title}</td>
 							<td>${val.lc_type}</td>
 							<td>${val.lc_distance}</td>
 							<td>${val.lc_run}</td>
@@ -211,8 +220,7 @@
 			</div>
           	</div>
 
-            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
-            float : right;  position: relative; left: -50%;">
+            <h6 class="card-title al-center">
               <a href="/mp/myCourse">상세보기</a>
             </h6>
           </div>
@@ -222,44 +230,44 @@
 	<!-- 나의 대회 -->
       <div class="col-lg-12 portfolio-item">
         <div class="card h-100">
-          <div class="card-body" id="" style="background-color: #e9ecef;">
+          <div class="card-body" id="" style="background-color: #e9ecef; ">
           	<a href="/mp/myCompetition">나의 대회 보기</a>
           </div>
           <div class="card-body" id="" >
 				<div class="table-responsive" id="myCourse">
 				<table class="table table-hover" style="margin-top: 30px;">
 					<tr class="active"
-						style="font-weight: bold; background-color: #e9ecef;">
-						
+						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
+						<td style="width: 40%">제목</td>
+						<td style="width: 15%">일시</td>
+						<td style="width: 15%">장소</td>
+						<td style="width: 15%">종목</td>
+						<td style="width: 15%">후기</td>
 	
 	
 					</tr>
-					<c:if test="${empty listComtition }">
-								${"나의 대회정보가 없습니다."}
+					<c:if test="${empty listCompetition }">
+								${"신청한 대회가 없습니다."} &nbsp;
+								<small>
+									<a href="/co/co_003_1">대회 신청하러 가기</a>
+								</small>
 								
 					</c:if>
 					<tbody id="">
 	
-						<c:forEach var="val" items="${listComtition }" varStatus="status">
+						<c:forEach var="val" items="${listCompetition }" varStatus="status">
 	
 	
-							<tr id="corseDetail" class="success" 
-								onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
-								'${val.m_index}','${val.lc_distance}','${val.lc_record}',
-								'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
+							<tr id="corseDetail" class="success" style="text-align: center;"
+								onclick="">
 	
-								<td>${val.rn}</td>
-								<td>${val.lc_title}</td>
-								<td>${val.lc_type}</td>
-								<td>${val.lc_distance}</td>
-								<td>${val.lc_run}</td>
-								<td>${val.lc_cycle}</td>
-								<td>${val.lc_address}</td>
-								<td>${val.lc_good}</td>
-								<td>${val.lc_date}</td>
+								<td style="text-align: left;">${val.co_b_title}</td>
+								<td>${val.co_b_day}</td>
+								<td>${val.co_b_area}</td>
+								<td>${val.co_b_type}</td>
 								<td>
 									<button
-										onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
+										onclick="location.href='/co/co_004_1'">
 										보기
 									</button>
 								</td>
@@ -276,8 +284,7 @@
           	</div>
 	          	
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
-	            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
-	            	float : right;  position: relative; left: -50%;">
+	            <h6 class="card-title al-center">
 	              <a href="/mp/myCompetition">상세보기</a>
 	            </h6>
             </div>
@@ -295,12 +302,13 @@
 				<table class="table table-hover" style="margin-top: 30px;">
 					<tr class="active"
 						style="font-weight: bold; background-color: #e9ecef;">
-						
+
 	
 	
 					</tr>
 					<c:if test="${empty listComtition }">
-								${"내 글이 없습니다."}
+								${"내가 작성한 글이 없습니다."} 
+								
 								
 					</c:if>
 					<tbody id="">
@@ -341,8 +349,7 @@
           	</div>
 	          	
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
-	            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
-	            	float : right;  position: relative; left: -50%;">
+	            <h6 class="card-title al-center">
 	              <a href="#">상세보기</a>
 	            </h6>
             </div>
@@ -406,8 +413,7 @@
           	</div>
 	          	
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
-	            <h6 class="card-title" style="margin-bottom: -10px; margin: auto; 
-	            	float : right;  position: relative; left: -50%;">
+	            <h6 class="card-title al-center">
 	              <a href="#">상세보기</a>
 	            </h6>
             </div>
