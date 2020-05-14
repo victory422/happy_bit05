@@ -141,7 +141,7 @@
 					<c:forEach var="val" items="${listVO }" varStatus="status">
 
 
-						<tr id="corseDetail" class="success" 
+						<tr id="courseDetail" class="success" name="courseDetail" style=""
 							onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
 							'${val.m_index}','${val.lc_distance}','${val.lc_record}',
 							'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
@@ -269,8 +269,13 @@
 	var lc_map = "";
 	function downPage(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
 			lc_index,lc_xy_arr) {
-				document.getElementById('detailBody').style.display ="block";
-				lc_map = lc_xy_arr;		
+				document.getElementById('detailBody').style.display = "block";
+				var cd = document.getElementsByName('courseDetail');
+				for(var i=0; i<cd.length; i++) {
+					cd[i].removeAttribute("style");
+				}
+				cd[rn-1].setAttribute("style","background-color:#e9ece0");
+				lc_map = lc_xy_arr;
 	
 		    	var td = "";
 				td += '<td>' + rn + '</td>';
@@ -477,7 +482,7 @@ ajaxPage(lc_index, m_index, 1);
 	        	if(pNum==page) {
 	            	paging += '<li class="page-item active">';
 	        	}else paging += '<li class="page-item ">';
-	        	paging += '<a class="page-link" onclick=\"ajaxPage('+lc_index+', '+m_index+', '+page+')\">';
+	        	paging += '<a class="page-link" onclick=\"ajaxPage('+lc_index+', '+m_index+', '+page+')\" style=\"cursor: pointer\">';
 	        	paging += pNum;
 	        	page = pNum;
 	        	paging += '</a>';

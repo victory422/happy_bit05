@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -32,5 +33,7 @@ public interface MP_001_Controller {
 	ModelAndView MP_001_3(HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 	String myCourse(Page_DTO dto, ServletRequest request) throws JsonProcessingException;
+
+	String mp_co_list(Model model, Page_DTO dto2, HttpServletRequest request) throws Exception;
 
 }
