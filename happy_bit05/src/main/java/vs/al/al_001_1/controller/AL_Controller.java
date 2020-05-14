@@ -59,11 +59,11 @@ public class AL_Controller {
 	//신고 상태 변경
 	@PostMapping("/disposechange")
 	@ResponseBody
-	public int disposechange(@RequestParam("de_index") String de_index) {
+	public int disposechange(@RequestParam("board_index") String board_index) {
 		
-		System.out.println(de_index);
+		System.out.println(board_index);
 		
-		return al_service.disposechange(de_index);
+		return al_service.disposechange(board_index);
 	}
 	
 	
