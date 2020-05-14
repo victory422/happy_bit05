@@ -29,34 +29,32 @@ public class Pr_002_1_Controller {
 	//개인기록 리스트
 	@GetMapping("/pr_002_1")
 	public void pr_list(Model model,Page_DTO dto) {
-		/*
+		
 		List<Pr_002_1VO> prvo = pr_service.pr_list(dto);
 		//리스트 썸네일 인코딩, 디코딩 작업.
         for(int i = 0; i < prvo.size(); i++) {
            
         	Pr_002_1VO vo = prvo.get(i);
             
-           if(vo.getCo_thumbnail() != null) {
+           if(vo.getPr_thumbnail1() != null) {
               
-              byte[] imageContent = Base64.getEncoder().encode(vo.getCo_thumbnail());
+              byte[] imageContent = Base64.getEncoder().encode(vo.getPr_thumbnail1());
               
               //System.out.println("대체 뭐야........" + imageContent);
               String thumbnail = new String(imageContent);
               
-              System.out.println(vo.getCo_request() + "ㅇㅇㅇㅇㅇ");	
+              System.out.println(vo.getRequest_thumbnail() + "ㅇㅇㅇㅇㅇ");	
               //System.out.println(thumbnail);
            
-              vo.setCo_request(thumbnail);
+              vo.setRequest_thumbnail(thumbnail);
            // model.addAttribute("thumbnail"+i, thumbnail);
            }else {
-              vo.setCo_request("");
+              vo.setRequest_thumbnail("");
            }
         }
-		*/
+		
 		System.out.println("개인기록 리스트 ????");
 		
-		List<Pr_002_1VO> prvo = pr_service.pr_list(dto);
-		System.out.println(pr_service.pr_list(dto) + "ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ");
 		model.addAttribute("data", prvo);
 		model.addAttribute("pageUtil",new PageUtil(dto,pr_service.get_total(dto)));
 		model.addAttribute("type",dto.getTypeArr());
