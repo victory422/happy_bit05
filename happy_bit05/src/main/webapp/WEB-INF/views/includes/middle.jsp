@@ -10,13 +10,13 @@
 	<header>
 		<div id="carouselExampleIndicators" class="carousel slide"
 			data-ride="carousel">
-			<ol class="carousel-indicators">
+			<ol id="middle_ol" class="carousel-indicators">
 				<li data-target="#carouselExampleIndicators" data-slide-to="0"
 					class="active"></li>
 				<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
 				<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
 			</ol>
-			<div class="carousel-inner" role="listbox">
+			<div id="middle_div" class="carousel-inner" role="listbox">
 				<!-- Slide One - Set the background image for this slide in the line below -->
 				<div class="carousel-item active max-small" style="background-image: url('/resources/img/midle1.jpg')">
 				</div>
