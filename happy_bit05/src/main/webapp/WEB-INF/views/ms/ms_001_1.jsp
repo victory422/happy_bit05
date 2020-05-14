@@ -20,30 +20,34 @@
       <div class="card-body">
 		<h5 class="card-title text-center">Register</h5>
 		<hr>
-		<form id="form" action="/ms/regist" class="form-signin"
+		<form id="form" action="#" class="form-signin"
 		 enctype="multipart/form-data" method="post" onkeyup="submitConfirm(this)">
 			<div class="input-group">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_id"
 					placeholder="User ID" name="m_id" required autofocus> 
-				<button type="submit" class="btn btn-secondary" id="idSearch" onclick='idNickCheck()'>
+				<button class="btn btn-secondary" id="idSearch" onclick='idNickCheck()'>
 					중복확인
 				</button>
 			</div>
 			<span id="idChk"></span>
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_nickName"
 					placeholder="User NickName" name="m_nickName" required> 
-				<button type="submit" class="btn btn-secondary" id="nickSearch" onclick='idNickCheck()'>
+				<button class="btn btn-secondary" id="nickSearch" onclick='idNickCheck()'>
 					중복확인
 				</button>
 			</div>
 			<span id="nickChk"></span>
 			<div id="password">
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="password" class="form-control" id="m_pw1" onkeyup="passwordCheck(this.value)"
 					placeholder="password" name="m_pw1" required> 
 			</div>
 			<div class="input-group" style="margin-top: 5px">
+				<input hidden="hidden" />
 				<input type="password" class="form-control" id="m_pw2" onkeyup="passwordCheck(this.value)"
 					placeholder="password confirm" name="m_pw2" required> 
 			</div>
@@ -58,25 +62,31 @@
 
 			
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_name"
 					placeholder="User Name" name="m_name" required> 
 			</div>
 			<div class="input-group" style="margin-top: 15px; ">
+				<input hidden="hidden" />
 				<input type="radio" name="m_gender" value="남" checked>남
 				&nbsp;&nbsp;&nbsp;
+				<input hidden="hidden" />
 				<input type="radio" name="m_gender" value="여">여
 			</div>
 			
 			<div class="input-group" style="margin-top: 15px">
-			생년월일 &nbsp; : &nbsp;<input type="date" value="1990-01-01" min="1900-01-01" max="2020-12-31"
+			생년월일 &nbsp; : &nbsp;
+			<input hidden="hidden" />
+			<input type="date" value="1990-01-01" min="1900-01-01" max="2020-12-31"
 			style="font-size: 16px; font-family: Consolas, sans-serif;" name="m_birth">
 			</div>
 					  
 			<div id="emailConfirm">
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_email_1"
 					placeholder="E-mail" name="m_email_1" required>
-				<button type="submit" class="btn btn-secondary" id="mailChk" onclick='sendMail()'>
+				<button class="btn btn-secondary" id="mailChk" onclick='sendMail()'>
 					Email인증
 				</button>
 			</div>
@@ -90,11 +100,13 @@
 			</div>
 
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_tel"
 					placeholder="Phone number" name="m_tel" required>
 			</div>
 			
 			<div class="input-group" style="margin-top: 15px">
+				<input hidden="hidden" />
 				<input type="text" class="form-control" id="m_address"
 					placeholder="Address" name="m_address" required>
 			</div>
@@ -102,6 +114,7 @@
 			<label style="margin-top: 20px" >Picture</label>
 
 			<!-- 파일업로드. 안됨.-->
+          		<input hidden="hidden" />
           		<input type="file" class="form-control-file" 
             		id="" name="m_picture">
 
@@ -111,7 +124,7 @@
 			id="submitBtn" disabled="disabled">Register</button>
 			
 		</form>
-		<form>
+<!-- 		<form>
 		 <hr class="my-4">
 	           <button class="btn  btn-google btn-block text-uppercase" 
 	           	type="submit"><i class="fab fa-google mr-2"></i> Sign up with Google
@@ -119,7 +132,7 @@
 	           <button class="btn  btn-facebook btn-block text-uppercase" 
 	          	 type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign up with Facebook
 	          	 </button>
-		</form>
+		</form> -->
 	</div>
 </div>
 </div>
@@ -128,9 +141,25 @@
 </body>
 
 <script>
-	
+	<%
+	//request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort();
+ 	%>
+// 	var serverName = '${serverName}';
+ 	var serverName = 'bikeenrun.shop';
+	var id = nick = "";
+ 	console.log(serverName +' 접속중');
+	//aws에서 접속 시 이메일 인증 없애기
+ 	window.onload = function() {
+		if(serverName!='localhost'){
+	 		document.getElementById('mailChk').setAttribute("style","display:none");
+		}
+		if(sessionStorage.getItem("ing")=='ing') {
+			history.go(-1);
+			sessionStorage.removeItem("ing");
+		}
+ 	}
+ 	
 	function idNickCheck(){
-		var id = nick = "";
 		var e = window.event;
         btn = e.target || e.srcElement;
 		var area = btn.id;
@@ -176,8 +205,11 @@
 		console.log("nickName : "+nick);
 		if($('input[name=m_id]').val()!=id || $('input[name=m_nickName]').val()!=nick){
 			alert("아이디 또는 닉네임 중복확인을 다시 해주세요.");
+			sessionStorage.setItem("ing","ing");
+			history.go(-1);
 		}else {
-			alert("aaa");
+			sessionStorage.removeItem("ing");
+			alert("회원가입을 축하합니다!");
 			document.getElementById('form').action = "/ms/regist";
 			document.getElementById('form').submit();
 		}
@@ -202,6 +234,28 @@
 				} 
 			} 
 		}); 
+	}
+	
+	//모든 탭 입력값 있을 때 REGISTER 활성화 (onkeyup)
+	function submitConfirm() {
+		var idChk = document.getElementById('idChk').firstChild.firstChild.nodeValue=='사용가능';
+		var nickChk = document.getElementById('nickChk').firstChild.firstChild.nodeValue=='사용가능';
+		var passwordChk = document.getElementById('alert-success').firstChild.nextSibling.firstChild.nodeValue=='비밀번호가 일치합니다.';
+		var nameChk = document.getElementById('m_name').value!="";
+		var phoneChk = document.getElementById('m_tel').value!="";
+		var addressChk = document.getElementById('m_address').value!="";
+		console.log(serverName=='localhost');
+		if(serverName=='localhost'){
+			var mailChk = keyForRegist==document.getElementById('m_email_2').value;
+			if(idChk && nickChk &&passwordChk &&nameChk&&mailChk&&phoneChk&&addressChk){
+				document.getElementById('submitBtn').removeAttribute("disabled");
+			}
+		}else {
+			if(idChk && nickChk &&passwordChk && nameChk && phoneChk && addressChk){
+				document.getElementById('submitBtn').removeAttribute("disabled");
+			}
+		}
+		console.log(mailChk);
 	}
 	
 	
@@ -255,20 +309,7 @@
 	});
 
 
-	//모든 탭 입력값 있을 때 REGISTER 활성화
-	function submitConfirm() {
-		var idChk = document.getElementById('idChk').firstChild.firstChild.nodeValue=='사용가능';
-		var nickChk = document.getElementById('nickChk').firstChild.firstChild.nodeValue=='사용가능';
-		var passwordChk = document.getElementById('alert-success').firstChild.nextSibling.firstChild.nodeValue=='비밀번호가 일치합니다.';
-		var nameChk = document.getElementById('m_name').value!="";
-		var mailChk = keyForRegist==document.getElementById('m_email_2').value;
-		var phoneChk = document.getElementById('m_tel').value!="";
-		var addressChk = document.getElementById('m_address').value!="";
-		if(idChk && nickChk &&passwordChk &&nameChk&&mailChk&&phoneChk&&addressChk){
-			document.getElementById('submitBtn').removeAttribute("disabled");
-		}
-		console.log(mailChk);
-	}
+
 	
 	
 </script>
