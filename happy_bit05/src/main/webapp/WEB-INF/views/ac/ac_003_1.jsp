@@ -12,19 +12,12 @@
   <div style="padding-left: 280px;padding-right: 100px; "> 
   <div class="row">
 		<div class="col-lg-12">
-		<div class="content" style="width: 70%; margin-top:30px; margin-left: 180px;">
+		<div class="content" style="margin-top:30px;">
 			<div class="row col-12">
-			<div class="col-8">대회명 : ${data.get(0).co_b_title }</div>
-			<div class="col-4" style="text-align: right;"> 대회 일시: ${data.get(0).co_b_day }</div>
-			</div>
-			<div class="row col-12">
-			<div class="col-8">대회 장소 : ${data.get(0).co_b_area }</div>			
-			<div class="col-4" style="text-align: right;">접수기간 : ${data.get(0).co_b_start } ~ ${data.get(0).co_b_end }</div>
-			</div>
-			<br>
 			
-			<div style="text-align: center;"><h3>참가자 리스트</h3></div><br>
-			<table class="table table-striped col-12">
+			<h3>참가자 리스트 <span class="text-muted"style="font-size:1.2rem">(${data.get(0).co_b_title })</span></h3>
+			
+			<table class="table table-striped col-12" style="margin-top:15px;">
 			<thead>
 			<tr>
 				<td>회원id</td>
@@ -45,7 +38,7 @@
 					<td>${member.m_tel }</td>
 					<td>${member.m_gender }</td>
 					<c:if test="${member.co_state eq '참가'}">
-						<td><button type="button" class="btn btn-primary statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
+						<td><button type="button" class="btn btn-info statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
 					</c:if>
 					<c:if test="${member.co_state eq '환불'}">
 						<td><button type="button" class="btn btn-secondary statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
@@ -55,6 +48,7 @@
 			</c:forEach>
 			</table>
 		</div>
+	</div>
 	</div>
 	</div>
 </div>
@@ -74,14 +68,14 @@ $('.statechange').on("click", function() {
 				if(co_state == '참가'){
 					
 					$('#statechange'+m_index).text("환불");			
-					$('#statechange'+m_index).removeClass("btn btn-primary");
+					$('#statechange'+m_index).removeClass("btn btn-info");
 					$('#statechange'+m_index).addClass("btn btn-secondary");
 
 				}else{
 					
 					$('#statechange'+m_index).text("참가");			
 					$('#statechange'+m_index).removeClass("btn btn-secondary");
-					$('#statechange'+m_index).addClass("btn btn-primary");
+					$('#statechange'+m_index).addClass("btn btn-info");
 
 					
 				}

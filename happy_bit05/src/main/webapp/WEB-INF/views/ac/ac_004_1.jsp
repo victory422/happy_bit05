@@ -11,9 +11,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
 <div style="padding-left: 280px;padding-right: 100px; ">
- <h1 style="text-align: center; margin-top: 30px;">대회 참가자 관리</h1>
 		<div class="row">
 		<div class="col-lg-12">	
+		<h3 style="margin-top: 30px;">대회 참가자 관리</h3>
+	<hr>
 		<form method="get">
 				
 					<!-- 체크박스 부분 -->
@@ -93,12 +94,13 @@
 					<td>${member.m_tel }</td>
 					<td>${member.m_gender }</td>
 					<c:if test="${member.co_state eq '참가'}">
-						<td><button type="button" class="btn btn-primary statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
+						<td><button type="button" class="btn btn-info statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
 					</c:if>
 					<c:if test="${member.co_state eq '환불'}">
 						<td><button type="button" class="btn btn-secondary statechange" id="statechange${member.m_index }" value="${member.m_index }">${member.co_state}</button></td>
 					</c:if>
-				</tr>					 
+				</tr>	
+				<input type="hidden" id="co_b_index" value="${member.co_b_index }">				 
 			</c:forEach>
 			</table>
 			
@@ -109,7 +111,8 @@
  </div>
 <script>
 $('.statechange').on("click", function() {
-		
+		var co_b_index = $('#co_b_index').val();
+		console.log("co_b_index : ", co_b_index);
 		var co_state = $(this).text();
 		console.log("state",co_state);
 		var m_index = $(this).val();
@@ -117,21 +120,19 @@ $('.statechange').on("click", function() {
 		$.ajax({
 			url : '/ac/m_statechange',
 			type : 'post',
-			data : {
-				'm_index' : m_index
-			},
+			data : {'m_index' : m_index , 'co_b_index' : co_b_index},
 			success : function(data) {
 				if(co_state == '참가'){
 					
 					$('#statechange'+m_index).text("환불");			
-					$('#statechange'+m_index).removeClass("btn btn-primary");
+					$('#statechange'+m_index).removeClass("btn btn-info");
 					$('#statechange'+m_index).addClass("btn btn-secondary");
 
 				}else{
 					
 					$('#statechange'+m_index).text("참가");			
 					$('#statechange'+m_index).removeClass("btn btn-secondary");
-					$('#statechange'+m_index).addClass("btn btn-primary");
+					$('#statechange'+m_index).addClass("btn btn-info");
 
 					
 				}

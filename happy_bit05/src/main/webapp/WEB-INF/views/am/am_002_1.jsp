@@ -29,14 +29,14 @@
 
   
 <div style="padding-left: 280px;padding-right: 100px; "> 
-<h1 style="text-align: center; margin-top: 30px;">회원 관리</h1>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 				
 				<!-- /.panel-heading -->
 				<div class="panel-body">
-
+<h3 style="margin-top: 30px;">회원 목록</h3>
+	<hr>
 <input type="hidden" id="del" value="${param.del }">				
 				<form method="get">
 				
@@ -107,13 +107,11 @@
 						</thead>
 						<c:forEach items="${data}" var="data">
 							<tr>
-							<c:if test="${data.m_index ne '1' }">
-															
-								<td><a href="am_003_1?m_index=${data.m_index}">${data.m_index}</a></td>
-								
-								<td>${data.m_id}</td>
-								<td>${data.m_name}</td>
-								<td>${data.m_nickName}</td>
+							<c:if test="${data.m_index ne '1' }">															
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_index}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_id}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_name}</a></td>
+								<td><a style="color:#4c3527;"href="am_003_1?m_index=${data.m_index}">${data.m_nickName}</a></td>
 								<td>${data.m_tel}</td>	
 								<td>${data.m_birth }</td>
 								<td>${data.m_gender }</td>

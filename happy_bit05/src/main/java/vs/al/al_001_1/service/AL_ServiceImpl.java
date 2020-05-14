@@ -32,9 +32,9 @@ public class AL_ServiceImpl implements AL_Service{
 
 	//처리 상태 변경
 	@Override
-	public int disposechange(String de_index) {
+	public int disposechange(String board_index) {
 		
-		return almapper.disposechange(de_index);
+		return almapper.disposechange(board_index);
 	}
 
 	@Override

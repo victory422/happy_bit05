@@ -12,7 +12,7 @@ public interface AL_Service {
 	//신고 게시글 조회
 	public List<ReVO> re_list(Page_DTO dto);
 	//처리 상태 변경
-	public int disposechange(String de_index);
+	public int disposechange(String board_index);
 	//게시글 갯수
 	public int get_total(Page_DTO dto);
 
