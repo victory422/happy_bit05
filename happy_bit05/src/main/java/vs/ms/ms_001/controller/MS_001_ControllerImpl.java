@@ -33,7 +33,7 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 		System.out.println("ms회원가입 페이지 mav");
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("ms/ms_001_1");
-		
+		mav.addObject("serverName", request.getServerName());
 		return mav;
 	}
 	
@@ -57,9 +57,14 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 		log.info(id);
 		System.out.println("ms회원가입 regist mav");
 		System.out.println(ms_001_vo);
+		
+		//회원정보 insert
+		ms_001_vo = ms_001_Service.memberVO(ms_001_vo);
+		
+		//썸네일 insert
 		Map<String, Object> hmap = new HashMap<String, Object>();
 		hmap.put("m_picture", ms_001_vo.getM_picture().getBytes());
-		ms_001_Service.memberVO(ms_001_vo);
+		hmap.put("m_index", ms_001_vo.getM_index());
 		ms_001_Service.registThumbnail(hmap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("lo/lo_001_1");

@@ -1,5 +1,6 @@
 package vs.mb.mb_001_1.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Base64;
@@ -40,6 +41,8 @@ import vs.mb.mb_001_1.vo.PR_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
+import vs.pr.pr_002_1.vo.Pr_002_1VO;
+import vs.pr.pr_002_1.vo.Upload_pr_vo;
 
 @Log4j
 @Controller
@@ -521,11 +524,41 @@ public class MB_controller {
 		service.regist(pr_vo);
 		
 	}
-	
+	//모바일 정보처리 방침
 	@RequestMapping("/mobile_info")
 	public String mobile(){
 		log.info("개인정보처리방침 페이지");
 		return "/mb/member_info";
+	}
+	
+	
+	@RequestMapping("/upload")
+	public String upload(HttpSession session, @RequestParam String pr_index,Model model){
+		log.info("업로드 페이지");
+		log.info("기록 게시글 인덱스 : "+pr_index);
+		Pr_002_1VO vo = service.upload(pr_index);
+		model.addAttribute("lc_get", vo);
+		log.info("기록 업로드에서 LC_INDEX : "+vo.getLc_index());
+		return "/mb/mb_008_1";
+	}
+	
+	@RequestMapping(value = "/update",method = RequestMethod.POST)
+	public String update(Upload_pr_vo vo) {
+		service.update1(vo);
+		
+		Map<String, Object> hmap = new HashMap<String, Object>();
+
+		try {
+			hmap.put("pr_thumbnail", vo.getPr_thumbnail().getBytes());
+			hmap.put("pr_index",vo.getPr_index());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		service.update2(hmap);
+		
+		return "/mb/mb_009_1";
 	}
 	
 }

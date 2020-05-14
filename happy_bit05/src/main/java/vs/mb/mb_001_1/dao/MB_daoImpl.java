@@ -1,5 +1,6 @@
 package vs.mb.mb_001_1.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,8 @@ import lombok.extern.log4j.Log4j;
 import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.vo.PR_VO;
+import vs.pr.pr_002_1.vo.Pr_002_1VO;
+import vs.pr.pr_002_1.vo.Upload_pr_vo;
 
 @Component
 @AllArgsConstructor
@@ -78,6 +81,23 @@ public class MB_daoImpl implements MB_dao{
 		session.insert("mb.regist", pr_vo);
 	}
 	
+	//업로드페이지에 코스정보 불러오기
+	@Override
+	public Pr_002_1VO upload(String pr_index) {
+		// TODO Auto-generated method stub
+		return session.selectOne("mb.course_info",pr_index);
+	}
 	
+	@Override
+	public void update1(Upload_pr_vo pr_vo) {
+		// TODO Auto-generated method stub
+		session.update("mb.update1",pr_vo);
+	}
 	
+	@Override
+	public void update2(Map<String, Object> hmap) {
+		// TODO Auto-generated method stub
+		session.update("mb.update2",hmap);
+	}
+
 }
