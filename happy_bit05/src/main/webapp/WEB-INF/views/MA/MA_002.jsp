@@ -27,39 +27,48 @@
 
 
 <div style="padding-left: 280px;padding-right: 100px; "> 
-<h1 style="text-align: center; margin-top: 30px;">회원 상세보기</h1>
+<h1 style="text-align: center; margin-top: 30px;">광고 관리하기</h1>
+
    <div class="row">
-   
-   	<form name="ad_insert" action="insert" method="post" enctype="multipart/form-data">
+	<div class="col-12"><br></div>
+	<div class="col-12"><br></div>
+	<div class="col-12"><br></div>
+	<div class="col-12"><hr></div>
+	<div class="col-12"><br></div>
+	<div class="col-12"><br></div>
    	
    	<c:forEach var="ad" varStatus="status" items="${listAd}">
-	   <div class="w-100"/>
-	   	<div class="col-lg-12">
-	     	 <div id="ad" class="input-group mb-1">
-							<div class="input-group-prepend">
-								<h5 class="my-0 font-weight-normal"><font style="font-weight:bold"> 광고 1 : </t> </font></h5>    
-							</div>
+	   	<div class="col-lg-3" style='width:192px; height:108px; margin-top:30px;'>
+	     	 <div id="lol" class="input-group mb-1">
+							<%-- <div class="input-group-prepend">
+								<h5 class="my-0 font-weight-normal"><font style="font-weight:bold"> 광고 ${status.count} : </t> </font></h5>    
+							</div> --%>
 							<div class="custom-file">
-	                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile0" name="ad_image[0]">
+									<img alt="" class="form-control-file" id="exampleFormControlFile${status.count }" name="ad_image[${status.count }]"
+	                 		 			src="data:image/jsp;base64,${ad.request_image}" style='width:192px; height:108px;'/>
+	                 		 	
 	             			</div>
 			</div>
 	     </div>
    </c:forEach>
    
+   <div class="col-12"><br><br><br></div>
+   <form name="ad_insert" action="insert" method="post" enctype="multipart/form-data">
+   	<div class="w-100"/>
       <div class="col-lg-12">
      	 <div id="ad" class="input-group mb-1">
 						<div class="input-group-prepend">
-							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold"> 광고 + ${count} + : </t> </font></h5>    
+							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold"> 광고 1 : </t> </font></h5>    
 						</div>
 						<div class="custom-file">
-                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile0" name="ad_image["+${count}+"]"/>
+                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile0"" name="ad_image[0]"/>
              			</div>
 		</div>
      </div>
      <div class="w-100"/>
-     <button type="button" onclick="javascript:addAd()">광고 개수 추가.</button>
+     	<button type="button" onclick="javascript:addAd()">광고 개수 추가.</button>
      <div class="w-100" />
-     <input type="submit" value="submit" />
+     	<input type="submit" value="submit" />
    </div>
    </form>
 </div>

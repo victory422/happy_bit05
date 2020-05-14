@@ -642,6 +642,11 @@
 	function login_need(){
 		alert("로그인이 필요한 서비스입니다.");
 	}
+	
+	function modify(){
+		var modify = document.getElementById("modifyForm");
+		modify.submit();
+	}
 	</script>
 	<script>
 /* 	$(document).ready(function(){

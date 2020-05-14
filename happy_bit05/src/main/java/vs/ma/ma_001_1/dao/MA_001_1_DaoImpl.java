@@ -43,4 +43,10 @@ public class MA_001_1_DaoImpl implements MA_001_1_Dao{
 		return session.selectList("lc.ma_002_2");
 	}
 
+	@Override
+	public void deleteAd() {
+		// TODO Auto-generated method stub
+		session.delete("lc.ma_002_delete");
+	}
+
 }

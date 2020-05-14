@@ -390,4 +390,10 @@
 			select * from advertising
 		]]>
 	</select>
+	
+	<delete id="ma_002_delete">
+		<![CDATA[
+			delete from advertising
+		]]>
+	</delete>
 </mapper>

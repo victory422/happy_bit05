@@ -117,12 +117,16 @@ public class LC_003_1_Controller {
 	public String updateLC(LC_003_1_VO vo, Model model) {
 		
 		try {
-			Map<String, Object> hmap = new HashMap<String, Object>();
-			hmap.put("lc_thumbnail", vo.getLc_thumbnail().getBytes());
-			hmap.put("lc_index", vo.getLc_index());
+			System.out.println("뭐냐 : " + vo.getLc_thumbnail().toString());
+			if(vo.getLc_thumbnail() != null) {
+				Map<String, Object> hmap = new HashMap<String, Object>();
+				hmap.put("lc_thumbnail", vo.getLc_thumbnail().getBytes());
+				hmap.put("lc_index", vo.getLc_index());
+				
+				service.modifyLC_thumbnail(hmap);
+			}
 			
 			service.modifyLC(vo);
-			service.modifyLC_thumbnail(hmap);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

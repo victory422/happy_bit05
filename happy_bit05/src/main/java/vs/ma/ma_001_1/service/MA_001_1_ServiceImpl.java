@@ -36,4 +36,10 @@ public class MA_001_1_ServiceImpl implements MA_001_1_Service{
 		return dao.listAd();
 	}
 
+	@Override
+	public void deleteAd() {
+		// TODO Auto-generated method stub
+		dao.deleteAd();
+	}
+
 }

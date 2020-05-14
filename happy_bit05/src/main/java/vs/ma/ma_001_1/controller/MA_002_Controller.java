@@ -39,7 +39,7 @@ public class MA_002_Controller {
 		}
 		
 		model.addAttribute("listAd", listAd);
-		model.addAttribute("count", listAd.size());
+		model.addAttribute("count", listAd.size()+1);
 		
 		return "MA/MA_002";
 	}
@@ -48,6 +48,9 @@ public class MA_002_Controller {
 	public String insertAd(MA_002_1_VO vo) {
 		
 		MultipartFile[] file = vo.getAd_image();
+		
+		service.deleteAd();
+		
 		for(int i = 0; i < file.length; i++) {
 			try {
 				if(file[i] == null) {

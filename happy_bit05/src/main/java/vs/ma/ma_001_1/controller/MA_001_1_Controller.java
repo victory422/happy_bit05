@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.ma.ma_001_1.service.MA_001_1_Service;
 import vs.ma.ma_001_1.vo.MA_001_1_VO;
+import vs.ma.ma_001_1.vo.MA_002_2_VO;
 
 @Controller
 @Log4j
@@ -55,4 +56,24 @@ public class MA_001_1_Controller {
 		 
 		 return listVO;
 	 }
+	 
+	 @ResponseBody
+	 @RequestMapping(value="main_ad", method = RequestMethod.POST)
+	 public List<MA_002_2_VO> getAdvertising(MA_002_2_VO vo, Model model) {
+			
+			List<MA_002_2_VO> listAd = service.listAd();
+			
+			for(int i = 0; i < listAd.size(); i++) {
+				
+				byte[] imageContent = Base64.getEncoder().encode(listAd.get(i).getAd_image());
+				String image = new String(imageContent);
+				
+				listAd.get(i).setRequest_image(image);
+			}
+			
+			model.addAttribute("listAd", listAd);
+			
+			return listAd;
+		}
+	 
 }

@@ -13,4 +13,6 @@ public interface MA_001_1_Dao {
 	public void insertAd(Map<String, Object> hmap);
 	
 	public List<MA_002_2_VO> listAd();
+	
+	public void deleteAd();
 }
