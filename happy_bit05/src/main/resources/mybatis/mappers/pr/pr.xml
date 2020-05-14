@@ -80,7 +80,7 @@
 			        	 <include refid="Page_DTO"/>
 			        <![CDATA[ 
 			        pr_index > '0'
-			        and pr_public = '게시'
+			        and pr_public = '1'
 			        order by to_number(substr(pr_index, 4)) desc
 		        )a
 		where rownum <= (#{page} * #{amount})

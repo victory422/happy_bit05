@@ -33,7 +33,7 @@
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
+    <a href="#" class="brand-link">
       <span class="brand-text font-weight-light">Admin</span>
     </a>
 
@@ -71,7 +71,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
               <p>
-                	회원 관리
+                	회원 목록
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>

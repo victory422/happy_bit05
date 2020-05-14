@@ -11,7 +11,7 @@
 </select>
 <!-- 댓글 목록 -->
 <select id="commentList" resultType="vs.cm.cm_001_1.vo.CommentVO" parameterType="String">
-	SELECT b.com_index,b.board_index,m.m_nickname,b.com_text,b.com_good,b.com_index1
+	SELECT b.com_index,b.board_index,m.m_nickname,b.com_text,b.com_good,b.com_index1,b.m_index,b.com_count,b.com_date
 	FROM board_com b, member m
 	where board_index = #{data}
 	and com_index1 is null
@@ -20,8 +20,7 @@
 
 <!-- 대댓글 리스트 -->
 <select id="dcommentList" resultType="vs.cm.cm_001_1.vo.CommentVO" parameterType="String">
-	SELECT b.com_index,b.board_index,m.m_nickname,b.com_text,b.com_good,b.com_index1
-		
+	SELECT b.com_index,b.board_index,m.m_nickname,b.com_text,b.com_good,b.com_index1,b.m_index,b.com_date
 	FROM board_com b, member m
 	where com_index1 = #{com_index}
 	and b.m_index = m.m_index
@@ -30,8 +29,8 @@
 <!-- 댓글 작성 -->
 <insert id="commentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	INSERT INTO
-	board_com(com_index, com_text,board_index,m_index)
-	VALUES(com_index.nextval,#{com_text},#{board_index},#{m_index})
+	board_com(com_index, com_text,board_index,m_index,com_count,com_date)
+	VALUES(com_index.nextval,#{com_text},#{board_index},#{m_index},0,(select to_char(sysdate,'mm.dd  hh24:mi') from dual))
 </insert>
 
 
@@ -43,8 +42,16 @@
 		where com_index = #{com_index}
 </update>
 
+<!-- 댓글 카운트 -->
+<update id="upcount" parameterType="String">
+update board_com
+	set com_count = (
+    select DISTINCT(com_count)
+    from board_com
+    where com_index = #{index})+1
+	where com_index = #{index}
 
-
+</update>
 
 <!-- 댓글 삭제 -->
 <delete id="commentDelete" parameterType="String">
@@ -54,8 +61,8 @@
 <!-- 대댓글 작성 -->
 <insert id="dcommentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	insert into
-	board_com(com_index, com_text, com_index1, board_index,m_index)
-	values(com_index.nextval, #{com_text}, #{com_index1}, #{board_index},#{m_index})
+	board_com(com_index, com_text, com_index1, board_index,m_index,com_date)
+	values(com_index.nextval, #{com_text}, #{com_index1}, #{board_index},#{m_index},(select to_char(sysdate,'mm.dd  hh24:mi') from dual))
 	
 </insert>
 
