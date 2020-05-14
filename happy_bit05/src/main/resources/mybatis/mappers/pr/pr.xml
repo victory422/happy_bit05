@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="vs.cm.cm_001_1.mapper.PrMapper">
-<!--  
+
 <resultMap type="PrVO" id="requestVO">
 	<result property="pr_index" column="pr_index"/>
 	<result property="mp_index" column="mp_index"/>
@@ -15,8 +15,8 @@
 	<result property="pr_record" column="pr_record"/>
 	<result property="pr_type" column="pr_type"/>
 	<result property="pr_public" column="pr_public"/>
+	<result property="pr_thumbnail1" column="PR_THUMBNAIL"></result>
 </resultMap>
--->
 
 <sql id="Page_DTO">
 		<trim prefix="(" suffix=") and" prefixOverrides="and">
@@ -63,17 +63,17 @@
 		</trim>
 	</sql>
 
-<select id="pr_list" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO" parameterType="String">
+<select id="pr_list" resultMap="requestVO">
 
 	<![CDATA[ 
 		select pr_index, pr_title, pr_text, pr_see, pr_good, 
-				pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public
+				pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public, PR_THUMBNAIL
 	 from(
 		select rownum rn, a.*
 		from
 		        (
 			        select pr_index, pr_title, pr_text, pr_see, pr_good, 
-						pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public
+						pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public, PR_THUMBNAIL
 			        from myrecord
 			        where 
 			        ]]>

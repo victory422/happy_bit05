@@ -20,7 +20,7 @@ public class Pr_002_1VO {
 		private String pr_type;
 		private String pr_public;
 		//섬네일
-		private byte[] pr_thumbnail;
+		private byte[] pr_thumbnail1;
 		private String request_thumbnail;
 		
 		//맴버 조인

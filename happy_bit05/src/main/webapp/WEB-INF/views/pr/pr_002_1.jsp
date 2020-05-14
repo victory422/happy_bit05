@@ -62,33 +62,31 @@
 
 		</div>
 	</form>
-	<table class="table table-striped table-bordered table-hover"
-		style="margin-top: 30px;">
-		<thead>
+	<c:forEach items="${data}" var="data">
+		<table class="table table-bordered table-hover"
+			style="margin-top: 30px;"
+			onClick="location.href='pr_003_1?pr_index=${data.pr_index}'">
 			<tr>
-				<th>제목</th>
-				<th>일자</th>
-				<th>장소</th>
-				<th>기록</th>
-				<th>추천수</th>
-				<th>조회수</th>
+				<td rowspan="5" style="width: 200px; height: 125px; padding: 0;">
+					<img id="thumbnail"
+					src="data:image/jsp;base64, ${data.request_thumbnail }"
+					style="width: 230px; height: 210px; padding: 0;">
+				</td>
+				<td><h4>${data.pr_title }</h4></td>
+
 			</tr>
-		</thead>
+			<tr>
+				<td>등록일 : ${data.pr_recordDate }</td>
+			</tr>
+			<tr>
+				<td>작성자 : ${data.m_nickname }</td>
+			</tr>
+			<tr>
+				<td>개인기록 : ${data.pr_record }</td>
+			</tr>
 
-		<tbody>
-			<c:forEach items="${data}" var="data">	
-				<tr onClick = "location.href='pr_003_1?pr_index=${data.pr_index}'">			
-					<td>${data.pr_title }</td>
-					<td>${data.pr_recordDate }</td>
-					<td>${data.m_nickname }</td>
-					<td>${data.pr_record }</td>
-					<td>${data.pr_good }</td>
-					<td>${data.pr_see }</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-
-	</table>
+		</table>
+	</c:forEach>
 	<!-- 페이징  -->
 	<div class="col-md-10">
 		<ul class="pagination d-flex justify-content-center">

@@ -14,6 +14,8 @@
 		<typeAlias type="vs.al.al_001_1.vo.AlVO" alias="AlVO"></typeAlias>
 		<typeAlias type="vs.ma.ma_001_1.vo.MA_001_1_VO"
 			alias="MA_001_1_VO" />
+			
+		<typeAlias type="vs.pr.pr_002_1.vo.Pr_002_1VO" alias="PrVO"></typeAlias>
 
 	</typeAliases>
 </configuration>
