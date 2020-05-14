@@ -561,4 +561,18 @@ public class MB_controller {
 		return "/mb/mb_009_1";
 	}
 	
+	@RequestMapping("/pr_list")
+	public String pr_list(Model model) {
+		
+		model.addAttribute("data", service.pr_list());
+	
+		return "/mb/mb_010_1";
+	}
+	
+	@RequestMapping("/pr_003")
+	public String move_pr_003() {
+	
+		return "/pr/pr_003_1";
+	}
+	
 }

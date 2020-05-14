@@ -191,4 +191,15 @@
 		]]>
 	</update>
 	
+	<select id="pr_list" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO">
+		<![CDATA[
+			select 
+				rownum,pr_index,mp_index,m_index,pr_title,pr_text,pr_see,pr_good,pr_resistdate,pr_recorddate,pr_record,pr_type,pr_public
+			from
+				myrecord
+			where rownum > 0
+			and pr_public='1'
+		]]>
+	</select>
+	
 </mapper>

@@ -141,7 +141,9 @@ nav ul li {
 
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
-			<table class="table table-hover" style="margin-top: 30px;">
+		<h1 style="text-align: center;">기록 자랑하기</h1>
+		<h4 style="text-align: center;">업로드하고싶은 기록을 클릭해주세요.</h4>
+			<table class="table table-hover" style="margin-top: 0px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
 					<td width="30%" onclick="sort('LC_TITLE')">제목</td>
@@ -160,7 +162,6 @@ nav ul li {
 
 					<c:forEach var="val" items="${list}" varStatus="status">
 
-<input type="text" value="${val.PR_INDEX }">
 						<tr id="corseDetail" class="success" 
 							onclick="upload('${val.PR_INDEX}')">
 							<!-- lc_index값 없음  글 업로드 페이지로 가야함  혁희-->

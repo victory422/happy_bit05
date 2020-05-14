@@ -121,7 +121,15 @@
 							<textarea class="textarea" name="pr_text" id="pr_text" style="width: 400px;">${lc_get.pr_text }</textarea>
 							<a class="cke_button_icon cke_button__maximize_icon" href='javascript:void("최대화");'>글쓰기</a>
 							<script type="text/javascript">
-							
+							config.toolbar =
+								[
+								[ 'NewPage','Preview' ],
+								[ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ],
+								[ 'Find','Replace','-','SelectAll','-','Scayt' ],
+								[ 'Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'],
+								[ 'Styles','Format' ],
+								[ 'Bold','Italic','Strike','-','RemoveFormat' ]
+								];
 								CKEDITOR.replace('pr_text');
 							</script>
 						</div>

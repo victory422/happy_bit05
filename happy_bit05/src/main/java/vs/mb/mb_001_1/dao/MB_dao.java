@@ -29,4 +29,6 @@ public interface MB_dao {
 	public void update1(Upload_pr_vo pr_vo);
 	
 	public void update2(Map<String, Object> hmap);
+	
+	public List<Pr_002_1VO> pr_list();
 }

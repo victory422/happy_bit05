@@ -76,4 +76,9 @@ public class MB_servieceImpl implements MB_service{
 		// TODO Auto-generated method stub
 		dao.update2(hmap);
 	}
+	@Override
+	public List<Pr_002_1VO> pr_list() {
+		// TODO Auto-generated method stub
+		return dao.pr_list();
+	}
 }

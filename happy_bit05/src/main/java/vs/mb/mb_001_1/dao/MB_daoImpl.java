@@ -99,5 +99,11 @@ public class MB_daoImpl implements MB_dao{
 		// TODO Auto-generated method stub
 		session.update("mb.update2",hmap);
 	}
+	
+	@Override
+	public List<Pr_002_1VO> pr_list() {
+		// TODO Auto-generated method stub
+		return session.selectList("mb.pr_list");
+	}
 
 }
