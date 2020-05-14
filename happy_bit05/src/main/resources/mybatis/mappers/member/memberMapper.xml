@@ -92,8 +92,19 @@
 		<include refid="type_match"></include>
 	</select>
 	
-	<insert id="get_member"
-		parameterType="vs.ms.ms_001.vo.MS_001_VO">
+		<select id="get_m_index" resultType="int">
+			<![CDATA[ 
+				SELECT 
+						 MEMBER_SEQ.currval 
+				FROM 
+				        dual
+					
+			]]>	
+		</select>
+	
+	
+	<insert id="regist_member" parameterType="vs.ms.ms_001.vo.MS_001_VO">
+	
 		<![CDATA[
 			INSERT INTO member 
 			(m_index,
@@ -109,7 +120,7 @@
 			
 			
 			VALUES (
-			(select count(*) from member)+1,
+			MEMBER_SEQ.NEXTVAL,
 			#{m_id},
 			#{m_pw1},
 			#{m_name},
@@ -126,11 +137,6 @@
 	<!-- 썸네일 업로드 -->
 	<update id="set_member_thumbnail" parameterType="java.util.Map">
 		  
-		<selectKey keyProperty="m_index" order="BEFORE" resultType="String">
-			<![CDATA[ 
-				select count(*) from member
-			]]>	
-		</selectKey>
 		
 		<![CDATA[ 
 			update member
