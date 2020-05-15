@@ -73,7 +73,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </head>
 <body>
-<%@ include file="../includes/middle.jsp"%>
 	<!-- 넘겨줄값들 -->
 <input type="hidden" name="li_b_type" value="후기게시판"/>
 <!-- <input type="hidden" name="back_url" value="li_001_1.jsp"/>  -->
@@ -82,11 +81,23 @@
 	<div class="container">
 		<form method="get">
 		<div style="margin-top: 30px;" class="row">
-			<div class="col-md-10">
+			<div class="col-md-12">
 				<h1>장비 Tip</h1>
 			</div>
+			<div class="col-md-10"></div>
 			<div class="col-md-2">		
-			<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+				<c:choose>
+					<c:when test="${member ne null}">
+						<div class="col-md-12">
+							<a href="/li/li_005_1?li_b_type=후기게시판"><button type="button" class="btn btn-success">글작성 </button></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="col-md-12">
+							<button type="button" onclick="need_login()" class="btn btn-success">글작성</button>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			<!-- 페이지수 변경 (미완성) -->		
 				<!-- <select name="amount" id="list_mount">
 					<option value="15">15개씩 보기</option>

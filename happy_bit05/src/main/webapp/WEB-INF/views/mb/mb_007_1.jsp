@@ -141,7 +141,9 @@ nav ul li {
 
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
-			<table class="table table-hover" style="margin-top: 30px;">
+		<h1 style="text-align: center;">기록 자랑하기</h1>
+		<h4 style="text-align: center;">업로드하고싶은 기록을 클릭해주세요.</h4>
+			<table class="table table-hover" style="margin-top: 0px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef;">
 					<td width="30%" onclick="sort('LC_TITLE')">제목</td>
@@ -160,9 +162,8 @@ nav ul li {
 
 					<c:forEach var="val" items="${list}" varStatus="status">
 
-
 						<tr id="corseDetail" class="success" 
-							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
+							onclick="upload('${val.PR_INDEX}')">
 							<!-- lc_index값 없음  글 업로드 페이지로 가야함  혁희-->
 							<td width="30%">${val.LC_TITLE}</td>
 							<td width="8%">${val.PR_TYPE}</td>
@@ -241,10 +242,18 @@ var count = 0;
 		});
 		
 	}
+	
 		
 	
 
-
+function upload(pr_index){
+	var upload = confirm('이 기록을 업로드 하시겠습니까?')
+	var pr_index = pr_index;
+	if (upload){
+		alert("페이지이동경로 넣기");
+		location.href="/mb/upload?pr_index="+pr_index
+	}
+}
 	
 </script>
 </body>

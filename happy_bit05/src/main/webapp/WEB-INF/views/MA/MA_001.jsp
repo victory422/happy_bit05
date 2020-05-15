@@ -200,7 +200,7 @@ function mainView(){
 		          			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
 		          		    var imageSize = new kakao.maps.Size(24, 35);
 		          		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 	// 마커 이미지를 생성합니다    
-	          				var course; //리스트 내용.
+	          				var course = ''; //리스트 내용.
 	              			var content = []; //HTML 내용.
 	              			infowindow = [];
 	              			markers = [];
@@ -215,6 +215,7 @@ function mainView(){
 		    					positions[i] = new kakao.maps.LatLng(split1[0], split1[1]);
 		    					
 		    					//마커 눌렀을때 나올 내용.
+		    					content[i] = '';
 		    					content[i] += '<form id="mainGet'+i+'" action="../../lc/003/lc_get" method="post">';
 			        			content[i] += '<div class="col-md-12">';
 			    				content[i] += '<div class="card mb-3 shadow-sm">';
@@ -298,6 +299,35 @@ function mainView(){
 		          			
 		          		}
 		          	});
+		            
+		            
+		            $.ajax({
+		          		type: "POST",
+		          		cache: false,
+		          		async: "true",
+		          		url: "../ma/001/main_ad",
+		          		success : function(data){
+		          			
+		          			var middle_ol = document.getElementById('middle_ol');
+		          			var middle_div = document.getElementById('middle_div');
+		          			
+		          			var content_ol = '<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>';
+		          			var content_div = '<div class="carousel-item active max-small"><img src="data:image/jsp;base64,'+ ${data[0].request_image} +'" style="max-width:100%; max-height:auto"></div>';
+		          			
+		          			for(var i = 1; i < data.length; i++){
+		          				content_ol += '<li data-target="#carouselExampleIndicators" data-slide-to="'+i+'"></li>';
+		          				
+		          				content_div += '<div class="carousel-item max-small">';
+		        				content_div += '		<img src="data:image/jsp;base64,'+ ${data[i].request_image} + '" style="max-width:100%; max-height:auto">';
+		        				content_div += '			<div class="carousel-caption d-none d-md-block">';
+		        				content_div += '			</div>';
+		        				content_div += '		</div>';
+		          			}
+		          			
+		          			middle_ol.innerHTML = content_ol;
+		          			middle_div.innerHTML = content_div;
+		          		}
+		        	});
 	            }   
 	        }); 
 	      });
@@ -312,9 +342,43 @@ function mainView(){
 
 };
 
-
+//주변 코스 최초 실행.
 mainView();
 
+
+/* function mainAd(){
+	$.ajax({
+  		type: "POST",
+  		cache: false,
+  		async: "true",
+  		url: "../ma/001/main_ad",
+  		success : function(data){
+  			
+  			var middle_ol = document.getElementById('middle_ol');
+  			var middle_div = document.getElementById('middle_div');
+  			
+  			var content_ol = '<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>';
+  			var content_div = '<div class="carousel-item active max-small" style="background-image: url("data:image/jsp;base64,"'+${data[0].request_image} +')"></div>';
+  			
+  			for(var i = 1; i < data.length; i++){
+  				content_ol += '<li data-target="#carouselExampleIndicators" data-slide-to="'+i+'"></li>';
+  				
+  				content_div += '<div class="carousel-item max-small"';
+				content_div += '		style="background-image: url("data:image/jsp;base64,"'+${data[i].request_image} +')">';
+				content_div += '			<div class="carousel-caption d-none d-md-block">';
+				content_div += '			</div>';
+				content_div += '		</div>';
+  			}
+  			
+  			middle_ol.innerHTML = content_ol;
+  			middle_div.innerHTML = content_div;
+  		}
+	});
+}
+
+//광고 최초 실행.
+mainAd();
+ */
 /* ---------------------------------------------------------------------------------------------------------- */
 
 // 지도에 마커와 인포윈도우를 표시하는 함수입니다

@@ -1,5 +1,6 @@
 package vs.mb.mb_001_1.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,8 @@ import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mb.mb_001_1.dao.MB_dao;
 import vs.mb.mb_001_1.vo.PR_VO;
+import vs.pr.pr_002_1.vo.Pr_002_1VO;
+import vs.pr.pr_002_1.vo.Upload_pr_vo;
 
 @Log4j
 @Component
@@ -56,4 +59,26 @@ public class MB_servieceImpl implements MB_service{
 		dao.regist(pr_vo);
 	}
 	
+	@Override
+	public Pr_002_1VO upload(String pr_index) {
+		// TODO Auto-generated method stub
+		return dao.upload(pr_index);
+	}
+	
+	//썸네일
+	@Override
+	public void update1(Upload_pr_vo pr_vo) {
+		// TODO Auto-generated method stub
+		dao.update1(pr_vo);
+	}
+	@Override
+	public void update2(Map<String, Object> hmap) {
+		// TODO Auto-generated method stub
+		dao.update2(hmap);
+	}
+	@Override
+	public List<Pr_002_1VO> pr_list() {
+		// TODO Auto-generated method stub
+		return dao.pr_list();
+	}
 }

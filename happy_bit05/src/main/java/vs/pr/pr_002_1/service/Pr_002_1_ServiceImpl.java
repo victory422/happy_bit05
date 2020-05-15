@@ -16,10 +16,10 @@ public class Pr_002_1_ServiceImpl implements Pr_002_1_Service{
 	@Autowired
 	private PrMapper prmapper;
 	
-	
+	//개인기록 리스트
 	@Override
 	public List<Pr_002_1VO> pr_list(Page_DTO dto) {
-		System.out.println("개인기록 서비스 ");
+		
 		return prmapper.pr_list(dto);
 	}
 

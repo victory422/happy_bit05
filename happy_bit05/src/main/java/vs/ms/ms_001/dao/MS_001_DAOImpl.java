@@ -31,7 +31,11 @@ public class MS_001_DAOImpl implements MS_001_DAO{
 	@Override
 	public MS_001_VO memberVO(MS_001_VO vo) {
 		log.info("member insert vo : "+ vo);
-		sqlSession.insert("member.get_member", vo);
+		sqlSession.insert("member.regist_member", vo);
+		log.info("regist complete");
+		int m_index = sqlSession.selectOne("member.get_m_index");
+		log.info(m_index);
+		vo.setM_index(Integer.toString(m_index));
 		return vo;
 	}
 	

@@ -72,18 +72,23 @@
 						<div data-text-content="true" style="font-weight: bold; font-size: 18px; color: rgb(41, 128, 185); margin-top: 30px;" class="float-right">${data.co_b_state}</div>
 					<table class="table table-bordered table-hover" style="margin-top: 30px; " onClick = "location.href='co_004_1?co_b_index=${data.co_b_index}'">														
 						<tr>
-							<td rowspan="4" style="width:200px; height: 125px; padding: 0;">
-							<img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:200px; height: 180px; padding: 0;">
+							<td rowspan="5" style="width:200px; height: 125px; padding: 0;">
+							<img id="thumbnail" src="data:image/jsp;base64, ${data.co_request}" style="width:230px; height: 210px; padding: 0;">
 							</td>
-							<td ><h2>제목 : ${data.co_b_title}</h2></td>
+							<td ><h4>${data.co_b_title}</h4></td>
 							
 						</tr>
 						<tr>
-							<td >일자 : ${data.co_b_day}</td>
+							<td>접수기한 : ${data.co_b_start} ~ ${data.co_b_end }</td>
 						</tr>
 						<tr>
+							<td >일자 : ${data.co_b_day}</td>
+						</tr>				
+						<tr>
+						
 							<td>장소 : ${data.co_b_area}</td>
-						</tr>					
+						</tr>
+							
 					</table>
 													
 						</c:forEach>

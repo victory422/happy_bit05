@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
+import vs.ac.ac_001_1.vo.AcVO;
+import vs.co.co_001_1.service.Co_Service;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
@@ -43,6 +47,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	MemberLoginInterceptor login = new MemberLoginInterceptor();
 	private LO_001_Service LOservice;
 	private Page_DTO dto;
+	private Co_Service co_service;
 	
 	@Override
 	@RequestMapping(value="/mp")
@@ -52,6 +57,8 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();
 		login.preHandle(request, response, session);
+		Page_DTO dto = new Page_DTO();
+		List<MP_001_3_VO> listVO = new ArrayList<MP_001_3_VO>();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		//썸네일 주입
@@ -60,6 +67,12 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
 			String thumbnail = new String(imageContent);
 			sessionVO.setM_picture(thumbnail);
+			log.info("m_index : "+sessionVO.getM_index());
+
+			//나의 관심코스 리스트
+			dto.setM_index(sessionVO.getM_index());
+			listVO = service.getMCList(dto);
+			mav.addObject("listVO", listVO);
 		}else {
 			sessionVO.setM_picture("");
 			System.out.println("썸네일 없음.");
@@ -69,16 +82,9 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			log.info(e);
 		}
 		
-		//나의 관심코스 리스트
-		List<MP_001_3_VO> listVO = service.getMCList(dto);
-		
-		mav.addObject("sessionVO", sessionVO);
-		mav.addObject("listVO", listVO);
-		mav.setViewName("mp/mp_001_1");
-		System.out.println("session : "+ sessionVO);
-		System.out.println(mav + "mav완료");
-		
-		return mav;
+			mav.addObject("sessionVO", sessionVO);
+			mav.setViewName("mp/mp_001_1");
+			return mav;
 	}
 	
 	
@@ -125,7 +131,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	
 	
 	@Override
-	@RequestMapping(value="/mp/myCourse/detail" , method=RequestMethod.POST)
+	@RequestMapping(value="/mp/myCourse/detail" , method=RequestMethod.POST , produces = "application/text;charset=utf8")
 	@ResponseBody
 	public  String myCourse (Page_DTO dto, 
 			ServletRequest request) throws JsonProcessingException  {
@@ -223,6 +229,45 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		mav.setViewName("mp/mp_001_1");
 		
 		return mav;
+	}
+	
+	@Override
+	@GetMapping(value="/mp/myCompetition")
+	public String mp_co_list(Model model,Page_DTO dto, HttpServletRequest request) throws Exception{
+		//세션주입
+		HttpSession session = request.getSession();
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		//dto 주입.
+		dto.setM_index(sessionVO.getM_index());
+		List<AcVO> acvo = service.compeptition_myList(dto);
+		
+		//리스트 썸네일 인코딩, 디코딩 작업.
+        for(int i = 0; i < acvo.size(); i++) {
+           
+           AcVO vo = acvo.get(i);
+           if(vo.getCo_thumbnail() != null) {
+              byte[] imageContent = Base64.getEncoder().encode(vo.getCo_thumbnail());
+              String thumbnail = new String(imageContent);
+              vo.setCo_request(thumbnail);
+           }else {
+              vo.setCo_request("");
+           }
+        }
+        pageutil = service.competition_paging(dto);
+		System.out.println(dto.getType());
+		
+		model.addAttribute("data", acvo);
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
+		model.addAttribute("pageUtil", pageutil);
+		System.out.println("page : " + dto.getPage());
+		System.out.println("Amount : " + dto.getAmount());
+		
+		for(int i= 0; i<dto.getTypeArr().length; i++) {
+		model.addAttribute("type"+i,dto.getTypeArr()[i]);
+		}
+		return "mp/mp_001_2";
 	}
 
 	

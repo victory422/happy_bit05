@@ -6,8 +6,8 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.vo.MP_001_3_VO;
@@ -107,6 +107,25 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		
 		return pageutil;
 	}
+	
+	@Override
+	public List<AcVO> compeptition_myList(Page_DTO dto) {
+		log.info(dto);
+		
+		return session.selectList("member.compeptition_myList", dto);
+	}
+
+
+	@Override
+	public PageUtil competition_paging(Page_DTO dto) {
+		int total = session.selectOne("member.competition_paging", dto);
+		pageutil = new PageUtil(dto, total);
+		log.info("competition_paging....."+dto);
+		return pageutil;
+	}
+	
+	
+	
 
 
 }

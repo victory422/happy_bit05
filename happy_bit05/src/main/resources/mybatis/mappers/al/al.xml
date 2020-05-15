@@ -139,7 +139,7 @@ case when r.m_index is not null then r.m_index
 		when de_dispose = '경고' then '삭제처리'
 		when de_dispose = '삭제처리' then '처리대기'
 		else de_dispose end
-		where de_index = #{de_index}
+		where board_index = #{board_index}
 </update>    
  <!-- 게시물 총합 출력 쿼리 -->
 	<select id="get_total" resultType="int">
