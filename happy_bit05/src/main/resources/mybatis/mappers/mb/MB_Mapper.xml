@@ -68,7 +68,7 @@
 		</selectKey>
 		<![CDATA[
 		insert into myrecord values(
-			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, #{lc_title}, #{pr_text}, 0, 0, #{pr_resistdate}, sysdate, #{pr_record}, null, #{pr_type}, #{pr_public}
+			'pr_'||lpad(seq_pr.nextval, 10, '0'), #{mp_index}, #{m_index}, null, null, 0, 0, null, sysdate, #{pr_record}, null, #{pr_type}, #{pr_public}
 		)
 		]]>
 	</insert>
@@ -162,15 +162,17 @@
 			select
 				mr.pr_index,mr.mp_index,mr.m_index,mr.pr_title,mr.pr_text,mr.pr_see,mr.pr_good,mr.pr_resistdate,mr.pr_recorddate,mr.pr_record,mr.pr_thumbnail,mr.pr_type,mr.pr_public,
 				c.lc_index,c.lc_title,c.lc_type,c.lc_distance,c.lc_run,c.lc_cycle,c.lc_area1,c.lc_area2,c.lc_area3,c.lc_text,c.lc_date,c.lc_good,c.lc_see,c.lc_record,
-				m.lc_xy_arr,m.lc_address
+				m.lc_xy_arr,m.lc_address,
+				mem.m_nickname
 			from 
-				myrecord mr,mycourse mp,course c,map m
+				myrecord mr,mycourse mp,course c,map m,member mem
 			where
 				mr.mp_index = mp.mp_index
 				and mp.lc_index = c.lc_index
 				and c.lc_index = m.lc_index
+				and mr.m_index = mem.m_index
+				and mp.m_index = mem.m_index
                 and mr.pr_index =  #{pr_index}
-				
 		]]>
 	</select>
 	
@@ -194,11 +196,14 @@
 	<select id="pr_list" resultType="vs.pr.pr_002_1.vo.Pr_002_1VO">
 		<![CDATA[
 			select 
-				rownum,pr_index,mp_index,m_index,pr_title,pr_text,pr_see,pr_good,pr_resistdate,pr_recorddate,pr_record,pr_type,pr_public
+				rownum,mr.pr_index,mr.mp_index,mr.m_index,mr.pr_title,mr.pr_text,mr.pr_see,mr.pr_good,mr.pr_resistdate,mr.pr_recorddate,mr.pr_record,mr.pr_type,mr.pr_public,
+				c.lc_title
 			from
-				myrecord
+				myrecord mr,mycourse mp,course c
 			where rownum > 0
-			and pr_public='1'
+			and mr.mp_index = mp.mp_index
+			and mp.lc_index = c.lc_index
+			and mr.pr_public='1'
 		]]>
 	</select>
 	

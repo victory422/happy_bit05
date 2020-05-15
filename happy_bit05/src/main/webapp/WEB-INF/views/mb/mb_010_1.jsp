@@ -12,8 +12,9 @@
   crossorigin="anonymous"></script>
 
 
+
     <!-- Bootstrap core CSS -->
-    <link href="/happy_bit05/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- 합쳐지고 최소화된 최신 CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -23,6 +24,8 @@
 
     <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    
+    
     <style>
 .carousel-item {
      height: auto;
@@ -51,10 +54,101 @@
 	.map {margin:0;}
 	
 	.custom_padding{padding-right: 0px;padding-left: 0px;}
+	
+	
+	/*테이블 css  */
+	@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
+}
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.rwd-table th {
+  display: none;
+}
+.rwd-table td {
+  display: block;
+}
+.rwd-table td:first-child {
+  padding-top: .1em;
+}
+.rwd-table td:last-child {
+  padding-bottom: .1em;
+}
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 6.5em;
+  display: inline-block;
+}
+@media (min-width: 480px) {
+  .rwd-table td:before {
+    display: none;
+  }
+}
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .1em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+}
+
+body {
+  padding: 0 0em;
+  font-family: sans-serif;
+  color: #444;
+  background: #eee;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+.rwd-table {
+  background: #34495E;
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+}
+.rwd-table tr {
+  border-color: #46637f;
+}
+.rwd-table th,
+.rwd-table td {
+  margin: .5em 1em;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+}
+.rwd-table th,
+.rwd-table td:before {
+  color: #dd5;
+}
 </style>
 </head>
-	<body>
-		<div class="container">
+	<body style="padding: 0px;">
+		<div class="container" style="padding: 0px;">
 			<form method="get">
 		
 				<!-- 체크박스 부분 -->
@@ -63,7 +157,7 @@
 		
 					<label class="input-group-text col-sm-12"> <select id="type"
 						name="type" class="custom-select custom-select-sm-1"
-						style="margin-left: 10px; width: 15%">
+						style="width: 30%">
 		
 							<option value=null>종목선택</option>
 							<option value="육상"
@@ -90,37 +184,35 @@
 										</c:forEach>--%>
 						</select> --> <select id="type" name="search_filter"
 						class="custom-select custom-select-sm-1"
-						style="margin-left: 10px; width: 15%">
+						style="margin-left: 10px; width: 25%">
 							<option value=null selected>제목</option>
 							<option value="내용">내용</option>
 							<option value="all">제목+내용</option>
-					</select> <input type="text" style="width: 55%" id="input_text"
+					</select> <input type="text" style="width: 45%;margin-left: 20px;height: 26px;" id="input_text"
 						name="input_text" class="search-box form-control"
 						placeholder="검색어 입력" onsubmit="page_put()" />
 					</label>
 		
 				</div>
 			</form>
-			<table class="table table-striped table-bordered table-hover"
-				style="margin-top: 30px;">
+			<table class="table-responsivetable-responsive rwd-table table-hover"
+				style="margin-top: 30px;width:100%;table-layout:fixed">
 				<thead>
-					<tr>
-						<th>제목</th>
-						<th>일자</th>
-						<th>기록</th>
-						<th>추천수</th>
-						<th>조회수</th>
+					<tr style="width: 100%;">
+						<th width="29%">제목</th>
+						<th width="29%">코스 제목</th>
+						<th width="26%">일자</th>
+						<th width="16%">기록</th>
 					</tr>
 				</thead>
 		
 				<tbody>
 					<c:forEach items="${data}" var="data">	
-						<tr onClick = "location.href='/pr/pr_003_1?pr_index=${data.pr_index}'">			
-							<td>${data.pr_title }</td>
-							<td>${data.pr_recordDate }</td>
-							<td>${data.pr_record }</td>
-							<td>${data.pr_good }</td>
-							<td>${data.pr_see }</td>
+						<tr style="width: 100%;" onClick = "location.href='/mb/pr_003_1?pr_index=${data.pr_index}'">			
+							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important; ">${data.pr_title }</td>
+							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.lc_title }</td>
+							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.pr_recordDate }</td>
+							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.pr_record }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

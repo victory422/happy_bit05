@@ -55,6 +55,8 @@
 .btn-lg{
 padding: 20px 16px;
 }
+.button4 {background-color: #e7e7e7; color: black;} 
+/* Gray */
 
 
 
@@ -77,21 +79,31 @@ padding: 20px 16px;
 
 
 <body>
-<div class="container">
+<div class="container" style="max-width: 100%;">
 	<div class="row a" style="text-align: center;">
 		<h2>${member.m_nickName }님 환영합니다!</h2>
 	</div>
-	<div class="container" style="width: 100%;">
+	<div class="container" style="max-width: 100%;">
 		<br>
-		<button type="button" class="btn btn-info btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=자전거'">자전거 코스보기</button>
+		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=자전거'">자전거 코스보기</button>
 		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=육상'">육상 코스보기</button>
 		<br>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/myCourse'">기록 재기</button>
+		<button type="button" class="btn btn btn-primary btn-lg btn-block" onclick="location.href='/mb/myCourse'">기록 재기</button>
 		<br>
-		<button type="button" class="btn btn-primary btn-lg btn-block" onclick="location.href='/mb/mb_007_1'">측정한 기록보기</button>
+		<button type="button" class="btn btn-info btn-lg btn-block" onclick="location.href='/mb/mb_007_1'">기록 업로드하기</button>
+		<br>
+		<button type="button" class="btn btn-info btn-lg btn-block" onclick="location.href='/mb/pr_list'">기록 보기</button>
+		<br>
+		<button type="button" class="btn btn-default btn-lg btn-block" onclick="info()">사용 설명</button>
 		<br>
 	</div>
 </div>
 </body>
+	
+	<script type="text/javascript">
+		function info(){
+			alert('1.종목을 선택한다. \n 2.관심코스로 등록한다.\n 3.기록을 잰다. \n 4.기록을 업로드한다. \n 5.다른사람들과 소통한다.')
+		}
+	</script>
 </html>

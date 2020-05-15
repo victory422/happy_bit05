@@ -33,15 +33,15 @@
 					<c:when test="${lc_get.lc_type eq '자전거'}"><img src="../../resources/img/lc/cycle.png" width="60px"/></c:when>
 				</c:choose>
 				<br/>
-				<div><h4>${lc_get.lc_title }</h4></div>
+				<div><h4><a href="/mb/lc_get?lc_index=${lc_get.lc_index }">${lc_get.lc_title }</a></h4></div>
 				<br/>
 				<div style="margin-bottom:50px;">
 					<div style="float:left;">
-						작성자 : ${lc_get.m_nickname } 	| 	  게시일 : ${lc_get.lc_date }
+						코스 작성자 : ${lc_get.m_nickname } 	| 	 코스 게시일 : ${lc_get.lc_date }
 					</div>
 					
 					<div style="float:right;">
-						조회수 ${lc_get.lc_see } | 댓글 | 추천수 ${lc_get.lc_good }
+						코스 조회수 ${lc_get.lc_see } 코스 추천수 ${lc_get.lc_good }
 					</div>
 				</div>
 
@@ -60,34 +60,23 @@
 	      
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-	       	 도보 시간 : <span id="run" name="run">${lc_get.lc_run }</span>
-	      </font></font></h3>
-	      </div>
-	      <br>
-	      
-	      <div class="p-4">
-	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
-	       	자전거 시간 : <span id="cycle" name="cycle">${lc_get.lc_cycle }</span>
-	      </font></font></h3>
-	      </div>
-	      <br>
-	      
-	      <div class="p-4">
-	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 출발지 : <span id="address" name="address">${lc_get.lc_address }</span>
 	      </font></font></h3>
 	      </div>
 	      <br>
+	      		   		
+		   	<div class="p-4">
+		      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+		       	 완주 기록 : <span id="address" name="address">${lc_get.pr_record }</span>
+		      </font></font></h3>
+		      </div>
+		      <br>
+	      
 	    </div>
 	    
 	    <div class="w-100"><hr></div>
 	    <div style="margin-top:30px;margin-bottom:30px;"></div>
 	    
-		    <div class="col-12" style="margin:auto;">
-			${lc_get.lc_text }
-			<br>
-			${lc_get.pr_record }
-			</div>
 			
 			<!-- 제목 -->
 			</div>
@@ -96,8 +85,8 @@
 					</div>
 					
 			<!-- 텍스트 -->
-		<div class="w-100" style="margin-top:30px;margin-bottom:30px;"><hr></div>
-		<ul class="list-unstyled" style="margin-left:30px;">
+		<div class="w-100" style="margin-top:10px;margin-bottom:10px;"><hr></div>
+		<ul class="list-unstyled" style="margin-left:0px;">
 			
 			<li class="course-text">
 
@@ -106,7 +95,7 @@
 							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">썸네일</font></h5>    
 						</div>
 						<div class="custom-file">
-                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="pr_thumbnail" value="${lc_get.pr_thumbnail }">
+                 		 &nbsp;<input type="file" class="form-control-file" id="exampleFormControlFile1" name="pr_thumbnail" value="">
              			</div>
 					</div>
 			</li>
@@ -118,26 +107,19 @@
 						<div class="input-group-prepend">
 							<h5 class="my-0 font-weight-normal"><font style="font-weight:bold">게시글 내용</font></h5>    
 						</div>
-							<textarea class="textarea" name="pr_text" id="pr_text" style="width: 400px;">${lc_get.pr_text }</textarea>
-							<a class="cke_button_icon cke_button__maximize_icon" href='javascript:void("최대화");'>글쓰기</a>
+							<textarea class="textarea" name="pr_text" id="pr_text">${lc_get.pr_text }</textarea>
 							<script type="text/javascript">
-							config.toolbar =
-								[
-								[ 'NewPage','Preview' ],
-								[ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ],
-								[ 'Find','Replace','-','SelectAll','-','Scayt' ],
-								[ 'Image','Flash','Table','HorizontalRule','SpecialChar','PageBreak'],
-								[ 'Styles','Format' ],
-								[ 'Bold','Italic','Strike','-','RemoveFormat' ]
-								];
-								CKEDITOR.replace('pr_text');
+							
+								CKEDITOR.replace('pr_text',{
+									customConfig: '../../../resources/CKEditorSample/ckeditor/mconfig.js'
+								});
 							</script>
 						</div>
 					</div>
 			</li>
 		</ul>
 		
-			<input type="submit" value="업로드" />
+			<button type="submit" class="btn btn-success">업로드</button>
 			<!-- PR_INDEX값 컨트롤러에 넘겨줌 -->
 			<input type="hidden" name="pr_index" value="${lc_get.pr_index }">
 		</form>
@@ -292,7 +274,7 @@
 	    	
 	    	marker.setMap(map);
 	    }
-	}
+	}  
 	
 	
 	//------------------------------------------------------------------------------------------

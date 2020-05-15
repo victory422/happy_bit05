@@ -58,7 +58,97 @@
 	.course-text {margin-bottom:30px;}
 	.input-group-prepend {width:80px;}
 	.map {margin:0;}
+	body{width: 100%;}
+	
+	/*테이블 css  */
+	@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
+}
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.rwd-table th {
+  display: none;
+}
+.rwd-table td {
+  display: block;
+}
+.rwd-table td:first-child {
+  padding-top: .5em;
+}
+.rwd-table td:last-child {
+  padding-bottom: .5em;
+}
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 6.5em;
+  display: inline-block;
+}
+@media (min-width: 480px) {
+  .rwd-table td:before {
+    display: none;
+  }
+}
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .5em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+}
 
+body {
+  padding: 0 2em;
+  font-family: sans-serif;
+  color: #444;
+  background: #eee;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+.rwd-table {
+  background: #34495E;
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+}
+.rwd-table tr {
+  border-color: #46637f;
+}
+.rwd-table th,
+.rwd-table td {
+  margin: .5em 1em;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+}
+.rwd-table th,
+.rwd-table td:before {
+  color: #dd5;
+}
 </style>
 </head>
 <!-- Navigation -->
@@ -106,30 +196,29 @@
 
 <main role="main">
 		<!-- 게시글 리스트 출력 테이블 -->
-			<div class="table-responsive">
-				<table class="table table-hover" style="margin-top: 30px;">
+			<div style="width: 100%;">
+				<table class="table-responsive rwd-table" style="width:100%;table-layout:fixed">
 					<!-- <tr><td><h2>전체글</h2></td>
 					<td style="text-alcgn: right;"><input type="checkbox"></td>
 					</tr> -->
 					<tr class="active" style="text-alcgn: center;">
-						<td width="7%">종목</td>
-						<td width="30%">게시글 제목</td>
-						<td width="10%">작성자</td>
-						<td width="20%">작성날자</td>
-						<td width="5%">조회수</td>
-						<td width="5%">좋아요</td>
+						<td width="10%">종목</td>
+						<td width="44%">게시글 제목</td>
+						<td width="15%">작성자</td>
+						<td width="16%">작성날자</td>
+						<td width="15%">길이(km)</td>
 					</tr>
 					<tbody id="table_lcst">
 						<c:forEach var="board" items="${lc_list }">
-							<tr class="success" style="text-alcgn: center;">
-								<td>
+							<tr class="success" style="text-alcgn: center; border-collapse: separate;
+  border-spacing: 0 10px;">
+								<td width="10%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
 									<c:out value="${board.lc_type eq 'all'?'전체': board.lc_type}"/>
 								</td>
-								<td onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'">${board.lc_title }</td>
-								<td>${board.m_nickname }</td>
-								<td>${board.lc_date }</td>
-								<td>${board.lc_see }</td>
-								<td>${board.lc_good }</td>
+								<td width="44%" style="max-width:100px;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'"><nobr>${board.lc_title }<nobr></td>
+								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.m_nickname }</td>
+								<td width="20%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_date }</td>
+								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_distance }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
