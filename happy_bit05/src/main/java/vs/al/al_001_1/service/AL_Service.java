@@ -18,4 +18,5 @@ public interface AL_Service {
 
 	public int get_total1(Page_DTO dto);
 
+	
 }

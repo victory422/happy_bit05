@@ -5,14 +5,15 @@
 
 
 <resultMap type="AlVO" id="requestVO">
-	<result property="boardidx" column="boardidx"/>
+	<result property="rn" column="rn"/>
+	<result property="tablename" column="tablename"/>
 	<result property="title" column="title"/>
-	<result property="day" column="day"/>
-	<result property="see" column="see"/>
 	<result property="good" column="good"/>
-	<result property="memindex" column="memindex"/>
+	<result property="see" column="see"/>
+	<result property="registdate" column="registdate"/>
+	<result property="m_index" column="m_index"/>
+	<result property="t_index" column="t_index"/>	
 </resultMap>
-
 
 <sql id="Page_DTO">
 		<trim prefix="(" suffix=") and" prefixOverrides="and">
@@ -57,54 +58,58 @@
 		</trim>
 	</sql>
 	
-<select id="al_list" resultMap="requestVO" >
-	
-select 
-case when r.co_r_index IS NOT NULL then r.co_r_INDEX    
-     when i.li_index is not null then i.li_index
-     when t.lt_index is not null then t.lt_index
-     when p.co_b_index is not null then p.co_b_index
-     ELSE C.lc_INDEX
-    end boardidx,
-case when r.co_r_title is not null then r.co_r_title
-    when i.li_title is not null then i.li_title
-    when p.co_b_title is not null then p.co_b_title
-    else c.lc_title
-    end title,
-case when r.co_r_day is not null then r.co_r_day
-    when i.li_date is not null then i.li_date
-    when t.lt_date is not null then t.lt_date
-    when p.co_b_date is not null then p.co_b_date
-    else c.lc_date
-    end day,
-case when r.co_r_see is not null then r.co_r_see
-    when i.li_see is not null then i.li_see
-    when t.lt_see is not null then t.lt_see
-    when p.co_b_see is not null then p.co_b_see
-    else c.lc_see 
-    end see,
-case when r.co_r_good is not null then r.co_r_good
-    when i.li_good is not null then i.li_good
-    when t.lt_good is not null then t.lt_good
-    when p.co_b_good is not null then p.co_b_good
-    else c.lc_good
-    end good,
-case when r.m_index is not null then r.m_index
-     when i.m_index is not null then i.m_index
-     when t.m_index is not null then t.m_index
-     when p.m_index is not null then p.m_index
-    else c.m_index
-    end memindex
-		    from member m inner join competition_review r
-		    on m.m_index = r.m_index
-		    full outer join course c
-		    on m.m_index = c.m_index
-		    full outer join item i
-		    on m.m_index = i.m_index
-		    full outer join trainning t
-		    on m.m_index = t.m_index
-		    full outer join competition p
-		    on m.m_index = p.m_index 
+<select id="al_list" resultMap="requestVO">
+<![CDATA[ 
+           select 
+              rn, tablename, title, good, see, registdate, m_index, t_index
+              from
+                 (select rownum rn, tablename, title, good, see, registdate, m_index, t_index
+                 from
+                    (
+                    select tablename, title, good, see, registdate, m_index, t_index
+                       from
+                       (
+                       select 
+                          'course' tablename, lc_title as title, lc_good as good, lc_see as see, 
+                          lc_date as registdate, m_index, lc_index as t_index
+                       from 
+                          course
+                       
+                       union all
+                       
+                       select 
+                          'item' tablename, li_title as title, li_good as good, li_see as see, 
+                          li_date as registdate, m_index, li_index as t_index
+                       from item
+                       
+                       union all
+                       
+                       select 
+                          'myrecord' tablename, pr_title as title, pr_good as good, pr_see as see, 
+                          pr_resistdate as registdate, m_index, pr_index as t_index
+                       from myrecord
+                       where pr_public = '1'
+                       union all
+                       
+                       select 
+                          'competition_review' tablename, co_r_title as title, co_r_good as good, 
+                          co_r_see as see, co_r_day as registdate, m_index, co_r_index as t_index
+                       from competition_review
+                       
+                       union all
+                    
+                       select 
+                          'trainning' tablename,lt_title as title, lt_good as good, lt_see as see, 
+                          lt_date as registdate, m_index, lt_index as t_index
+                       from trainning
+                       )
+                 
+                    order by registdate desc
+                    )
+              where rownum <= (#{page} * #{amount})
+             )
+           where rn > ((#{page}-1) * #{amount})
+           ]]>
 </select>    
     
     
@@ -149,7 +154,27 @@ case when r.m_index is not null then r.m_index
 
 	</select>   
 
+<select id="get_total1" resultType="int">
 
+	select count(*)
+                 from
+                 (
+                    select m_index
+                    from course
+                    union all
+                    select m_index
+                    from item
+                    union all
+                    select m_index
+                    from myrecord
+                    union all
+                    select m_index
+                    from competition_review
+                    union all
+                    select m_index
+                    from trainning
+                 )
+</select>
 
 
 </mapper>

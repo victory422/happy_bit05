@@ -72,17 +72,22 @@ public class Ac_ServiceImpl implements Ac_Service {
 		return comapper.ac_detail(co_b_index);
 	}
 	@Override
-	public List<CoVO> ac_memberlist(CoVO covo) throws Exception {
+	public List<CoVO> ac_memberlist(Page_DTO dto) throws Exception {
 		
 			System.out.println("대회 참가자 리스트 서비스");
 			
-		return comapper.ac_memberlist(covo);
+		return comapper.ac_memberlist(dto);
 	}
 	@Override
 	public int m_statechange(Map<String, Object> hmap) {
 		
 		
 		return comapper.m_statechange(hmap);
+	}
+	@Override
+	public int get_total(Page_DTO dto) {
+		
+		return comapper.get_total(dto);
 	}
 	
 	

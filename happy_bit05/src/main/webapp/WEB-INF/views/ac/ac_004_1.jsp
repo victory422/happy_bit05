@@ -68,7 +68,7 @@
 			
 			</div>
 			</form>		
-			<table class="table table-striped col-12"  style="margin-top: 50px">
+			<table class="table table-striped table-bordered table-hover"  style="margin-top: 50px">
 			
 			<thead>
 			<tr>
@@ -103,7 +103,20 @@
 				<input type="hidden" id="co_b_index" value="${member.co_b_index }">				 
 			</c:forEach>
 			</table>
-			
+			<div class="col-md-10">
+						<ul class="pagination d-flex justify-content-center">
+							<c:if test="${pageUtil.prev }">
+								<li class="page-item"><a class="page-link" href="/ac/ac_004_1?page=${pageUtil.start-1}">Previous</a></li>
+							</c:if>
+							<c:forEach begin="${pageUtil.start }" end="${pageUtil.end }" var="pNum">
+								<li class="page-item ${pNum==pageUtil.dto.page?'active':"" }"><a class="page-link" href="/ac/ac_004_1?page=${pNum }">${pNum }</a></li>
+							</c:forEach>
+							<c:if test="${pageUtil.next }">
+								<li class="page-item"><a class="page-link" href="/ac/ac_004_1?page=${pageUtil.end+1 }">Next</a>
+								</li>
+							</c:if>
+						</ul>
+					</div>
 		</div>
 		
 	</div> 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dao.MP_001_Dao;
 import vs.mp.mp_001.dto.Page_DTO;
@@ -87,6 +88,19 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 	public PageUtil pagingDownPage(Page_DTO dto) {
 		// TODO Auto-generated method stub
 		return dao.pagingDownPage(dto);
+	}
+	
+	@Override
+	public List<AcVO> compeptition_myList(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info(dto);
+		return dao.compeptition_myList(dto);
+	}
+
+	@Override
+	public PageUtil competition_paging(Page_DTO dto) {
+		pageutil = dao.competition_paging(dto);
+		return pageutil;
 	}
 	
 

@@ -3,6 +3,7 @@ package vs.mp.mp_001.service;
 import java.util.List;
 import java.util.Map;
 
+import vs.ac.ac_001_1.vo.AcVO;
 import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.vo.MP_001_3_VO;
@@ -31,4 +32,8 @@ public interface MP_001_Service {
 	public PageUtil pagingDownPage(Page_DTO dto);
 
 	List<MP_001_3_VO> getMCListApp(Page_DTO dto);
+
+	List<AcVO> compeptition_myList(Page_DTO dto);
+
+	public PageUtil competition_paging(Page_DTO dto);
 }

@@ -27,11 +27,12 @@
 
 
 <div style="padding-left: 280px;padding-right: 100px; "> 
-<h1 style="text-align: center; margin-top: 30px;">회원 상세보기</h1>
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
 			<div style="border:0px solid #eee; padding:0px;">
+		<h3 style="margin-top: 30px;">회원 상세보기</h3>
+			<hr>
  		<table class="table table-striped table-bordered" style="margin-top:50px;">	
  			<tbody>													
 						<tr>

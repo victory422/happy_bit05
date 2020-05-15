@@ -67,13 +67,12 @@
 			style="margin-top: 30px;"
 			onClick="location.href='pr_003_1?pr_index=${data.pr_index}'">
 			<tr>
-				<td rowspan="5" style="width: 200px; height: 125px; padding: 0;">
+				<td rowspan="5" style="width: 250px; height: 125px; padding: 0;">
 					<img id="thumbnail"
 					src="data:image/jsp;base64, ${data.request_thumbnail }"
-					style="width: 230px; height: 210px; padding: 0;">
+					style="width:250px; height: 260px; padding: 0;">
 				</td>
 				<td><h4>${data.pr_title }</h4></td>
-
 			</tr>
 			<tr>
 				<td>등록일 : ${data.pr_recordDate }</td>
@@ -84,7 +83,9 @@
 			<tr>
 				<td>개인기록 : ${data.pr_record }</td>
 			</tr>
-
+			<tr>
+				<td>코스장소 : ${data.lc_area1 } ${data.lc_area2 } ${data.lc_area3 }</td>
+			</tr>
 		</table>
 	</c:forEach>
 	<!-- 페이징  -->

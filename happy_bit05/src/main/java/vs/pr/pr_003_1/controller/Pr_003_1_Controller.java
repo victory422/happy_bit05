@@ -1,6 +1,8 @@
 package vs.pr.pr_003_1.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,8 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonObject;
 
 import vs.board.good.vo.GOOD_VO;
-import vs.cr.cr_001_1.vo.CrVO;
 import vs.lo.lo_001.vo.LO_001_VO;
+import vs.mb.mb_001_1.service.MB_service;
 import vs.pr.pr_002_1.vo.Pr_002_1VO;
 import vs.pr.pr_003_1.service.Pr_003_1_Service;
 
@@ -27,14 +30,18 @@ public class Pr_003_1_Controller {
 
 	@Autowired
 	private Pr_003_1_Service pr_service;
-	
+	@Autowired
+	private MB_service service;
 	//개인기록 상세보기
 	@GetMapping("/pr_003_1")
 	public String pr_detail(Model model,@RequestParam("pr_index") String pr_index,HttpServletRequest request,Pr_002_1VO prvo) {
 		
-		model.addAttribute("data", pr_service.pr_detail(pr_index));
 		HttpSession session = request.getSession();
 		LO_001_VO member = (LO_001_VO) session.getAttribute("sessionVO");
+		Pr_002_1VO vo = service.upload(pr_index);
+		model.addAttribute("lc_get", vo);
+		model.addAttribute("data", pr_service.pr_detail(pr_index));
+		model.addAttribute("member",member);
 		if(member == null) {
 			model.addAttribute("data",pr_service.pr_detail(pr_index));
 			return "/pr/pr_003_1";
@@ -75,6 +82,34 @@ public class Pr_003_1_Controller {
 	      return "/pr/pr_003_1";	
 	
 	}
+	//개인기록 수정폼
+	@GetMapping("/pr_004_1")
+	public void pr_updateform(Model model, @RequestParam("pr_index") String pr_index) {
+		System.out.println("수정하기 폼");
+		Pr_002_1VO vo = service.upload(pr_index);
+		model.addAttribute("lc_get", vo);
+		
+	}
+	//개인기록 수정
+	@PostMapping("/update.do")
+	public String pr_update(Pr_002_1VO vo) {
+		System.out.println("안오는거야?1");
+
+		pr_service.update(vo);
+		System.out.println("ddddddddd : " + vo.getPr_index());
+		return "redirect:/pr/pr_003_1?pr_index="+vo.getPr_index();
+	}
+	//개인기록 삭제
+	@GetMapping("/pr_delete")
+	public String cr_delete(@RequestParam("pr_index") String pr_index) {
+		
+		pr_service.pr_delete(pr_index);
+		
+		return "redirect:/pr/pr_002_1";
+		
+	}
+	
+	
 	
 	//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		 //like@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@

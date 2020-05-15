@@ -30,7 +30,7 @@
 <insert id="commentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	INSERT INTO
 	board_com(com_index, com_text,board_index,m_index,com_count,com_date)
-	VALUES(com_index.nextval,#{com_text},#{board_index},#{m_index},0,(select to_char(sysdate,'mm.dd  hh24:mi') from dual))
+	VALUES(com_index.nextval,#{com_text},#{board_index},#{m_index},0,(select to_char(sysdate,'mm.dd  hh24:mi:ss') from dual))
 </insert>
 
 
@@ -62,7 +62,7 @@ update board_com
 <insert id="dcommentInsert" parameterType="vs.cm.cm_001_1.vo.CommentVO">
 	insert into
 	board_com(com_index, com_text, com_index1, board_index,m_index,com_date)
-	values(com_index.nextval, #{com_text}, #{com_index1}, #{board_index},#{m_index},(select to_char(sysdate,'mm.dd  hh24:mi') from dual))
+	values(com_index.nextval, #{com_text}, #{com_index1}, #{board_index},#{m_index},(select to_char(sysdate,'mm.dd  hh24:mi:ss') from dual))
 	
 </insert>
 
