@@ -31,5 +31,9 @@ public interface Pr_003_1_Service {
 			public int good_count(HashMap<String, Object> hashmap);
 
 			public void good_insert(HashMap<String, Object> hashmap);
+			//개인기록 수정
+			public int update(Pr_002_1VO vo);
+			//개인기록 삭제
+			public int pr_delete(String pr_index);
 			
 }

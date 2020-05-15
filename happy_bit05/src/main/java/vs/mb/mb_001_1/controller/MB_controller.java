@@ -43,6 +43,7 @@ import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
 import vs.pr.pr_002_1.vo.Pr_002_1VO;
 import vs.pr.pr_002_1.vo.Upload_pr_vo;
+import vs.pr.pr_003_1.service.Pr_003_1_Service;
 
 @Log4j
 @Controller
@@ -60,6 +61,8 @@ public class MB_controller {
 	private LC_003_1_VO lc_003_1_vo;
 	private LC_003_1_Service lc_003_1_service;
 	private MP_001_Service mp_001_service;
+	
+	private Pr_003_1_Service pr_service;
 	
 	
 	@RequestMapping(value="/mb_001_1")
@@ -246,6 +249,7 @@ public class MB_controller {
 
 	@RequestMapping("/lc_002_1")
 	public void lc_list(Criteria cri, Model model,HttpServletRequest request) {
+		cri.setAmount(10000);
 		List<LC_002_1_VO> listVO = lc_002_1_service.getList(cri);
 		List<LC_002_1_VO> listGood = lc_002_1_service.getGood(cri);
 		
@@ -543,7 +547,7 @@ public class MB_controller {
 	}
 	
 	@RequestMapping(value = "/update",method = RequestMethod.POST)
-	public String update(Upload_pr_vo vo) {
+	public String update(Upload_pr_vo vo,Model model) {
 		service.update1(vo);
 		
 		Map<String, Object> hmap = new HashMap<String, Object>();
@@ -558,8 +562,12 @@ public class MB_controller {
 		
 		service.update2(hmap);
 		
-		return "/mb/mb_009_1";
+		//리스트뿌려주기
+		model.addAttribute("data", service.pr_list());
+		
+		return "/mb/mb_010_1";
 	}
+	
 	
 	@RequestMapping("/pr_list")
 	public String pr_list(Model model) {
@@ -569,10 +577,40 @@ public class MB_controller {
 		return "/mb/mb_010_1";
 	}
 	
-	@RequestMapping("/pr_003")
-	public String move_pr_003() {
-	
-		return "/pr/pr_003_1";
+	@RequestMapping("/pr_003_1")
+	public void move_pr_003(Model model,@RequestParam String pr_index,HttpSession session) {
+		
+		model.addAttribute("data",service.upload(pr_index));
+		Pr_002_1VO vo =new Pr_002_1VO();
+		vo.setPr_index(pr_index);
+		
+		//좋아요 조회수 소스
+		//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		  pr_service.increse_see(vo, session);
+		  System.out.println("increse_service 실행완료------------------------------");
+	      System.out.println(member.getM_index());
+	      HashMap<String,Object> hashmap = new HashMap<String,Object>();
+	      
+	      hashmap.put("board_index", pr_index);
+	      hashmap.put("m_index",  member.getM_index());
+	      
+	      if(member.getM_index() != null) {
+	      //로그인 했을 경우에만 좋아요 체크. 없으면 에러남.
+	         int row_check = pr_service.good_count(hashmap);
+	         
+	         if(row_check == 0) {
+	            System.out.println("로우 생성중");
+	            pr_service.good_insert(hashmap);
+	            System.out.println("로우 생성완료");
+	         }else {
+	            System.out.println("로우가 이미 생성되어있음");
+	         }
+	      }else {
+	    	  System.out.println("ㅇㅇㅇㅇㅇㅇㅇ");
+	      }
+	      //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	      
+		
 	}
 	
 }

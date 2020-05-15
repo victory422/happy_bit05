@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<!-- Navigation -->
-	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+	<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top" style="
+    padding-left: 15px;
+    padding-right: 15px;
+">
 		<div class="container">
 				<a class="navbar-brand" href="/mb/mb_003_1">BnR</a>
 				<button class="navbar-toggler navbar-toggler-right" type="button"
@@ -22,7 +25,8 @@
 								class="nav-link" href="/mb/lc_002_1?lc_type=자전거">자전거</a>
 						</div></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/myCourse">기록재기</a></li>
-						<li class="nav-item"><a class="nav-link" href="/mb/mb_007_1">나의기록보기</a></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/mb_007_1">기록 업로드하기</a></li>
+						<li class="nav-item"><a class="nav-link" href="/mb/pr_list">기록보기</a></li>
 						<li class="nav-item"><a class="nav-link" href="/mb/logout" onclick="logout()">로그아웃</a></li>
 					</ul>
 			</div>

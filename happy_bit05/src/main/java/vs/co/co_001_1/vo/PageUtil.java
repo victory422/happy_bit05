@@ -32,7 +32,7 @@ public class PageUtil {
 			this.end = tempEnd;
 
 		} else {
-			this.end = realEnd + 1;
+			this.end = realEnd;
 		}
 
 	}

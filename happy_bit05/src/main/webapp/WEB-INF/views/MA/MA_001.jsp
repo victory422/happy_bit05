@@ -41,27 +41,29 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../../resources/mainBoot/css/styles.css" rel="stylesheet" />
 <!-- -------------------------------------------------------------------------------------------------------------------- -->
-
-<section class="page-section">
 <div class="container text-center">
+	<section class="page-section">
+	<div class="jumbotron">
 	<h2 class="text-center mt-0">지금 당장 달려볼까요!</h2>
 	<hr class="divider my-4">
 	<p class="text-black-50 mb-4">사용자의 위치와 가장 가까운 코스들을 불러옵니다.</p>
+	</div>
 	<br>
 	<div class="row justify-content-center ">
 		<div class="col-8">
 		   <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div> 
 		</div>
 		<div class="col-4">
-			 <select id="lc_type" class="selectpicker" onchange="mainView()">
+			 <select id="lc_type" class="custom-select" onchange="mainView()">
 				  <option value="육상" selected="selected">육상</option>
 				  <option value="자전거">자전거</option>
 				</select>
 			<div id="muteCourse" class="overflow-auto" style="height:600px; background-color: white;"></div>
 		</div>
 	</div>
+	</section>
 </div>
-</section>
+
 
 <section id="portfolio">
             <div class="container-fluid p-0">
@@ -217,16 +219,16 @@ function mainView(){
 		    					//마커 눌렀을때 나올 내용.
 		    					content[i] = '';
 		    					content[i] += '<form id="mainGet'+i+'" action="../../lc/003/lc_get" method="post">';
-			        			content[i] += '<div class="col-md-12">';
+			        			//content[i] += '<div class="col-md-12">';
 			    				content[i] += '<div class="card mb-3 shadow-sm">';
 			    				content[i] += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
 			    				content[i] += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100"/>';
 			    				content[i] += '</svg>';
-			    				content[i] += '<div class="card-body">';
+			    				content[i] += '<div class="card-body" height="20">';
 			    				content[i] += '<p class="card-text">' + data[i].lc_title + '</p>';
 			    				content[i] += '<p class="card-text">조회수 : ' + data[i].lc_see + '<br>추천수 : ' + data[i].lc_good + '</p>';
 			    				content[i] += '<input name="lc_index" type="hidden" value="'+ data[i].lc_index +'"/>';
-			    				content[i] += '</div></div></div>';
+			    				content[i] += '</div></div>';
 			    				content[i] += '</form>';
 		    					
 			    				//마커 생성.
@@ -300,34 +302,7 @@ function mainView(){
 		          		}
 		          	});
 		            
-		            
-		            $.ajax({
-		          		type: "POST",
-		          		cache: false,
-		          		async: "true",
-		          		url: "../ma/001/main_ad",
-		          		success : function(data){
-		          			
-		          			var middle_ol = document.getElementById('middle_ol');
-		          			var middle_div = document.getElementById('middle_div');
-		          			
-		          			var content_ol = '<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>';
-		          			var content_div = '<div class="carousel-item active max-small"><img src="data:image/jsp;base64,'+ ${data[0].request_image} +'" style="max-width:100%; max-height:auto"></div>';
-		          			
-		          			for(var i = 1; i < data.length; i++){
-		          				content_ol += '<li data-target="#carouselExampleIndicators" data-slide-to="'+i+'"></li>';
-		          				
-		          				content_div += '<div class="carousel-item max-small">';
-		        				content_div += '		<img src="data:image/jsp;base64,'+ ${data[i].request_image} + '" style="max-width:100%; max-height:auto">';
-		        				content_div += '			<div class="carousel-caption d-none d-md-block">';
-		        				content_div += '			</div>';
-		        				content_div += '		</div>';
-		          			}
-		          			
-		          			middle_ol.innerHTML = content_ol;
-		          			middle_div.innerHTML = content_div;
-		          		}
-		        	});
+		      
 	            }   
 	        }); 
 	      });

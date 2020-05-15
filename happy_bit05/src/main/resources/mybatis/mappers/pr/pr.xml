@@ -16,6 +16,10 @@
 	<result property="pr_type" column="pr_type"/>
 	<result property="pr_public" column="pr_public"/>
 	<result property="pr_thumbnail1" column="PR_THUMBNAIL"></result>
+	<result property="lc_index" column="lc_index"/>
+	<result property="lc_area1" column="lc_area1"/>
+	<result property="lc_area2" column="lc_area2"/>
+	<result property="lc_area3" column="lc_area3"/>
 </resultMap>
 
 <sql id="Page_DTO">
@@ -66,21 +70,23 @@
 <select id="pr_list" resultMap="requestVO">
 
 	<![CDATA[ 
-		select pr_index, pr_title, pr_text, pr_see, pr_good, 
-				pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public, PR_THUMBNAIL
-	 from(
+	select pr_index, pr_title, pr_text, pr_see, pr_good,m_nickname, 
+          	pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public, PR_THUMBNAIL,lc_index,lc_area1,lc_area2,lc_area3
+          from(
 		select rownum rn, a.*
 		from
 		        (
-			        select pr_index, pr_title, pr_text, pr_see, pr_good, 
-						pr_resistDate, pr_recordDate, pr_record, pr_type, pr_public, PR_THUMBNAIL
-			        from myrecord
+			       select r.pr_index, r.pr_title, r.pr_text, r.pr_see, r.pr_good,b.m_nickname, 
+          			 r.pr_resistDate, r.pr_recordDate, r.pr_record, r.pr_type, r.pr_public, r.PR_THUMBNAIL,c.lc_index,c.lc_area1,c.lc_area2,c.lc_area3
+     				 from myrecord r, mycourse m, course c, member b
 			        where 
 			        ]]>
 			        	 <include refid="Page_DTO"/>
 			        <![CDATA[ 
-			        pr_index > '0'
-			        and pr_public = '1'
+			        r.mp_index = m.mp_index
+			         and r.m_index = b.m_index
+    				  and m.lc_index = c.lc_index
+      					and r.pr_public = '1'
 			        order by to_number(substr(pr_index, 4)) desc
 		        )a
 		where rownum <= (#{page} * #{amount})
@@ -95,6 +101,7 @@
 	<select id="get_total" resultType="int">
 		select count(pr_index)
 		 from myrecord 
+		 where pr_public = '1'
 	
 
 	</select>
@@ -163,7 +170,21 @@
   	
   	</select>
 
-
+	<!-- 개인기록 수정 -->
+	<update id="update" parameterType="vs.pr.pr_002_1.vo.Pr_002_1VO">
+		<![CDATA[
+			update myrecord set
+				pr_title=#{pr_title},pr_text=#{pr_text},pr_resistdate=sysdate,pr_public='1'
+			WHERE pr_index = #{pr_index}
+		]]> 
+	</update>
+	
+	<!-- 개인기록  삭제 -->
+	<delete id="pr_delete" parameterType="String">
+	
+		delete from myrecord where pr_index = #{pr_index}
+	
+	</delete>
 
 
 

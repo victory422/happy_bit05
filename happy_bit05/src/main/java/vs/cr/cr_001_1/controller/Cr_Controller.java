@@ -135,7 +135,7 @@ public class Cr_Controller {
 	
 	//대회 후기 수정폼
 	@GetMapping("/cr_004_1")
-	public void cr_update(CrVO crvo,Model model,@RequestParam("co_r_index") String co_r_index) throws Exception	{
+	public void cr_update(Model model,@RequestParam("co_r_index") String co_r_index) throws Exception	{
 		
 		//대회 리스트 출력
 		model.addAttribute("list",cr_service.co_list());			

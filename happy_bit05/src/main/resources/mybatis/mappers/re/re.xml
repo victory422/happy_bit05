@@ -6,7 +6,7 @@
 <insert id="re_insert" parameterType="vs.re.re_001_1.vo.ReVO">
 
 insert into declaration(de_index, m_index, m_index2, de_target, de_type, board_index, de_date, de_dispose)
-            values('de_'||de_index.nextval, #{m_index}, #{m_index2}, #{de_target}, #{de_type}, #{board_index}, sysdate, '처리대기')
+            values('de_'||de_index.nextval, #{m_index}, #{m_index2}, #{de_target}, #{de_type}, #{board_index}, (select to_char(sysdate,'mm.dd  hh24:mi:ss') from dual), '처리대기')
     
 </insert> 
 

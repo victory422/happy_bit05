@@ -30,7 +30,7 @@ select *
 			#{co_title},
 			#{co_price},
 			#{co_area},
-			sysdate,
+			(sysdate,'yy/mm/dd hh24:mi:ss')
 			'참가',		
 			#{co_m_event},
 			#{co_m_souvenir},
@@ -79,18 +79,36 @@ select m.m_index,m.m_id, m.m_name, m.m_tel, m.m_gender, m.m_nickname, p.co_title
 
 <!-- 대회 참가자 리스트 관리자 -->
 <select id="ac_memberlist" resultType="vs.co.co_001_1.vo.CoVO">
-
-	select m.m_index,m.m_id, m.m_name, m.m_gender, m.m_tel, m.m_nickname, p.co_state, p.co_title, c.co_b_day, p.co_b_index
-	 from 
-	participant p inner join member m
-	on p.m_index = m.m_index
-	inner join competition c
-	on p.co_b_index = c.co_b_index
-	
+<![CDATA[ 
+	select m_index,m_id, m_name, m_gender, m_tel,
+		 m_nickname, co_state, co_title, co_b_day, co_b_index
+	from(
+	select rownum rn, a.*
+		from(select
+			m.m_index,m.m_id, m.m_name, m.m_gender, m.m_tel,
+		 	m.m_nickname, p.co_state, p.co_title, c.co_b_day, p.co_b_index		 	 
+		 from participant p inner join member m
+		on p.m_index = m.m_index
+		inner join competition c
+		on p.co_b_index = c.co_b_index
+		)a
+		where rownum <= (#{page} * #{amount})
+	)
+	where rn > ((#{page}-1) * #{amount})	
+	]]>
 	
 
 </select>
 
+<select id="get_total" resultType="int">
+		select count(m_index) 
+		from(select m.m_index,m.m_id, m.m_name, m.m_gender, m.m_tel,
+		 	m.m_nickname, p.co_state, p.co_title, c.co_b_day, p.co_b_index		 	 
+			 from participant p inner join member m
+			on p.m_index = m.m_index
+			inner join competition c
+			on p.co_b_index = c.co_b_index)
+	
 
-
+</select>
 </mapper>
