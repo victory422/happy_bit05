@@ -112,7 +112,19 @@
 			<div data-text-content="true" style="font-weight: bold; font-size: 24px; color: rgb(41, 128, 185); margin-top: 30px;" class="row">Best</div>
 				<div class="card mb-3 shadow-sm">
 				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc1.lc_request}" height="200"/>
+				<c:choose>
+					<c:when test="${lc1.lc_request ne ''}">
+						<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc1.lc_request}" height="200"/>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${lc1.lc_type eq '육상' }">
+							<img alt="" id="thumbnail" src="/resources/img/lc/basic_run.png" height="200"/>
+						</c:if>
+						<c:if test="${lc1.lc_type eq '자전거' }">
+							<img alt="" id="thumbnail" src="/resources/img/lc/basic_cycle.png" height="200"/>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 				</svg>
 				<div class="card-body">
 					<a class="move" href="<c:out value='${lc1.lc_index}'/>">
@@ -137,7 +149,19 @@
 			<div class="col-md-3">
 				<div class="card mb-3 shadow-sm">
 				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-				<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc.lc_request}" height="200"/>
+				<c:choose>
+					<c:when test="${lc.lc_request ne ''}">
+						<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc.lc_request}" height="200"/>
+					</c:when>
+					<c:otherwise>
+						<c:if test="${lc.lc_type eq '육상' }">
+							<img alt="" id="thumbnail" src="/resources/img/lc/basic_run.png" height="200"/>
+						</c:if>
+						<c:if test="${lc.lc_type eq '자전거' }">
+							<img alt="" id="thumbnail" src="/resources/img/lc/basic_cycle.png" height="200"/>
+						</c:if>
+					</c:otherwise>
+				</c:choose>
 				</svg>
 				<div class="card-body">
 					<a class="move" href="<c:out value='${lc.lc_index}'/>">
