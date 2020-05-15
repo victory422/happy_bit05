@@ -89,6 +89,7 @@
 					<table class="table table-striped table-bordered table-hover" style="margin-top: 30px;">
 						<thead>
 							<tr>
+								<th>게시판 이름</th>
 								<th>글 번호</th>
 								<th>제목</th>
 								<th>등록날짜</th>
@@ -100,12 +101,13 @@
 						</thead>
 						<c:forEach items="${al_list}" var="data">
 							<tr>
-								<td>${data.boardidx }</td>
-								<td>${data.title}</td>
-								<td>${data.day}</td>
+								<td><a style="color: #4c3527;text-decoration: underline;" onclick="index_detail('${data.tablename}')">${data.tablename}</a></td>
+								<td><a style="color: #4c352;text-decoration: underline;" onclick="index_detail('${data.t_index }')">${data.t_index }</a></td>
+								<td><a style="color: #4c3527;text-decoration: underline;" onclick="index_detail('${data.t_index }')">${data.title}</a></td>
+								<td>${data.registdate}</td>
 								<td>${data.see}</td>
 								<td>${data.good}</td>
-								<td>${data.memindex}</td>
+								<td>${data.m_index}</td>
 							</tr>
 					</c:forEach> 
 						</table>
@@ -176,6 +178,62 @@ $(document).ready(function(){
 	}
 	
 });
+
+function index_detail(index){
+	
+	console.log(index);
+	var sub_index = index.substr(0,2);
+	var a = '';
+	var b = '';
+	 console.log(sub_index);
+	 
+	 if(sub_index == 'co'){
+		 a='co_004_1';
+		 b="co_b_index";
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 }
+	 if(sub_index == 'cr'){
+		 a='cr_003_1';
+		 b='co_r_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 }
+	 if(sub_index == 'li'){
+		 a='li_006_1';
+		 b='li_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index+"&li_b_type=";
+	 }
+	 if(sub_index == 'lc'){
+		 a='003/lc_get';
+		 b='lc_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 }
+	 if(sub_index == 'pr'){
+		 a='pr_003_1';
+		 b='pr_index';
+		 location.href="/"+sub_index+"/"+a+"?"+b+"="+index;
+	 }
+	 if(index == 'myrecord'){
+		 location.href="/pr/pr_002_1";
+	 }
+	 if(index == 'item'){
+		 location.href="/li/li_001_1"
+	 }
+	 if(index == 'competition_review'){
+		 location.href="/cr/cr_001_1"
+	 }
+	 if(index == 'course'){
+		 location.href="/lc/002/list"
+	 }
+	 if(index == 'competition'){
+		 location.href="/co/co_003_1"
+	 }
+	 
+	 
+	
+}
+
+
+
 </script>
 
 </body>

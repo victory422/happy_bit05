@@ -37,10 +37,11 @@ public class AL_Controller {
 	@GetMapping(value="/al_001_1")
 	public void al_List(Model model,Page_DTO dto) throws Exception {
 		
+		dto.setAmount(10);
 		List al_list = al_service.al_list(dto);
-		
+		System.out.println(dto.getAmount());
 		 model.addAttribute("al_list", al_list);
-		 model.addAttribute("type",dto.getTypeArr());
+		 model.addAttribute("pageUtil",new PageUtil(dto,al_service.get_total1(dto)));
 		 
 	}
 	//신고 게시글 조회
