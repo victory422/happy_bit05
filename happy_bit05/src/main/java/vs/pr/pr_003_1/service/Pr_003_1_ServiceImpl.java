@@ -129,6 +129,20 @@ public class Pr_003_1_ServiceImpl implements Pr_003_1_Service {
 			System.out.println("로우 인서트 ");
 			
 		}
+		@Override
+		public int update(Pr_002_1VO vo) {
+			
+			prmapper.update(vo);
+			
+			return 0;
+		}
+		@Override
+		public int pr_delete(String pr_index) {
+
+			prmapper.pr_delete(pr_index);
+			
+			return 0;
+		}
 	
 	
 }

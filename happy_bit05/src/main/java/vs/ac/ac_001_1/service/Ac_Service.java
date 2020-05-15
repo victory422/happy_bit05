@@ -23,8 +23,10 @@ public interface Ac_Service {
 	public List<AcVO> ac_detail(String co_b_index) throws Exception;
 	
 	//대회 참가자 리스트
-	public List<CoVO> ac_memberlist(CoVO covo) throws Exception;
+	public List<CoVO> ac_memberlist(Page_DTO dto) throws Exception;
 	
 	public int m_statechange(Map<String, Object> hmap);
+	
+	public int get_total(Page_DTO dto);
 	
 }

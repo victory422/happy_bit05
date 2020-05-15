@@ -17,7 +17,7 @@
 			
 			<h3>참가자 리스트 <span class="text-muted"style="font-size:1.2rem">(${data.get(0).co_b_title })</span></h3>
 			
-			<table class="table table-striped col-12" style="margin-top:15px;">
+			<table class="table table-striped table-bordered table-hover" style="margin-top:15px;">
 			<thead>
 			<tr>
 				<td>회원id</td>

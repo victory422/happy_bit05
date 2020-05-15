@@ -110,12 +110,14 @@ public class Ac_Controller {
 	}
 	//대회 참가자 리스트
 	@GetMapping("/ac_004_1")
-	public void memberlist(Model model,CoVO covo) throws Exception{
+	public void memberlist(Model model,Page_DTO dto) throws Exception{
 		
 		System.out.println("대회 참가자 리스트점 뽑아주라");
 		
-		model.addAttribute("memberlist", ac_service.ac_memberlist(covo));
-		
+		model.addAttribute("memberlist", ac_service.ac_memberlist(dto));
+		model.addAttribute("pageUtil",new PageUtil(dto,ac_service.get_total(dto)));
+		model.addAttribute("type",dto.getTypeArr());
+		model.addAttribute("page", dto.getPage());
 	}
 	
 	

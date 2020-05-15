@@ -18,4 +18,8 @@ public interface PrMapper {
 	
 	//개인기록 상세보기
 	public List<Pr_002_1VO> pr_detail(String pr_index);
+	//개인기록 수정
+	public int update(Pr_002_1VO vo);
+	//개인기록 삭제
+	public int pr_delete(String pr_index);
 }

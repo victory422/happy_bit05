@@ -306,10 +306,8 @@ function commentInsert(insertData) {
 			if(data == 0){
 				alert("로그인이 필요합니다.");
 			}
-			if (data == 1) {
-				
+			if (data == 1) {			
 				commentList(); //댓글 작성 후 댓글 목록 reload
-				alert("댓글 작성");
 				 $('[name=com_text]').val('');
 			}
 		}		
@@ -357,9 +355,6 @@ function commentDelete(com_index){
 }
 //대댓글 폼생성
 function dedet(com_index){
-	alert(board_index);
-	
-
 		var textareaTag = "<hr><div style='margin-left:50px;'><textarea rows='2' cols='105' name='test1_"+com_index+"'></textarea>";
 			//textareaTag += "<input type='hidden' id='co_b_index' name='co_b_index'>";
 			textareaTag += "<button type='button'  class='btn btn-outline-secondary' style='margin-bottom:25px' onclick='dedetinsert("+com_index+")'>완료</button></div>"
@@ -371,16 +366,13 @@ function dedet(com_index){
 }
 //대댓글 작성
 function dedetinsert(com_index){
-	
-		alert(board_index); 
 	var test1 = $('[name=test1_'+com_index+']').val();
 	$.ajax({
 		url : '/comment/dedetinsert',
 		type : 'post',
 		data : {"com_text" : test1, "com_index" : com_index, "board_index" : board_index},
 		success : function(data){
-			if(data == 1)				
-				alert("대댓글 작성");
+			if(data == 1)			
 			 	commentList();
 		}
 	})

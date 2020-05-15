@@ -105,15 +105,16 @@
 								<td>${data.m_index}</td>
 								<td>
 									<c:if test="${data.de_dispose eq '처리대기' }">
-										<a style="color: blue" onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
+										<a style="color: #4c3527;text-decoration: underline;"  onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
 									</c:if>
 									<c:if test="${data.de_dispose eq '경고' }">
-										<a style="color: blue" onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
+										<a style="color: #4c3527;text-decoration: underline;" onclick="index_detail('${data.board_index }')">${data.de_target}</a>									
 									</c:if>
 									<c:if test="${data.de_dispose eq '삭제처리' }">
-										${data.de_target}									
+										<span style="color: red;">${data.de_target}</span>									
 									</c:if>
 								</td>
+								
 								<td>${data.de_type}</td>
 								<td>${data.m_index2}</td>
 								<td>${data.de_date }</td>

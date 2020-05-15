@@ -15,7 +15,7 @@
 
 <div class="container" style="margin-top: 20px; margin-botton: 50px;">
 	<div class="content" style="width: 1000px">
-		<c:forEach items="${data}" var="data">		
+	<c:forEach items="${data}" var="data">		
 			<table style="width:100%;">
 				<tr>
 					<td style="width:70%"><span style="font-size:1.5rem;">${data.pr_title }&emsp; </span> 종목: ${data.pr_type }</td>
@@ -32,6 +32,46 @@
 			</table>
 			<br>
 			<hr>
+	<div class="row justify-content-center col-12">   
+            <div id="map" class="col-md-8" style="width:800px;height:500px;"></div>       
+      <div class="col-md-4" id="mapText">
+         <div class="p-4">
+         <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+              거리 : <span id="distance" name="distance">${lc_get.lc_distance } km</span>
+            </font></font></h3>
+            </div>
+            <br>
+         
+         <div class="p-4">
+         <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+              도보 시간 : <span id="run" name="run">${lc_get.lc_run }</span>
+         </font></font></h3>
+         </div>
+         <br>
+         
+         <div class="p-4">
+         <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+             자전거 시간 : <span id="cycle" name="cycle">${lc_get.lc_cycle }</span>
+         </font></font></h3>
+         </div>
+         <br>
+         
+         <div class="p-4">
+         <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+              출발지 : <span id="address" name="address">${lc_get.lc_address }</span>
+         </font></font></h3>
+         </div>
+         <div class="p-4">
+         <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
+              개인기록 : <span id="address" name="address">${lc_get.pr_record }</span>
+         </font></font></h3>
+         </div>       
+         <br>
+       </div>       
+         </div>
+	
+	
+		
 
 			<div style="margin-bottom: 50px">
 				<div class="text_container text_padding">${data.pr_text }</div>
@@ -44,6 +84,7 @@
 							<td style="width:60%">
 					<c:choose>
 						<c:when test="${data.m_index ne null}">
+						<input type="hidden" id="m_index" value="${member.m_index }">
 							<a href='javascript: like_func();'><img
 								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${data.pr_good }</span>
 						</c:when>
@@ -56,7 +97,18 @@
 					<td style="width:40%; text-align: right;">
 					<div>					
 					<button class="btn btn-info" onclick="location.href='/pr/pr_002_1'">목록으로돌아가기</button>
+					<c:if test="${member.m_index eq data.m_index }">
 					<button class="btn btn-info" onclick="location.href='/pr/pr_004_1?pr_index=${data.pr_index}'">수정하기</button>
+					</c:if>
+					<c:if test="${member.m_index eq 1 }">
+					<button class="btn btn-info" onclick="location.href='/pr/pr_004_1?pr_index=${data.pr_index}'">수정하기</button>
+					</c:if>
+					<c:if test="${member.m_index eq data.m_index }">
+					<input class="btn btn-info" type="button" value="삭제" onclick="pr_del()">
+					</c:if>
+					<c:if test="${member.m_index eq 1}">
+					<input class="btn btn-info" type="button" value="삭제" onclick="pr_del()">
+					</c:if>	
 					</div>
 					</td>
 					</tr>
@@ -91,6 +143,9 @@
 							</div>
 						</form>
 					</div>
+					<form id="pr_deleteForm" action="/pr/pr_delete" method="get">
+			        <input type="hidden" name="pr_index" value="${data.pr_index}"/>			 		
+		   			 </form>
 				</div>
 			</div>
 			<!-- 댓글 마무리 -->
@@ -99,10 +154,150 @@
 
 </div>
 
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=12678188621fb459c68a7473a7071d75&libraries=services"></script>
+   <!-- services와 clusterer, drawing 라이브러리 불러오기 -->
+   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=82ad3ba87fbee08d3a9f5cdbcb70051d&libraries=services,clusterer,drawing"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-
+var m_index = $('#m_index').val();
 var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+var options = { //지도를 생성할 때 필요한 기본 옵션
+   center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+   level: 3 //지도의 레벨(확대, 축소 정도)
+};
+
+var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+//HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+if (navigator.geolocation) {
+    
+    // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+    navigator.geolocation.getCurrentPosition(function(position) {
+        
+        var lat = xy_arr[0], // 위도
+            lon = xy_arr[1]; // 경도
+        
+        var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용입니다
+        
+        // 지도 중심좌표를 접속위치로 변경합니다
+       map.setCenter(locPosition); 
+            
+      });
+    
+} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+    
+    var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),    
+        message = 'geolocation을 사용할수 없어요..'
+        
+    displayMarker(locPosition, message);
+}
+
+
+//점찍는 함수
+function displayCircleDot(position) {
+
+    // 클릭 지점을 표시할 빨간 동그라미 커스텀오버레이를 생성합니다
+    var circleOverlay = new kakao.maps.CustomOverlay({
+        content: '<span class="dot"></span>',
+        position: position,
+        zIndex: 1
+    });
+
+    // 지도에 표시합니다
+    circleOverlay.setMap(map);
+}
+
+
+// 선긋는 부분.
+var xy = "${lc_get.lc_xy_arr}";
+var xy_arr = xy.split(',');
+
+var linePath = [];
+
+for(var i = 0; i < xy_arr.length; i++){
+   if(i % 2 != 0){
+      xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length-1);
+   }
+   else{
+      xy_arr[i] = xy_arr[i].substring(1, xy_arr[i].length);
+   }
+   
+   console.log(xy_arr[i]);
+}
+
+for(var i = 0; i < xy_arr.length; i+=2){
+   linePath.push(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+    displayCircleDot(new kakao.maps.LatLng(xy_arr[i], xy_arr[i+1]));
+}
+
+for(var i = 0; i < linePath.length; i++){
+   console.log(linePath[i]);
+}
+
+// 지도에 표시할 선을 생성합니다
+var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 7, // 선의 두께 입니다
+    strokeColor: '#db4040', // 선의 색깔입니다
+    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid' // 선의 스타일입니다
+});
+
+// 지도에 선을 표시합니다 
+polyline.setMap(map);  
+   
+
+//마커 표시하기.
+var positions = [
+    {
+        title: '출발', 
+        latlng: new kakao.maps.LatLng(xy_arr[0], xy_arr[1])
+    },
+    {
+        title: '도착', 
+        latlng: new kakao.maps.LatLng(xy_arr[xy_arr.length-2], xy_arr[xy_arr.length-1])
+    }
+];
+
+// 마커 이미지의 이미지 주소입니다
+var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(24, 35); 
+    
+    if(i == 1){
+       // 마커 이미지를 생성합니다    
+       var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+       
+       // 마커를 생성합니다
+       var marker = new kakao.maps.Marker({
+           map: map, // 마커를 표시할 지도
+           position: positions[i].latlng, // 마커를 표시할 위치
+           title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+           image : markerImage // 마커 이미지 
+       });
+    }else{
+       var marker = new kakao.maps.Marker({
+          position: positions[i].latlng
+       });
+       
+       marker.setMap(map);
+    }
+}
+
+//개인기록 게시글 삭제
+function pr_del() {
+		var chk = confirm("정말 삭제하시겠습니까?");
+		if (chk) {
+			var form = document.getElementById("pr_deleteForm");
+	        form.submit();
+	        alert("삭제 완료");
+		}
+	}	
 
 
 var popupWidth = 600;
@@ -198,40 +393,33 @@ $('#commentInsertBtn').click(function() { //댓글 등록 버튼 클릭시
 });
 //댓글 목록 
 function commentList() {
-	
+	console.log(board_index);
 	$.ajax({
 		url : '/comment/list',
 		type : 'get',
 		data : {data : board_index},
 		success : function(data) {
 			console.log('test',JSON.stringify(data))
-			//console.log(value.com_index1);
 			var a = '';
 			$.each(data,function(key, value) {
-				a += '<div class="commentArea" style="margin-bottom: 15px;">';
-				a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
-				a +=	'&emsp; <a onclick="dedetlist('+value.com_index+')" id="a'+value.com_index+'">댓글보기</a>';
-				a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
-				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
-                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
-                a +=	'</div>';             
-				a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
-				/*
-					if(value.com_dedetflag == 1){					
-						a += '<div class="commentArea1'+value.com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px; margin-left: 50px;">';
-						a += 	'<div class="commentInfo'+value.com_index1+'">'+ '상위 댓글 번호 : '+ value.com_index1 ;
-						a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
-						a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
-		                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	
-		                a +=	'</div>'; 
-		                a += 	'<div class="commentContent1'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
-		                a +='</div>'
+					a += '<div class="commentArea" style="margin-bottom: 15px;">';
+					a += 	'<div class="commentInfo'+value.com_index+'">'+ '작성자 : '+ value.m_nickname;
+					a += '&emsp; <span style="font-size:0.7rem">'+value.com_date+'</span>'
+					a +=	'&emsp; <a class="text-muted" onclick="dedetlist('+value.com_index+')">';
+					a +=	'<img src="../resources/img/12.png" id="a'+value.com_index+'">';
+					a += '<span id="ddd">답글 '+value.com_count+'개</span>'
+					a += 	'</a>';
+					if(m_index != null){
+					a +=		'<a onclick="dedet('+value.com_index+');"  value="0" class="float-right">댓글</a>';
 					}
-					a +='</div>';
-				*/
+					if(m_index == value.m_index){
+					a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
+	                a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';
+					}
+	                a +=	'</div>';             
+					a += 	'<div class="commentContent'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> <hr></div>';					
 			});
 			$(".commentList").html(a);
-			
 		}
 	});
 }
@@ -240,7 +428,6 @@ function commentList() {
 var check = true;
 var checkIdx = 0;
 function dedetlist(com_index){
-	alert(com_index);
 	var a ='';
 	$.ajax({
 		url : '/comment/dedetlist',
@@ -249,24 +436,48 @@ function dedetlist(com_index){
 		success : function(data){
 			$.each(data,function(key, value){
 				a += '<div class="commentArea1'+com_index+'" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '작성자 : '+ value.m_nickname ;
+				a += 	'<div class="commentInfo'+value.com_index1+'">'+ '작성자 : '+ value.m_nickname;
+				a += '&emsp; <span style="font-size:0.7rem">'+value.com_date+'</span>'
 				a += 		"<img src='../resources/img/reply.png' class='float-left'>";
+				if(m_index == value.m_index){
 				a += 		'<a onclick="commentUpdate('+value.com_index+',\''+value.com_text+'\');" class="float-right" style="margin-right : 10px"> 수정 </a>';
                 a += 		'<a onclick="commentDelete('+value.com_index+');" class="float-right" style="margin-right: 10px;"> 삭제 </a>';        	
+				}
                 a +=	'</div>'; 
                 a += 	'<div class="commentContent1'+value.com_index+'"> <p> 내용 : '+ value.com_text+ '</p> </div>';
                 a +='</div>'
 			});
 			
 			
-			if($("#a"+com_index).text() == '댓글보기'){
+				
+			var img = $('#a'+com_index).attr('src');
+			if(img == "../resources/img/12.png"){
 				$(".commentContent" + com_index).append(a);
-				$("#a"+com_index).text("댓글지우기");
+				$("#a"+com_index).attr('src', "../resources/img/321.jpg");
+			}else{
+				$(".commentArea1" + com_index).remove();
+				$("#a"+com_index).attr('src', "../resources/img/12.png");
+			}
+			/*
+			if($("#a"+com_index).text() == '댓글보기'){
+			$(".commentContent" + com_index).append(a);
+			$("#a"+com_index).text("댓글지우기");
 			}else{
 				$(".commentArea1" + com_index).remove();
 				$("#a"+com_index).text("댓글보기");
 			}
 			
+			
+			
+			
+			if($("#a"+com_index).text() == "<img src='../resources/img/12.png'>"){
+				$(".commentContent" + com_index).append(a);
+				$("#a"+com_index).text("<img src='../resources/img/1.png'>");
+			}else{
+				$(".commentArea1" + com_index).remove();
+				$("#a"+com_index).text("<img src='../resources/img/12.png'>");
+			}
+			*/
 
 		}
 	})	
@@ -281,9 +492,11 @@ function commentInsert(insertData) {
 		type : 'post',
 		data : insertData,
 		success : function(data) {
-			if (data == 1) {
+			if(data == 0){
+				alert("로그인이 필요합니다.");
+			}
+			if (data == 1) {			
 				commentList(); //댓글 작성 후 댓글 목록 reload
-				alert("댓글 작성");
 				 $('[name=com_text]').val('');
 			}
 		}		
@@ -331,9 +544,6 @@ function commentDelete(com_index){
 }
 //대댓글 폼생성
 function dedet(com_index){
-	alert(board_index);
-	
-
 		var textareaTag = "<hr><div style='margin-left:50px;'><textarea rows='2' cols='105' name='test1_"+com_index+"'></textarea>";
 			//textareaTag += "<input type='hidden' id='co_b_index' name='co_b_index'>";
 			textareaTag += "<button type='button'  class='btn btn-outline-secondary' style='margin-bottom:25px' onclick='dedetinsert("+com_index+")'>완료</button></div>"
@@ -345,16 +555,13 @@ function dedet(com_index){
 }
 //대댓글 작성
 function dedetinsert(com_index){
-	
-		alert(board_index); 
 	var test1 = $('[name=test1_'+com_index+']').val();
 	$.ajax({
 		url : '/comment/dedetinsert',
 		type : 'post',
 		data : {"com_text" : test1, "com_index" : com_index, "board_index" : board_index},
 		success : function(data){
-			if(data == 1)				
-				alert("대댓글 작성");
+			if(data == 1)			
 			 	commentList();
 		}
 	})

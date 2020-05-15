@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import vs.al.al_001_1.vo.AlVO;
 import vs.cm.cm_001_1.mapper.AlMapper;
 import vs.co.co_001_1.dto.Page_DTO;
+import vs.co.co_001_1.vo.PageUtil;
 import vs.re.re_001_1.vo.ReVO;
 
 @Service
@@ -54,9 +55,9 @@ public class AL_ServiceImpl implements AL_Service{
 	public int get_total1(Page_DTO dto) {
 
 		try {
-
-			return almapper.get_total1(dto);
-
+			int total = almapper.get_total1(dto);
+			System.out.println(total);
+			return total;
 		} catch (Exception e) {
 			System.out.println("get_total" + e);
 		}

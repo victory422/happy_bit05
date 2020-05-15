@@ -119,7 +119,7 @@
 								 co_b_see,co_b_good
 								)
 		values ('co_'||co_b_index.nextval, #{co_b_title}, #{co_b_text},
-				 #{co_b_day}, (select to_char(sysdate,'yyyy.mm.dd  hh24:mi') from dual), #{co_b_area},
+				 #{co_b_day}, (select to_char(sysdate,'yy/mm/dd  hh24:mi:ss') from dual), #{co_b_area},
 				 #{co_b_start}, #{co_b_end}, #{co_b_type}, #{co_b_price},
 				  #{co_souvenir}, #{co_rating},'접수가능', '0',#{m_index},
 				  '0','0'
