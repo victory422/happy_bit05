@@ -43,7 +43,7 @@
 				<div><h3>${data.pr_title }</h3> <h5>코스명 : (${data.lc_title })</h5></div>
 
 				</div>
-				<div class="col-8">
+				<div class="col-8" >
 					<h5>작성자 : ${data.m_nickname }</h5>
 				</div>
 				<div class="col-4">
