@@ -44,6 +44,8 @@ public class Cr_Controller {
 		if(member == null) {
 		dto.setAmount(10);
 		
+		System.out.println("말도 안된다" + new PageUtil(dto,cr_service.get_total(dto)));
+		
 		model.addAttribute("data", cr_service.Cr_List(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));
 		model.addAttribute("type",dto.getTypeArr());
@@ -52,6 +54,7 @@ public class Cr_Controller {
 		
 		dto.setAmount(10);
 		System.out.println("로그인정보" + member);
+		System.out.println("말도 안된다" + new PageUtil(dto,cr_service.get_total(dto)));
 		model.addAttribute("member",member);
 		model.addAttribute("data", cr_service.Cr_List(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,cr_service.get_total(dto)));

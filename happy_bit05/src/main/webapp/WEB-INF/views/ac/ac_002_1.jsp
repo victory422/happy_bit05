@@ -104,7 +104,7 @@
 						<c:forEach items="${data}" var="data">
 							<tr>
 								<td>${data.co_b_title}</td>
-								<td>${data.co_b_day}</td>
+								<td>${data.co_b_day} ${data.co_b_time }</td>
 								<td>${data.co_b_price}</td>
 								<td>${data.co_b_count}</td>
 								<td>${data.co_b_see }</td>
