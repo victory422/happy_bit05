@@ -126,12 +126,12 @@
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef; text-align: center;">
-					<td>No</td>
-					<td>게시판</td>
-					<td>제목</td>
-					<td>추천</td>
-					<td>조회</td>
-					<td>게시일</td>
+					<td style="width: 5%">No</td>
+					<td style="width: 15%">게시판</td>
+					<td style="width: 25%">제목</td>
+					<td style="width: 8%">추천</td>
+					<td style="width: 8%">조회</td>
+					<td style="width: 10%">게시일</td>
 				</tr>
 				<c:if test="${empty postList }">
 							${"등록된 관심코스가 없습니다."}
@@ -201,36 +201,28 @@
 		console.log("t_index :"+t_index);
 		
 		switch (tableName) {
-			case 'myrecord' :
+			case '기록게시판' :
 				location.href = '/pr/pr_003_1?pr_index='+t_index ;
 				break;
 				
-			case 'item' :
+			case '장비TIP' :
 				location.href = '/li/li_006_1?li_index='+t_index+'&li_b_type=후기게시판';
 				break;
 				
-			case 'course' :
+			case '코스게시판' :
 				location.href = '/lc/003/lc_get?lc_index='+t_index ;
 				break;
 				
-			case 'competition_review' :
+			case '대회리뷰게시판' :
 				location.href = '/cr/cr_003_1?co_r_index='+t_index ;
 				break;
 				
-			case 'trainning' :
+			case '트레이닝TIP' :
 				alert("아직 페이지 세팅 전");
 				break;
 				
 				default : alert("error!");
 		} 
-		
-		
-		
-		
-		
-		
-		
-		
 		
 	}
 	

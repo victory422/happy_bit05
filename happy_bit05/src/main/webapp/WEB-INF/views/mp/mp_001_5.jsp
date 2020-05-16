@@ -89,12 +89,12 @@
 	<div class="container">
 
 		<div style="margin-top: 30px;">
-			<h1>My Course</h1>
+			<h1>My Post's Reply</h1>
 		</div>
 
 		<!-- 체크박스 부분 -->
 
-		<form method="get" action="/mp/myPost/">
+		<form method="get" action="/mp/replys/">
 		
 			<div class="input-group mb-12" style="margin-top: 30px;">
 				<label class="input-group-text col-sm-12"> 
@@ -126,31 +126,31 @@
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef; text-align: center;">
-					<td>No</td>
-					<td>게시판</td>
-					<td>제목</td>
-					<td>추천</td>
-					<td>조회</td>
-					<td>게시일</td>
+					<td style="width: 5%">No</td>
+					<td style="width: 10%">게시판</td>
+					<td style="width: 20%">제목</td>
+					<td style="width: 20%">댓글내용</td>
+					<td style="width: 10%">작성자</td>
+					<td style="width: 10%">게시일</td>
 				</tr>
-				<c:if test="${empty postList }">
-							${"등록된 관심코스가 없습니다."}
+				<c:if test="${empty replyList}">
+							${"내 글의 댓글이 없습니다."}
 							
 				</c:if>
 				<tbody id="">
 
-					<c:forEach var="val" items="${postList }" varStatus="status">
+					<c:forEach var="val" items="${replyList}" varStatus="status">
 
 
 						<tr id="" class="success"  style="text-align: center;"
-							onclick="">
+							onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
 
 							<td>${val.RN}</td>
 							<td>${val.TABLENAME}</td>
 							<td>${val.TITLE}</td>
-							<td>${val.GOOD}</td>
-							<td>${val.SEE}</td>
-							<td>${val.REGISTDATE}</td>
+							<td>${val.COM_TEXT}</td>
+							<td>${val.REPLY_NICK}</td>
+							<td>${val.COM_DATE}</td>
 						</tr>
 
 					</c:forEach>
@@ -165,7 +165,7 @@
 					<ul class="pagination justify-content-end al-center">
 						<c:if test="${pageUtil.prev }">
 							<li class="page-item">
-								<a class="page-link" href="/mp/myPost?page=${pageUtil.start-1}">
+								<a class="page-link" href="/mp/replys?page=${pageUtil.start-1}">
 									Previous
 								</a>
 							</li>
@@ -175,7 +175,7 @@
 							<div class="mb-4" id="accordion" role="tablist"
 								aria-multiselectable="true"></div>
 							<li class="page-item ${pNum==pageUtil.dto.page?'active':''}">
-								<a class="page-link" href="/mp/myPost?page=${pNum}">
+								<a class="page-link" href="/mp/replys?page=${pNum}">
 									${pNum}
 								</a>
 							</li>
@@ -183,7 +183,7 @@
 						</c:forEach>
 						<c:if test="${pageUtil.next }">
 							<li class="page-item">
-								<a class="page-link" href="/mp/myPost?page=${pageUtil.end+1 }">
+								<a class="page-link" href="/mp/replys?page=${pageUtil.end+1 }">
 									Next
 								</a>
 							</li>
@@ -196,6 +196,35 @@
 
 <script>
 
+function goPage(tableName, t_index ) {
+	console.log("tableName :"+tableName);
+	console.log("t_index :"+t_index);
+	
+	switch (tableName) {
+		case '기록게시판' :
+			location.href = '/pr/pr_003_1?pr_index='+t_index ;
+			break;
+			
+		case '장비TIP' :
+			location.href = '/li/li_006_1?li_index='+t_index+'&li_b_type=후기게시판';
+			break;
+			
+		case '코스게시판' :
+			location.href = '/lc/003/lc_get?lc_index='+t_index ;
+			break;
+			
+		case '대회리뷰게시판' :
+			location.href = '/cr/cr_003_1?co_r_index='+t_index ;
+			break;
+			
+		case '트레이닝TIP' :
+			alert("아직 페이지 세팅 전");
+			break;
+			
+			default : alert("error!");
+	} 
+	
+}
 	
 </script>
 

@@ -86,6 +86,10 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				List<Map<String, String>> postList = service.getAllMyPost(dto);
 				mav.addObject("getAllMyPost", postList);
 				log.info(postList);
+				
+				//내 글의 댓글
+		        List<Map<String, String>> replyList = service.myReplys(dto);	
+				mav.addObject("replyList", replyList);
 
 			}else {
 				sessionVO.setM_picture("");
@@ -294,6 +298,23 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		model.addAttribute("pageUtil", pageutil);
 		
 		return "mp/mp_001_4";
+	}
+	
+	
+	@Override
+	@GetMapping(value="/mp/replys")
+	public String myReplys(Model model,Page_DTO dto, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		//dto 주입.
+		dto.setM_index(sessionVO.getM_index());
+		
+        List<Map<String, String>> replyList = service.myReplys(dto);	
+        pageutil = service.replys_paging(dto);
+		model.addAttribute("replyList", replyList);
+		model.addAttribute("pageUtil", pageutil);
+		
+		return "mp/mp_001_5";
 	}
 
 	

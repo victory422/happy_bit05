@@ -140,6 +140,22 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		log.info("post_paging....."+pageutil);
 		return pageutil;
 	}
+
+
+	@Override
+	public PageUtil replys_paging(Page_DTO dto) {
+		int total = session.selectOne("member.replys_paging", dto);
+		pageutil = new PageUtil(dto, total);
+		log.info("replys_paging....."+pageutil);
+		return pageutil;
+	}
+
+
+	@Override
+	public List<Map<String, String>> myReplys(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.myReplys", dto);
+	}
 	
 	
 	

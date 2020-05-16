@@ -38,4 +38,6 @@ public interface MP_001_Controller {
 
 	String myPost(Model model, Page_DTO dto, HttpServletRequest request) throws Exception;
 
+	String myReplys(Model model, Page_DTO dto, HttpServletRequest request) throws Exception;
+
 }
