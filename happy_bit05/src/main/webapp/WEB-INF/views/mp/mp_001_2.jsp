@@ -83,7 +83,7 @@
 
 								</tr>
 								<tr>
-									<td>접수기한 : ${data.co_b_start} ~ ${data.co_b_end }</td>
+									<td>접수완료</td>
 								</tr>
 								<tr>
 									<td>일자 : ${data.co_b_day}</td>

@@ -36,4 +36,8 @@ public interface MP_001_Dao {
 
 	public PageUtil competition_paging(Page_DTO dto);
 
+	public List<Map<String, String>> getAllMyPost(Page_DTO dto);
+
+	public PageUtil post_paging(Page_DTO dto);
+
 }

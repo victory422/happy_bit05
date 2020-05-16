@@ -317,7 +317,7 @@
 	
 	<select id="compeptition_myList" resultMap="requestVO" parameterType="vs.ac.ac_001_1.vo.AcVO">		
 		<![CDATA[ 
-		select rownum rn, co_b_index as co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
+		select rownum rn, co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
 				co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
 	 		from(
 		        select competition.co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
@@ -347,6 +347,87 @@
 	</select>
 	
 	
+	
+		<select id="getAllMyPost" resultType="java.util.Map">
+		<![CDATA[
+	        select 
+	        	rn, tablename, title, good, see, registdate, m_index, t_index
+		        from
+		        	(select rownum rn, tablename, title, good, see, registdate, m_index, t_index
+			        from
+				        (
+				        select tablename, title, good, see, registdate, m_index, t_index
+					        from
+					        (
+					        select 
+					        	'course' tablename, lc_title as title, lc_good as good, lc_see as see, 
+					        	lc_date as registdate, m_index, lc_index as t_index
+					        from 
+					        	course
+					        
+					        union all
+					        
+					        select 
+						        'item' tablename, li_title as title, li_good as good, li_see as see, 
+						        li_date as registdate, m_index, li_index as t_index
+					        from item
+					        
+					        union all
+					        
+					        select 
+						        'myrecord' tablename, pr_title as title, pr_good as good, pr_see as see, 
+						        pr_resistdate as registdate, m_index, pr_index as t_index
+					        from myrecord
+					        
+					        union all
+					        
+					        select 
+						        'competition_review' tablename, co_r_title as title, co_r_good as good, 
+						        co_r_see as see, co_r_day as registdate, m_index, co_r_index as t_index
+					        from competition_review
+					        
+					        union all
+				        
+					        select 
+						        'trainning' tablename,lt_title as title, lt_good as good, lt_see as see, 
+						        lt_date as registdate, m_index, lt_index as t_index
+					        from trainning
+					        )
+			        
+				        order by registdate desc
+				        )
+		        where rownum <= (#{page} * #{amount})
+		        and m_index = #{m_index})
+	        where rn > ((#{page}-1) * #{amount})
+		
+		]]>
+		</select>
+	
+		<select id="post_paging" resultType="int">
+			<![CDATA[ 
+				select count(*)
+			        from
+			        (
+				        select m_index
+				        from course
+				        union all
+				        select m_index
+				        from item
+				        union all
+				        select m_index
+				        from myrecord
+				        union all
+				        select m_index
+				        from competition_review
+				        union all
+				        select m_index
+				        from trainning
+			        )
+	       	 	where m_index = #{m_index}
+			]]>	
+		</select>
+	
+	    
 	
 	
 
