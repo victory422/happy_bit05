@@ -65,6 +65,8 @@ public class Co_Controller {
 
 		System.out.println(dto.getType());
 		
+		System.out.println("와와오아ㅗ아" + new PageUtil(dto,co_service.get_total(dto)));
+		
 		model.addAttribute("data", acvo);
 		model.addAttribute("pageUtil",new PageUtil(dto,co_service.get_total(dto)));
 		model.addAttribute("type",dto.getTypeArr());

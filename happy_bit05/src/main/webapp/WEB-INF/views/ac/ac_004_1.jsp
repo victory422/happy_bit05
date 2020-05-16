@@ -87,7 +87,7 @@
 			<c:forEach items="${memberlist }" var="member">
 				<tr>
 					<td>${member.co_title }</td>
-					<td>${member.co_b_day }</td>
+					<td>${member.co_b_day } ${data.co_b_time }</td>
 					<td>${member.m_id }</td>
 					<td>${member.m_nickname }</td>
 					<td>${member.m_name }</td>
@@ -116,13 +116,44 @@
 								</li>
 							</c:if>
 						</ul>
-					</div>
+			</div>
 		</div>
 		
 	</div> 
   
  </div>
 <script>
+
+$(document).ready(function(){
+	
+	$('a.page_now').on('click',function(){
+		//alert($('input[name=page]').val($(this).text()))
+		//alert($('select[name=type]').val())
+		
+		var a =$('select[name=type]').length;
+		//배열생성
+		var aArr = new Array(a);
+		
+		//필터값들 스트링으로 변환
+		for(var i=0; i<a; i++){
+			aArr[i] = $('select[name=type]').eq(i).val();
+			//alert(aArr[i]);
+		}
+		
+		//선택한 종목값
+		//aArr[1]
+		//선택한 장비값
+		//aArr[2]
+		//현재 선택된 a태그안  
+		$(this).attr('href',"/ac/ac_004_1?page="+$(this).text()+"&type="+aArr[0],aArr[1])
+		})
+	
+	//alert(${param.test1});
+		function page_put(){
+		console.log($('input[name=page]').val(1))
+	}
+	
+})
 $('.statechange').on("click", function() {
 		var co_b_index = $('#co_b_index').val();
 		console.log("co_b_index : ", co_b_index);

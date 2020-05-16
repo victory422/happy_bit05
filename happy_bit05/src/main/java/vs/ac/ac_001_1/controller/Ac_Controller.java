@@ -113,6 +113,9 @@ public class Ac_Controller {
 	public void memberlist(Model model,Page_DTO dto) throws Exception{
 		
 		System.out.println("대회 참가자 리스트점 뽑아주라");
+
+		dto.setAmount(10);
+		System.out.println("dddddddddd" + new PageUtil(dto,ac_service.get_total(dto)));
 		
 		model.addAttribute("memberlist", ac_service.ac_memberlist(dto));
 		model.addAttribute("pageUtil",new PageUtil(dto,ac_service.get_total(dto)));

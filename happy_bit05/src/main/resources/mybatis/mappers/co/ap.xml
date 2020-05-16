@@ -44,7 +44,7 @@ select *
 <!-- m.m_id,m.m_nickname,m.m_tel,m.m_name,p.co_state,m.m_gender,p.co_title,p.co_area -->
 <select id="ac_member" resultType="vs.co.co_001_1.vo.CoVO" parameterType="String">
 	<![CDATA[	
-select m.m_index,m.m_id, m.m_name, m.m_tel, m.m_gender, m.m_nickname, p.co_title, p.co_area, c.co_b_day,p.co_state,p.co_b_index
+select m.m_index,m.m_id, m.m_name, m.m_tel, m.m_gender, m.m_nickname, p.co_title, p.co_area, c.co_b_day,p.co_state,p.co_b_index,co_b_time
     from member m inner join participant p 
         on m.m_index = p.m_index 
         inner join competition c
@@ -81,12 +81,12 @@ select m.m_index,m.m_id, m.m_name, m.m_tel, m.m_gender, m.m_nickname, p.co_title
 <select id="ac_memberlist" resultType="vs.co.co_001_1.vo.CoVO">
 <![CDATA[ 
 	select m_index,m_id, m_name, m_gender, m_tel,
-		 m_nickname, co_state, co_title, co_b_day, co_b_index
+		 m_nickname, co_state, co_title, co_b_day, co_b_index,co_b_time
 	from(
 	select rownum rn, a.*
 		from(select
 			m.m_index,m.m_id, m.m_name, m.m_gender, m.m_tel,
-		 	m.m_nickname, p.co_state, p.co_title, c.co_b_day, p.co_b_index		 	 
+		 	m.m_nickname, p.co_state, p.co_title, c.co_b_day, p.co_b_index,co_b_time		 	 
 		 from participant p inner join member m
 		on p.m_index = m.m_index
 		inner join competition c

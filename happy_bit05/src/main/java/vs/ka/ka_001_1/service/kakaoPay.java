@@ -60,7 +60,7 @@ public class kakaoPay{
         params.add("quantity", "1");    //상품수량, integer타입
         params.add("total_amount", map.get("amount"));  //상품총액 integer타입
         params.add("tax_free_amount", "0");   //상품비과세 금액, integer타입
-        params.add("approval_url", "http://localhost:8080/kakaoPaySuccess?co_b_index="+map.get("co_b_index")+"");    //결제성공시 redirect url
+        params.add("approval_url", "https://bikendrun.shop/kakaoPaySuccess?co_b_index="+map.get("co_b_index")+"");    //결제성공시 redirect url
         params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");       //결제취소시 redirect url
         params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");    //결제실패시 redirect url
        
