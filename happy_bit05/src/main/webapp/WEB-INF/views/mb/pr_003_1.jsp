@@ -31,31 +31,32 @@
     
     
 
-<div class="container" style="margin-top: 20px; margin-botton: 50px; margin-left: 5px;margin-right: 5px;max-width: 100%;">
+<div class="container" style="max-width: 100%;margin-left: 0px;margin-right: 0px;padding-right: 0px;padding-left: -20px;">
 <div class="row justify-content-center col-12" style="max-width: 100%;">
-			<div class="w-100"></div>
-			<div class = "col-12" style="margin-bottom:30px;">
+			<div class="w-100" style="margin: 0;">
+			<div class = "col-12" style="margin-bottom:30px;padding-left: 0px;padding-right: 0px;">
 				<c:choose>
 					<c:when test="${data.lc_type eq '육상'}"><img src="../../resources/img/lc/running.png" width="60px"/></c:when>
 					<c:when test="${data.lc_type eq '자전거'}"><img src="../../resources/img/lc/cycle.png" width="60px"/></c:when>
 				</c:choose>
 				<br/>
-				<div><h4>${data.lc_title }</h4></div>
-				<br/>
-				<div style="margin-bottom:50px;">
-					<div style="float:left;">
-						코스 작성자 : ${data.m_nickname } 	| 	 코스 게시일 : ${data.lc_date }
-					</div>
-					
-					<div style="float:right;">
-						코스 조회수 ${data.lc_see } 코스 추천수 ${data.lc_good }
-					</div>
-				</div>
+				<div><h3>${data.pr_title }</h3> <h5>코스명 : (${data.lc_title })</h5></div>
 
-				<hr/>
-			</div>
+				</div>
+				<div class="col-8">
+					<h5>작성자 : ${data.m_nickname }</h5>
+				</div>
+				<div class="col-4">
+					<h5>날짜 : ${data.pr_resistDate }</h5>
+					<h5><a onclick="report()" class="text-muted">신고하기</a></h5>
+				</div>
 			
-				<div id="map" class="col-md-8" style="width:800px;height:500px;"></div>
+			<div style="margin-bottom:10px;">
+					
+				</div>
+				</div>
+			
+				<div id="map" class="col-md-12" style="width:90%;height:300px;"></div>
 			
 		<div class="col-md-4" id="mapText">
 			<div class="p-4">
@@ -63,28 +64,24 @@
 	       	 거리 : <span id="distance" name="distance">${data.lc_distance } km</span>
 	     	 </font></font></h3>
 	     	 </div>
-	   		<br>
-	      
+	   		
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 도보 시간 : <span id="run" name="run">${data.lc_run }</span>
 	      </font></font></h3>
 	      </div>
-	      <br>
 	      
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	자전거 시간 : <span id="cycle" name="cycle">${data.lc_cycle }</span>
 	      </font></font></h3>
 	      </div>
-	      <br>
 	      
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 출발지 : <span id="address" name="address">${data.lc_address }</span>
 	      </font></font></h3>
 	      </div>
-	      <br>
 	      
 	      <div class="p-4">
 	      <h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
@@ -97,33 +94,10 @@
 	    <div class="w-100"><hr></div>
 	    <div style="margin-top:30px;margin-bottom:30px;"></div>
 	    
-		    <div class="col-12" style="margin:auto;">
-		    <h3>코스 내용:</h3>
-			${data.lc_text }
-			</div>
+
 			<br>
 			
-			<hr style="border: solid 15px gray;width: 100%;">
-			<br>
-			<h2>기록 게시글</h2>
-			<br>
 	<div class="content" style="width:100%;">
-			<table style="width:100%;">
-				<tr>
-					<td style="width:70%"><span style="font-size:1.5rem;">${data.pr_title }&emsp; </span> 종목: ${data.pr_type }</td>
-					<td style="width:30%; text-align: right;">${data.pr_resistDate }</td>
-				</tr>
-				<tr>
-					<td>작성자 : ${data.m_nickname}</td>
-					<td style="text-align: right"><h6>추천수:<span class="good_cnt">${data.pr_good }</span> 조회수:${data.pr_see }</h6> </td>
-				</tr>
-				<tr>
-					<td></td>
-					<td style="text-align: right"><a onclick="report()" class="text-muted">신고하기</a></td>
-				</tr>
-			</table>
-			<br>
-			<hr>
 
 			<div style="margin-bottom: 50px">
 				<div class="text_container text_padding">${data.pr_text }</div>
@@ -156,8 +130,8 @@
 			<!--  댓글  -->
 			<div class="container"
 				style="border: 1px solid darkgray; margin-bottom: 30px; margin-top: 30px; padding: 5px;">
-				<div class="row col-12">
-					<div class="col-lg-12">
+				<div class="row col-12" style="margin-right: 0px;padding-right: 0px;padding-left: 0px;margin-left: 0px;">
+					<div class="col-lg-12" style="padding-right: 0px;padding-left: 0px;">
 						<div class="container">
 							<label for="content">댓글쓰기</label>
 						</div>
@@ -613,4 +587,3 @@ function dedetinsert(com_index){
 
 
 
-<%@include file="../includes/footer.jsp"%>

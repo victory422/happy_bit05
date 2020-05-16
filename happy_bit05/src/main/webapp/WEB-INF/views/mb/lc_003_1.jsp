@@ -88,9 +88,9 @@
 				<hr/>
 			</div>
 			
-				<div id="map" class="col-md-8" style="width:800px;height:500px;"></div>
+				<div id="map" class="col-md-12" style="width:100%;height:300px;"></div>
 			
-		<div class="col-md-4" id="mapText">
+		<div class="col-md-12" id="mapText">
 			<div class="p-4">
 			<h3 class="pb-2 mb-2 font-italic border-bottom"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">
 	       	 거리 : <span id="distance" name="distance">${lc_get.lc_distance } km</span>

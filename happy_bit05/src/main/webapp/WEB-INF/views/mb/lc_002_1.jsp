@@ -58,7 +58,9 @@
 	.course-text {margin-bottom:30px;}
 	.input-group-prepend {width:80px;}
 	.map {margin:0;}
-	body{width: 100%;}
+	body{width: 100%; 
+    padding-right: 0px;
+	}
 	
 	/*테이블 css  */
 	@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
@@ -151,8 +153,7 @@ h1 {
 }
 </style>
 </head>
-<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
+
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -193,7 +194,9 @@ h1 {
 	
 	
 </script>
-
+<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
+<body style="padding-right: 0px;padding-left: 0px;">
 <main role="main">
 		<!-- 게시글 리스트 출력 테이블 -->
 			<div style="width: 100%;">
@@ -225,3 +228,4 @@ h1 {
 				</table>
 			</div>
 </main>
+</body>
