@@ -120,6 +120,7 @@
 					rownum <= #{pageNum} * #{amount}
 				)
 				where rn > (#{pageNum} -1) * #{amount}
+				order by lc_index desc
 		]]>
 	</select>
 	
@@ -165,7 +166,7 @@
 		insert into course(lc_index, m_index, lc_title, lc_type, lc_distance, lc_run, lc_cycle, lc_area1,
 			lc_area2, lc_area3, lc_text, lc_date, lc_good, lc_see, lc_record)
 		values('lc_'||lpad(seq_course.nextval, 10, '0'), #{m_index}, #{lc_title}, #{lc_type}, #{lc_distance}, #{lc_run},
-			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, #{lc_text}, sysdate, 0, 0, 0)
+			#{lc_cycle}, #{lc_area1}, #{lc_area2}, #{lc_area3}, #{lc_text}, to_char(sysdate, 'yy/mm/dd hh24:mi:ss'), 0, 0, 0)
 			]]>
 	</insert> 
 	
@@ -267,7 +268,40 @@
 			and m_index = #{m_index}
 		]]>
 	</delete>
-
+	
+	<!--  나의 기록 리스트-->
+	<select id="getMyRecordList" parameterType="java.lang.String" resultType="java.util.Map">
+		<![CDATA[
+			select 
+				rowNum rn, pr_index, a.mp_index, pr_title, pr_text, 
+				pr_see,pr_good, pr_resistDate, pr_recordDate, 
+				pr_record, pr_thumbnail, pr_type, pr_public
+			 from 
+				 myrecord a,
+				(select mp_index from mycourse
+				where m_index = #{m_index}) b
+			where 
+				a.mp_index = b.mp_index
+			order by pr_index desc;
+		]]>	
+	</select>
+	
+	
+		<select id="getMyRecordListSort" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+			select 
+				rowNum rn, pr_index, a.mp_index, pr_title, pr_text, 
+				pr_see,pr_good, pr_resistDate, pr_recordDate, 
+				pr_record, pr_thumbnail, pr_type, pr_public
+			 from 
+				 myrecord a,
+				(select mp_index from mycourse
+				where m_index = #{m_index}) b
+			where 
+				a.mp_index = b.mp_index
+				order by #{type} desc
+		]]>	
+	</select>
 	
 	
 	<!-- 조회수 추천수 -->
@@ -336,7 +370,7 @@
 	<insert id="ma_002_1">
 		<![CDATA[
 			insert into advertising(ad_index, ad_date)
-				values('ad_'||lpad(ad_seq.nextval, 10, '0'), sysdate)
+				values('ad_'||lpad(ad_seq.nextval, 10, '0'), to_char(sysdate, 'yy/mm/dd hh24:mi:ss'))
 		]]>
 	</insert>
 	

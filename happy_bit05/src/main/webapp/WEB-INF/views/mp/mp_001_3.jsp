@@ -108,7 +108,14 @@
 					<input type="text" style="margin-left: 10px; width: 50%" id=""
 						name="" class="search-box form-control"
 						placeholder="Enter search word" /> 
-					<input type="submit" value="search" />
+					<a class="text-muted" aria-label="Search" name="search_button" href="">
+          				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" 
+          				stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 
+          				stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false">
+          				<circle cx="10.5" cy="10.5" r="7.5"></circle>
+          				<path d="M21 21l-5.2-5.2"></path>
+          				</svg>
+       				 </a>
 				</label>
 			</div>
 		</form>
@@ -118,7 +125,7 @@
 		<div class="table-responsive" id="myCourse">
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
-					style="font-weight: bold; background-color: #e9ecef;">
+					style="font-weight: bold; background-color: #e9ecef; text-align: center;">
 					<td>No</td>
 					<td>제목</td>
 					<td>종목</td>
@@ -141,7 +148,7 @@
 					<c:forEach var="val" items="${listVO }" varStatus="status">
 
 
-						<tr id="courseDetail" class="success" name="courseDetail" style=""
+						<tr id="courseDetail" class="success" name="courseDetail" style="text-align: center;"
 							onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
 							'${val.m_index}','${val.lc_distance}','${val.lc_record}',
 							'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">

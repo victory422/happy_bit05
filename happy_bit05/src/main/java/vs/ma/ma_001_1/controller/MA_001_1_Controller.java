@@ -48,7 +48,13 @@ public class MA_001_1_Controller {
 					vo.setLc_request(thumbnail);
 				// model.addAttribute("thumbnail"+i, thumbnail);
 				}else {
-					vo.setLc_request("");
+					vo.setLc_request(null);
+				}
+				
+				if(vo.getLc_type().equals("육상")) {
+					vo.setLc_type2(0);
+				}else {
+					vo.setLc_type2(1);
 				}
 			}
 			

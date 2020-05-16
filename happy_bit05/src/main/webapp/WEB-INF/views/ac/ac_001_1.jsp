@@ -52,6 +52,7 @@
                             <div id="wrapper2"></div>
                     </div>
 				</div>
+                        <label class="input-group-text">시간</label><input type="text" class="form-control" name="co_b_time">
 			</div>
 		</div>
 		<div class="col-sm-6">

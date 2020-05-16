@@ -67,7 +67,7 @@ public class Ka_Controller {
 		//model.addAttribute("data", co_service.ap_list(co_b_index));
 
 		
-		return new RedirectView("http://localhost:8080/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
+		return new RedirectView("https://bikendrun.shop/co/co_001_1?co_b_index="+co_b_index+"&kakaotest=1");	
 	}
 	
 	

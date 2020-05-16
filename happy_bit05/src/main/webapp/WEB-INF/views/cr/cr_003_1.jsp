@@ -36,9 +36,9 @@
 			<hr>
 			<div style="margin-bottom: 50px">
 				<div class="text_container text_padding">
-				<input type="hidden" name="co_r_index" value="${data.co_r_text }">${data.co_r_text }
+				${data.co_r_text }
 				</div>
-			</div>
+			</div>\
 			<div class="box">
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->
