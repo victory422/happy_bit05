@@ -58,7 +58,9 @@
 	.course-text {margin-bottom:30px;}
 	.input-group-prepend {width:80px;}
 	.map {margin:0;}
-	body{width: 100%;}
+	body{width: 100%; 
+    padding-right: 0px;
+	}
 	
 	/*테이블 css  */
 	@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
@@ -151,8 +153,7 @@ h1 {
 }
 </style>
 </head>
-<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
+
 <script type="text/javascript">
 
 	$(document).ready(function(){
@@ -193,11 +194,13 @@ h1 {
 	
 	
 </script>
-
+<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
+<body style="padding-right: 0px;padding-left: 0px;">
 <main role="main">
 		<!-- 게시글 리스트 출력 테이블 -->
 			<div style="width: 100%;">
-				<table class="table-responsive rwd-table" style="width:100%;table-layout:fixed">
+				<table class="table-responsive rwd-table" style="width:100%;table-layout:fixed;font-size: 75%;">
 					<!-- <tr><td><h2>전체글</h2></td>
 					<td style="text-alcgn: right;"><input type="checkbox"></td>
 					</tr> -->
@@ -215,7 +218,7 @@ h1 {
 								<td width="10%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
 									<c:out value="${board.lc_type eq 'all'?'전체': board.lc_type}"/>
 								</td>
-								<td width="44%" style="max-width:100px;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'"><nobr>${board.lc_title }<nobr></td>
+								<td width="44%" style="min-widt:150px;max-width:200px;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'"><nobr>${board.lc_title }<nobr></td>
 								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.m_nickname }</td>
 								<td width="20%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_date }</td>
 								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_distance }</td>
@@ -225,3 +228,4 @@ h1 {
 				</table>
 			</div>
 </main>
+</body>

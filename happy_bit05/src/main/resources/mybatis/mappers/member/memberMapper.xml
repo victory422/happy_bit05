@@ -317,11 +317,12 @@
 	
 	<select id="compeptition_myList" resultMap="requestVO" parameterType="vs.ac.ac_001_1.vo.AcVO">		
 		<![CDATA[ 
-		select rownum rn, co_b_index as co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
+		select rownum rn, co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
 				co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
 	 		from(
 		        select competition.co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
-						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
+						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, 
+						co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
 		        from competition,  participant
 		        where 
 			    	competition.co_b_index = participant.co_b_index
@@ -338,7 +339,8 @@
 		select count(*)
 	 		from
 		        (select competition.co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
-						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
+						co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, 
+						co_rating, co_b_thumbnail, competition.co_b_count as co_b_count
 		        from competition,  participant
 		        where 
 			    	competition.co_b_index = participant.co_b_index
@@ -347,6 +349,202 @@
 	</select>
 	
 	
+	
+	<select id="getAllMyPost" resultType="java.util.Map">
+	<![CDATA[
+        select 
+        	rn, tablename, title, good, see, registdate, m_index, t_index
+	        from
+	        	(select rownum rn, tablename, title, good, see, registdate, m_index, t_index
+		        from
+			        (
+			        select tablename, title, good, see, registdate, m_index, t_index
+				        from
+				        (
+					        select 
+					        	'코스게시판' tablename, lc_title as title, lc_good as good, lc_see as see, 
+					        	lc_date as registdate, m_index, lc_index as t_index
+					        from 
+					        	course
+					        
+					        union all
+					        
+					        select 
+						        '장비TIP' tablename, li_title as title, li_good as good, li_see as see, 
+						        li_date as registdate, m_index, li_index as t_index
+					        from item
+					        
+					        union all
+					        
+					        select 
+						        '기록게시판' tablename, pr_title as title, pr_good as good, pr_see as see, 
+						        pr_resistdate as registdate, m_index, pr_index as t_index
+					        from myrecord
+					        where pr_public = '1'
+					        
+					        union all
+					        
+					        select 
+						        '대회리뷰게시판' tablename, co_r_title as title, co_r_good as good, 
+						        co_r_see as see, co_r_day as registdate, m_index, co_r_index as t_index
+					        from competition_review
+					        
+					        union all
+				        
+					        select 
+						        '트레이닝TIP' tablename,lt_title as title, lt_good as good, lt_see as see, 
+						        lt_date as registdate, m_index, lt_index as t_index
+					        from trainning
+				        )
+		        
+			        order by registdate desc
+			        )
+	        where rownum <= (#{page} * #{amount})
+	        and m_index = #{m_index})
+        where rn > ((#{page}-1) * #{amount})
+	
+	]]>
+	</select>
+
+	<select id="post_paging" resultType="int">
+		<![CDATA[ 
+			select count(*)
+		        from
+		        (
+			        select m_index
+			        from course
+			        union all
+			        select m_index
+			        from item
+			        union all
+			        select m_index
+			        from myrecord
+			        where pr_public = '1'
+			        union all
+			        select m_index
+			        from competition_review
+			        union all
+			        select m_index
+			        from trainning
+		        )
+       	 	where m_index = #{m_index}
+		]]>	
+	</select>
+	
+	
+		<select id="replys_paging" resultType="int">
+		<![CDATA[ 
+			select
+			    count(*)
+			from 
+			    board_com,
+			    (
+				select 
+				     m_index, lc_index as t_index
+				    from 
+				        course
+				    
+				    union all
+				    
+				    select 
+				        m_index, li_index as t_index
+				    from item
+				    
+				    union all
+				    
+				    select 
+				        m_index, pr_index as t_index
+				    from myrecord
+				    where pr_public = '1'
+				    
+				    union all
+				    
+				    select 
+				       m_index, co_r_index as t_index
+				    from competition_review
+				    
+				    union all
+				
+				    select 
+				       m_index, lt_index as t_index
+				    from trainning
+				    
+				    union all
+				    select 
+				       m_index, co_b_index as t_index 
+				    from competition
+			    ) b, member
+		    where board_com.BOARD_INDEX = b.T_INDEX
+		    and board_com.m_index = member.m_index
+		    and b.m_index = #{m_index}
+		    
+		]]>	
+	</select>
+	
+	<select id="myReplys" resultType="java.util.Map">
+	<![CDATA[
+		select
+		    COM_INDEX, T_INDEX, write_m_index, 
+		    reply_nick, tablename, title, 
+		    COM_TEXT, COM_INDEX1,  COM_DATE, rownum rn
+		from
+			(
+			select
+			    COM_INDEX, BOARD_INDEX as T_INDEX, b.M_INDEX as write_m_index, 
+			    member.m_nickname as reply_nick, tablename, title, 
+			    COM_TEXT, COM_INDEX1,  COM_DATE, rownum rn
+			from 
+			    board_com,
+			    (
+				select 
+				    '코스게시판' tablename, lc_title as title, lc_good as good, lc_see as see, 
+				    lc_date as registdate, m_index, lc_index as t_index
+				    from 
+				        course
+				    
+				    union all
+				    
+				    select 
+				        '장비TIP' tablename, li_title as title, li_good as good, li_see as see, 
+				        li_date as registdate, m_index, li_index as t_index
+				    from item
+				    
+				    union all
+				    
+				    select 
+				        '기록게시판' tablename, pr_title as title, pr_good as good, pr_see as see, 
+				        pr_resistdate as registdate, m_index, pr_index as t_index
+				    from myrecord
+				    where pr_public = '1'
+				    
+				    union all
+				    
+				    select 
+				        '대회리뷰게시판' tablename, co_r_title as title, co_r_good as good, 
+				        co_r_see as see, co_r_day as registdate, m_index, co_r_index as t_index
+				    from competition_review
+				    
+				    union all
+				
+				    select 
+				        '트레이닝TIP' tablename, lt_title as title, lt_good as good, lt_see as see, 
+				        lt_date as registdate, m_index, lt_index as t_index
+				    from trainning
+				    
+				    union all
+				    select 
+				        '대회게시판' tablename, co_b_title as title, co_b_good as good, 
+				        co_b_see as see, co_b_day as registdate, m_index, co_b_index as t_index 
+				    from competition
+			    ) b, member
+		    where board_com.BOARD_INDEX = b.T_INDEX
+		    and board_com.m_index = member.m_index
+		    and b.m_index = #{m_index}
+		    and rownum <= ( #{page} * #{amount} ))
+	    where rn > ((#{page}-1) * #{amount})
+	]]>
+	</select>
+	    
 	
 	
 

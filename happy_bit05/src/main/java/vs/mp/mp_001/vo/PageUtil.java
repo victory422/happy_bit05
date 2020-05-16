@@ -25,7 +25,7 @@ public class PageUtil {
 		int tempEnd = (int) (Math.ceil(pageNum / 5.0) * 5);
 		System.out.println("tempEnd: "+tempEnd);
 		
-		this.start = tempEnd - 9 < 0 ? 1 : tempEnd - 9;
+		this.start = tempEnd - 4 < 0 ? 1 : tempEnd - 4;
 		this.prev = this.start != 1;
 
 		// Ǯ��

@@ -102,6 +102,32 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 		pageutil = dao.competition_paging(dto);
 		return pageutil;
 	}
+
+	@Override
+	public List<Map<String, String>> getAllMyPost(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return dao.getAllMyPost(dto);
+	}
+
+	@Override
+	public PageUtil post_paging(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		pageutil = dao.post_paging(dto);
+		return pageutil;
+	}
+
+	@Override
+	public List<Map<String, String>> myReplys(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return dao.myReplys(dto);
+	}
+
+	@Override
+	public PageUtil replys_paging(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		pageutil = dao.replys_paging(dto);
+		return pageutil;
+	}
 	
 
 	

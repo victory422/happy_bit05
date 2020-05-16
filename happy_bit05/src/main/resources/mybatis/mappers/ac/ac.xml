@@ -89,13 +89,13 @@
 	<select id="ac_list" resultMap="requestVO">		
 		<![CDATA[ 
 		select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state,
-					co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
+					co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count,co_b_time
 	 from(
 		select rownum rn, a.*
 		from
 		        (
 			        select co_b_index, co_b_title, co_b_see, co_b_good, co_b_date, co_b_day, co_b_area, co_b_state, 
-							co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count
+							co_b_start, co_b_end, co_b_type, co_b_text, co_b_price, co_souvenir, co_rating, co_b_thumbnail,co_b_count,co_b_time
 			        from competition
 			        where 
 			        ]]>
@@ -116,13 +116,13 @@
 								co_b_day, co_b_date, co_b_area,
 								co_b_start, co_b_end, co_b_type, co_b_price,
 								 co_souvenir, co_rating,co_b_state,co_b_count,m_index,
-								 co_b_see,co_b_good
+								 co_b_see,co_b_good,co_b_time
 								)
 		values ('co_'||co_b_index.nextval, #{co_b_title}, #{co_b_text},
 				 #{co_b_day}, (select to_char(sysdate,'yy/mm/dd  hh24:mi:ss') from dual), #{co_b_area},
 				 #{co_b_start}, #{co_b_end}, #{co_b_type}, #{co_b_price},
 				  #{co_souvenir}, #{co_rating},'접수가능', '0',#{m_index},
-				  '0','0'
+				  '0','0',#{co_b_time}
 				 )
 		]]>
 	</insert>

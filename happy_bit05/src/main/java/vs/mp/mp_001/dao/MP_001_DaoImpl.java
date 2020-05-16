@@ -110,7 +110,7 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	
 	@Override
 	public List<AcVO> compeptition_myList(Page_DTO dto) {
-		log.info(dto);
+		log.info("compeptition_myList dto : "+dto);
 		
 		return session.selectList("member.compeptition_myList", dto);
 	}
@@ -120,8 +120,41 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 	public PageUtil competition_paging(Page_DTO dto) {
 		int total = session.selectOne("member.competition_paging", dto);
 		pageutil = new PageUtil(dto, total);
-		log.info("competition_paging....."+dto);
+		log.info("competition_paging....."+pageutil);
 		return pageutil;
+	}
+
+
+	@Override
+	public List<Map<String, String>> getAllMyPost(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		log.info("getAllMyPost : "+dto);
+		return session.selectList("member.getAllMyPost", dto);
+	}
+
+
+	@Override
+	public PageUtil post_paging(Page_DTO dto) {
+		int total = session.selectOne("member.post_paging", dto);
+		pageutil = new PageUtil(dto, total);
+		log.info("post_paging....."+pageutil);
+		return pageutil;
+	}
+
+
+	@Override
+	public PageUtil replys_paging(Page_DTO dto) {
+		int total = session.selectOne("member.replys_paging", dto);
+		pageutil = new PageUtil(dto, total);
+		log.info("replys_paging....."+pageutil);
+		return pageutil;
+	}
+
+
+	@Override
+	public List<Map<String, String>> myReplys(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.myReplys", dto);
 	}
 	
 	

@@ -15,7 +15,7 @@
 	crossorigin="anonymous">
 
 </head>
-<body onunload="opener.pClose()" > 
+<body onunload="pClose()"> 
 	<div class="container">
 		<div class="d-flex justify-content-center h-100">
 			<div class="card">
@@ -57,7 +57,6 @@
 <script type="text/javascript">
 
 	opener.document.getElementById("passwordConfirm2").value = 'cancel';
-	
 	function login() {
 		var id = document.getElementById('m_id').value;
 		var pw = document.getElementById('m_pw').value;
@@ -72,6 +71,7 @@
 			opener.document.getElementById("passwordConfirm2").value = 'updateTrue';
 			console.log('updateTrue');
 			opener.document.getElementById("btn").removeChild;
+			opener.pClose();
 			window.close();
 		}else if(pw==returnPw && passwordUpdate==null && pw != null && pw != "") {
 			console.log("pw  : " +pw);
@@ -80,6 +80,7 @@
 			sessionStorage.removeItem("password");
 			opener.document.getElementById("passwordConfirm2").value = 'true';
 			opener.document.getElementById("btn").removeChild;
+			opener.pClose();
 			window.close();
 			
 		}else if(pw!=returnPw){
