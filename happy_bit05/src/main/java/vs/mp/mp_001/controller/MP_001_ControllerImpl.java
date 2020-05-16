@@ -60,6 +60,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		Page_DTO dto = new Page_DTO();
 		List<MP_001_3_VO> listVO = new ArrayList<MP_001_3_VO>();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		log.info(sessionVO);
 		
 		try {
 			//썸네일 주입
@@ -79,6 +80,12 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				List<AcVO> acvo = service.compeptition_myList(dto);
 				log.info(acvo);
 				mav.addObject("listCompetition", acvo);
+				
+				//내 모든 글 리스트
+				log.info("my post list");
+				List<Map<String, String>> postList = service.getAllMyPost(dto);
+				mav.addObject("getAllMyPost", postList);
+				log.info(postList);
 
 			}else {
 				sessionVO.setM_picture("");
@@ -267,16 +274,26 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		System.out.println(dto.getType());
 		
 		model.addAttribute("data", acvo);
-		model.addAttribute("type",dto.getTypeArr());
-		model.addAttribute("page", dto.getPage());
 		model.addAttribute("pageUtil", pageutil);
-		System.out.println("page : " + dto.getPage());
-		System.out.println("Amount : " + dto.getAmount());
 		
-		for(int i= 0; i<dto.getTypeArr().length; i++) {
-		model.addAttribute("type"+i,dto.getTypeArr()[i]);
-		}
 		return "mp/mp_001_2";
+	}
+	
+	
+	@Override
+	@GetMapping(value="/mp/myPost")
+	public String myPost(Model model,Page_DTO dto, HttpServletRequest request) throws Exception{
+		HttpSession session = request.getSession();
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		//dto 주입.
+		dto.setM_index(sessionVO.getM_index());
+		
+        List<Map<String, String>> postList = service.getAllMyPost(dto);		
+        pageutil = service.post_paging(dto);
+		model.addAttribute("postList", postList);
+		model.addAttribute("pageUtil", pageutil);
+		
+		return "mp/mp_001_4";
 	}
 
 	

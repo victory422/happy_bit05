@@ -88,7 +88,10 @@
 							aria-labelledby="navbarDropdownPortfolio">
 							<a class="dropdown-item" id="login" href="/lo">로그인</a>
 							<a class="dropdown-item" href="/mp">내 정보 보기</a> 
-							<a class="dropdown-item" href="/mp/myCourse">내 관심코스</a>
+							<a class="dropdown-item" href="/mp/myCourse">관심코스</a>
+							<a class="dropdown-item" href="/mp/myCompetition">참여대회</a>
+							<a class="dropdown-item" href="/mp/myPost">내가 쓴 글</a>
+							<a class="dropdown-item" href="/mp/replys">내 글의 댓글</a>
 							<a class="dropdown-item" href="/lo/logout" onclick="logout()">로그아웃</a>
 						</div>
 					</li>

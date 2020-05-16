@@ -16,28 +16,6 @@
 	
 <style>
 
-.table-left {
-	display: inline;
-	background-color: #e9ecef;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	text-align: center;
-	font-weight: bold;
-	box-shadow: 0 0 2px #E50F0F;
-}
-
-.table-right {
-	display: inline;
-	background-color: white;
-	top: 0;
-	bottom: 0;
-	margin: auto;
-	text-align: center;
-	font-weight: bold;
-	box-shadow: 0 0 2px #E50F0F;
-}
-
 .tr {
   display: table-cell;
   background: #333;
@@ -143,9 +121,10 @@
 	            </tr>
 	          	<tr>
 	          		<td colspan="4" class="td" id="confirmBtn" style="background-color: #C0FFFF;">
-	          			<a id="btn" onclick="pwChk(1)" style="cursor: pointer; ">회원정보 수정 </a>
+	          			<a id="btn" onclick="pwChk(1)" class="btn btn-primary " 
+	          			style="color: #fff; font-weight: 400; cursor: pointer;">회원정보 수정 </a> 
 	          		</td>
-	          			<input type="hidden" id="passwordConfirm2">
+			          	<input type="hidden" id="passwordConfirm2">
 	          	</tr>
 	          </table>
 	          	</form>
@@ -162,7 +141,7 @@
           </div>
           <div class="card-body" id="importMyCourse">
           <!-- 관심코스 리스트 -->
-          	<div class="table-responsive" id="myCourse">
+          	<div class="table-responsive" id="myCourse" style="margin-top : -30px;">
 			<table class="table table-hover" style="margin-top: 30px;">
 				<tr class="active"
 					style="font-weight: bold; background-color: #e9ecef; text-align: center;">
@@ -234,7 +213,7 @@
           	<a href="/mp/myCompetition">나의 대회 보기</a>
           </div>
           <div class="card-body" id="" >
-				<div class="table-responsive" id="myCourse">
+				<div class="table-responsive" id="" style="margin-top : -30px;">
 				<table class="table table-hover" style="margin-top: 30px;">
 					<tr class="active"
 						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
@@ -272,9 +251,7 @@
 									</button>
 								</td>
 							</tr>
-	
 						</c:forEach>
-	
 					</tbody>
 				</table>
 	
@@ -295,47 +272,36 @@
       <div class="col-lg-6 portfolio-item">
         <div class="card h-100">
           <div class="card-body" id="" style="background-color: #e9ecef;">
-          	<a href="#">내 글</a>
+          	<a href="/mp/myPost">내 글</a>
           </div>
           <div class="card-body" id="" >
-				<div class="table-responsive" id="myCourse">
+				<div class="table-responsive" id="" style="margin-top : -30px;">
 				<table class="table table-hover" style="margin-top: 30px;">
 					<tr class="active"
-						style="font-weight: bold; background-color: #e9ecef;">
-
-	
-	
+						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
+						<td style="width: 8%">게시판</td>
+						<td style="width: 20%">제목</td>
+						<td style="width: 8%">추천</td>
+						<td style="width: 8%">조회</td>
+						<td style="width: 8%">게시일</td>
 					</tr>
-					<c:if test="${empty listComtition }">
+					<c:if test="${empty getAllMyPost }">
 								${"내가 작성한 글이 없습니다."} 
 								
 								
 					</c:if>
 					<tbody id="">
 	
-						<c:forEach var="val" items="${listComtition }" varStatus="status">
+						<c:forEach var="val" items="${getAllMyPost }" varStatus="status">
 	
 	
 							<tr id="corseDetail" class="success" 
-								onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
-								'${val.m_index}','${val.lc_distance}','${val.lc_record}',
-								'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
-	
-								<td>${val.rn}</td>
-								<td>${val.lc_title}</td>
-								<td>${val.lc_type}</td>
-								<td>${val.lc_distance}</td>
-								<td>${val.lc_run}</td>
-								<td>${val.lc_cycle}</td>
-								<td>${val.lc_address}</td>
-								<td>${val.lc_good}</td>
-								<td>${val.lc_date}</td>
-								<td>
-									<button
-										onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
-										보기
-									</button>
-								</td>
+								onclick="location.href='/?/?=${val.T_INDEX}'">
+								<td>${val.TABLENAME}</td>
+								<td>${val.TITLE}</td>
+								<td>${val.GOOD}</td>
+								<td>${val.SEE}</td>
+								<td>${val.REGISTDATE}</td>
 							</tr>
 	
 						</c:forEach>
@@ -350,56 +316,46 @@
 	          	
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
 	            <h6 class="card-title al-center">
-	              <a href="#">상세보기</a>
+	              <a href="/mp/myPost">상세보기</a>
 	            </h6>
             </div>
           </div>
         </div>
         
                 	<!-- 내 글의 댓글 목록 -->
-      <div class="col-lg-6 portfolio-item">
+       <div class="col-lg-6 portfolio-item">
         <div class="card h-100">
           <div class="card-body" id="" style="background-color: #e9ecef;">
-          	<a href="#">내 댓글</a>
+          	<a href="/mp/replys">내 글의 댓글</a>
           </div>
           <div class="card-body" id="" >
-				<div class="table-responsive" id="myCourse">
+				<div class="table-responsive" id="" style="margin-top : -30px;">
 				<table class="table table-hover" style="margin-top: 30px;">
 					<tr class="active"
-						style="font-weight: bold; background-color: #e9ecef;">
-						
-	
-	
+						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
+						<td style="width: 8%">게시판</td>
+						<td style="width: 20%">제목</td>
+						<td style="width: 8%">추천</td>
+						<td style="width: 8%">조회</td>
+						<td style="width: 8%">게시일</td>
 					</tr>
-					<c:if test="${empty listComtition }">
-								${"내 글의 댓글이 없습니다."}
+					<c:if test="${empty getAllMyPost }">
+								${"내가 작성한 글이 없습니다."} 
+								
 								
 					</c:if>
 					<tbody id="">
 	
-						<c:forEach var="val" items="${listComtition }" varStatus="status">
+						<c:forEach var="val" items="${getAllMyPost }" varStatus="status">
 	
 	
 							<tr id="corseDetail" class="success" 
-								onclick="downPage('${val.rn}','${val.lc_type}','${val.lc_title}',
-								'${val.m_index}','${val.lc_distance}','${val.lc_record}',
-								'${val.lc_date}','${val.lc_index}','${val.lc_xy_arr}')">
-	
-								<td>${val.rn}</td>
-								<td>${val.lc_title}</td>
-								<td>${val.lc_type}</td>
-								<td>${val.lc_distance}</td>
-								<td>${val.lc_run}</td>
-								<td>${val.lc_cycle}</td>
-								<td>${val.lc_address}</td>
-								<td>${val.lc_good}</td>
-								<td>${val.lc_date}</td>
-								<td>
-									<button
-										onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
-										보기
-									</button>
-								</td>
+								onclick="location.href='/?/?=${val.T_INDEX}'">
+								<td>${val.TABLENAME}</td>
+								<td>${val.TITLE}</td>
+								<td>${val.GOOD}</td>
+								<td>${val.SEE}</td>
+								<td>${val.REGISTDATE}</td>
 							</tr>
 	
 						</c:forEach>
@@ -414,7 +370,7 @@
 	          	
 	          	<h6 class="card-title" style="margin-bottom: -10px;">&nbsp;</h6>
 	            <h6 class="card-title al-center">
-	              <a href="#">상세보기</a>
+	              <a href="/mp/replys">상세보기</a>
 	            </h6>
             </div>
           </div>
@@ -435,11 +391,11 @@ function pwChk(check) {
 	var name = "비밀번호 확인";
 	var option = "width = 400, height = 260, top = 100, left = 200, location = no";
 	console.log("check is : "+check);
+	console.log(check=='1');
 	if(check=='1'){
 		sessionStorage.setItem("password",'${sessionVO.m_pw}');
 		sessionStorage.removeItem("passwordUpdate");
 		console.log(sessionStorage.getItem("passwordUpdate"));
-	
 	}else if(check=='2') {
 		//썸네일 업로드 확인 (없을 시 기존 썸네일로 대체하기 위함)
 		var thumbnail = document.getElementById('file'); //input file Element
@@ -462,6 +418,7 @@ function pwChk(check) {
 }
 
 function pClose() {
+	console.log('aaa??');
 	var passwordCheck = document.getElementById("passwordConfirm2").value;
 	console.log(passwordCheck);
 	if(passwordCheck == 'true') {
@@ -574,11 +531,6 @@ function memberUpdate() {
 	//버튼 바꾸기
 	document.getElementById('btn').firstChild.nodeValue = "회원정보 수정완료 (비밀번호 확인)";
 	document.getElementById('btn').setAttribute("onclick","pwChk(2)");
-}
-
-var b document.getElementById('blind');
-window.b.onload = function blind() {
-	alert();
 }
 
 </script>
