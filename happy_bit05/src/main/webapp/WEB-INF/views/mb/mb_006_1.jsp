@@ -123,6 +123,98 @@ nav ul li {
 .map {
 	margin: 0;
 }
+
+
+/*테이블 css  */
+	@import "https://fonts.googleapis.com/css?family=Montserrat:300,400,700";
+.rwd-table {
+  margin: 1em 0;
+  min-width: 300px;
+}
+.rwd-table tr {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+.rwd-table th {
+  display: none;
+}
+.rwd-table td {
+  display: block;
+}
+.rwd-table td:first-child {
+  padding-top: .1em;
+}
+.rwd-table td:last-child {
+  padding-bottom: .1em;
+}
+.rwd-table td:before {
+  content: attr(data-th) ": ";
+  font-weight: bold;
+  width: 6.5em;
+  display: inline-block;
+}
+@media (min-width: 480px) {
+  .rwd-table td:before {
+    display: none;
+  }
+}
+.rwd-table th,
+.rwd-table td {
+  text-align: left;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    display: table-cell;
+    padding: .25em .1em;
+  }
+  .rwd-table th:first-child,
+  .rwd-table td:first-child {
+    padding-left: 0;
+  }
+  .rwd-table th:last-child,
+  .rwd-table td:last-child {
+    padding-right: 0;
+  }
+}
+
+body {
+  padding: 0 0em;
+  font-family: sans-serif;
+  color: #444;
+  background: #eee;
+}
+
+h1 {
+  font-weight: normal;
+  letter-spacing: -1px;
+  color: #34495E;
+}
+
+.rwd-table {
+  background: #34495E;
+  color: #fff;
+  border-radius: .4em;
+  overflow: hidden;
+}
+.rwd-table tr {
+  border-color: #46637f;
+}
+.rwd-table th,
+.rwd-table td {
+  margin: .5em 1em;
+}
+@media (min-width: 480px) {
+  .rwd-table th,
+  .rwd-table td {
+    padding: 1em !important;
+  }
+}
+.rwd-table th,
+.rwd-table td:before {
+  color: #dd5;
+}
+
 </style>
 
 <script>
@@ -140,15 +232,15 @@ nav ul li {
 <%@ include file="../includes/mobile_topbar.jsp"%>
 
 <!-- 게시글 리스트 출력 테이블 -->
-		<div class="table-responsive" id="myCourse">
-			<table class="table table-hover" style="margin-top: 30px;">
-				<tr class="active"
-					style="font-weight: bold; background-color: #e9ecef;">
-					<td width="24%">제목</td>
-					<td width="8%">코스유형</td>
-					<td width="8%">거리<small>(km)</small></td>
-
-
+		<div id="myCourse">
+				<h1 style="text-align: center;">기록 측정하기</h1>
+		<h4 style="text-align: center;">측정하고싶은 기록을 클릭해주세요.</h4>
+			<table class="rwd-table" style="margin-top: 30px;table-layout:fixed;">
+				<tr class="active">
+					<th width="50">제목</th>
+					<th width="12%">코스유형</th>
+					<th width="26%">출발위치</th>
+					<th width="12%">거리<small>(km)</small></th>
 				</tr>
 				
 				<tbody id="vals">
@@ -162,9 +254,11 @@ nav ul li {
 						<tr id="corseDetail" class="success" 
 							onclick="location.href='/mb/mb_004_1?lc_index=${val.lc_index}'">
 							
-							<td width="30%">${val.lc_title}</td>
-							<td width="8%">${val.lc_type}</td>
-							<td width="8%">${val.lc_distance}</td>
+							<td data-th="제목" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${val.lc_title}</td>
+							<td data-th="코스유형">${val.lc_type}</td>
+							<td data-th="출발위치" style="font-size: 85%;">${val.lc_area1}&nbsp;${val.lc_area2}&nbsp;${val.lc_area3}</td>
+							<td data-th="게시일">${val.lc_date}</td>
+							<td data-th="거리">${val.lc_distance}</td>
 							<%-- <td>
 								<button
 									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
