@@ -200,28 +200,25 @@ h1 {
 <main role="main">
 		<!-- 게시글 리스트 출력 테이블 -->
 			<div style="width: 100%;">
-				<table class="table-responsive rwd-table" style="width:100%;table-layout:fixed;font-size: 75%;">
+							<h1 style="text-align: center;"><c:out value="${type eq 'all'?'전체': type}"/> 코스보기</h1>
+		<h4 style="text-align: center;">관심있는 코스를 클릭해주세요.</h4>
+				<table class="rwd-table" style="width:100%;table-layout:fixed;">
 					<!-- <tr><td><h2>전체글</h2></td>
 					<td style="text-alcgn: right;"><input type="checkbox"></td>
 					</tr> -->
-					<tr class="active" style="text-alcgn: center;">
-						<td width="10%">종목</td>
-						<td width="44%">게시글 제목</td>
-						<td width="15%">작성자</td>
-						<td width="16%">작성날자</td>
-						<td width="15%">길이(km)</td>
+					<tr class="active">
+						<th width="47%">게시글 제목</th>
+						<th width="17%">작성자</th>
+						<th width="18%">작성날자</th>
+						<th width="17%">거리<small>(km)</small></th>
 					</tr>
 					<tbody id="table_lcst">
 						<c:forEach var="board" items="${lc_list }">
-							<tr class="success" style="text-alcgn: center; border-collapse: separate;
-  border-spacing: 0 10px;">
-								<td width="10%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">
-									<c:out value="${board.lc_type eq 'all'?'전체': board.lc_type}"/>
-								</td>
-								<td width="44%" style="min-widt:150px;max-width:200px;text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'"><nobr>${board.lc_title }<nobr></td>
-								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.m_nickname }</td>
-								<td width="20%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_date }</td>
-								<td width="15%" style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${board.lc_distance }</td>
+							<tr class="success">
+								<td data-th="제목"   onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'">${board.lc_title }</td>
+								<td data-th="닉네임" >${board.m_nickname }</td>
+								<td data-th="날자"  >${board.lc_date }</td>
+								<td data-th="거리(km)" >${board.lc_distance }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
