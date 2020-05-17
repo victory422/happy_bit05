@@ -150,7 +150,7 @@
 				<div class="card mb-3 shadow-sm">
 				<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
 				<c:choose>
-					<c:when test="${lc.lc_request ne ''}">
+					<c:when test="${lc.lc_request ne null}">
 						<img alt="" id="thumbnail" src="data:image/jsp;base64, ${lc.lc_request}" height="200"/>
 					</c:when>
 					<c:otherwise>
@@ -176,8 +176,7 @@
 		
 		</div>
 		
-		<div class="row">
-			<div class="col-md-10">
+			<div class="col-md-10" style="max-width: 100%;">
 						<ul class="pagination d-flex justify-content-center">
 							<c:if test="${pageUtil.prev }">
 								<li class="page-item"><a class="page-link" href="${pageUtil.startPage-1}">Previous</a></li>
@@ -191,7 +190,8 @@
 							</c:if>
 						</ul>
 					</div>
-		</div>
+<!-- 		<div class="row">
+		</div> -->
 		
 		<form id='actionForm' action="/lc/002/list" method='get'>
 			<input type="hidden" name="lc_type" value='${pageUtil.cri.lc_type }'/>

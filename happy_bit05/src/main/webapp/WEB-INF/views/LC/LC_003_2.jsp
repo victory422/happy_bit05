@@ -162,11 +162,15 @@
 			</li>
 				
 			</ul>
+			<div class = "col-12" style="margin-bottom:30px;text-align: center;">
+		<input type="submit" class='btn btn-secondary' value="업로드" />
+		<input type="hidden" id="lc_xy_arr" name="lc_xy_arr"/>
+		</div>
 		</div>
 		
-		<input type="submit" value="업로드" />
+	<!-- 	<input type="submit" value="업로드" />
 		
-		<input type="text" id="lc_xy_arr" name="lc_xy_arr"/>
+		<input type="text" id="lc_xy_arr" name="lc_xy_arr"/> -->
 		</form:form>
 		
 	</div>
