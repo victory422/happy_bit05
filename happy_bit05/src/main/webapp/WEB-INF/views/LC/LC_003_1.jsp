@@ -107,15 +107,15 @@
 			<div class = "col-12" style="margin-bottom:30px;">
 				<div style="float:left;">
 					<c:if test="${member.m_index eq lc_get.m_index }">
-					<form id="modifyForm" action="lc_modify">
+					<form id="modifyForm" action="lc_modify"style="float: left;margin-right: 10px;">
 						<button type="button" class="btn btn-secondary" onclick="modify()">수정하기</button>
 						<input type="hidden" name="lc_index" value="${lc_get.lc_index }"/>
 					</form>
-					<form>
+					<form style="float: left;margin-right: 10px;">
 						<button type="button" class="btn btn-secondary" onclick="location.href='lc_delete?lc_index=${lc_get.lc_index}'">삭제하기</button>
 					</form>
 					</c:if>
-					
+					<button type="button" class="btn btn-secondary" onclick="report()">신고하기</button>
 				</div>
 				
 				<div style="float:right;">
@@ -127,16 +127,16 @@
 						<input type="hidden" name="type" value='<c:out value="${cri.type }"/>' />
 						<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>' />
 					</form>
-						<button type="button" class="btn btn-secondary">댓글</button>
-				</div>
+						<!-- <button type="button" class="btn btn-secondary">댓글</button>
+				 --></div>
 			</div>
 			<br>
 			<div class="w-100"></div>
 			<br>
 			<div class="w-100">
 				<div style="float:left;">
-					<button type="button" class="btn btn-secondary">블라인드</button>
-					<button type="button" class="btn btn-secondary" onclick="report()">신고하기</button>
+					<!-- <button type="button" class="btn btn-secondary">블라인드</button> -->
+					<!-- <button type="button" class="btn btn-secondary" onclick="report()">신고하기</button> -->
 					
 				</div>
 				
@@ -160,7 +160,7 @@
 			</div>
 		</div>
 		<!--  댓글  -->
-            <div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:30px; padding: 5px;" >
+            <div class="container" style="border:1px solid darkgray; margin-bottom:30px; padding: 5px;" >
                <div class="row col-12" >
                <div class="col-lg-12">
             <div class="container">
