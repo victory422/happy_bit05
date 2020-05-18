@@ -97,14 +97,14 @@
                             </div></a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="/li/li_004_1?li_b_type=장비게시판"><img class="img-fluid" src="../../resources/mainBoot/assets/img/portfolio/thumbnails/inven1.png" alt="">
+                        <a class="portfolio-box" href="/li/li_001_1?li_b_type=후기게시판"><img class="img-fluid" src="../../resources/mainBoot/assets/img/portfolio/thumbnails/inven1.png" alt="">
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Training Gear</div>
                             </div></a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="/lt/lt_002_1"><img class="img-fluid" src="../../resources/mainBoot/assets/img/portfolio/thumbnails/train1.png" alt="">
+                        <a class="portfolio-box" href="/lt/lt_001_1?lt_b_type=트레이닝게시판"><img class="img-fluid" src="../../resources/mainBoot/assets/img/portfolio/thumbnails/train1.png" alt="">
                             <div class="portfolio-box-caption p-3">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Work Out</div>
