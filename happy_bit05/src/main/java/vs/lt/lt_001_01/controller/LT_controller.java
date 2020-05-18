@@ -197,7 +197,7 @@ public class LT_controller {
 		
 		
 		good_check = service.good_check(hashmap);
-		good_cnt = service.good_cnt(hashmap);
+		//good_cnt = service.good_cnt(hashmap);
 		
 		log.info(service.good_check(hashmap));
 		
