@@ -305,6 +305,16 @@
          <version>${org.springframework-version}</version>
       </dependency>
       <!-- 이메일 인증 2018.11.20 KW -->
+      
+      
+      <!-- AWS 이메일 서비스  -->
+      <dependency> 
+      	<groupId>com.amazonaws</groupId> 
+   		<artifactId>aws-java-sdk-ses</artifactId> 
+   		<version>1.11.490</version> 
+   	</dependency>
+
+
 
 
    </dependencies>
