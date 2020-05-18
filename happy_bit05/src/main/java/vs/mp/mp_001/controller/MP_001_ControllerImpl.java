@@ -198,7 +198,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		HttpSession session = request.getSession();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		Map<String, Object> hmap = new HashMap<String, Object>();
-		log.info("memberUpdate 중 : "+vo);
 		
 		//vo에 부족한 값 sessionVO 에서 주입
 		vo.setM_index(sessionVO.getM_index());
@@ -234,7 +233,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		if(sessionVO.getRequest_thumbnail() != null) {
 			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
 			String thumbnail = new String(imageContent);
-			log.info(thumbnail);
 			sessionVO.setM_picture(thumbnail);
 		}else {
 			sessionVO.setM_picture("");
