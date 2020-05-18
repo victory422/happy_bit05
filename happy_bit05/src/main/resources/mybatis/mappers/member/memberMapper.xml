@@ -540,7 +540,9 @@
 		    where board_com.BOARD_INDEX = b.T_INDEX
 		    and board_com.m_index = member.m_index
 		    and b.m_index = #{m_index}
-		    and rownum <= ( #{page} * #{amount} ))
+		    and rownum <= ( #{page} * #{amount} )
+		    order by com_date desc 
+		    )
 	    where rn > ((#{page}-1) * #{amount})
 	]]>
 	</select>
