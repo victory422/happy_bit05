@@ -383,7 +383,8 @@ function buttonEvt(){
 	    				clearInterval(timer);
 	    			      starFlag = true;
 
-	    			      $('#upload').html($button);
+	    			      /* $('#upload').html($button); */
+	    			      
 	    			      
 	    			      regist(); //완주하면 자동 저장 함수 실행.
 	    			}
@@ -883,7 +884,7 @@ function regist(){
 		},
 		success: function(data) {
 			 alert("수고하셨습니다. 기록은 자동 저장됩니다.");
-			 window.location.href = "/mb/mb_007_1"
+			 window.location.href="/mb/mb_007_1";
 		},
 		 error: function(request, status, error){
 			 alert("저장 오류");
