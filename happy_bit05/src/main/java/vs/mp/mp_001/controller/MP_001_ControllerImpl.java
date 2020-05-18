@@ -68,25 +68,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				String thumbnail = new String(imageContent);
 				sessionVO.setM_picture(thumbnail);
 				log.info("m_index : "+sessionVO.getM_index());
-	
-				//나의 관심코스 리스트
-				dto.setM_index(sessionVO.getM_index());
-				listVO = service.getMCList(dto);
-				mav.addObject("listVO", listVO);
-				
-				//나의 대회 리스트
-				log.info("my competition list");
-				List<AcVO> acvo = service.compeptition_myList(dto);
-				mav.addObject("listCompetition", acvo);
-				
-				//내 모든 글 리스트
-				log.info("my post list");
-				List<Map<String, String>> postList = service.getAllMyPost(dto);
-				mav.addObject("getAllMyPost", postList);
-				
-				//내 글의 댓글
-		        List<Map<String, String>> replyList = service.myReplys(dto);	
-				mav.addObject("replyList", replyList);
 
 			}else {
 				sessionVO.setM_picture("");
@@ -97,11 +78,29 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			log.info(e);
 		}
 		
+		//나의 관심코스 리스트
+		dto.setM_index(sessionVO.getM_index());
+		listVO = service.getMCList(dto);
+		mav.addObject("listVO", listVO);
+		
+		//나의 대회 리스트
+		log.info("my competition list");
+		List<AcVO> acvo = service.compeptition_myList(dto);
+		mav.addObject("listCompetition", acvo);
+		
+		//내 모든 글 리스트
+		log.info("my post list");
+		List<Map<String, String>> postList = service.getAllMyPost(dto);
+		mav.addObject("getAllMyPost", postList);
+		
+		//내 글의 댓글
+        List<Map<String, String>> replyList = service.myReplys(dto);	
+		mav.addObject("replyList", replyList);
 
 		
-			mav.addObject("sessionVO", sessionVO);
-			mav.setViewName("mp/mp_001_1");
-			return mav;
+		mav.addObject("sessionVO", sessionVO);
+		mav.setViewName("mp/mp_001_1");
+		return mav;
 	}
 	
 	
@@ -195,6 +194,7 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		HttpSession session = request.getSession();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		Map<String, Object> hmap = new HashMap<String, Object>();
+		log.info("memberUpdate vo : "+vo);
 		
 		//vo에 부족한 값 sessionVO 에서 주입
 		vo.setM_index(sessionVO.getM_index());
@@ -206,10 +206,13 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		}else {
 			hmap.put("m_picture", vo.getM_picture().getBytes());
 			hmap.put("m_index", vo.getM_index());
+			log.info("업로드된 이미지 있음");
 			service.updateThumbnail(hmap);
 			sessionVO.setRequest_thumbnail(vo.getM_picture().getBytes());
+			log.info(vo.getM_picture());
 		}
 		
+		mav.addObject("path", request.getServletPath());
 		//멤버 업데이트 실행
 		int check = service.memberUpdate(vo);
 		log.info(check); //1일 경우 성공
