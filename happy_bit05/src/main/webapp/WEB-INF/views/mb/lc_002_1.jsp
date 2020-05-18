@@ -210,15 +210,15 @@ h1 {
 					<tr class="active">
 						<th width="47%">게시글 제목</th>
 						<th width="17%">작성자</th>
-						<th width="18%">작성날자</th>
+						<th width="18%">작성날짜</th>
 						<th width="17%">거리<small>(km)</small></th>
 					</tr>
 					<tbody id="table_lcst">
 						<c:forEach var="board" items="${lc_list }">
-							<tr class="success">
-								<td data-th="제목"   onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'">${board.lc_title }</td>
+							<tr class="success" onclick="location.href='/mb/lc_get?lc_index=${board.lc_index }'">
+								<td data-th="제목"  >${board.lc_title }</td>
 								<td data-th="닉네임" >${board.m_nickname }</td>
-								<td data-th="날자"  >${board.lc_date }</td>
+								<td data-th="날짜"  >${board.lc_date }</td>
 								<td data-th="거리(km)" >${board.lc_distance }</td>
 							</tr>
 						</c:forEach>

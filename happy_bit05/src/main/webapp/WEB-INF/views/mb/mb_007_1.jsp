@@ -233,7 +233,7 @@ h1 {
 		<div class="table-responsive" id="myCourse">
 		<h1 style="text-align: center;">기록 자랑하기</h1>
 		<h4 style="text-align: center;">자랑하고싶은 기록을 클릭해주세요.</h4>
-			<table class="rwd-table" style="margin-top: 0px;">
+			<table class="rwd-table" style="width:100%;margin-top: 0px;">
 				<tr class="active"
 					style="font-weight: bold;">
 					<th width="50%" onclick="sort('LC_TITLE')">코스 명</th>
