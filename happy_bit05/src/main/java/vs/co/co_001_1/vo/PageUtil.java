@@ -23,16 +23,17 @@ public class PageUtil {
 		this.start = tempEnd - 9 < 0 ? 1 : tempEnd - 9;
 		this.prev = this.start != 1;
 
-		// 풀占쏙옙
+		// Ǯ��
 		int realEnd = (int) (total / 10.0);
 
 		this.next = realEnd > tempEnd;
 
 		if (realEnd > tempEnd) {
 			this.end = tempEnd;
-
-		} else {
+		} else if((total % 10) == 0){
 			this.end = realEnd;
+		}else {
+			this.end = realEnd + 1;
 		}
 
 	}
