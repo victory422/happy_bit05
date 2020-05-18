@@ -40,4 +40,6 @@ public interface MP_001_Controller {
 
 	String myReplys(Model model, Page_DTO dto, HttpServletRequest request) throws Exception;
 
+	String replyX(Page_DTO dto, HttpServletRequest request) throws Exception;
+
 }

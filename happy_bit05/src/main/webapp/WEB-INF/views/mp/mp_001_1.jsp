@@ -375,19 +375,28 @@ img {
 						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
 						<td style="width: 20%">게시판</td>
 						<td style="width: 20%">제목</td>
-						<td style="width: 20%">댓글내용</td>
+						<td colspan="2" style="width: 20%">댓글내용</td>
+						
 					</tr>
 					<c:if test="${empty replyList }">
 								${"내 글에 댓글이 없습니다."} 
 					</c:if>
-					<tbody>
+					<tbody id="replys">
 						<c:forEach var="val" items="${replyList }" varStatus="status">
 	
-							<tr id="corseDetail" class="success" style="text-align : center;"
-								onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
-								<td>${val.TABLENAME}</td>
-								<td>${val.TITLE}</td>
-								<td>${val.COM_TEXT}</td>
+							<tr class="success" style="text-align : center;">
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
+									${val.TABLENAME}
+								</td>
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
+									${val.TITLE}
+								</td>
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
+									${val.COM_TEXT}
+								</td>
+								<td id="replyX" onclick="disabled('${val.COM_INDEX}')" style="cursor:pointer;">
+									x
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -599,6 +608,49 @@ function popup(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
 	alert("상세보기에서 확인가능합니다.");
 
 	
+}
+
+
+function disabled(com_index) {
+	//스크롤 고정
+	var offset = $("#replyX").offset();
+	$('html, body').animate({scrollTop : offset.top}, 100);
+	
+	//클릭한 댓글 index
+	console.log(com_index);
+	
+	$.ajax({
+		 type : "POST",  
+		    url : "/mp/replyX",  
+		    data : { "com_index" :com_index},
+		    dataType : "json",
+		    success : function(data){
+		    	document.getElementById('replys').firstChild.remove();
+		    	
+		    	var td = "";
+		    	
+		        for(i=0; i<data.length-1; i++) {
+				    	console.log("console data : "+data[i]);
+				    	
+				    	td += '<tr  class="success" style="text-align : center;">';
+						td += '<td onclick="goPage('+data[i]['TABLENAME']+','+data[i]['T_INDEX']+')">' + data[i]['TABLENAME'] + '</td>';
+						td += '<td onclick="goPage('+data[i]['TABLENAME']+','+data[i]['T_INDEX']+')">' + data[i]["TITLE"] + '</td>';
+						td += '<td onclick="goPage('+data[i]['TABLENAME']+','+data[i]['T_INDEX']+')">' + data[i]["COM_TEXT"] + '</td>';
+						td += '</tr>';
+		        }
+		
+		        document.getElementById('vals').innerHTML = td;
+		    
+		      
+		        
+
+		    },  
+		
+		    error:function(xhr,status,error,data){ //ajax 오류인경우  
+		            alert("error\nxhr : " + xhr + ", status : " + 
+		            		+status + ", error : " + error+ ", data : " + data); 
+		    }  
+	}) //ajax 끝.
 }
 
 

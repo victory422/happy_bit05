@@ -44,4 +44,8 @@ public interface MP_001_Service {
 	public List<Map<String, String>> myReplys(Page_DTO dto);
 
 	public PageUtil replys_paging(Page_DTO dto);
+
+	public void replyX(Page_DTO dto);
+
+	public List<Map<String, String>> replysExceptionX(Page_DTO dto);
 }

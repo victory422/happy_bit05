@@ -70,7 +70,7 @@ public class MB_daoImpl implements MB_dao{
 	
 	@Override
 	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
-		log.info("sort ing : "+map);
+		log.info("getMyRecordListSorting : "+map);
 			return session.selectList("mb.getMyRecordListSort", map);
 	}
 
@@ -104,6 +104,12 @@ public class MB_daoImpl implements MB_dao{
 	public List<Pr_002_1VO> pr_list() {
 		// TODO Auto-generated method stub
 		return session.selectList("mb.pr_list");
+	}
+
+	@Override
+	public List<Map<String, String>> getMCListAppSort(Map<String, String> map) {
+		log.info("getMCListAppSorting : "+map);
+		return session.selectList("mb.getMCListAppSort", map);
 	}
 
 }

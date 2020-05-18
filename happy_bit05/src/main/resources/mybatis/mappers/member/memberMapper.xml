@@ -547,7 +547,76 @@
 	    where rn > ((#{page}-1) * #{amount})
 	]]>
 	</select>
+	
+	<select id="replysExceptionX" resultType="java.util.Map">
+		<![CDATA[
+	     	select
+			    COM_INDEX, BOARD_INDEX as T_INDEX, b.M_INDEX as write_m_index, 
+			    member.m_nickname as reply_nick, tablename, title, com_view,
+			    COM_TEXT, COM_INDEX1,  COM_DATE, rownum rn
+			from 
+			    board_com,
+			    (
+				select 
+				    '코스게시판' tablename, lc_title as title, lc_good as good, lc_see as see, 
+				    lc_date as registdate, m_index, lc_index as t_index
+				    from 
+				        course
+				    
+				    union all
+				    
+				    select 
+				        '장비TIP' tablename, li_title as title, li_good as good, li_see as see, 
+				        li_date as registdate, m_index, li_index as t_index
+				    from item
+				    
+				    union all
+				    
+				    select 
+				        '기록게시판' tablename, pr_title as title, pr_good as good, pr_see as see, 
+				        pr_resistdate as registdate, m_index, pr_index as t_index
+				    from myrecord
+				    where pr_public = '1'
+				    
+				    union all
+				    
+				    select 
+				        '대회리뷰게시판' tablename, co_r_title as title, co_r_good as good, 
+				        co_r_see as see, co_r_day as registdate, m_index, co_r_index as t_index
+				    from competition_review
+				    
+				    union all
+				
+				    select 
+				        '트레이닝TIP' tablename, lt_title as title, lt_good as good, lt_see as see, 
+				        lt_date as registdate, m_index, lt_index as t_index
+				    from trainning
+				    
+				    union all
+				    select 
+				        '대회게시판' tablename, co_b_title as title, co_b_good as good, 
+				        co_b_see as see, co_b_day as registdate, m_index, co_b_index as t_index 
+				    from competition
+			    ) b, member
+		    where board_com.BOARD_INDEX = b.T_INDEX
+		    and board_com.m_index = member.m_index
+		    and b.m_index = '3'
+		    and rownum <= 5
+		   and not com_view is not null
+            order by com_date desc 
+		]]>   
+	</select>
+	
 	    
+		<!-- 확인한 댓글 안보이게 하기 -->
+	<update id="replyX">
+		<![CDATA[ 
+			update board_com
+			set com_index = #{com_index}
+			where com_view = '1'
+		]]>	
+	</update>
+	
 	
 	
 

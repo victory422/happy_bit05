@@ -314,7 +314,7 @@ var count = 0;
 					htm += '<td>'+data[i]['LC_TITLE']+'</td>';
 					htm += '<td>'+data[i]['PR_TYPE']+'</td>';
 					htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
-					htm += '<td>'+data[i]['ADDRESS']+'</td>';
+					//htm += '<td>'+data[i]['ADDRESS']+'</td>';
 					htm += '<td>'+data[i]['PR_RECORD']+'</td>';
 					htm += '</tr>';
 				}

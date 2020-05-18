@@ -225,7 +225,7 @@
 									<td>종목</td>
 									<td>제목</td>
 									<td>거리</td>
-									<td>평균기록</td>
+									<!-- <td>평균기록</td> -->
 									<td>등록일</td>
 								</tr>
 
@@ -243,8 +243,8 @@
 										style="font-weight: bold; background-color: #e9ecef;">
 										<td>No</td>
 										<td>일자</td>
+										<td>종목</td>
 										<td>기록</td>
-										<td>증감</td>
 										<td>게시여부</td>
 
 									</tr>
@@ -289,7 +289,7 @@
 				td += '<td>' + lc_type + '</td>';
 				td += '<td>' + lc_title + '</td>';
 				td += '<td>' + lc_distance + '</td>';
-				td += '<td>' + lc_record + '</td>';
+				//td += '<td>' + lc_record + '</td>';
 				td += '<td>' + lc_date + '</td>';
 				$("#tdText").html(td);
 			
@@ -429,15 +429,15 @@ ajaxPage(lc_index, m_index, 1);
 	} //downPage 끝
 	
 
-	function ajaxPage(courseIndex, memberIndex, pageNumber) {
+function ajaxPage(courseIndex, memberIndex, pageNumber) {
 		
-        //스크롤 고정
-        var offset = $("#ajaxPaging").offset();
-        $('html, body').animate({scrollTop : offset.top}, 400);
-        
-		var lc_index = courseIndex;
-		var m_index = memberIndex;
-		var pageNum = pageNumber;
+    //스크롤 고정
+    var offset = $("#ajaxPaging").offset();
+    $('html, body').animate({scrollTop : offset.top}, 400);
+       
+	var lc_index = courseIndex;
+	var m_index = memberIndex;
+	var pageNum = pageNumber;
 	console.log("lc_index : "+lc_index);
 	console.log("m_index : "+m_index);
 	console.log("page : "+pageNum);
@@ -460,8 +460,8 @@ ajaxPage(lc_index, m_index, 1);
 			    	td += '<tr class="success">';
 					td += '<td>' + data[i]['RN'] + '</td>';
 					td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+					td += '<td>' + data[i]["PR_TYPE"] + '</td>';
 					td += '<td>' + data[i]["PR_RECORD"] + '</td>';
-					td += '<td>' + 0 + '</td>';
 					td += '<td>';
 					td += '<button onclick="location.href=\'/lc/003/lc_get?lc_index='+lc_index+'\'">view';
 					td +=  '</button></td>';

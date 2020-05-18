@@ -177,7 +177,7 @@ public class MB_controller {
 	//앱에서 개인기록 보여주는 페이지 (기록 불러오기)
 	@ResponseBody
 	@RequestMapping(value="/mb_007_1")
-	public  ModelAndView mb_006_1 (HttpServletRequest request, HttpServletResponse response) 
+	public  ModelAndView mb_007_1 (HttpServletRequest request, HttpServletResponse response) 
 			throws JsonProcessingException  {
 			log.info("app/myCourse/detail");
 			HttpSession session = request.getSession();
@@ -206,7 +206,7 @@ public class MB_controller {
 	
 	@RequestMapping(value="/mb_007_1/sort", method = RequestMethod.POST, produces = "application/text;charset=utf8")
 	@ResponseBody
-	public  String mb_006_1_sort (@RequestParam("searchType")String searchType, 
+	public  String mb_007_1_sort (@RequestParam("searchType")String searchType, 
 			@RequestParam("m_index")String m_index, @RequestParam("sort")String sort,
 			HttpServletRequest request, HttpServletResponse response) 
 			throws JsonProcessingException  {
@@ -218,6 +218,35 @@ public class MB_controller {
 		map.put("searchType", searchType);
 		map.put("sort", sort);
 		List<Map<String,String>> list = service.getMyRecordListSort(map);
+		
+		log.info(list);
+		String jsonStr = new ObjectMapper().writeValueAsString(list);
+		//글자 인코딩 설정 (JSON 파싱) //이거보단 위의 produce로 해결된 듯 혹은 둘 다 일 수도.
+		try {
+			jsonStr = URLDecoder.decode(jsonStr, "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			log.info("json parsing error");
+		}
+		return jsonStr;
+	}
+	
+	
+	//관심코스 (앱) 정렬기능
+	@RequestMapping(value="/mb_006_1/sort", method = RequestMethod.POST, produces = "application/text;charset=utf8")
+	@ResponseBody
+	public  String mb_006_1_sort (@RequestParam("searchType")String searchType, 
+			@RequestParam("m_index")String m_index, @RequestParam("sort")String sort,
+			HttpServletRequest request, HttpServletResponse response) 
+			throws JsonProcessingException  {
+		log.info("app/myCourse/detail-ajax "+searchType);
+		log.info("app/myCourse/detail-ajax "+sort);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("m_index", m_index);
+		map.put("searchType", searchType);
+		map.put("sort", sort);
+		List<Map<String,String>> list = service.getMCListAppSort(map);
 		
 		log.info(list);
 		String jsonStr = new ObjectMapper().writeValueAsString(list);
@@ -503,6 +532,7 @@ public class MB_controller {
 			dto.setM_index(member.getM_index());
 			List<MP_001_3_VO> list = mp_001_service.getMCListApp(dto);
 			mav.addObject("list", list);
+			mav.addObject("m_index", dto.getM_index());
 			log.info("list : "+list);
 			
 			log.info("mb_006_1 mav완료");

@@ -156,6 +156,20 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		// TODO Auto-generated method stub
 		return session.selectList("member.myReplys", dto);
 	}
+
+
+	@Override
+	public List<Map<String, String>> replysExceptionX(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return session.selectList("member.replysExceptionX", dto);
+	}
+
+	@Override
+	public void replyX(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		session.update("member.replyX", dto);
+		
+	}
 	
 	
 	

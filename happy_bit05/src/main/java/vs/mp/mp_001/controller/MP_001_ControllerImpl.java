@@ -73,30 +73,30 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				sessionVO.setM_picture("");
 				System.out.println("썸네일 없음.");
 				}
+			
+			//나의 관심코스 리스트
+			dto.setM_index(sessionVO.getM_index());
+			listVO = service.getMCList(dto);
+			mav.addObject("listVO", listVO);
+			
+			//나의 대회 리스트
+			log.info("my competition list");
+			List<AcVO> acvo = service.compeptition_myList(dto);
+			mav.addObject("listCompetition", acvo);
+			
+			//내 모든 글 리스트
+			log.info("my post list");
+			List<Map<String, String>> postList = service.getAllMyPost(dto);
+			mav.addObject("getAllMyPost", postList);
+			
+			//내 글의 댓글
+	        List<Map<String, String>> replyList = service.myReplys(dto);	
+			mav.addObject("replyList", replyList);
+			
 		}catch (Exception e) {
 			// TODO: handle exception
 			log.info(e);
 		}
-		
-		//나의 관심코스 리스트
-		dto.setM_index(sessionVO.getM_index());
-		listVO = service.getMCList(dto);
-		mav.addObject("listVO", listVO);
-		
-		//나의 대회 리스트
-		log.info("my competition list");
-		List<AcVO> acvo = service.compeptition_myList(dto);
-		mav.addObject("listCompetition", acvo);
-		
-		//내 모든 글 리스트
-		log.info("my post list");
-		List<Map<String, String>> postList = service.getAllMyPost(dto);
-		mav.addObject("getAllMyPost", postList);
-		
-		//내 글의 댓글
-        List<Map<String, String>> replyList = service.myReplys(dto);	
-		mav.addObject("replyList", replyList);
-
 		
 		mav.addObject("sessionVO", sessionVO);
 		mav.setViewName("mp/mp_001_1");
@@ -313,6 +313,23 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		model.addAttribute("pageUtil", pageutil);
 		
 		return "mp/mp_001_5";
+	}
+	
+	@Override
+	@RequestMapping(value="/mp/replyX", method=RequestMethod.POST , produces = "application/text;charset=utf8")
+	@ResponseBody
+	public String replyX(Page_DTO dto, HttpServletRequest request) throws Exception{
+		dto.setCom_index(request.getParameter("com_index"));
+		service.replyX(dto);
+        List<Map<String, String>> list = service.replysExceptionX(dto);	
+		log.info("replyX : "+list);
+		
+		String jsonStr = new ObjectMapper().writeValueAsString(list);
+
+		log.info("jsonStr : "+ jsonStr);
+
+		return jsonStr;
+		
 	}
 
 	

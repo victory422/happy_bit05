@@ -49,7 +49,7 @@ public class MB_servieceImpl implements MB_service{
 	
 	@Override
 	public List<Map<String, String>> getMyRecordListSort(Map<String, String> map) {
-		log.info("sort ing");
+		log.info("getMyRecordListSorting");
 		return dao.getMyRecordListSort(map);
 	}
 
@@ -80,5 +80,11 @@ public class MB_servieceImpl implements MB_service{
 	public List<Pr_002_1VO> pr_list() {
 		// TODO Auto-generated method stub
 		return dao.pr_list();
+	}
+
+	@Override
+	public List<Map<String, String>> getMCListAppSort(Map<String, String> map) {
+		log.info("getMCList sort ing");
+		return dao.getMCListAppSort(map);
 	}
 }

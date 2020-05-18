@@ -16,6 +16,8 @@ public class Page_DTO {
 	private String keyword;
 	private String m_index;
 	private String lc_index;
+	private String com_index;
+	
 	
 	
 	public Page_DTO(int page, int amount) {

@@ -73,7 +73,7 @@
 	console.log("세션체크 1 : " + '${sessionVO}');
 	console.log("세션체크 2 : " + sessionStorage.getItem("sessionScript"));
 
-	//remember 기능
+	//remember 기능 시작
 	const rmCheck = document.getElementById("rememberMe");
 	const idInput = document.getElementById("m_id");
 	if(localStorage["checked"]=='true') {
@@ -115,7 +115,7 @@
 			
 		})
 	})
-
+	//리멤버기능 끝
 
 	function login() {
 		sessionStorage.setItem("sessionScript", '${sessionVO.m_index}');
