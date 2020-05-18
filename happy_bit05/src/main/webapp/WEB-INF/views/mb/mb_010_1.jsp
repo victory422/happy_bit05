@@ -201,7 +201,7 @@ h1 {
 					<tr >
 						<th>게시글 제목</th>
 						<th>코스 명</th>
-						<th>날자</th>
+						<th>날짜</th>
 						<th>기록</th>
 					</tr>
 				</thead>

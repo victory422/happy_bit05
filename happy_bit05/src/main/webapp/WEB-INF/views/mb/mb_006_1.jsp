@@ -234,7 +234,7 @@ h1 {
 		<div id="myCourse">
 				<h1 style="text-align: center;">기록 측정하기</h1>
 		<h4 style="text-align: center;">측정하고싶은 기록을 클릭해주세요.</h4>
-			<table class="rwd-table" style="margin-top: 30px;table-layout:fixed;">
+			<table class="rwd-table" style="width:100%;margin-top: 30px;table-layout:fixed;">
 				<tr class="active">
 					<th width="50">제목</th>
 					<th width="12%">코스유형</th>
