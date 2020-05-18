@@ -113,7 +113,7 @@ public class MB_controller {
 		member = (LO_001_VO) session.getAttribute("sessionVO");
 		
 		dto.setM_index(member.getM_index());
-		List<MP_001_3_VO> listVO = mp_001_service.getMCList(dto);
+		List<MP_001_3_VO> listVO = mp_001_service.getMCListApp(dto);
 		return listVO;
 	}
 	
@@ -310,7 +310,7 @@ public class MB_controller {
 			model.addAttribute("m_index", vo.getM_index());
 			model.addAttribute("sessionVO", session.getAttribute("sessionVO"));
 		}
-		
+		model.addAttribute("type",listVO.get(0).getLc_type());
 		model.addAttribute("lc_list", listVO);
 		
 	}
@@ -489,7 +489,7 @@ public class MB_controller {
 			HttpServletRequest request, HttpServletResponse response 
 			) throws Exception {
 		MemberLoginInterceptor login = new MemberLoginInterceptor();
-		
+		dto.setAmount(1000);
 		
 		ModelAndView mav = new ModelAndView();
 		HttpSession session = request.getSession();

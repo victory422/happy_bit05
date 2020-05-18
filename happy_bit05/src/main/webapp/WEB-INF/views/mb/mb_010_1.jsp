@@ -195,24 +195,24 @@ h1 {
 		
 				</div>
 			</form>
-			<table class="table-responsivetable-responsive rwd-table table-hover"
-				style="margin-top: 30px;width:100%;table-layout:fixed">
+			<table class="rwd-table"
+				style="margin-top: 30px;width:100%;table-layout:fixed;">
 				<thead>
-					<tr style="width: 100%;">
-						<th width="29%">제목</th>
-						<th width="29%">코스 제목</th>
-						<th width="26%">일자</th>
-						<th width="16%">기록</th>
+					<tr >
+						<th>게시글 제목</th>
+						<th>코스 명</th>
+						<th>날자</th>
+						<th>기록</th>
 					</tr>
 				</thead>
 		
 				<tbody>
 					<c:forEach items="${data}" var="data">	
-						<tr style="width: 100%;" onClick = "location.href='/mb/pr_003_1?pr_index=${data.pr_index}'">			
-							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important; ">${data.pr_title }</td>
-							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.lc_title }</td>
-							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.pr_recordDate }</td>
-							<td style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap; padding: 0.5em !important;">${data.pr_record }</td>
+						<tr onClick = "location.href='/mb/pr_003_1?pr_index=${data.pr_index}'">			
+							<td data-th="제목">${data.pr_title }</td>
+							<td data-th="코스 명">${data.lc_title }</td>
+							<td data-th="날자">${data.pr_resistDate }</td>
+							<td data-th="기록">${data.pr_record }</td>
 						</tr>
 					</c:forEach>
 				</tbody>

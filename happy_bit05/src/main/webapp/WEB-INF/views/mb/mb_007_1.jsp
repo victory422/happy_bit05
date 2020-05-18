@@ -178,7 +178,7 @@ nav ul li {
 }
 
 body {
-  padding: 0 2em;
+  padding: 0 0em;
   font-family: sans-serif;
   color: #444;
   background: #eee;
@@ -232,14 +232,14 @@ h1 {
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
 		<h1 style="text-align: center;">기록 자랑하기</h1>
-		<h4 style="text-align: center;">업로드하고싶은 기록을 클릭해주세요.</h4>
-			<table class="table-responsive rwd-table table-hover" style="margin-top: 0px;">
+		<h4 style="text-align: center;">자랑하고싶은 기록을 클릭해주세요.</h4>
+			<table class="rwd-table" style="margin-top: 0px;">
 				<tr class="active"
 					style="font-weight: bold;">
-					<td width="40%" onclick="sort('LC_TITLE')">코스 제목</td>
-					<td width="12%" onclick="sort('PR_TYPE')">코스유형</td>
-					<td width="12%"onclick="sort('LC_DISTANCE')">거리<small>(km)</small></td>
-					<td width="21%"onclick="sort('PR_RECORD')">기록</td>
+					<th width="50%" onclick="sort('LC_TITLE')">코스 명</th>
+					<th width="17%" onclick="sort('PR_TYPE')">코스유형</th>
+					<th width="12%"onclick="sort('LC_DISTANCE')">거리<small>(km)</small></th>
+					<th width="21%"onclick="sort('PR_RECORD')">기록</th>
 
 
 				</tr>
@@ -254,10 +254,10 @@ h1 {
 						<tr id="corseDetail" class="success" 
 							onclick="upload('${val.PR_INDEX}')">
 							<!-- lc_index값 없음  글 업로드 페이지로 가야함  혁희-->
-							<td width="30%">${val.LC_TITLE}</td>
-							<td width="8%">${val.PR_TYPE}</td>
-							<td width="8%">${val.LC_DISTANCE}</td>
-							<td width="14%">${val.PR_RECORD}</td>
+							<td data-th="코스 명">${val.LC_TITLE}</td>
+							<td data-th="코스유형">${val.PR_TYPE}</td>
+							<td data-th="거리">${val.LC_DISTANCE}</td>
+							<td data-th="기록">${val.PR_RECORD}</td>
 							<%-- <td>
 								<button
 									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">

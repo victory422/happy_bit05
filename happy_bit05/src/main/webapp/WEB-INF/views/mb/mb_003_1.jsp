@@ -85,8 +85,8 @@ padding: 20px 16px;
 	</div>
 	<div class="container" style="max-width: 100%;">
 		<br>
-		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=자전거'">자전거 코스보기</button>
-		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=육상'">육상 코스보기</button>
+		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=자전거'">자전거 코스</button>
+		<button type="button" class="btn btn-success btn-lg btn_inline" onclick="location.href='/mb/lc_002_1?lc_type=육상'">육상 코스</button>
 		<br>
 		<br>
 		<button type="button" class="btn btn btn-primary btn-lg btn-block" onclick="location.href='/mb/myCourse'">기록 재기</button>
