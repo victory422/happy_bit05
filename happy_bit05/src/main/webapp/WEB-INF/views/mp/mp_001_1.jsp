@@ -133,8 +133,8 @@ img {
     	</ol>
         <div class="card-custom">
 			
-			<form action="/mp/memberUpdate" method="post" name="userinput" enctype="multipart/form-data">
-			<table class="table-responsive" style="margin:auto;" id="memberTable">
+			<form action="/mp/memberUpdate" method="post" name="userinput" enctype="multipart/form-data" id="memberTable" >
+			<table class="table-responsive" style="margin:auto;" id="">
 	          	<tr id="tr">
 	          		<td rowspan="6" class="thumbnail-wrapper" id="m_picture" style="width: 40%;">
 	          			<img alt="" src="data:image/jsp;base64, ${sessionVO.m_picture}"/>
@@ -168,7 +168,7 @@ img {
 	            </tr>
 	          	<tr>
 	          		<td colspan="4" class="td" id="confirmBtn" style="background-color: #C0FFFF;">
-	          			<a id="btn" onclick="pwChk(1)" class="btn btn-primary " 
+	          			<a id="btn" onclick="pwChk(1)" class="btn-primary " 
 	          			style="color: #fff; font-weight: 400; cursor: pointer; width : 70%;
 	          			background-color: #6c757d; border-color: #6c757d;">회원정보 수정 </a> 
 	          		</td>
@@ -408,6 +408,13 @@ img {
 
 <script type="text/javascript">
 
+window.onload = function() {
+	console.log("path : "+'${path}');
+	if('${path}'=='/mp/memberUpdate'){
+		location = '/mp';
+	}
+}
+
 function pwChk(check) {
 	var url = "/lo2";
 	var name = "비밀번호 확인";
@@ -420,7 +427,8 @@ function pwChk(check) {
 	}else if(check=='2') {
 		//썸네일 업로드 확인 (없을 시 기존 썸네일로 대체하기 위함)
 		var thumbnail = document.getElementById('file'); //input file Element
-		
+			console.log("썸네일 null : ");
+			console.log(thumbnail.value == "");
 		if(thumbnail.value == ""){ //썸네일 없을 시 input file 삭제
 			var m_picture = document.getElementById('m_picture');
 			m_picture.removeChild(thumbnail);
@@ -433,12 +441,12 @@ function pwChk(check) {
 	}else if(check=='-1'){
 		location = '/mp';
 	}
+	console.log("open login window");
 	window.open(url, name, option);
 	console.log(document.getElementById('btn').firstChild.nodeValue);
 }
 
 function pClose() {
-	console.log('aaa??');
 	var passwordCheck = document.getElementById("passwordConfirm2").value;
 	console.log(passwordCheck);
 	if(passwordCheck == 'true') {
@@ -447,14 +455,15 @@ function pClose() {
     	passwordCheck = null;
     	
 	}else if(passwordCheck == 'updateTrue') {
+		alert("updateTrue");
 		document.getElementById('btn').firstChild.nodeValue = "비밀번호 확인";
 		document.getElementById('btn').setAttribute("onclick","pwChk(1)");
 		passwordCheck = null;
 		
 		//  /mp/memberUpdate로 서브밋	
-		var form = document.userinput;
-	    form.submit();
-	    window.location.replace("/mp");
+		var formId = document.getElementById('memberTable');
+		console.log(formId);
+		formId.submit();
 	    
 	}else{
 		alert("회원정보 수정 취소");
@@ -578,7 +587,7 @@ function goPage(tableName, t_index ) {
 			break;
 			
 		case '트레이닝TIP' :
-			alert("아직 페이지 세팅 전");
+			location.href = '/lt/lt_004_1?index='+t_index;
 			break;
 			
 			default : alert("error!");

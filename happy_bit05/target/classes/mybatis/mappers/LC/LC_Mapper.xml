@@ -82,34 +82,32 @@
 					from
 						course c join member m
 					on
+						m.m_index = c.m_index
+					and
 		]]>	
-					<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
+			<trim prefix=" (" suffix=") AND" prefixOverrides="OR">
 					<trim prefix="OR">
 						<choose>
 							<when test = "lc_type == '육상'">
-								lc_type like '%'||#{lc_type}||'%'
+								c.lc_type like '%'||#{lc_type}||'%'
 							</when>
 							<when test = "lc_type == '자전거'">
-								lc_type like '%'||#{lc_type}||'%'
+								c.lc_type like '%'||#{lc_type}||'%'
 							</when>
 						</choose>
 					</trim>
 			</trim>
-		<![CDATA[
-						m.m_index = c.m_index
-					and
-		]]>	
 		
 			<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 				<foreach item="type" collection="typeArr">
 					<trim prefix="OR">
 						<choose>
 							<when test = "type == 'normal'.toString()">
-								lc_title like '%'||#{keyword}||'%') or (m_nickname like '%'||#{keyword}||'%'
+								c.lc_title like '%'||#{keyword}||'%') or (m.m_nickname like '%'||#{keyword}||'%'
 							</when>
 							<when test = "type == 'area'.toString()">
-								lc_area1 like '%'||#{keyword}||'%') or (lc_area2 like '%'||#{keyword}||'%') or
-								(lc_area3 like '%'||#{keyword}||'%'
+								c.lc_area1 like '%'||#{keyword}||'%') or (c.lc_area2 like '%'||#{keyword}||'%') or
+								(c.lc_area3 like '%'||#{keyword}||'%'
 							</when>
 						</choose>
 					</trim>

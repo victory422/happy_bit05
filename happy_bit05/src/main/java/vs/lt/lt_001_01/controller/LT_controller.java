@@ -94,6 +94,25 @@ public class LT_controller {
 		vo.setM_nickname(member.getM_nickName());
 		service.regist(vo);
 		
+		HashMap<String,Object> hashmap = new HashMap<String,Object>();
+		
+		hashmap.put("board_index", vo.getLt_index());
+		if(member != null) {
+		hashmap.put("m_index", member.getM_index());
+		}
+		if(member!= null) {
+			
+			int row_check = service.good_count(hashmap);
+			
+			if(row_check == 0) {
+				log.info("로우 생성중");
+				service.good_insert(hashmap);
+				log.info("로우 생성완료");
+			}else {
+				log.info("로우가 이미 생성되어있음");
+			}
+		}
+		
 		return url_mapping(vo.getLt_b_type());
 	}
 	
@@ -253,7 +272,7 @@ public class LT_controller {
 			return obj.toString();
 		}
 		
-	}
+	}	
 	
 	
 	

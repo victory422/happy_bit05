@@ -52,7 +52,7 @@
 		 <form id="form" method="post" onsubmit="return check_fn()" >
 			<c:forEach var="board" items="${page }">
 				<input type="hidden" name="li_index" value="${board.li_index }"/>
-				<input type="text" name="li_b_type" value="${board.li_b_type }"/>
+				<input type="hidden" name="li_b_type" value="${board.li_b_type }"/>
 			</c:forEach>
 			 <!--	<c:forEach var="board" items="${page }">
 					<c:choose>
@@ -178,8 +178,6 @@
 		      </div> -->
 	
 				<div class="row justify-content-md-center">
-					<button type="submit" class="btn btn-danger" 
-						style="width: 10%; font-weight: bold; margin-bottom: 30px">취소</button>
 					<button type="submit" id="btnsave" class="btn btn-outline-secondary"
 						style="width: 10%; font-weight: bold; margin-bottom: 30px; margin-left: 10px"
 													<c:forEach var="board" items="${page }">

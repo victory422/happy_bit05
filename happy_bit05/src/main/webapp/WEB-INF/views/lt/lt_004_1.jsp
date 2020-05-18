@@ -46,7 +46,7 @@
 	<!--에이작스로 넘겨룰 히든값  -->
 	<input type="hidden" id="li_index" name="li_index" value="${board.li_index }"/>
 <c:forEach var="board" items="${page }">
-<div class="container">
+<div class="container" style="margin-top: 30px;">
 
 <div class="row board_style">
   <div class="col-md-8"><h1>제목 : ${board.lt_title }</h1></div>

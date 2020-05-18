@@ -61,12 +61,11 @@
 	})
 	  	
 	</script>
-<%@ include file="../includes/middle.jsp"%>
 <body>
 
 	<c:forEach var="board" items="${page }">
 
-		<div class="container">
+		<div class="container" style="margin-top: 30px;">
 <form id="page_info">
 	
 	<!--에이작스로 넘겨룰 히든값  -->
