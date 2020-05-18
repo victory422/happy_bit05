@@ -131,5 +131,28 @@ public class LT_ServiceImpl implements LT_Service{
 			// TODO: handle exception
 		}
 	}
+	
+	@Override
+	public int good_cnt(HashMap<String, Object> hashmap) {
+		return sqlsession.selectOne("li.good_cnt", hashmap);
+	}
+	
+	@Override
+	public int good_count(HashMap<String, Object> hashmap) {
+		try {
+			return sqlsession.selectOne("good.good_count",hashmap);
+		} catch (Exception e) {
+			log.info("--good_count 에러   : "+e);
+			return 0;
+		}
+	}
+	
+	@Override
+	public void good_insert(HashMap<String, Object> hashmap) {
+		// TODO Auto-generated method stub
+		sqlsession.insert("good.check_row_insert",hashmap);
+		
+		log.info("로우 인서트 ");
+	}
 
 }

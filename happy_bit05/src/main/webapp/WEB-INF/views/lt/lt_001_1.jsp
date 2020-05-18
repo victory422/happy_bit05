@@ -71,7 +71,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </head>
 <body>
-<%@ include file="../includes/middle.jsp"%>
 	<form method="get">
 <input type="hidden" name="lt_b_type" value="질문게시판">
 	<div class="container">
@@ -135,7 +134,7 @@
 							<td>${board.lt_index }</td>
 							<td>${board.lt_tier }</td>
 							<td>${board.lt_type }</td>
-							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'">${board.lt_title }</td>
+							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'"><button type="button" onclick="location.href='/lt/lt_004_1?page=${page }&lt_index=${board.lt_index }&lt_b_type=${board.lt_b_type}'" class="btn btn-link">${board.lt_title }</button></td>
 							<td>${board.m_nickname }</td>
 							<td>${board.lt_date }</td>
 							<td>${board.lt_see }</td>

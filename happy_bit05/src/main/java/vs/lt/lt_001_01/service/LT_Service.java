@@ -27,5 +27,11 @@ public interface LT_Service {
 	public int increse_good(HashMap<String, Object> hashmap);
 
 	public int decrese_good(HashMap<String, Object> hashmap);
+
+	public int good_cnt(HashMap<String, Object> hashmap);
+
+	public int good_count(HashMap<String, Object> hashmap);
+
+	public void good_insert(HashMap<String, Object> hashmap);
 	
 }

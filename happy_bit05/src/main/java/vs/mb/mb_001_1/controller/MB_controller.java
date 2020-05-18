@@ -542,7 +542,7 @@ public class MB_controller {
 		log.info("기록 게시글 인덱스 : "+pr_index);
 		Pr_002_1VO vo = service.upload(pr_index);
 		model.addAttribute("lc_get", vo);
-		log.info("기록 업로드에서 LC_INDEX : "+vo.getLc_index());
+		log.info("기록 업로드에서 LC_INDEX : "+vo.getLc_index());  
 		return "/mb/mb_008_1";
 	}
 	
