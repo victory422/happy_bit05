@@ -64,7 +64,6 @@
 		var passwordUpdate = sessionStorage.getItem("passwordUpdate");
 		console.log(passwordUpdate);
 		if(passwordUpdate=='0' && pw==returnPw &&pw!=null) {
-			console.log("수정 중인 비밀번호 확인");
 			alert("비밀번호가 확인되었습니다.");
 			sessionStorage.removeItem("password");
 			sessionStorage.removeItem("passwordUpdate");
@@ -74,8 +73,6 @@
 			opener.pClose();
 			window.close();
 		}else if(pw==returnPw && passwordUpdate==null && pw != null && pw != "") {
-			console.log("pw  : " +pw);
-			console.log("DB에서 비밀번호 확인");
 			alert("비밀번호가 확인되었습니다.");
 			sessionStorage.removeItem("password");
 			opener.document.getElementById("passwordConfirm2").value = 'true';
