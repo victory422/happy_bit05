@@ -51,7 +51,7 @@ public class MP_001_DaoImpl implements MP_001_Dao{
 		log.info("my코스  상세조회.....DAO");
 		log.info("getMyCourse : "+dto);
 		List<Map<String, String>> list = session.selectList("member.getMyCourseDetail", dto);
-		log.info(list);
+		log.info("getMyCourseDetail : "+list);
 		return list;
 	}
 	

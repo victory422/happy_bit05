@@ -445,7 +445,7 @@ ajaxPage(lc_index, m_index, 1);
 	    type : "POST",  
 	    url : "/mp/myCourse/detail",  
 	    data : { "lc_index" :lc_index, 
-	    		 "m_index" : sessionStorage.getItem("sessionScript"),
+	    		 "m_index" : m_index,
 	    		 "page" : pageNum},
 	    dataType : "json",
 	    success : function(data){
