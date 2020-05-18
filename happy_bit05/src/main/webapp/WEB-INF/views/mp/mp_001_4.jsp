@@ -218,7 +218,7 @@
 				break;
 				
 			case '트레이닝TIP' :
-				alert("아직 페이지 세팅 전");
+				location.href = '/lt/lt_004_1?index='+t_index;
 				break;
 				
 				default : alert("error!");
