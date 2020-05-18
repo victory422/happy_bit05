@@ -68,7 +68,8 @@
 				 });
         
     </script>
-
+<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
 </head>
 <body>
 <!-- 지도 관련 파라미터들 -->
@@ -81,8 +82,6 @@
 <input type="hidden" id="mylon" />
 
 
-<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
 
 <div class="container">
     <div class="row">
@@ -106,20 +105,19 @@
             <h2><div id="distance"></div></h2>
 
             <button type="button" id="startbtn" class="btn btn-default btn-lg">Start</button>
-            <button type="button" id="pausebtn" class="btn btn-danger btn-lg btnStop">Stop</button>
             <br>
             <br>
             <div id="upload"><br></div>
             <br>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
+            <button type="button" id="change-course" class="btn btn-default btn-sm" data-toggle="modal" data-target="#myModal">
                 경로 변경
             </button>
             <button type="button" class="btn btn-default btn-sm" onclick="myPosition()">
                 내 위치
             </button>
-            <button type="button" class="btn btn-default btn-sm" onclick="coursePosition()">
-     	  다음경로
+            <button type="button" id="start-point" class="btn btn-default btn-sm" onclick="coursePosition()">
+     	  출발지점
             </button>
             
             <!-- 지도를 표시할 div 입니다 -->
@@ -171,6 +169,11 @@ function buttonEvt(){
   // start btn
   $(".btnStart").click(function(){
 
+	  
+	  //다른 버튼들 클릭이벤트 제거
+		$('#start-point').off('click');
+		$('#change-course').off('click');  
+	
     if(starFlag){
       $(".fa").css("color","#FAED7D")
       this.style.color = "#4C4C4C";
@@ -379,8 +382,6 @@ function buttonEvt(){
 	    			if(xy_arr.length <= 2){
 	    				clearInterval(timer);
 	    			      starFlag = true;
-
-	    			      var $button = $('<button class="btn btn-primary">upload업로드</button>');
 
 	    			      $('#upload').html($button);
 	    			      
@@ -882,6 +883,7 @@ function regist(){
 		},
 		success: function(data) {
 			 alert("수고하셨습니다. 기록은 자동 저장됩니다.");
+			 window.location.href = "/mb/mb_007_1"
 		},
 		 error: function(request, status, error){
 			 alert("저장 오류");

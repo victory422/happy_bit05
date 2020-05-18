@@ -31,24 +31,35 @@ public class LT_controller {
 	
 	@RequestMapping("/lt_001_1")
 	public void lt_001_1(Model model,Page_DTO dto,HttpSession session) {
-		
 		member = (LO_001_VO) session.getAttribute("sessionVO");
+		
+		if(member != null) {
+			//////////////////////////////////로그인 세션
+			model.addAttribute("member", member);
+			}
+		
+		for(int i= 0; i<dto.getTypeArr().length; i++) {
+			model.addAttribute("type"+i,dto.getTypeArr()[i]);
+			}
+		
 		
 		log.info(" -----------------------------질문 게시판 ------------------------------");
 		dto.setBoard("질문게시판");
 		
 		log.info("게시판 유형" +dto.getBoard());
 
+		
 		List<LT_VO> vo = service.get_list(dto);
 
-		model.addAttribute("list", service.get_list(dto));
-		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
+		
 		
 		model.addAttribute("type",dto.getTypeArr());
 		model.addAttribute("list", vo);
 		model.addAttribute("pageUtil",new PageUtil(dto,service.get_total(dto)));
 		model.addAttribute("page", dto.getPage());
 		log.info("검색 type : "+dto.getType());
+		
+
 		
 	}
 	@RequestMapping("/lt_002_1")

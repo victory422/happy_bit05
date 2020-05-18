@@ -136,7 +136,7 @@
 							<td>${board.lt_tier }</td>
 							<td>${board.lt_type }</td>
 							<td onclick="location.href='/lt/lt_004_1?index=${board.lt_index }'">${board.lt_title }</td>
-							<td>${board.nickname }</td>
+							<td>${board.m_nickname }</td>
 							<td>${board.lt_date }</td>
 							<td>${board.lt_see }</td>
 							<td>${board.lt_good }</td>
@@ -148,7 +148,19 @@
 			
 			<div id="row">
 				<div class="col-md-6">
-					<a href="/lt/lt_003_1?lt_b_type=질문게시판"><button type="button" class="btn btn-success">글작성</button></a>
+				<c:choose>
+					<c:when test="${member ne null}">
+						<div class="col-md-12">
+							<a href="/lt/lt_003_1?lt_b_type=질문게시판"><button type="button" class="btn btn-success">글작성</button></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="col-md-12">
+							<button type="button" onclick="need_login()" class="btn btn-success">글작성</button>
+						</div>
+					</c:otherwise>
+				</c:choose>
+					
 				</div>
 			<!-- 페이징  -->
 				<div class="col-md-6">
@@ -169,4 +181,11 @@
 		</div>
 	</div>
 	</form>	
+	
+	<script type="text/javascript">
+	
+	function need_login() {
+		alert('로그인이 필요합니다.')
+	}
+	</script>
 	<%@ include file="../includes/footer.jsp"%>

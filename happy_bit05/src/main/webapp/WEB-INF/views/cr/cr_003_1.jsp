@@ -38,7 +38,7 @@
 				<div class="text_container text_padding">
 				${data.co_r_text }
 				</div>
-			</div>\
+			</div>
 			<div class="box">
 				<div id="" class="padding_1">
 				<!-- 좋아요 기능 -->

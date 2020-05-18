@@ -60,7 +60,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		Page_DTO dto = new Page_DTO();
 		List<MP_001_3_VO> listVO = new ArrayList<MP_001_3_VO>();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
-		log.info(sessionVO);
 		
 		try {
 			//썸네일 주입
@@ -78,14 +77,12 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 				//나의 대회 리스트
 				log.info("my competition list");
 				List<AcVO> acvo = service.compeptition_myList(dto);
-				log.info(acvo);
 				mav.addObject("listCompetition", acvo);
 				
 				//내 모든 글 리스트
 				log.info("my post list");
 				List<Map<String, String>> postList = service.getAllMyPost(dto);
 				mav.addObject("getAllMyPost", postList);
-				log.info(postList);
 				
 				//내 글의 댓글
 		        List<Map<String, String>> replyList = service.myReplys(dto);	
@@ -198,7 +195,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		HttpSession session = request.getSession();
 		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
 		Map<String, Object> hmap = new HashMap<String, Object>();
-		log.info("memberUpdate 중 : "+vo);
 		
 		//vo에 부족한 값 sessionVO 에서 주입
 		vo.setM_index(sessionVO.getM_index());
@@ -234,7 +230,6 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		if(sessionVO.getRequest_thumbnail() != null) {
 			byte[] imageContent = Base64.getEncoder().encode(sessionVO.getRequest_thumbnail());
 			String thumbnail = new String(imageContent);
-			log.info(thumbnail);
 			sessionVO.setM_picture(thumbnail);
 		}else {
 			sessionVO.setM_picture("");

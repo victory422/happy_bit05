@@ -48,30 +48,34 @@
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 		<![CDATA[ 
 		insert into trainning (lt_index, lt_b_type, m_index,m_nickname,lt_text, lt_type, lt_date, lt_title, lt_tier, lt_see, lt_good) 
-		values ('lt_'||seq_lt.nextval, #{lt_b_type}, #{m_index},#{nickname},  #{lt_text}, #{lt_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{lt_title}, #{lt_tier},0,0)
+		values ('lt_'||seq_lt.nextval, #{lt_b_type}, #{m_index},#{m_nickname},  #{lt_text}, #{lt_type}, TO_CHAR(sysdate,'YYYY/MM/DD HH24:MI:SS'), #{lt_title}, #{lt_tier},0,0)
 		]]>
 	</insert>
 
 
-	<!-- 리스트 페이징해서 출력하는 쿼리 -->
-	<select id="get_list" resultType="LT_VO">
+	
+<select id="get_list" resultType="LT_VO">
 		<!-- CDATA 범위안에 태그처리를 막아줌 -->
 <![CDATA[ 
-select lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good,m_index,m_nickname as nickname
-from
-        (        
-        select rownum rn, lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good, substr(lt_index, 4) as sort
-        from trainning
-        where 
-        ]]>
-		<include refid="Page_DTO" /> 
-        <![CDATA[ 
-        rownum <= (#{page} * #{amount})
-        and lt_index > '0'
-        and lt_b_type = TRIM(#{board})
-        order by to_number(sort) desc
-        )
-where rn > ((#{page}-1) * #{amount})
+	 select  lt_index, lt_b_type, lt_date, lt_text, lt_type, lt_title, lt_tier, lt_see, lt_good, lt_index,m_nickname
+	 from(
+		select rownum rn, a.*
+		from
+		        (
+			        select t.lt_index, t.lt_b_type, t.lt_date, t.lt_text, t.lt_type, t.lt_title, t.lt_tier, t.lt_see, t.lt_good, substr(t.lt_index, 4) as sort,m.m_nickname
+			        from trainning t,member m
+			        where 
+			        ]]>
+			        	<include refid="Page_DTO"/>
+			        <![CDATA[ 
+			        lt_index > '0'
+			        and t.m_index = m.m_index
+			        and t.lt_b_type = TRIM(#{board})
+			        order by to_number(substr(lt_index, 4)) desc
+		        )a
+		where rownum <= (#{page} * #{amount})
+		)
+	where rn > ((#{page}-1) * #{amount})
 ]]>
 	</select>
 	<!-- <select id="get_list" parameterType="vs.li.lt_001_01.vo.lt_VO" resultType="vs.li.lt_001_01.vo.lt_VO"> 

@@ -152,6 +152,8 @@ h1 {
   color: #dd5;
 }
 </style>
+<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
 </head>
 
 <script type="text/javascript">
@@ -194,8 +196,7 @@ h1 {
 	
 	
 </script>
-<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
+
 <body style="padding-right: 0px;padding-left: 0px;">
 <main role="main">
 		<!-- 게시글 리스트 출력 테이블 -->
