@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.log4j.Log4j;
+import vs.ms.ms_001.service.AmazonSESSample;
 import vs.ms.ms_001.service.MS_001_SaService;
 import vs.ms.ms_001.vo.MS_001_VO;
 
@@ -25,6 +26,7 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 	
 	@Autowired
 	private MS_001_SaService ms_001_Service;
+	private AmazonSESSample aws;
 	
 	@Override
 	@RequestMapping(value="/ms")
@@ -68,7 +70,7 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 		ms_001_Service.registThumbnail(hmap);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("lo/lo_001_1");
-		request.setAttribute("memberList", ms_001_vo);
+		//request.setAttribute("memberList", ms_001_vo);
 		return mav;
 	}
 	
@@ -118,6 +120,7 @@ public class MS_001_ControllerImpl implements MS_001_Controller {
 		int key = ran.hashCode();
 		log.info("key : "+key);
 		ms_001_Service.mailSender(mail, id, key, request);
+		//aws.awsEmailSending();
 
 		return key;
 	}
