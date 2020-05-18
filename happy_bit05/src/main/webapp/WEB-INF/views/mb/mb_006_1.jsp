@@ -222,14 +222,13 @@ h1 {
 
 
 </script>
-
+<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
 </head>
 <body>
 
 
 
-	<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
 
 <!-- 게시글 리스트 출력 테이블 -->
 		<div id="myCourse">

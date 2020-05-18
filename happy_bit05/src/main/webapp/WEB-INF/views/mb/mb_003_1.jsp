@@ -73,9 +73,10 @@ padding: 20px 16px;
 	.map {margin:0;}
 
 </style>
-</head>
 <!-- Navigation -->
 <%@ include file="../includes/mobile_topbar.jsp"%>
+</head>
+
 
 
 <body>

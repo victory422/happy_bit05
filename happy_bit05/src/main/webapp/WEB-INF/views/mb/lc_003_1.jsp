@@ -60,9 +60,9 @@
 	.map {margin:0;}
 
 </style>
-
-</head>
 <%@ include file="../includes/mobile_topbar.jsp"%>
+</head>
+
 <div class="container col-md-10 bg-light" style="padding:0px;">
 	
 		HOME > 코스 > ${lc_get.lc_type }

@@ -220,14 +220,14 @@ h1 {
 
 
 </script>
-
+	<!-- Navigation -->
+<%@ include file="../includes/mobile_topbar.jsp"%>
 </head>
 <body>
 
 
 
-	<!-- Navigation -->
-<%@ include file="../includes/mobile_topbar.jsp"%>
+
 
 <!-- 게시글 리스트 출력 테이블 -->
 		<div class="table-responsive" id="myCourse">
@@ -338,7 +338,6 @@ function upload(pr_index){
 	var upload = confirm('이 기록을 업로드 하시겠습니까?')
 	var pr_index = pr_index;
 	if (upload){
-		alert("페이지이동경로 넣기");
 		location.href="/mb/upload?pr_index="+pr_index
 	}
 }
