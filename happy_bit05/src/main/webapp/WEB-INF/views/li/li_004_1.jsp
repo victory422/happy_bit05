@@ -70,7 +70,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 </head>
 <body>
-<%@ include file="../includes/middle.jsp"%>
 	<!-- 넘겨줄값들 -->
 	<input type="hidden" name="li_b_type" value="자랑게시판">
 		<input type="hidden" name="page" value="1"/>

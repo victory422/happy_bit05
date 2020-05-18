@@ -1,5 +1,6 @@
 package vs.lt.lt_001_01.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,14 +16,14 @@ import vs.lt.lt_001_01.vo.LT_VO;
 public class LT_ServiceImpl implements LT_Service{
 	
 	@Autowired
-	private SqlSession session;
+	private SqlSession sqlsession;
 	
 	//인서트 -----------------------------------------------------
 	@Override
 	public void regist(LT_VO vo) {
 		try {
 			log.info("글 등록중-------------------");
-			session.insert("lt.insert", vo);
+			sqlsession.insert("lt.insert", vo);
 			log.info("글등록 완료");
 			
 		} catch (Exception e) {
@@ -42,7 +43,7 @@ public class LT_ServiceImpl implements LT_Service{
 				dto.setInput_text("");
 			}
 			
-			return session.selectList("lt.get_list", dto);
+			return sqlsession.selectList("lt.get_list", dto);
 			
 		} catch (Exception e) {
 			log.info(e);
@@ -57,7 +58,7 @@ public class LT_ServiceImpl implements LT_Service{
 	public int get_total(Page_DTO dto) {
 		try {
 			
-			return session.selectOne("lt.get_total", dto);
+			return sqlsession.selectOne("lt.get_total", dto);
 			
 		} catch (Exception e) {
 			log.info(e);
@@ -69,7 +70,7 @@ public class LT_ServiceImpl implements LT_Service{
 	@Override
 	public List<LT_VO> search_list(LT_VO vo) {
 		try {
-			return session.selectList("lt.search_list", vo);
+			return sqlsession.selectList("lt.search_list", vo);
 		} catch (Exception e) {
 			log.info(e);
 			return null;
@@ -83,7 +84,7 @@ public class LT_ServiceImpl implements LT_Service{
 	public List<LT_VO> detail_page(String index) {
 
 		try {
-			return session.selectList("lt.detail_page",index);
+			return sqlsession.selectList("lt.detail_page",index);
 			
 		} catch (Exception e) {
 			log.info(e);
@@ -93,8 +94,42 @@ public class LT_ServiceImpl implements LT_Service{
 	}
 
 
+	@Override
+	public int good_check(HashMap<String, Object> hashmap) {
+		try {
+			log.info(hashmap.get("board_index"));
+			log.info(hashmap.get("m_index"));
+			//good_check 테이블에서   good_check 컬럼을 조회해서 리턴해준다.
+			return sqlsession.selectOne("good.check",hashmap); 
+			}catch(Exception e){
+				log.info("good_check 에러: "+e);
+				return 0;
+				}
+	}
 
-
-	
+	@Override
+	public int increse_good(HashMap<String, Object> hashmap) {
+		// TODO Auto-generated method stub
+		try {
+			int good_cnt = sqlsession.update("li.good_increse",hashmap);
+			log.info("좋아요 수 : "+good_cnt);
+			return sqlsession.update("good.like_check",hashmap);
+		} catch (Exception e) {
+			log.info("good_check_increse 에러: "+e);
+			return 0;
+		}
+	}
+	@Override
+	public int decrese_good(HashMap<String, Object> hashmap) {
+		try {
+			int good_cnt = sqlsession.update("li.good_decrese",hashmap);
+			log.info("좋아요 수 : "+good_cnt);
+			return sqlsession.update("good.like_check_cancel",hashmap);
+		} catch (Exception e) {
+			log.info("good_check_decrese 에러: "+e);
+			return 0;
+			// TODO: handle exception
+		}
+	}
 
 }
