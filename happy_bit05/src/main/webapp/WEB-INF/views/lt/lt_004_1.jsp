@@ -15,8 +15,36 @@
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<%@ include file="../includes/middle.jsp"%>
+  	<script type="text/javascript">
+	$(document).ready(function(){
+		(function(){
+			var lt_index = $('#lt_index').val();
+			$.ajax({
+				url: "../lt/like_check",
+				type: "GET",
+				cache: false,
+				dataType: "json",
+				data: 'lt_index=' +lt_index,
+				success: function(data) {
+					 if(data.good_check == 0){
+					        like_img = "/resources/img/dislike.png";
+					      } else {
+					        like_img = "/resources/img/like.png";
+					      }
+					      $('#like_img').attr('src', like_img);
+					     
+				},
+				 error: function(request, status, error){
+					colsole.log("비회원");
+				 }
+				 })
+			})();
+
+	})
+	</script>
 <body>
+	<!--에이작스로 넘겨룰 히든값  -->
+	<input type="hidden" id="li_index" name="li_index" value="${board.li_index }"/>
 <c:forEach var="board" items="${page }">
 <div class="container">
 
@@ -37,6 +65,59 @@
 							<div class="text_container">
 							${board.lt_text }
 							</div>
+							
+							
+					<!-- 좋아요 기능 -->
+					<c:choose>
+						<c:when test="${board.m_index ne null}">
+							<a href='javascript: like_func();'><img
+								src="/resources/img/dislike.png" id='like_img'></a>추천수<span class="good_cnt"> ${board.lt_good }</span>
+						</c:when>
+						<c:otherwise>
+							<a href='javascript: login_need();'><img
+								src="/resources/img/like.png"></a>추천수<span class="good_cnt"> ${board.lt_good }</span>
+						</c:otherwise>
+					</c:choose>
+				</div>
+				<div class="push padding_1">
+					<c:if test="${member.m_index ne null}">
+						<button type="button"class="btn btn-primary" onclick="report()">신고하기</button> 
+					</c:if>
+					<c:if test="${member.m_index eq board.m_index or member.m_index eq 1}">
+						<button class="btn btn-danger" onclick="btn_delete()">삭제하기</button>
+					</c:if>
+					<c:if test="${member.m_index eq board.m_index}">
+						<button class="btn btn-success" onclick="modify()">수정하기</button>
+					</c:if>
+					<button  class="btn btn-info" onclick="fn_golist()">
+						목록으로 돌아가기 
+					</button>
+				</div>
+			</div>
+			
+								<!--  댓글  -->
+            <div class="container" style="border:1px solid darkgray; margin-bottom:30px; margin-top:30px; padding: 5px;" >
+               <div class="row col-12" >
+               <div class="col-lg-12">
+            <div class="container">
+            <label for="content">댓글쓰기</label>
+            </div>
+               <form name="commentInsertForm">
+                  <div class="input-group">
+                     <input type="text" class="form-control" name="com_text" placeholder="내용을 입력하세요." style="margin-bottom: 25px;"> 
+                     <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="commentInsertBtn">등록</button>      
+                        <input type="hidden" id="board_index" name="board_index"value="${board.lt_index}"><!-- value값 게시판에 맞게 바꾸세요 -->                  
+                     </span>
+                     <div class="container"><b>Comments</b></div>
+                     <div class="container" style="border:1px solid black;">
+                     <div class="commentList"></div>
+                  </div>
+                  </div>
+               </form>
+               </div>
+               </div>
+            </div>
 						 </div>
 						 <div id="">
 						 
@@ -44,6 +125,74 @@
 </div>
 </c:forEach>
 
+<script type="text/javascript">
+
+
+<!-- 좋아요 함수 -->
+	<script type="text/javascript">
+	
+
+	var board_index = $('#board_index').val();//게시글 넘버 변수에 넣어주기
+	
+	function like_func(){
+		  var lt_index = $('#lt_index').val();
+		  var lt_good = $('#lt_good').val()
+		  var mno = $('#m_index').val();
+		  console.log("lt_index, mno : " + lt_index +","+ mno);
+
+
+		  $.ajax({
+			    url: "../lt/like",
+			    type: "GET",
+			    cache: false,
+			    dataType: "json",
+			    data: 'lt_index=' +lt_index,
+			    success: function(data) {
+			      var msg = '';
+			      var like_img = '';
+			      msg += data.msg;
+			      if(msg != 'no'){
+			      alert(msg);
+			      
+			      if(data.good_check == 0){
+			        like_img = "/resources/img/dislike.png";
+			      } else {
+			        like_img = "/resources/img/like.png";
+			      }      
+			      $('')
+			      $('#like_img').attr('src', like_img);
+			      $('.good_cnt').text(data.good_cnt);
+			      /* $('#like_check').html(data.like_check); */
+			      }else{
+			    	  alert("로그인이 필요합니다.")
+			      }
+			    },
+			    error: function(request, status, error){
+			      	alert("로그인이 필요합니다.");
+			    }
+			  });
+			}
+
+		function modify(){
+			$('form').attr('action','/lt/lt_003_1').submit()
+		}
+
+		function btn_delete(){
+			var delete_check = confirm("삭제하시겠습니까??")
+			//버튼 변수에넣기
+			
+			if(delete_check){
+				$('form').attr('action','/lt/delete').submit()
+			}else{
+			}
+		}
+
+		
+		function fn_golist(){
+			var a = '${back_url}?page=${page_num}'
+			$('form').attr('action',a).submit()
+		}
+		
 document.addEventListener('keydown', function(event) {
   if (event.keyCode === 13) {
     event.preventDefault();
@@ -87,7 +236,6 @@ var popupX = (window.screen.width / 2) - (popupWidth / 2);
 
 var popupY= (window.screen.height / 2) - (popupHeight / 2);
 //만들 팝업창 height 크기의 1/2 만큼 보정값으로 빼주었음
-
 
 
 
@@ -137,7 +285,6 @@ function commentList() {
     }
  });
 }
-<script>
 //대댓글 리스트
 var check = true;
 var checkIdx = 0;

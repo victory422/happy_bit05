@@ -47,7 +47,6 @@
   	
 
   </script>
-<%@ include file="../includes/middle.jsp"%>
 	<div class="container">
 	
 		 <form id="form" method="post" onsubmit="return check_fn()" >

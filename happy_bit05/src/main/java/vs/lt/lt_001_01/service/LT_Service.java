@@ -1,5 +1,6 @@
 package vs.lt.lt_001_01.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import vs.li.li_001_1.dto.Page_DTO;
@@ -20,5 +21,11 @@ public interface LT_Service {
 	public List<LT_VO> search_list(LT_VO vo);
 	
 	public List<LT_VO> detail_page(String index);
+
+	public int good_check(HashMap<String, Object> hashmap);
+
+	public int increse_good(HashMap<String, Object> hashmap);
+
+	public int decrese_good(HashMap<String, Object> hashmap);
 	
 }

@@ -93,12 +93,6 @@ html, body { width: 100%; height: 100%; }
 							<input type="submit" value="Login"
 								class="btn float-right login_btn">
 						</div>
-					
-						<br>
-						<div class="form-group">
-							<input type="submit" value="회원가입" onclick="javascript: form.action='/ms';"
-							class="btn float-right member_btn">
-						</div>
 					</form>
 				</div>
 				<div class="card-footer"></div>
