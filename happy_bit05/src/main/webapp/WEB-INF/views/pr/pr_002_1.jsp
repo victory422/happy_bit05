@@ -66,6 +66,7 @@
 		<table class="table table-bordered table-hover"
 			style="margin-top: 30px;"
 			onClick="location.href='pr_003_1?pr_index=${data.pr_index}'">
+	<c:if test="${data.request_thumbnail eq null }">
 			<tr>
 				<td rowspan="5" style="width: 250px; height: 125px; padding: 0;">
 					<img id="thumbnail"
@@ -74,6 +75,18 @@
 				</td>
 				<td><h4>${data.pr_title }</h4></td>
 			</tr>
+	</c:if>
+	
+	<c:if test="${data.request_thumbnail ne null }">
+			<tr>
+				<td rowspan="5" style="width: 250px; height: 125px; padding: 0;">
+					<img src="../resources/img/noimg.jpeg"
+					style="width:250px; height: 260px; padding: 0;">
+				</td>
+				<td><h4>${data.pr_title }</h4></td>
+			</tr>
+	</c:if>
+	
 			<tr>
 				<td>등록일 : ${data.pr_recordDate }</td>
 			</tr>
