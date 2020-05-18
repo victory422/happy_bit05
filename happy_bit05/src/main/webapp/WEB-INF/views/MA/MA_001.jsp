@@ -253,15 +253,15 @@ function mainView(){
 		    				    });
 			    				
 			    				//리스트에 나올 내용.
-			    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "lcGet('+i+')">';														
+			    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "lcGet('+i+')" style="table-layout:fixed">';														
 								course += '<tr>';
 								course += '	<td rowspan="2" style="width:120px; height: 100px; padding: 0;">';
 								if(data[i].lc_request){
-			    					course += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100"/>';
+			    					course += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100" width="150"/>';
 			    				} else {
 			    					course += '<img alt="" id="thumbnail" src="/resources/img/lc/basic.png" height="100"/>';
 			    				}								course += '	</td>';
-								course += '	<td>' + data[i].lc_title + '</td>';
+								course += '	<td style="text-overflow:ellipsis; overflow:hidden" >' + data[i].lc_title + '</td>';
 								course += '</tr><tr>';
 								course += ' <td>추천수 : '+ data[i].lc_good +'</td>';	
 								course += '</tr>';
