@@ -222,7 +222,11 @@ function mainView(){
 			        			//content[i] += '<div class="col-md-12">';
 			    				content[i] += '<div class="card mb-3 shadow-sm">';
 			    				content[i] += '<svg class="bd-placeholder-img card-img-top" width="100%" height="0" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">';
-			    				content[i] += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100"/>';
+			    				if(data[i].lc_request){
+			    					content[i] += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100"/>';
+			    				} else {
+			    					content[i] += '<img alt="" id="thumbnail" src="/resources/img/lc/basic.png" height="100"/>';
+			    				}
 			    				content[i] += '</svg>';
 			    				content[i] += '<div class="card-body" height="20">';
 			    				content[i] += '<p class="card-text">' + data[i].lc_title + '</p>';
@@ -249,12 +253,15 @@ function mainView(){
 		    				    });
 			    				
 			    				//리스트에 나올 내용.
-			    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "lcGet('+i+')">';														
+			    				course += '<table id = "mainList'+ i +'" class="table table-bordered table-hover" onClick = "lcGet('+i+')" style="table-layout:fixed">';														
 								course += '<tr>';
 								course += '	<td rowspan="2" style="width:120px; height: 100px; padding: 0;">';
-								course += '	<img id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request +'" style="width:120px; height: 100px; padding: 0;">';
-								course += '	</td>';
-								course += '	<td>' + data[i].lc_title + '</td>';
+								if(data[i].lc_request){
+			    					course += '<img alt="" id="thumbnail" src="data:image/jsp;base64,' + data[i].lc_request + '" height="100" width="150"/>';
+			    				} else {
+			    					course += '<img alt="" id="thumbnail" src="/resources/img/lc/basic.png" height="100"/>';
+			    				}								course += '	</td>';
+								course += '	<td style="text-overflow:ellipsis; overflow:hidden" >' + data[i].lc_title + '</td>';
 								course += '</tr><tr>';
 								course += ' <td>추천수 : '+ data[i].lc_good +'</td>';	
 								course += '</tr>';

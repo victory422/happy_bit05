@@ -13,7 +13,7 @@ select *
 </select>
 
 <insert id="ap_insert" parameterType="vs.co.co_001_1.vo.CoVO">
-
+<![CDATA[
 	insert into participant(
 				co_paper_index,
 				 co_title,
@@ -30,14 +30,14 @@ select *
 			#{co_title},
 			#{co_price},
 			#{co_area},
-			(sysdate,'yy/mm/dd hh24:mi:ss')
+			(select to_char(sysdate,'yy/mm/dd  hh24:mi:ss') from dual),
 			'참가',		
 			#{co_m_event},
 			#{co_m_souvenir},
 			#{co_b_index},	
 			#{m_index}	
 				)
-			
+]]>
 
 
 </insert>

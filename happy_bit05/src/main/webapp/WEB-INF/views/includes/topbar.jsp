@@ -96,7 +96,7 @@
 						</div>
 					</li>
 
-					<li class="nav-item"><a class="nav-link" href="/SP/SP_001_1">shop</a>
+					<!-- <li class="nav-item"><a class="nav-link" href="/sp">shop</a> -->
 					</li>
 				</ul>
 			</div>
