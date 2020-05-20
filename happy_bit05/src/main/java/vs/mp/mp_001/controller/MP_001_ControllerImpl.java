@@ -1,5 +1,6 @@
 package vs.mp.mp_001.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
@@ -17,23 +18,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.amazonaws.partitions.model.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import vs.ac.ac_001_1.vo.AcVO;
 import vs.co.co_001_1.service.Co_Service;
+import vs.lc.lc_002_1.service.LC_002_1_Service;
+import vs.lc.lc_003_1.service.LC_003_1_Service;
+import vs.lc.lc_003_1.vo.LC_003_1_VO;
 import vs.lo.lo_001.controller.MemberLoginInterceptor;
 import vs.lo.lo_001.service.LO_001_Service;
 import vs.lo.lo_001.vo.LO_001_VO;
+import vs.mb.mb_001_1.service.MB_service;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.service.MP_001_Service;
 import vs.mp.mp_001.vo.MP_001_3_VO;
 import vs.mp.mp_001.vo.PageUtil;
 import vs.ms.ms_001.vo.MS_001_VO;
+import vs.pr.pr_002_1.vo.Pr_002_1VO;
+import vs.pr.pr_002_1.vo.Upload_pr_vo;
+import vs.pr.pr_003_1.service.Pr_003_1_Service;
 
 @Controller
 @Log4j
@@ -48,6 +59,8 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	private LO_001_Service LOservice;
 	private Page_DTO dto;
 	private Co_Service co_service;
+	private MB_service mb_service;
+	 
 	
 	@Override
 	@RequestMapping(value="/mp")
@@ -90,8 +103,9 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 			mav.addObject("getAllMyPost", postList);
 			
 			//내 글의 댓글
-	        List<Map<String, String>> replyList = service.myReplys(dto);	
+	        List<Map<String, String>> replyList = service.replysExceptionX(dto);	
 			mav.addObject("replyList", replyList);
+			log.info("myPage replys " +replyList);
 			
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -319,7 +333,14 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 	@RequestMapping(value="/mp/replyX", method=RequestMethod.POST , produces = "application/text;charset=utf8")
 	@ResponseBody
 	public String replyX(Page_DTO dto, HttpServletRequest request) throws Exception{
+		//dto m_index 세션에서 주입.
+		HttpSession session = request.getSession();
+		sessionVO = (LO_001_VO) session.getAttribute("sessionVO");
+		dto.setM_index(sessionVO.getM_index());
+		
+		//dto com_index 파라미터로 주입.
 		dto.setCom_index(request.getParameter("com_index"));
+		
 		service.replyX(dto);
         List<Map<String, String>> list = service.replysExceptionX(dto);	
 		log.info("replyX : "+list);
@@ -331,6 +352,5 @@ public class MP_001_ControllerImpl implements MP_001_Controller {
 		return jsonStr;
 		
 	}
-
 	
 }

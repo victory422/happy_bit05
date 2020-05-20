@@ -62,6 +62,7 @@ public class MB_servieceImpl implements MB_service{
 	@Override
 	public Pr_002_1VO upload(String pr_index) {
 		// TODO Auto-generated method stub
+		log.info("pr_index : "+pr_index);
 		return dao.upload(pr_index);
 	}
 	

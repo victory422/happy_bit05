@@ -176,6 +176,9 @@ nav ul li {
   .rwd-table td:last-child {
     padding-right: 0;
   }
+  
+
+
 }
 
 body {
@@ -215,6 +218,19 @@ h1 {
   color: #dd5;
 }
 
+  #sidebox { 
+  background-color:#F0F0F0; 
+  position:absolute; 
+  width:30px;
+  height : 15px; 
+  top:170px; 
+  right:20px; 
+  padding: -5px -5px 
+  border-radius: .25rem;
+  background-color: #34495E;
+  }
+
+
 </style>
 
 <script>
@@ -234,11 +250,29 @@ h1 {
 		<div id="myCourse">
 				<h1 style="text-align: center;">기록 측정하기</h1>
 		<h4 style="text-align: center;">측정하고싶은 기록을 클릭해주세요.</h4>
+		
+		<!-- 정렬 드랍박스 -->
+		<div role="group" class="my-3" id="sidebox"
+			aria-label="Button group with nested dropdown">
+			<div class="btn-group" role="group">
+				<button id="btnGroupDrop3" type="button"
+					class="btn btn-info dropdown-toggle" data-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false"></button>
+				<div class="dropdown-menu" aria-labelledby="btnGroupDrop3">
+					<a class="dropdown-item" onclick="sort('LC_TITLE')">제목</a> 
+					<a class="dropdown-item" onclick="sort('LC_TYPE')">유형</a> 
+					<a class="dropdown-item" onclick="sort('LC_ADDRESS')">위치</a> 
+					<a class="dropdown-item" onclick="sort('LC_DISTANCE')">거리</a> 
+				</div>
+			</div>
+		</div>
+
+
 			<table class="rwd-table" style="width:100%;margin-top: 30px;table-layout:fixed;">
 				<tr class="active">
-					<th width="50%" onclick="sort('LC_TITLE')">코스 명</th>
+					<th width="40%" onclick="sort('LC_TITLE')">코스 명</th>
 					<th width="12%" onclick="sort('LC_TYPE')">코스유형</th>
-					<th width="26%" onclick="sort('LC_ADDRESS')">출발위치</th>
+					<th width="36%" onclick="sort('LC_ADDRESS')">출발위치</th>
 					<th width="12%" onclick="sort('LC_DISTANCE')">거리</th>
 				</tr>
 				<c:if test="${empty list }">
@@ -328,8 +362,11 @@ var count = 0;
 	}
 	
 		
-	
-
+	var currentPosition = parseInt($("#sidebox").css("top")); 
+	$(window).scroll(function() {
+		var position = $(window).scrollTop(); 
+		$("#sidebox").stop().animate({"top":position+currentPosition+"px"},500); 
+		});
 
 	
 </script>

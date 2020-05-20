@@ -163,7 +163,7 @@
 							<td>${val.lc_good}</td>
 							<td>${val.lc_date}</td>
 							<td>
-								<button
+								<button class="btn btn-primary"
 									onclick="location.href='/lc/003/lc_get?lc_index=${val.lc_index}'">
 									보기
 								</button>
@@ -453,19 +453,33 @@ function ajaxPage(courseIndex, memberIndex, pageNumber) {
 	    	var td = "";
 	    	
 	        for(i=0; i<data.length-1; i++) {
-			    	console.log("console data rn : "+data[i]['RN']);
-			    	console.log("console data pr_recorddate: "+data[i]['PR_RECORDDATE']);
-			    	console.log("console data pr_record : "+data[i]['PR_RECORD']);
-			    	
-			    	td += '<tr class="success">';
-					td += '<td>' + data[i]['RN'] + '</td>';
-					td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
-					td += '<td>' + data[i]["PR_TYPE"] + '</td>';
-					td += '<td>' + data[i]["PR_RECORD"] + '</td>';
-					td += '<td>';
-					td += '<button onclick="location.href=\'/lc/003/lc_get?lc_index='+lc_index+'\'">view';
-					td +=  '</button></td>';
-					td += '</tr>';
+		    	var pr_public = data[i]['PR_PUBLIC'];
+		    	var viewORwrite = '';
+
+		    	
+		    	console.log("console data rn : "+data[i]['RN']);
+		    	console.log("console data pr_recorddate: "+data[i]['PR_RECORDDATE']);
+		    	console.log("console data pr_record : "+data[i]['PR_RECORD']);
+		    	console.log("console data pr_public : "+pr_public);
+		    	console.log("console data viewORwrite : "+viewORwrite);
+		    	
+		    	td += '<tr class="success">';
+				td += '<td>' + data[i]['RN'] + '</td>';
+				td += '<td>' + data[i]["PR_RECORDDATE"] + '</td>';
+				td += '<td>' + data[i]["PR_TYPE"] + '</td>';
+				td += '<td>' + data[i]["PR_RECORD"] + '</td>';
+				td += '<td>';
+		    	if(pr_public =='1') {
+		    		viewORwrite = 'view';
+					td += '<button class="btn btn-primary" onclick="location.href=\'/pr/pr_003_1?pr_index='+data[i]['PR_INDEX']+'\'">'+viewORwrite+'';
+		    	}else {
+		    		viewORwrite = 'write';
+		    		td += '<button class="btn btn-primary" onclick="location.href=\'/mb/upload?pr_index='+data[i]['PR_INDEX']+'\'">'+viewORwrite+'';
+		    		sessionStorage.setItem("prUpload", "fromMp");
+		    		alert(sessionStorage.getItem("prUpload"));
+		    	}
+				td +=  '</button></td>';
+				td += '</tr>';
 	        }
 	
 	        $("#detail").html(td);

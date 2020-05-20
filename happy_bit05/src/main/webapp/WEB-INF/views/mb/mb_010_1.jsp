@@ -220,4 +220,20 @@ h1 {
 			</table>
 		</div>
 	</body>
+	
+	<script>
+	
+	//웹에서 업로드 시 웹 기록게시판으로 보내기.
+	window.onload = function() {
+		if(sessionStorage.getItem("prUpload")=='fromMp'){
+			sessionStorage.removeItem("prUpload");
+			location.href = '/pr/pr_002_1';
+		}else {
+			sessionStorage.removeItem("prUpload");
+		}
+	}
+	
+	
+	
+	</script>
 </html>

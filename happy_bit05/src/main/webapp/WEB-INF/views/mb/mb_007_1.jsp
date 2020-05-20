@@ -342,6 +342,11 @@ function upload(pr_index){
 	}
 }
 	
+
+//웹 or 앱에서 접속했는지 체크하기 위한 세션정보
+sessionStorage.removeItem("prUpload");	
+
+	
 </script>
 </body>
 </html>

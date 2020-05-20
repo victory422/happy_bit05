@@ -600,9 +600,9 @@
 			    ) b, member
 		    where board_com.BOARD_INDEX = b.T_INDEX
 		    and board_com.m_index = member.m_index
-		    and b.m_index = '3'
+		    and b.m_index = #{m_index}
 		    and rownum <= 5
-		   and not com_view is not null
+		    and com_view is null
             order by com_date desc 
 		]]>   
 	</select>
@@ -612,8 +612,8 @@
 	<update id="replyX">
 		<![CDATA[ 
 			update board_com
-			set com_index = #{com_index}
-			where com_view = '1'
+			set com_view = '1'
+			where com_index = #{com_index}
 		]]>	
 	</update>
 	

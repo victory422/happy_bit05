@@ -21,6 +21,7 @@ import vs.lo.lo_001.vo.LO_001_VO;
 import vs.mp.mp_001.dto.Page_DTO;
 import vs.mp.mp_001.vo.MP_001_3_VO;
 import vs.ms.ms_001.vo.MS_001_VO;
+import vs.pr.pr_002_1.vo.Upload_pr_vo;
 
 
 @Controller
