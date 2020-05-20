@@ -342,10 +342,10 @@ var count = 0;
 				for(var i=0; i<data.length; i++) {
 					console.log(data[i]);
 					htm += '<tr class="success">';
-					htm += '<td>'+data[i]['LC_TITLE']+'</td>';
-					htm += '<td>'+data[i]['LC_TYPE']+'</td>';
-					htm += '<td>'+data[i]['LC_ADDRESS']+'</td>';
-					htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
+					htm += '<td data-th="제목">'+data[i]['LC_TITLE']+'</td>';
+					htm += '<td data-th="코스유형">'+data[i]['LC_TYPE']+'</td>';
+					htm += '<td data-th="장소">'+data[i]['LC_ADDRESS']+'</td>';
+					htm += '<td data-th="거리">'+data[i]['LC_DISTANCE']+'</td>';
 					htm += '</tr>';
 				}
 				
