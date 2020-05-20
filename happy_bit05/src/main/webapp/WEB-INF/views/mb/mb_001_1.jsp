@@ -86,7 +86,7 @@ html, body { width: 100%; height: 100%; }
 								placeholder="password">
 						</div>
 						<div class="row align-items-center remember">
-							<input type="checkbox">Remember
+							<input type="checkbox" value="lsRememberMe" id="checkbox">Remember
 
 						</div>
 						<div class="form-group">
@@ -126,6 +126,50 @@ html, body { width: 100%; height: 100%; }
 				 })
 				 return false;
 				 }
+		
+		//remember 기능 시작
+		const rmCheck = document.getElementById("rememberMe");
+		const idInput = document.getElementById("m_id");
+		if(localStorage["checked"]=='true') {
+			idInput.value = localStorage.getItem("rememberId");
+			console.log(localStorage.getItem("rememberId"));
+		}
+		
+		//체크박스 chane 함수 정의
+		$(function() {
+			$("#checkbox").change(function() {
+				if ($("#checkbox").is(":checked")) {
+				} else {
+					localStorage.removeItem("rememberId");
+				}
+			})
+		})
+
+		//체크박스 상태 저장
+		$(function() {
+			var checkbox = $("#checkbox")
+			checkbox.change(function() {
+				showID = !!checkbox.is(":checked");
+				localStorage["checked"] = showID;
+			})
+		})
+
+		//localStorage에서 값 불러오기
+		window.onload = function() {
+			
+			showID = localStorage["checked"] || false;
+			showID = showID === "true";
+
+			var checkbox = $("#checkbox");
+			checkbox.prop("checked", showID);
+
+			checkbox.change(function() {
+				showID = !!checkbox.is(":checked");
+				localStorage["checked"] = showID;
+				
+			})
+		}
+		//리멤버기능 끝
 	</script>
 </body>
 </html>

@@ -167,8 +167,8 @@ img {
 	                <td colspan="3" class="td2" id="m_address"> ${sessionVO.m_address}</td>
 	            </tr>
 	          	<tr>
-	          		<td colspan="4" class="td" id="confirmBtn" style="background-color: #C0FFFF;">
-	          			<a id="btn" onclick="pwChk(1)" class="btn-primary " 
+	          		<td colspan="4" class="td" id="confirmBtn">
+	          			<a id="btn" onclick="pwChk(1)" class="btn btn-primary " 
 	          			style="color: #fff; font-weight: 400; cursor: pointer; width : 70%;
 	          			background-color: #6c757d; border-color: #6c757d;">회원정보 수정 </a> 
 	          		</td>
@@ -375,19 +375,28 @@ img {
 						style="font-weight: bold; background-color: #e9ecef; text-align: center;">
 						<td style="width: 20%">게시판</td>
 						<td style="width: 20%">제목</td>
-						<td style="width: 20%">댓글내용</td>
+						<td colspan="2" style="width: 20%">댓글내용</td>
+						
 					</tr>
 					<c:if test="${empty replyList }">
-								${"내 글에 댓글이 없습니다."} 
+								${"최신 댓글이 없습니다."} 
 					</c:if>
-					<tbody>
+					<tbody id="replys">
 						<c:forEach var="val" items="${replyList }" varStatus="status">
 	
-							<tr id="corseDetail" class="success" style="text-align : center;"
-								onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}')">
-								<td>${val.TABLENAME}</td>
-								<td>${val.TITLE}</td>
-								<td>${val.COM_TEXT}</td>
+							<tr class="success" style="text-align : center;">
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}','')">
+									${val.TABLENAME}
+								</td>
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}','')">
+									${val.TITLE}
+								</td>
+								<td onclick="goPage('${val.TABLENAME}', '${val.T_INDEX}','')">
+									${val.COM_TEXT}
+								</td>
+								<td id="replyX" onclick="goPage('${val.COM_INDEX}','${val.M_INDEX}','goAjax')" style="cursor:pointer;">
+									x
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -407,6 +416,9 @@ img {
 </body>
 
 <script type="text/javascript">
+
+var m_index 
+
 
 window.onload = function() {
 	console.log("path : "+'${path}');
@@ -455,7 +467,6 @@ function pClose() {
     	passwordCheck = null;
     	
 	}else if(passwordCheck == 'updateTrue') {
-		alert("updateTrue");
 		document.getElementById('btn').firstChild.nodeValue = "비밀번호 확인";
 		document.getElementById('btn').setAttribute("onclick","pwChk(1)");
 		passwordCheck = null;
@@ -563,42 +574,106 @@ function memberUpdate() {
 	document.getElementById('btn').setAttribute("onclick","pwChk(2)");
 }
 
-// 내 글 , 내 댓글에서 게시판 상세페이지로 보내는 함수
+//동적 이벤트 할당 (ajax 안에 들어간 클래스명으로 이벤트 주기)
+/* $(document).on('click', '.successReply', function(){
+	var tableName = document.getElementById().firstChild.value;
+	var t_index = document.getElementById().firstChild.value;
+	var goAjax = document.getElementById().firstChild.value;
+	
+	
+	console.log(tableName);
+	console.log(t_index);
+	console.log(goAjax);
+	goPage(tableName, t_index, goAjax);
+}) */
 
-function goPage(tableName, t_index ) {
+
+// 내 글 , 내 댓글에서 게시판 상세페이지로 보내는 함수
+function goPage(tableName, t_index, goAjax ) {
 	console.log("tableName :"+tableName);
 	console.log("t_index :"+t_index);
+	console.log("goAjax :"+goAjax);
 	
-	switch (tableName) {
-		case '기록게시판' :
-			location.href = '/pr/pr_003_1?pr_index='+t_index ;
-			break;
-			
-		case '장비TIP' :
-			location.href = '/li/li_006_1?li_index='+t_index+'&li_b_type=후기게시판';
-			break;
-			
-		case '코스게시판' :
-			location.href = '/lc/003/lc_get?lc_index='+t_index ;
-			break;
-			
-		case '대회리뷰게시판' :
-			location.href = '/cr/cr_003_1?co_r_index='+t_index ;
-			break;
-			
-		case '트레이닝TIP' :
-			location.href = '/lt/lt_004_1?index='+t_index;
-			break;
-			
-			default : alert("error!");
+	if(goAjax=='' || goAjax==null){
+		switch (tableName) {
+			case '기록게시판' :
+				location.href = '/pr/pr_003_1?pr_index='+t_index ;
+				break;
+				
+			case '장비TIP' :
+				location.href = '/li/li_006_1?li_index='+t_index+'&li_b_type=후기게시판';
+				break;
+				
+			case '코스게시판' :
+				location.href = '/lc/003/lc_get?lc_index='+t_index ;
+				break;
+				
+			case '대회리뷰게시판' :
+				location.href = '/cr/cr_003_1?co_r_index='+t_index ;
+				break;
+				
+			case '트레이닝TIP' :
+				location.href = '/lt/lt_004_1?index='+t_index;
+				break;
+				
+				default : alert("error!");
+		} 
+	
+	}else {
+		var com_index = tableName;
+		var m_index = t_index;
+		disabled(com_index, m_index);
+		
 	} 
-}
+	
+	
+}//goPgae() 끝.
 
 function popup(rn, lc_type, lc_title, m_index, lc_distance, lc_record, lc_date,
 		lc_index,lc_xy_arr) {
 	alert("상세보기에서 확인가능합니다.");
 
 	
+}
+
+
+function disabled(com_index, m_index) {
+	
+	//스크롤 고정
+	var offset = $("#replyX").offset();
+	$('html, body').animate({scrollTop : offset.top}, 100);
+	
+	//클릭한 댓글 index
+	console.log(com_index);
+	
+	$.ajax({
+		 type : "POST",  
+		    url : "/mp/replyX",  
+		    data : { "com_index" :com_index},
+		    dataType : "json",
+		    success : function(data){
+		    	document.getElementById('replys').firstChild.remove();
+		    	
+		    	var td = "";
+		    	
+		        for(i=0; i<data.length; i++) {
+				    	td += '<tr style="text-align : center;">';
+						td += '<td onclick="goPage(\''+data[i]['TABLENAME']+'\',\''+data[i]['T_INDEX']+'\',)">' + data[i]['TABLENAME'] + '</td>';
+						td += '<td onclick="goPage(\''+data[i]['TABLENAME']+'\',\''+data[i]['T_INDEX']+'\',)">' + data[i]["TITLE"] + '</td>';
+						td += '<td onclick="goPage(\''+data[i]['TABLENAME']+'\',\''+data[i]['T_INDEX']+'\',)">' + data[i]["COM_TEXT"] + '</td>';
+						td += '<td id="replyX" onclick="goPage(\''+data[i]['COM_INDEX']+'\',\'\',\'ajax\')" style="cursor:pointer;">x</td>';
+						td += '</tr>';
+		        }
+		
+		        document.getElementById('replys').innerHTML = td;
+
+		    },  
+		
+		    error:function(xhr,status,error,data){ //ajax 오류인경우  
+		            alert("error\nxhr : " + xhr + ", status : " + 
+		            		+status + ", error : " + error+ ", data : " + data); 
+		    }  
+	}) 
 }
 
 

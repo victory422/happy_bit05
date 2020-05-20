@@ -314,7 +314,7 @@ var count = 0;
 					htm += '<td>'+data[i]['LC_TITLE']+'</td>';
 					htm += '<td>'+data[i]['PR_TYPE']+'</td>';
 					htm += '<td>'+data[i]['LC_DISTANCE']+'</td>';
-					htm += '<td>'+data[i]['ADDRESS']+'</td>';
+					//htm += '<td>'+data[i]['ADDRESS']+'</td>';
 					htm += '<td>'+data[i]['PR_RECORD']+'</td>';
 					htm += '</tr>';
 				}
@@ -341,6 +341,11 @@ function upload(pr_index){
 		location.href="/mb/upload?pr_index="+pr_index
 	}
 }
+	
+
+//웹 or 앱에서 접속했는지 체크하기 위한 세션정보
+sessionStorage.removeItem("prUpload");	
+
 	
 </script>
 </body>

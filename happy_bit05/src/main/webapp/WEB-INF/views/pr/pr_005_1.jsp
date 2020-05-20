@@ -21,7 +21,7 @@
 <body>
 	
 	<div class="container col-md-12 bg-light" style="padding:0px;">
-	<form name="update" action="/mb/update" method="post" enctype="multipart/form-data">
+	<form name="update" action="/mp/update" method="post" enctype="multipart/form-data">
 		HOME > 코스 > ${lc_get.lc_type }
 			<hr/>
 
@@ -278,7 +278,7 @@
 	
 	
 	//------------------------------------------------------------------------------------------
-
+	
 	</script>
 	<script>
 /* 	$(document).ready(function(){

@@ -128,6 +128,19 @@ public class MP_001_ServiceImpl implements MP_001_Service{
 		pageutil = dao.replys_paging(dto);
 		return pageutil;
 	}
+
+	@Override
+	public void replyX(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		dao.replyX(dto);
+		
+	}
+
+	@Override
+	public List<Map<String, String>> replysExceptionX(Page_DTO dto) {
+		// TODO Auto-generated method stub
+		return dao.replysExceptionX(dto);
+	}
 	
 
 	

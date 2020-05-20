@@ -31,4 +31,6 @@ public interface MB_dao {
 	public void update2(Map<String, Object> hmap);
 	
 	public List<Pr_002_1VO> pr_list();
+
+	public List<Map<String, String>> getMCListAppSort(Map<String, String> map);
 }

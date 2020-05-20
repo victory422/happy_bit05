@@ -180,11 +180,13 @@
 	</update>
 	
 	<!-- 개인기록  삭제 -->
-	<delete id="pr_delete" parameterType="String">
+	<update id="pr_delete" parameterType="String">
 	
-		delete from myrecord where pr_index = #{pr_index}
+		update myrecord 
+		set pr_public = '0'
+		where pr_index = #{pr_index}
 	
-	</delete>
+	</update>
 
 
 
